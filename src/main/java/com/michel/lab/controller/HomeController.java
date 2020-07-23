@@ -2,6 +2,7 @@ package com.michel.lab.controller;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,37 +13,46 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.michel.lab.constants.Constants;
 import com.michel.lab.model.FormCompte;
 import com.michel.lab.model.Utilisateur;
+import com.michel.lab.proxy.MicroServiceLab;
+import com.michel.lab.service.UserConnexion;
 
 @Controller
 @RequestMapping("/labplan")
 
 public class HomeController {
+	/*
+	@Autowired
+	private MicroServiceLab microServiceLab;
+	*/
+	@Autowired
+	private UserConnexion userConnexion;
+	
 	
 	@GetMapping("/")
 	public String accueil(Model model, HttpSession session) {
 		
-	//	Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
 		return Constants.PAGE_ACCUEIL;
 	}
 	
 	@GetMapping("/aide")
 	public String aide(Model model, HttpSession session) {
 		
-     //  Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
 		return Constants.AIDE;
 	}
 	
 	@GetMapping("/presentation")
 	public String presentation(Model model, HttpSession session) {
 		
-     //  Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
 		return Constants.PRESENTATION;
 	}
 	
 	@GetMapping("/connexion")
 	public String connexion(Model model, HttpSession session) {
 		
-	     //  Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+	     	Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
 			return Constants.CONNEXION;
 		}
 	
