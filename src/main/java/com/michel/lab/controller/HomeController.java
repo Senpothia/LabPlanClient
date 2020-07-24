@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.michel.lab.constants.Constants;
 import com.michel.lab.model.FormCompte;
+import com.michel.lab.model.Login;
 import com.michel.lab.model.Utilisateur;
+import com.michel.lab.model.UtilisateurAux;
 import com.michel.lab.proxy.MicroServiceLab;
 import com.michel.lab.service.UserConnexion;
 
@@ -20,10 +22,10 @@ import com.michel.lab.service.UserConnexion;
 @RequestMapping("/labplan")
 
 public class HomeController {
-	/*
+	
 	@Autowired
 	private MicroServiceLab microServiceLab;
-	*/
+	
 	@Autowired
 	private UserConnexion userConnexion;
 	
@@ -56,6 +58,25 @@ public class HomeController {
 			return Constants.CONNEXION;
 		}
 	
+	
+	@PostMapping("/connexion")  // Traitement formulaire de connexion
+	public String demandeConnexion(Login login, Model model, HttpSession session) {
+		
+		Utilisateur utilisateur = userConnexion.identifierUtilisateur(login, session);
+		
+		if (utilisateur != null) {
+		model.addAttribute("utilisateur", utilisateur);
+		model.addAttribute("authentification", true);
+		
+		return Constants.ESPACE_PERSONEL;
+		
+		} else {
+			
+			return "redirect:/labplan/connexion?error=true";
+		}
+	}
+	
+	
 	@GetMapping("/compte")   // Accès formulaire de création de compte
 	public String compte(Model model) {
 		
@@ -66,17 +87,32 @@ public class HomeController {
 	
 	@PostMapping("/compte")  // Création du compte
 	public String creationCompte(Model model, FormCompte formCompte) {
-		/*
+		
 		UtilisateurAux utilisateurAux = new UtilisateurAux();
 		utilisateurAux.setPrenom(formCompte.getPrenom());
 		utilisateurAux.setNom(formCompte.getNom());
 		utilisateurAux.setToken(formCompte.getPassword());
 		utilisateurAux.setUsername(formCompte.getUsername());
 		utilisateurAux.setRole("USER");
-		*/
-		//microServiceOuvrages.creerCompte(utilisateurAux);
+		
+		microServiceLab.creerCompte(utilisateurAux);
 			
 		return Constants.CONNEXION;
+	}
+	
+	@GetMapping("/espace")
+	public String espace(Model model, HttpSession session) {
+		
+		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		if (utilisateur == null) {
+
+			return Constants.CONNEXION;
+			
+		}else {
+			
+			return Constants.ESPACE_PERSONEL;
+		}
+		
 	}
 	
 	@GetMapping("/compte/modifier")
@@ -93,6 +129,52 @@ public class HomeController {
 		model.addAttribute("error", error);
 		
 		return Constants.MODIFIER_COMPTE;
+	}
+	
+	@PostMapping("/compte/modifier")
+	public String enregitrementModification(Model model, HttpSession session, FormCompte formCompte) {
+		
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
+		Utilisateur utilisateur = (Utilisateur) session.getAttribute("USER");
+		
+		UtilisateurAux utilisateurAux = new UtilisateurAux();
+		utilisateurAux.setId(utilisateur.getId());
+		utilisateurAux.setPrenom(formCompte.getPrenom());
+		utilisateurAux.setNom(formCompte.getNom());
+		
+		System.out.println("password récupéré: "+ formCompte.getPassword());
+		
+		if (!formCompte.getPassword().equals("")) {
+			
+			utilisateurAux.setToken(formCompte.getPassword());
+			System.out.println("chaine non vide!");
+			utilisateurAux.setUsername(formCompte.getUsername());
+			utilisateurAux.setRole("USER");
+			
+			utilisateur.setPrenom(formCompte.getPrenom());
+			utilisateur.setNom(formCompte.getNom());
+			
+			session.setAttribute("utilisateur", utilisateur);
+			
+			microServiceLab.modifierCompte(utilisateur.getId(), token, utilisateurAux);
+			model.addAttribute("utilisateur", utilisateur);
+			model.addAttribute("authentification", true);
+			
+			return Constants.ESPACE_PERSONEL;
+			
+		}else {
+			
+			return "redirect:/labplan/compte/modifier?error=true";
+		}
+		
+	}
+	
+	@GetMapping("/logout")
+	public String logout(HttpSession session) {
+		
+		session.invalidate();
+		return Constants.PAGE_ACCUEIL;
 	}
 	
 }
