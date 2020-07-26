@@ -15,7 +15,7 @@
 
 <link rel="stylesheet" href="/css/styles.css">
  <link rel="shortcut icon" type="image/x-icon" href="/images/logo0.png" />
-<title>Bibliothèque</title>
+<title>Labplan</title>
 </head>
 <body>
 	<div class="container">
@@ -84,25 +84,30 @@
 				</div>
 				
 				<div class="row d-flex justify-content-center">
-					<a 	th:href="@{/biblio/client/emprunts/{id}(id=${utilisateur.id})}"><button type="button"
+					<a 	th:href="@{/labplan/private/qualifications/{id}(id=${utilisateur.id})}"><button type="button"
 								
-							class="btn mb-1 bouton2" style="background-color: #7e60fb; color: white;">Emprunts en cours</button></a>
+							class="btn mb-1 bouton2" style="background-color: #7e60fb; color: white;">Qualifications en cours</button></a>
 				</div>
 
 
 				<div class="row d-flex justify-content-center">
-					<a 	th:href="@{/biblio/client/emprunts/historique/{id}(id=${utilisateur.id})}"><button type="button"
-							class="btn mb-1 bouton2" style="background-color: #7e60fb; color: white;">Historique des emprunts</button></a>
+					<a 	th:href="@{/labplan/private/historique/{id}(id=${utilisateur.id})}"><button type="button"
+							class="btn mb-1 bouton2" style="background-color: #7e60fb; color: white;">Toutes mes qualifications</button></a>
 				</div>
 				
 					<div class="row d-flex justify-content-center">
-					<a href="/biblio/client/ouvrages"><button type="button"
-							class="btn mb-1 bouton2" style="background-color: #7e60fb; color: white;">Ouvrages</button></a>
+					<a href="/labplan/private/qualifications"><button type="button"
+							class="btn mb-1 bouton2" style="background-color: #7e60fb; color: white;">Toutes les qualifications</button></a>
 				</div>
 
 				<div class="row d-flex justify-content-center">
-					<a href="/biblio/client/rubriques"><button type="button"
-							class="btn mb-1 bouton2" style="background-color:  #7e60fb; color: white;">Voir par genre</button></a>
+					<a href="/labplan/private/qualification/creation"><button type="button"
+							class="btn mb-1 bouton2" style="background-color:  #7e60fb; color: white;">Créer une qualification</button></a>
+				</div>
+				
+					<div class="row d-flex justify-content-center">
+					<a href="/labplan/private/procedure/creation"><button type="button"
+							class="btn mb-1 bouton2" style="background-color:  #7e60fb; color: white;">Créer une procédure</button></a>
 				</div>
 						
 			
