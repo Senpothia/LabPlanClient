@@ -40,7 +40,7 @@
 		<div class="message row">
 
 			<p>
-				<b>Pour créer une procedure, remplir ce formulaire.</b>
+				<b>Pour créer une procédure, remplir ce formulaire.</b>
 			</p>
 
 		</div>
@@ -59,26 +59,31 @@
 		<!-- ********************************************* -->
 
 		<div class="container">
-			<form th:action="@{/labplan/private/qualification/creation}"
-				method="post" th:object="${formQualif}">
+			<form th:action="@{/labplan/private/procedure/creation}"
+				method="post" th:object="${formProcedure}">
 
 
 				<div class="col">
-					<h1>Qualification</h1>
+					<h1>Procédure</h1>
 
 					<div class="row mr-1">
-						<label for="text">Produit</label> <input type="text"
-							class="form-control" th:field="*{produit}">
+						<label for="text">Nom</label> <input type="text"
+							class="form-control" th:field="*{nom}">
 					</div>
 
 					<div class="row  mr-1">
-						<label for="text">Projet</label> <input type="text"
-							class="form-control" th:field="*{projet}">
+						<label for="text">Référentiel</label> <input type="text"
+							class="form-control" th:field="*{referentiel}">
 					</div>
 
 					<div class="row  mr-1">
-						<label for="text">Objet</label> <input type="text"
-							class="form-control" th:field="*{Objet}">
+						<label for="text">Version</label> <input type="text"
+							class="form-control" th:field="*{version}">
+					</div>
+					
+						<div class="row  mr-1">
+						<label for="text">Domaine</label> <input type="text"
+							class="form-control" th:field="*{domaine}">
 					</div>
 
 					<!--

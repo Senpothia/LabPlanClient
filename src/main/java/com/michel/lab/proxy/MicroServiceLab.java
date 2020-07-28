@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 
+import com.michel.lab.model.FormProcedure;
 import com.michel.lab.model.FormQualif;
 import com.michel.lab.model.Login;
 import com.michel.lab.model.UtilisateurAux;
@@ -68,6 +69,9 @@ public interface MicroServiceLab {
 	
 	@PostMapping("/save/qualification")  // Enregistrement d'une qualification
 	public void saveQualification(FormQualif formQualif);
+	
+	@PostMapping("/save/procedure")  // Enregistrement d'une procédure
+	public void saveProcedure(FormProcedure formProcedure);
 	
 	
 	

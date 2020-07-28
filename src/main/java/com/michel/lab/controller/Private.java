@@ -46,8 +46,6 @@ public class Private {
 	public String enregistrerQualification(Model model, HttpSession session, FormQualif formQualif) {
 		
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		System.out.println("entrée /qualification/creation");
-		System.out.println(formQualif.toString());
 		Integer createurId = utilisateur.getId();
 		formQualif.setCreateurId(createurId);
 		microServiceLab.saveQualification(formQualif);
