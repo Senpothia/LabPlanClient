@@ -35,8 +35,8 @@ public class ProcedureController {
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
 		
 		model.addAttribute("formProcedure", new FormProcedure());
-		List<String> nomsDomaines = microServiceLab.tousLesDomaines();
-		model.addAttribute("domaines", nomsDomaines);
+		//List<String> nomsDomaines = microServiceLab.tousLesDomaines();
+		//model.addAttribute("domaines", nomsDomaines);
 		
 		if (!selection) {
 			
@@ -44,6 +44,8 @@ public class ProcedureController {
 			
 		} else {
 			
+			List<String> nomsDomaines = microServiceLab.tousLesDomaines();
+			model.addAttribute("domaines", nomsDomaines);
 			model.addAttribute("selection", true);
 		
 		}
