@@ -80,10 +80,36 @@
 						<label for="text">Version</label> <input type="text"
 							class="form-control" th:field="*{version}">
 					</div>
-					
-						<div class="row  mr-1">
+
+					<div class="row  mr-1" th:unless="${selection}">
 						<label for="text">Domaine</label> <input type="text"
 							class="form-control" th:field="*{domaine}">
+					</div>
+
+
+
+
+					<div class="form-group" th:if="${selection}">
+						<label for="text">Sélectionnez un domaine</label> <select
+							class="form-control" name="domaine">
+							<option th:each="domaine: ${domaines}" th:text="${domaine}"></option>
+
+						</select>
+					</div>
+
+					<div class="bouton row">
+
+						<div class="col">
+							<div class="d-flex justify-content-end">
+								<a class="btn mb-1 bouton2"
+									style="background-color: #7e60fb; color: white;"
+									href="/labplan/private/procedure/creation?selection=false" role="button">Créer
+									un domaine</a>
+
+							</div>
+
+
+						</div>
 					</div>
 
 					<!--

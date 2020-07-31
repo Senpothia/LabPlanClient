@@ -73,6 +73,9 @@ public interface MicroServiceLab {
 	@PostMapping("/save/procedure")  // Enregistrement d'une procédure
 	public void saveProcedure(FormProcedure formProcedure);
 	
+	@GetMapping("/private/domaines")       // récupération de la liste des domaines
+	public List<String> tousLesDomaines();
+	
 	
 	
 	
