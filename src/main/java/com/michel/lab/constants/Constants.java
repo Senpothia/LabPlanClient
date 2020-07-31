@@ -11,5 +11,6 @@ public class Constants {
 	public static final String MODIFIER_COMPTE = "modifierCompte";
 	public static final String CREATION_QUALIFICATION = "createQualif";
 	public static final String CREATION_ESSAI = "createEssai";
+	public static final String QUALIFICATIONS = "qualifications";
 
 }

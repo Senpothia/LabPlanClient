@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import com.michel.lab.model.FormProcedure;
 import com.michel.lab.model.FormQualif;
 import com.michel.lab.model.Login;
+import com.michel.lab.model.QualificationAux;
 import com.michel.lab.model.UtilisateurAux;
 
 import feign.Body;
@@ -76,7 +77,8 @@ public interface MicroServiceLab {
 	@GetMapping("/private/domaines")       // récupération de la liste des domaines
 	public List<String> tousLesDomaines();
 	
-	
+	@GetMapping("/private/qualifications")       // récupération de la liste de toutes les qualifications
+	public List<QualificationAux> toutesLesQualifications();
 	
 	
 }
