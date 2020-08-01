@@ -80,6 +80,10 @@ public interface MicroServiceLab {
 	@GetMapping("/private/qualifications")       // récupération de la liste de toutes les qualifications
 	public List<QualificationAux> toutesLesQualifications();
 	
+	@GetMapping("/private/historique/{id}")       // récupération de la liste de toutes les qualifications par utilisateur
+	public List<QualificationAux> mesQualifications(@PathVariable (name = "id") Integer id);
 	
+	@GetMapping("/private/qualifications/{id}")   // récupération de la liste de toutes les qualifications en cours par utilisateur
+	public List<QualificationAux> mesQualificationsEnCours(@PathVariable (name = "id") Integer id);
 }
 
