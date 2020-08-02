@@ -14,9 +14,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 
+
+import com.michel.lab.model.DomaineAux;
 import com.michel.lab.model.FormProcedure;
 import com.michel.lab.model.FormQualif;
 import com.michel.lab.model.Login;
+import com.michel.lab.model.ProcedureAux;
 import com.michel.lab.model.QualificationAux;
 import com.michel.lab.model.UtilisateurAux;
 
@@ -85,5 +88,20 @@ public interface MicroServiceLab {
 	
 	@GetMapping("/private/qualifications/{id}")   // récupération de la liste de toutes les qualifications en cours par utilisateur
 	public List<QualificationAux> mesQualificationsEnCours(@PathVariable (name = "id") Integer id);
+	
+	@GetMapping("/private/qualification/{id}")   // récupération de la liste de toutes les qualifications en cours par utilisateur
+	public QualificationAux obtenirQualification(@PathVariable (name = "id") Integer id);
+	
+	@GetMapping("/private/procedures") 				// Récupérer la liste des procédures
+	public List<ProcedureAux> obtenirProcedures();
+	
+	@GetMapping("/private/liste/domaines") 			// Récupérer la liste des domaines
+	public List<DomaineAux> obtenirDomaines();
+	
+	@GetMapping("/private/liste/domaine/{id}") 
+	public List<ProcedureAux> obtenirProceduresParDomaine(@PathVariable(name = "id") Integer id);
+	
+	
+	
 }
 

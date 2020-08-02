@@ -37,13 +37,7 @@
 		<!-- ----------------- -->
 		<div class="row d-flex justify-content-center">
 
-			<span th:if="${access == '1'}"><h1>Liste de toutes les
-					qualifications</h1></span> <span th:if="${access == '2'}"><h1>Liste
-					de toutes mes qualifications</h1></span> <span th:if="${access == '3'}"><h1>Listes
-					de mes qualifications en cours</h1></span>
-
-
-
+			<h1>Liste des procédure du domaine: </h1>
 
 		</div>
 
@@ -56,33 +50,25 @@
 					<thead>
 						<tr>
 							<th scope="col">N°</th>
-							<th scope="col">Référence</th>
-							<th scope="col">Produit</th>
-							<th scope="col">Date</th>
-							<th scope="col">Objet</th>
-							<th scope="col">Projet</th>
-							<th scope="col">Créateur</th>
-							<th scope="col">Statut</th>
-							<th scope="col">Résultat</th>
-							<th scope="col">Consulter</th>
+							<th scope="col">Nom</th>
+							<th scope="col">Référentiel</th>
+							<th scope="col">Version</th>
+							<th scope="col">Sélection</th>
+							
 
 
 						</tr>
 					</thead>
 					<tbody>
-						<tr th:each="qualification, iStat: ${qualifications}">
+						<tr th:each="procedure, iStat: ${procedures}">
 							<th scope="row"><span th:text="${iStat.count}"></span></th>
-							<td th:text="${qualification.reference}" />
-							<td th:text="${qualification.produit}" />
-							<td th:text="${qualification.date}" />
-							<td th:text="${qualification.objet}" />
-							<td th:text="${qualification.projet}" />
-							<td th:text="${qualification.createur}" />
-							<td th:text="${qualification.statut}" />
-							<td th:text="${qualification.resultat}" />
-							<td><a th:href="@{/labplan/private/qualification/{id}(id=${qualification.numero})}"><p type="text"
-										class="btn btn-block"
-										style="background-color: #7e60fb; color: white">Voir</p></a>
+							<td th:text="${procedure.nom}" />
+							<td th:text="${procedure.referentiel}" />
+							<td th:text="${procedure.version}" />
+							<td><a
+								th:href="@{/labplan/private/essai/procedures/{id}/{qualification}(id=${iStat.index},qualification=${qualification})}"><p
+										type="text" class="btn btn-block"
+										style="background-color: #7e60fb; color: white">Ajouter</p></a>
 							<td />
 
 

@@ -1,25 +1,27 @@
 package com.michel.lab.model;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class QualificationAux {
 	
 	private Integer numero;
 	private String reference;
 	private String produit;
-	private LocalDateTime date;
+	private String date;
 	private String objet;
 	private String projet;
 	private String createur;
 	private String resultat;
 	private String statut;
+	//private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 	
 	public QualificationAux() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public QualificationAux(Integer numero, String reference, String produit, LocalDateTime date, String objet,
+	public QualificationAux(Integer numero, String reference, String produit, String date, String objet,
 			String projet, String createur, String resultat, String statut) {
 		super();
 		this.numero = numero;
@@ -33,44 +35,7 @@ public class QualificationAux {
 		this.statut = statut;
 	}
 	
-	/*
-	public QualificationAux(Qualification qualification) {
-		
-		boolean resultat = qualification.isResultat();
-		boolean statut = qualification.isStatut();
-		
-		
-		this.numero = qualification.getNumero();
-		this.reference = qualification.getReference();
-		this.produit = qualification.getProduit();
-		this.date = qualification.getDate();
-		this.objet = qualification.getObjet();
-		this.projet = qualification.getProjet();
-		this.createur = qualification.getCreateur().getNom();
-		
-		if (statut) {
-			
-			if (resultat) {
-				
-				this.resultat = "Conforme";
-			}else {
-				
-				this.resultat = "Non conforme";
-			}
-			
-			
-			
-		} else {
-			
-			this.statut = "En cours";
-			this.resultat = "En cours";
-		}
-		
-		
 	
-	}
-		
-	*/
 	public Integer getNumero() {
 		return numero;
 	}
@@ -95,11 +60,13 @@ public class QualificationAux {
 		this.produit = produit;
 	}
 
-	public LocalDateTime getDate() {
+	
+
+	public String getDate() {
 		return date;
 	}
 
-	public void setDate(LocalDateTime date) {
+	public void setDate(String date) {
 		this.date = date;
 	}
 

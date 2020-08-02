@@ -12,5 +12,8 @@ public class Constants {
 	public static final String CREATION_QUALIFICATION = "createQualif";
 	public static final String CREATION_ESSAI = "createEssai";
 	public static final String QUALIFICATIONS = "qualifications";
+	public static final String QUALIFICATION = "qualification";
+	public static final String DOMAINES = "domaines";
+	public static final String ESSAIS = "essais";
 
 }

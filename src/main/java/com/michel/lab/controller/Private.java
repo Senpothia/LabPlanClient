@@ -55,6 +55,7 @@ public class Private {
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
 		List<QualificationAux> qualifications = microServiceLab.toutesLesQualifications();
 		model.addAttribute("qualifications", qualifications);
+		model.addAttribute("access", "1");
 		return Constants.QUALIFICATIONS;
 	}
 	
@@ -64,6 +65,7 @@ public class Private {
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
 		List<QualificationAux> qualifications = microServiceLab.mesQualifications(id);
 		model.addAttribute("qualifications", qualifications);
+		model.addAttribute("access", "2");
 		return Constants.QUALIFICATIONS;
 	}
 	
@@ -73,6 +75,18 @@ public class Private {
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
 		List<QualificationAux> qualifications = microServiceLab.mesQualificationsEnCours(id);
 		model.addAttribute("qualifications", qualifications);
+		model.addAttribute("access", "3");
 		return Constants.QUALIFICATIONS;
+	}
+	
+	@GetMapping("/qualification/{id}")  // Consulter une qualification
+	public String qualification(@PathVariable (name = "id") Integer id, Model model, HttpSession session) {
+		
+		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		QualificationAux qualification = microServiceLab.obtenirQualification(id);
+		model.addAttribute("qualification", qualification);
+		
+		System.out.println("Référence qualification: " + qualification.getReference());
+		return Constants.QUALIFICATION;
 	}
 }
