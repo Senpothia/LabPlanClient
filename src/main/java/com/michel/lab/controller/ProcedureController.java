@@ -50,7 +50,7 @@ public class ProcedureController {
 		
 		}
 		
-		return "createProcedure";
+		return Constants.CREATION_PROCEDURE;
 
 	}
 	

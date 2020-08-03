@@ -55,6 +55,7 @@
 				<table class="table table-striped">
 					<thead>
 						<tr>
+							<th scope="col"></th>
 							<th scope="col">N°</th>
 							<th scope="col">Référence</th>
 							<th scope="col">Produit</th>
@@ -72,6 +73,7 @@
 					<tbody>
 						<tr th:each="qualification, iStat: ${qualifications}">
 							<th scope="row"><span th:text="${iStat.count}"></span></th>
+							<td th:text="${qualification.numero}" />
 							<td th:text="${qualification.reference}" />
 							<td th:text="${qualification.produit}" />
 							<td th:text="${qualification.date}" />

@@ -21,6 +21,7 @@ import com.michel.lab.model.FormQualif;
 import com.michel.lab.model.Login;
 import com.michel.lab.model.ProcedureAux;
 import com.michel.lab.model.QualificationAux;
+import com.michel.lab.model.Utilisateur;
 import com.michel.lab.model.UtilisateurAux;
 
 import feign.Body;
@@ -100,6 +101,11 @@ public interface MicroServiceLab {
 	
 	@GetMapping("/private/liste/domaine/{id}") 
 	public List<ProcedureAux> obtenirProceduresParDomaine(@PathVariable(name = "id") Integer id);
+	
+	@PostMapping("/essai/ajouter/procedure/{id}/{qualification}/{idUser}")
+	public void ajouterProcedure(@PathVariable (name = "id") Integer id   // id = identifiant procedure
+			, @PathVariable (name = "qualification") Integer qualification  // qualification = numéro de qualification
+			, @PathVariable (name = "idUser") Integer idUser);   // utilisateur = identifiant utilisateur 
 	
 	
 	

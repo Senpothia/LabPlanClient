@@ -60,6 +60,7 @@ public class Private {
 	}
 	
 	@GetMapping("/historique/{id}")       // récupération de la liste de toutes les qualifications
+										  // id = identifiant de l'utilisateur
 	public String mesQualifications(@PathVariable (name = "id") Integer id, Model model, HttpSession session){
 		
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
@@ -69,7 +70,8 @@ public class Private {
 		return Constants.QUALIFICATIONS;
 	}
 	
-	@GetMapping("/qualifications/{id}")
+	@GetMapping("/qualifications/{id}")   // Récupérer les qualification d'un utilisateur, identifiant : id
+											// id = identifiant de l'utilisateur
 	public String qualificationsEnCours(@PathVariable (name = "id") Integer id, Model model, HttpSession session) {
 		
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
@@ -80,6 +82,7 @@ public class Private {
 	}
 	
 	@GetMapping("/qualification/{id}")  // Consulter une qualification
+										// id = identifiant de l'utilisateur
 	public String qualification(@PathVariable (name = "id") Integer id, Model model, HttpSession session) {
 		
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
