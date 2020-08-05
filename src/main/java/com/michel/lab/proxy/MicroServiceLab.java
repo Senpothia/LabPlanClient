@@ -25,6 +25,7 @@ import com.michel.lab.model.QualificationAux;
 import com.michel.lab.model.Utilisateur;
 import com.michel.lab.model.UtilisateurAux;
 import com.michel.lab.model.EssaiAux;
+import com.michel.lab.model.FormEchantillon;
 
 import feign.Body;
 import feign.Headers;
@@ -117,7 +118,8 @@ public interface MicroServiceLab {
 	@GetMapping("/private/liste/essais/{id}")
 	public List<EssaiAux> obtenirEssaisParQualification(@PathVariable (name = "id") Integer id);
 	
-	
+	@PostMapping("private/echantillon/save")  // Enregistrement d'une procédure
+	public void saveEchantillon(FormEchantillon formEchantillon);
 	
 }
 

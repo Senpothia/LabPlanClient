@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.michel.lab.constants.Constants;
 import com.michel.lab.model.EssaiAux;
+import com.michel.lab.model.FormEchantillon;
 import com.michel.lab.model.FormQualif;
 import com.michel.lab.model.QualificationAux;
 import com.michel.lab.model.Utilisateur;
@@ -105,8 +106,7 @@ public class Private {
 		model.addAttribute("qualification", qualification);
 		model.addAttribute("essais", essais);
 		return Constants.PAGE_ESSAIS;
-		
-		
-		// return "ok";
 	}
+	
+	
 }
