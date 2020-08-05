@@ -24,6 +24,7 @@ import com.michel.lab.model.ProcedureAux;
 import com.michel.lab.model.QualificationAux;
 import com.michel.lab.model.Utilisateur;
 import com.michel.lab.model.UtilisateurAux;
+import com.michel.lab.model.EssaiAux;
 
 import feign.Body;
 import feign.Headers;
@@ -112,6 +113,9 @@ public interface MicroServiceLab {
 																				// Récuperer l'ensemble des procédure sélectionnées pour une qualification 
 	@PostMapping("/private/liste/procedure/selection")							//donnée et un domaine donné
 	public List<Integer> obtenirSelectionProcedure(Groupe groupe);				// Qualification = numéro de la qualification
+
+	@GetMapping("/private/liste/essais/{id}")
+	public List<EssaiAux> obtenirEssaisParQualification(@PathVariable (name = "id") Integer id);
 	
 	
 	

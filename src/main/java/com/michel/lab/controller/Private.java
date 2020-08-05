@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.michel.lab.constants.Constants;
+import com.michel.lab.model.EssaiAux;
 import com.michel.lab.model.FormQualif;
 import com.michel.lab.model.QualificationAux;
 import com.michel.lab.model.Utilisateur;
@@ -91,5 +92,21 @@ public class Private {
 		
 		System.out.println("Référence qualification: " + qualification.getReference());
 		return Constants.QUALIFICATION;
+	}
+	
+	@GetMapping("/essai/voir/{id}")
+	public String visualiserEssais(@PathVariable (name = "id") Integer id, Model model, HttpSession session) {
+		
+		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		QualificationAux qualification = microServiceLab.obtenirQualification(id);
+		
+		List<EssaiAux> essais = microServiceLab.obtenirEssaisParQualification(id);
+		
+		model.addAttribute("qualification", qualification);
+		model.addAttribute("essais", essais);
+		return Constants.PAGE_ESSAIS;
+		
+		
+		// return "ok";
 	}
 }

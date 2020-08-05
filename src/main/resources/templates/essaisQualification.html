@@ -37,7 +37,7 @@
 		<!-- ----------------- -->
 		<div class="row d-flex justify-content-center">
 
-			<h1>Page de qualification</h1>
+			<h1>Qualification</h1>
 
 
 
@@ -90,9 +90,15 @@
 
 		</div>
 
-	
 
-	<!--  
+		<div class="row d-flex justify-content-center">
+
+			<h2>Liste des essais</h2>
+
+
+
+		</div>
+
 
 		<div class="row">
 
@@ -101,12 +107,15 @@
 				<table class="table table-striped">
 					<thead>
 						<tr>
+							
+							<th scope="col">Essai</th>
 							<th scope="col">N°</th>
 							<th scope="col">Nom</th>
-							<th scope="col">Référentiel</th>
+							
 							<th scope="col">Version</th>
 							<th scope="col">Domaine</th>
-							
+							<th scope="col">Statut</th>
+							<th scope="col">Résultat</th>
 							<th scope="col">Consulter</th>
 
 
@@ -117,16 +126,16 @@
 							<th scope="row"><span th:text="${iStat.count}"></span></th>
 							<td th:text="${essai.numero}" />
 							<td th:text="${essai.nom}" />
-							<td th:text="${essai.referentiel}" />
+						
 							<td th:text="${essai.version}" />
-							<td th:text="${essai.domaine}" />	
+							<td th:text="${essai.domaine}" />
 							<td th:text="${essai.statut}" />
 							<td th:text="${essai.resultat}" />
 							<td><a
-								th:href="@{/labplan/private/qualification/{id}(id=${qualification.numero})}"><p
+								th:href="@{/labplan/private/essai/{id}/{num}(id=${qualification.numero},num=${essai.numero})}"><p
 										type="text" class="btn btn-block"
 										style="background-color: #7e60fb; color: white">Voir</p></a>
-								<td />
+							<td />
 
 
 						</tr>
@@ -139,9 +148,10 @@
 
 
 		</div>
-		
-		 
-					
+
+
+
+		<!--  	
 
 		<div class="row d-flex justify-content-center">
 
@@ -198,37 +208,44 @@
 		</div>
 
 		 -->
-							<div class="row mt-3">
+		<div class="row mt-3">
 			<div class="col d-flex justify-content-end">
-				
+
 
 				<div class="form-group mr-3 ">
-					<a th:href="@{/labplan/private/essai/choix/{id}(id=${qualification.numero})}"><p type="text" class="btn btn-block"
-																			style="background-color: #7e60fb; color: white">Définir
-							les essais</p></a>
+					<a
+						th:href="@{/labplan/private/essai/choix/{id}(id=${qualification.numero})}"><p
+							type="text" class="btn btn-block"
+							style="background-color: #7e60fb; color: white">Définir les
+							essais</p></a>
 				</div>
-				
+
 				<div class="form-group mr-3 ">
-					<a th:href="@{/labplan/private/essai/voir/{id}(id=${qualification.numero})}"><p type="text" class="btn btn-block"
-																			style="background-color: #7e60fb; color: white">voir
-							les essais</p></a>
+					<a
+						th:href="@{/labplan/private/essai/voir/{id}(id=${qualification.numero})}"><p
+							type="text" class="btn btn-block"
+							style="background-color: #7e60fb; color: white">voir les
+							essais</p></a>
 				</div>
-				
+
 				<div class="form-group mr-3 ">
-					<a th:href="@{/labplan/private/essai/echantillons/{id}(id=${qualification.numero})}"><p type="text" class="btn btn-block"
-																			style="background-color: #7e60fb; color: white">voir
-							les échantillons</p></a>
+					<a
+						th:href="@{/labplan/private/essai/echantillons/{id}(id=${qualification.numero})}"><p
+							type="text" class="btn btn-block"
+							style="background-color: #7e60fb; color: white">voir les
+							échantillons</p></a>
 				</div>
 
 				<div class="form-group mr-3">
-					<a th:href="@{/labplan/private/echantillon/creation/{id}(id=${qualification.numero})}"><p type="text" class="btn btn-block"
-																			style="background-color: #7e60fb; color: white">Ajouter
-							des échantillons</p></a>
+					<a href="/labplan/private/echantillon/creation"><p type="text"
+							class="btn btn-block"
+							style="background-color: #7e60fb; color: white">Ajouter des
+							échantillons</p></a>
 				</div>
-				
+
 				<div class="form-group ">
 					<a href="/labplan/espace"><p type="text" class="btn btn-block"
-																			style="background-color: #7e60fb; color: white">Retour</p></a>
+							style="background-color: #7e60fb; color: white">Retour</p></a>
 				</div>
 
 			</div>
@@ -243,8 +260,8 @@
 		<!-- ********************************************* -->
 
 
-	
-													</div>
+
+	</div>
 	<!-- fin conteneur -->
 
 
