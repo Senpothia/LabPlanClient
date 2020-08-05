@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import com.michel.lab.model.DomaineAux;
 import com.michel.lab.model.FormProcedure;
 import com.michel.lab.model.FormQualif;
+import com.michel.lab.model.Groupe;
 import com.michel.lab.model.Login;
 import com.michel.lab.model.ProcedureAux;
 import com.michel.lab.model.QualificationAux;
@@ -99,13 +100,18 @@ public interface MicroServiceLab {
 	@GetMapping("/private/liste/domaines") 			// Récupérer la liste des domaines
 	public List<DomaineAux> obtenirDomaines();
 	
-	@GetMapping("/private/liste/domaine/{id}") 
+	@GetMapping("/private/liste/domaine/{id}") 		// Récupérer une liste de procédure pour un domaine
+													// id = identifiant du domaine concerné
 	public List<ProcedureAux> obtenirProceduresParDomaine(@PathVariable(name = "id") Integer id);
 	
 	@PostMapping("/essai/ajouter/procedure/{id}/{qualification}/{idUser}")
 	public void ajouterProcedure(@PathVariable (name = "id") Integer id   // id = identifiant procedure
 			, @PathVariable (name = "qualification") Integer qualification  // qualification = numéro de qualification
 			, @PathVariable (name = "idUser") Integer idUser);   // utilisateur = identifiant utilisateur 
+	
+																				// Récuperer l'ensemble des procédure sélectionnées pour une qualification 
+	@PostMapping("/private/liste/procedure/selection")							//donnée et un domaine donné
+	public List<Integer> obtenirSelectionProcedure(Groupe groupe);				// Qualification = numéro de la qualification
 	
 	
 	

@@ -7,19 +7,21 @@ public class ProcedureAux {
 	private String referentiel;  // EN 61000-4-5
 	private String version;      // 2015, V1.8.1
 	private String domaine;
+	private boolean actif;
 	
 	public ProcedureAux() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public ProcedureAux(Integer id, String nom, String referentiel, String version, String domaine) {
+	public ProcedureAux(Integer id, String nom, String referentiel, String version, String domaine, boolean actif) {
 		super();
 		this.id = id;
 		this.nom = nom;
 		this.referentiel = referentiel;
 		this.version = version;
 		this.domaine = domaine;
+		this.actif = actif;
 	}
 
 	public Integer getId() {
@@ -61,9 +63,21 @@ public class ProcedureAux {
 	public void setDomaine(String domaine) {
 		this.domaine = domaine;
 	}
-	
-	
-	
+
+	public boolean isActif() {
+		return actif;
+	}
+
+	public void setActif(boolean actif) {
+		this.actif = actif;
+	}
+
+	@Override
+	public String toString() {
+		return "ProcedureAux [id=" + id + ", nom=" + nom + ", referentiel=" + referentiel + ", version=" + version
+				+ ", domaine=" + domaine + ", actif=" + actif + "]";
+	}
+
 	
 
 }
