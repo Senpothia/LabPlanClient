@@ -3,19 +3,22 @@ package com.michel.lab.proxy;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
-
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.michel.lab.model.DomaineAux;
+import com.michel.lab.model.EchantillonAux;
 import com.michel.lab.model.FormProcedure;
 import com.michel.lab.model.FormQualif;
 import com.michel.lab.model.Groupe;
@@ -120,6 +123,20 @@ public interface MicroServiceLab {
 	
 	@PostMapping("private/echantillon/save")  // Enregistrement d'une procédure
 	public void saveEchantillon(FormEchantillon formEchantillon);
+	
+	@GetMapping("/private/echantillon/voir/{id}")
+	public List<EchantillonAux> obtenirEchantillonsParQualification(@PathVariable(name = "id") Integer id);
+	
+	@GetMapping("/private/echantillon/desactiver/{id}/{qualification}")
+	public void desactiverEchantillon(@PathVariable(name = "id") Integer id,
+			@PathVariable(name = "qualification") Integer qualification);
+	
+	@GetMapping("/private/echantillon/voir")
+	public List<EchantillonAux> obtenirEchantillonsParQualification2(@RequestParam(name = "id") Integer id);
+	
+	@GetMapping("/private/echantillon/activer/{id}/{qualification}")
+	public void activerEchantillon(@PathVariable(name = "id") Integer id,
+			@PathVariable(name = "qualification") Integer qualification);
 	
 }
 

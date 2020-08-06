@@ -18,5 +18,6 @@ public class Constants {
 	public static final String ESSAIS = "essais";
 	public static final String PAGE_ESSAIS = "essaisQualification";
 	public static final String CREATION_ECHANTILLON = "createEchantillon";
+	public static final String ECHANTILLONS = "echantillons";
 
 }
