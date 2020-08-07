@@ -58,8 +58,8 @@
 		<!-- ********************************************* -->
 
 		<div class="container">
-			<form th:href="@{/labplan/private/echantillons/creer/{id}(id=${qualification.numero})}"
-				method="post" th:object="${formEchantillon}">
+			<form th:action="@{/labplan/private/sequence/creer/{id}(id=${id})}"
+				method="post" th:object="${formSequence}">
 
 
 				<div class="col">
@@ -73,41 +73,37 @@
 
 					<div class="row  mr-1">
 						<label for="text">Nom</label> <input type="text"
-							class="form-control" th:field="*{caracteristique}">
+							class="form-control" th:field="*{nom}">
 					</div>
 
 					<div class="row  mr-1">
-						<label for="text">Début</label> <input type="date"
-							class="form-control" th:field="*{version}">
-					</div>
-					
-						<div class="row  mr-1">
-						<label for="text">Fin</label> <input type="date"
-							class="form-control" th:field="*{version}">
-					</div>
-					
-						<div class="row  mr-1">
 						<label for="text">Niveau</label> <input type="text"
-							class="form-control" th:field="*{version}">
-					</div>
-					
-						<div class="row  mr-1">
-						<label for="text">Profil</label> <input type="text"
-							class="form-control" th:field="*{version}">
-					</div>
-					
-						<div class="row  mr-1">
-						<label for="text">Commentaire</label> <input type="text"
-							class="form-control" th:field="*{version}">
+							class="form-control" th:field="*{niveau}">
 					</div>
 
-					<!--  
+			<!-- 
 					<div class="row  mr-1">
-						<label for="text">Date</label> <input type="date"
-							class="form-control" th:field="*{date}">
+						<label for="text">Début</label> <input  type="datetime-local"
+							class="form-control" th:field="*{debut}">
 					</div>
-					
-					-->
+
+					<div class="row  mr-1">
+						<label for="text">fin</label> <input  type="datetime-local"
+							class="form-control" th:field="*{fin}">
+					</div>
+
+ -->
+					<div class="row  mr-1">
+						<label for="text">Profil</label> <input type="text"
+							class="form-control" th:field="*{profil}">
+					</div>
+
+					<div class="row  mr-1">
+						<label for="text">Commentaire</label> <input type="text"
+							class="form-control" th:field="*{commentaire}">
+					</div>
+
+				
 
 
 					<div class="bouton row">

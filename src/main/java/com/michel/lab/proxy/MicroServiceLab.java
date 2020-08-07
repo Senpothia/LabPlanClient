@@ -21,6 +21,7 @@ import com.michel.lab.model.DomaineAux;
 import com.michel.lab.model.EchantillonAux;
 import com.michel.lab.model.FormProcedure;
 import com.michel.lab.model.FormQualif;
+import com.michel.lab.model.FormSequence;
 import com.michel.lab.model.Groupe;
 import com.michel.lab.model.Login;
 import com.michel.lab.model.ProcedureAux;
@@ -149,6 +150,9 @@ public interface MicroServiceLab {
 	
 	@GetMapping("/private/qualification/numero/{id}")
 	public QualificationAux obtenirQualificationParNumero(@PathVariable(name="id") Integer id);
+	
+	@PostMapping("private/sequence/save") 
+	public void enregistrerSequence(FormSequence formSequence);
 	
 }
 

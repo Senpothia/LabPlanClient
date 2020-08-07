@@ -12,11 +12,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.michel.lab.constants.Constants;
 import com.michel.lab.model.EssaiAux;
 import com.michel.lab.model.FormEchantillon;
 import com.michel.lab.model.FormQualif;
+import com.michel.lab.model.FormSequence;
 import com.michel.lab.model.QualificationAux;
 import com.michel.lab.model.SequenceAux;
 import com.michel.lab.model.Utilisateur;
@@ -136,4 +139,93 @@ public class Private {
 		
 		return Constants.LISTE_SEQUENCES;
 	}
+	
+	@GetMapping("/sequence/creer/{id}/{qualification}/{domaine}")
+	public String creerSequence(@PathVariable (name = "id") Integer id,  // id = identifiant essai
+			@PathVariable (name = "qualification") Integer qualification,
+			@PathVariable (name = "domaine") String domaine,
+			Model model, HttpSession session) {
+		
+		System.out.println("Get: creerSequence");
+		System.out.println("Valeur id récupéré: " + id);
+		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		FormSequence formSequence = new FormSequence();
+		formSequence.setEssai(id);
+		formSequence.setQualification(qualification);
+		formSequence.setNomDomaine(domaine);
+		model.addAttribute("formSequence", formSequence);
+		model.addAttribute("id", id);
+		
+		return "createSequence";
+		
+	}
+	
+	@PostMapping("/sequence/creer/{id}")
+	public String enregistrerSequence(@PathVariable (name = "id") Integer id,
+			Model model, HttpSession session,
+			FormSequence formSequence
+			,RedirectAttributes redirectAttributes
+			) {
+		
+		
+		System.out.println("méthode POST enregistrement sequence");
+		
+
+		Integer qualification = formSequence.getQualification();
+		String nomDomaine = formSequence.getNomDomaine();
+		
+		System.out.println("Valeur param qualification: " + qualification);
+		System.out.println("Valeur param nomDomaine: " + nomDomaine);
+		
+		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		System.out.println("Identifiant essai récupéré: " + id);
+		formSequence.setEssai(id);
+		microServiceLab.enregistrerSequence(formSequence);
+		
+		
+		System.out.println("Valeur param qualification: " + qualification);
+		System.out.println("Valeur param nomDomaine: " + nomDomaine);
+		
+		redirectAttributes.addAttribute("id", qualification );
+		redirectAttributes.addAttribute("num", id);
+		redirectAttributes.addAttribute("domaine", nomDomaine );
+		
+		
+		return "redirect:/labplan/private/sequences";
+		
+		//return "ok";
+	}
+	
+	
+	
+	@GetMapping("/sequences")  //  id = id essai
+	public String voirSequencesParEssais2(	
+			@RequestParam (name = "id") Integer qualification,
+			@RequestParam (name = "num") Integer id,
+			@RequestParam (name = "domaine") String nomDomaine,
+			Model model, HttpSession session) {
+		
+		System.out.println(" *** entrée méthode voirSequencesParEssais2 ");
+		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		
+		EssaiAux essai = microServiceLab.obtenirEssaiParNumero(qualification);
+		model.addAttribute("essai", essai);
+		List<SequenceAux> sequences = microServiceLab.obtenirSequencesParEssai(qualification, id, nomDomaine);
+		model.addAttribute("sequences", sequences);
+		QualificationAux qualif = microServiceLab.obtenirQualificationParNumero(qualification);
+		model.addAttribute("qualification", qualif);
+		
+		if (sequences.isEmpty()) {
+			
+			model.addAttribute("vide", true);
+			
+		}else {
+			
+			model.addAttribute("vide", false);
+		}
+		
+		return Constants.LISTE_SEQUENCES;
+	}
+	
+	
 }
