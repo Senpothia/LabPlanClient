@@ -11,16 +11,15 @@ public class EchantillonAux {
 	private String caracteristique;    // Variantes pouvant distinguer les échantillons
 	private String actif;
 	private boolean statut;
+	private Integer qualification;
 	
 	public EchantillonAux() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	
-
 	public EchantillonAux(Integer id, Integer numero, LocalDateTime date, Integer version, String caracteristique,
-			String actif, boolean statut) {
+			String actif, boolean statut, Integer qualification) {
 		super();
 		this.id = id;
 		this.numero = numero;
@@ -29,6 +28,7 @@ public class EchantillonAux {
 		this.caracteristique = caracteristique;
 		this.actif = actif;
 		this.statut = statut;
+		this.qualification = qualification;
 	}
 
 	public Integer getId() {
@@ -79,16 +79,20 @@ public class EchantillonAux {
 		this.actif = actif;
 	}
 
-
-
 	public boolean isStatut() {
 		return statut;
 	}
 
-
-
 	public void setStatut(boolean statut) {
 		this.statut = statut;
+	}
+
+	public Integer getQualification() {
+		return qualification;
+	}
+
+	public void setQualification(Integer qualification) {
+		this.qualification = qualification;
 	}
 
 	

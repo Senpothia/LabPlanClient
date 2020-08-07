@@ -5,17 +5,19 @@ public class FormEchantillon {
 	private Integer numero;
 	private String caracteristique;
 	private Integer version;
+	private Integer qualification;   // numéro de qualification 
 	
 	public FormEchantillon() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public FormEchantillon(Integer numero, String caracteristique, Integer version) {
+	public FormEchantillon(Integer numero, String caracteristique, Integer version, Integer qualification) {
 		super();
 		this.numero = numero;
 		this.caracteristique = caracteristique;
 		this.version = version;
+		this.qualification = qualification;
 	}
 
 	public Integer getNumero() {
@@ -42,5 +44,14 @@ public class FormEchantillon {
 		this.version = version;
 	}
 
+	public Integer getQualification() {
+		return qualification;
+	}
+
+	public void setQualification(Integer qualification) {
+		this.qualification = qualification;
+	}
+
+	
 	
 }

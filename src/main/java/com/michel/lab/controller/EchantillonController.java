@@ -45,8 +45,11 @@ public class EchantillonController {
 	@PostMapping("/creer/{id}") // id = numero qualification
 	public String enregistrementEchantillon(@PathVariable(name = "id") Integer id, Model model, HttpSession session,
 			FormEchantillon formEchantillon, RedirectAttributes redirectAttributes) {
-
+		
+		System.out.println("Numéro de qualification pour enregistrement ech: " + id);
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		formEchantillon.setQualification(id);
+		System.out.println("Numéro de qualification pour enregistrement ech dans form: " + formEchantillon.getQualification());
 		microServiceLab.saveEchantillon(formEchantillon);
 
 		redirectAttributes.addAttribute("id", id);
