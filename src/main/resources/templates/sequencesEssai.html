@@ -51,6 +51,7 @@
 				<table class="table table-striped">
 					<thead>
 						<tr>
+
 							<th scope="col">N°</th>
 							<th scope="col">Référence</th>
 							<th scope="col">Produit</th>
@@ -90,12 +91,9 @@
 
 		</div>
 
-
 		<div class="row d-flex justify-content-center">
 
-			<h2>Liste des essais</h2>
-
-
+			<h2>Essai</h2>
 
 		</div>
 
@@ -108,35 +106,25 @@
 					<thead>
 						<tr>
 
-							<th scope="col">Essai</th>
 							<th scope="col">N°</th>
 							<th scope="col">Nom</th>
-
 							<th scope="col">Version</th>
-							<th scope="col">Domaine</th>
 							<th scope="col">Statut</th>
 							<th scope="col">Résultat</th>
-							<th scope="col">Consulter</th>
+
+
 
 
 						</tr>
 					</thead>
 					<tbody>
-						<tr th:each="essai, iStat: ${essais}">
-							<th scope="row"><span th:text="${iStat.count}"></span></th>
+						<tr>
+
 							<td th:text="${essai.numero}" />
 							<td th:text="${essai.nom}" />
-
 							<td th:text="${essai.version}" />
-							<td th:text="${essai.domaine}" />
 							<td th:text="${essai.statut}" />
 							<td th:text="${essai.resultat}" />
-							<td><a
-								th:href="@{/labplan/private/sequences/{id}/{num}/{domaine}(id=${qualification.numero},num=${essai.id},domaine=${essai.domaine})}"><p
-										type="text" class="btn btn-block"
-										style="background-color: #7e60fb; color: white">Séquences</p></a>
-							<td />
-
 
 						</tr>
 
@@ -149,65 +137,81 @@
 
 		</div>
 
-
-
-		<!--  	
 
 		<div class="row d-flex justify-content-center">
 
-									<h2>Liste des échantillons</h2>
-
-
+			<h2>Liste des séquences</h2>
 
 		</div>
 
-
-
+		<span th:unless=${vide}>
 		
-		<div class="row">
+			<div class="row">
 
-			<div class="col donnees" style="margin: 5px;">
+				<div class="col donnees" style="margin: 5px;">
 
-				<table class="table table-striped">
-					<thead>
-						<tr>
-							<th scope="col">N°</th>
-							<th scope="col">Caractéristique</th>
-							<th scope="col">Version</th>
-							<th scope="col">Date</th>
-							<th scope="col">Statut</th>
-							
+					<table class="table table-striped">
+						<thead>
+							<tr>
 
-						</tr>
-					</thead>
-					<tbody>
-						<tr th:each="echantillon, iStat: ${echantillons}">
-							<th scope="row"><span th:text="${iStat.count}"></span></th>
-							<td th:text="${echantillon.numero}" />
-							<td th:text="${echantillon.caracteristique}" />
-							<td th:text="${qualification.version}" />
-							<td th:text="${qualification.date}" />
-							<td th:text="${qualification.statut}" />
-							
-							<td><a
-														th:href="@{/labplan/private/qualification/{id}(id=${qualification.numero})}"><p
-																type="text" class="btn btn-block"
-																style="background-color: #7e60fb; color: white">Voir</p></a>
-							<td />
+								<th scope="col">Ordre</th>
+								<th scope="col">N°</th>
+								<th scope="col">Nom</th>
+								<th scope="col">Niveau</th>
+								<th scope="col">Domaine</th>
+								<th scope="col">Début</th>
+								<th scope="col">Fin</th>
+								<th scope="col">Profil</th>
+								<th scope="col">Commentaire</th>
+								<th scope="col">Statut</th>
+								<th scope="col">Résultat</th>
+								<th scope="col">Consulter</th>
 
 
-						</tr>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="sequence, iStat: ${sequences}">
+								<th scope="row"><span th:text="${iStat.count}"></span></th>
+								<td th:text="${sequence.numero}" />
+								<td th:text="${sequence.nom}" />
+								<td th:text="${sequence.niveau}" />
+								<td th:text="${sequence.domaine}" />
+								<td th:text="${sequence.debut}" />
+								<td th:text="${sequence.fin}" />
+								<td th:text="${sequence.profil}" />
+								<td th:text="${sequence.commentaire}" />
+								<td th:text="${sequence.actif}" />
+								<td th:text="${sequence.avis}" />
+								<td><a
+									th:href="@{/labplan/private/sequences/{id}/{num}(id=${qualification.numero},num=${essai.id})}"><p
+											type="text" class="btn btn-block"
+											style="background-color: #7e60fb; color: white">Consulter</p></a>
+								<td />
 
-					</tbody>
-				</table>
+
+							</tr>
+
+						</tbody>
+					</table>
+
+
+				</div>
 
 
 			</div>
 
+		</span>
+		
+		<span th:if=${vide}>
+			<div class="row d-flex justify-content-center">
+		
+			<h2 style="color: red;">Il n'y a aucune séquence pour cet essai!</h2>
+			</div>
+		
+		</span>
 
-		</div>
 
-		 -->
 		<div class="row mt-3">
 			<div class="col d-flex justify-content-end">
 
@@ -217,8 +221,14 @@
 					<a
 						th:href="@{/labplan/private/echantillons/ajouter/{id}(id=${qualification.numero})}"><p
 							type="text" class="btn btn-block"
-							style="background-color: #7e60fb; color: white">Ajouter des
-							essais</p></a>
+							style="background-color: #7e60fb; color: white">Ajouter</p></a>
+				</div>
+
+				<div class="form-group mr-3">
+					<a
+						th:href="@{/labplan/private/echantillons/creer/{id}(id=${qualification.numero})}"><p
+							type="text" class="btn btn-block"
+							style="background-color: #7e60fb; color: white">Modifier</p></a>
 				</div>
 
 
@@ -230,13 +240,7 @@
 							échantillons</p></a>
 				</div>
 
-				<div class="form-group mr-3">
-					<a
-						th:href="@{/labplan/private/echantillons/creer/{id}(id=${qualification.numero})}"><p
-							type="text" class="btn btn-block"
-							style="background-color: #7e60fb; color: white">Ajouter des
-							échantillons</p></a>
-				</div>
+
 
 				<div class="form-group ">
 					<a href="/labplan/espace"><p type="text" class="btn btn-block"

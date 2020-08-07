@@ -25,6 +25,7 @@ import com.michel.lab.model.Groupe;
 import com.michel.lab.model.Login;
 import com.michel.lab.model.ProcedureAux;
 import com.michel.lab.model.QualificationAux;
+import com.michel.lab.model.SequenceAux;
 import com.michel.lab.model.Utilisateur;
 import com.michel.lab.model.UtilisateurAux;
 import com.michel.lab.model.EssaiAux;
@@ -137,6 +138,17 @@ public interface MicroServiceLab {
 	@GetMapping("/private/echantillon/activer/{id}/{qualification}")
 	public void activerEchantillon(@PathVariable(name = "id") Integer id,
 			@PathVariable(name = "qualification") Integer qualification);
+
+	@GetMapping("/private/sequences/voir/{id}/{num}/{domaine}")
+	public List<SequenceAux> obtenirSequencesParEssai(@PathVariable(name="id") Integer id
+			, @PathVariable(name="num") Integer num, 
+			@PathVariable(name="domaine") String domaine);
+	
+	@GetMapping("/private/essai/{num}")
+	public EssaiAux obtenirEssaiParNumero(@PathVariable(name="num") Integer num);
+	
+	@GetMapping("/private/qualification/numero/{id}")
+	public QualificationAux obtenirQualificationParNumero(@PathVariable(name="id") Integer id);
 	
 }
 

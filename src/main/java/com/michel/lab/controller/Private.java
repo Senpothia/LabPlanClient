@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.bouncycastle.crypto.engines.SM2Engine.Mode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +18,7 @@ import com.michel.lab.model.EssaiAux;
 import com.michel.lab.model.FormEchantillon;
 import com.michel.lab.model.FormQualif;
 import com.michel.lab.model.QualificationAux;
+import com.michel.lab.model.SequenceAux;
 import com.michel.lab.model.Utilisateur;
 import com.michel.lab.proxy.MicroServiceLab;
 import com.michel.lab.service.UserConnexion;
@@ -108,5 +110,30 @@ public class Private {
 		return Constants.PAGE_ESSAIS;
 	}
 	
-	
+	@GetMapping("/sequences/{id}/{num}/{domaine}")  // id = numéro qualification, num = id essai
+	public String voirSequencesParEssais(@PathVariable (name = "id") Integer id,
+			@PathVariable (name = "num") Integer num,
+			@PathVariable (name = "domaine") String domaine,
+			Model model, HttpSession session) {
+		
+		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		
+		EssaiAux essai = microServiceLab.obtenirEssaiParNumero(num);
+		model.addAttribute("essai", essai);
+		List<SequenceAux> sequences = microServiceLab.obtenirSequencesParEssai(id, num, domaine);
+		model.addAttribute("sequences", sequences);
+		QualificationAux qualification = microServiceLab.obtenirQualificationParNumero(id);
+		model.addAttribute("qualification", qualification);
+		
+		if (sequences.isEmpty()) {
+			
+			model.addAttribute("vide", true);
+			
+		}else {
+			
+			model.addAttribute("vide", false);
+		}
+		
+		return Constants.LISTE_SEQUENCES;
+	}
 }
