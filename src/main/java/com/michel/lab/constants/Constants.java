@@ -21,5 +21,6 @@ public class Constants {
 	public static final String ECHANTILLONS = "echantillons";
 	public static final String LISTE_SEQUENCES = "sequencesEssai";
 	public static final String CREATION_SEQUENCE = "createSequence";
+	public static final String SEQUENCE = "sequence";
 
 }

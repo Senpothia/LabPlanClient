@@ -155,5 +155,8 @@ public interface MicroServiceLab {
 	@PostMapping("private/sequence/save") 
 	public void enregistrerSequence(FormSequence formSequence);
 	
+	@GetMapping("private/sequence/{id}")
+	public SequenceAux obtenirSequenceParId(@PathVariable(name="id") Integer id);
+	
 }
 
