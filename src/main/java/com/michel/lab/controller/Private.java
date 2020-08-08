@@ -116,14 +116,15 @@ public class Private {
 	@GetMapping("/sequences/{id}/{num}/{domaine}")  // id = numéro qualification, num = id essai
 	public String voirSequencesParEssais(@PathVariable (name = "id") Integer id,
 			@PathVariable (name = "num") Integer num,
-			@PathVariable (name = "domaine") String domaine,
+		//	@PathVariable (name = "domaine") String domaine,
 			Model model, HttpSession session) {
 		
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
 		
 		EssaiAux essai = microServiceLab.obtenirEssaiParNumero(num);
 		model.addAttribute("essai", essai);
-		List<SequenceAux> sequences = microServiceLab.obtenirSequencesParEssai(id, num, domaine);
+		//List<SequenceAux> sequences = microServiceLab.obtenirSequencesParEssai(id, num, domaine);
+		List<SequenceAux> sequences = microServiceLab.obtenirSequencesParEssai(id, num);
 		model.addAttribute("sequences", sequences);
 		QualificationAux qualification = microServiceLab.obtenirQualificationParNumero(id);
 		model.addAttribute("qualification", qualification);
@@ -148,20 +149,29 @@ public class Private {
 		
 		System.out.println("Get: creerSequence");
 		System.out.println("Valeur id récupéré: " + id);
+		System.out.println("Valeur qualification récupéré: " + qualification);
+		System.out.println("Valeur domaine récupéré: " + domaine);
+		
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
 		FormSequence formSequence = new FormSequence();
 		formSequence.setEssai(id);
 		formSequence.setQualification(qualification);
 		formSequence.setNomDomaine(domaine);
+		System.out.println(formSequence.toString());
 		model.addAttribute("formSequence", formSequence);
 		model.addAttribute("id", id);
+		model.addAttribute("qualification", qualification);
+		model.addAttribute("domaine", domaine);
 		
 		return "createSequence";
 		
 	}
 	
-	@PostMapping("/sequence/creer/{id}")
+	@PostMapping("/sequence/creer/{id}/{qualification}")
 	public String enregistrerSequence(@PathVariable (name = "id") Integer id,
+			@PathVariable (name = "qualification") Integer qualification,
+			//@PathVariable (name = "domaine") String domaine,
+		
 			Model model, HttpSession session,
 			FormSequence formSequence
 			,RedirectAttributes redirectAttributes
@@ -169,26 +179,23 @@ public class Private {
 		
 		
 		System.out.println("méthode POST enregistrement sequence");
-		
+		System.out.println(formSequence.toString());
 
-		Integer qualification = formSequence.getQualification();
-		String nomDomaine = formSequence.getNomDomaine();
 		
-		System.out.println("Valeur param qualification: " + qualification);
-		System.out.println("Valeur param nomDomaine: " + nomDomaine);
 		
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		
 		System.out.println("Identifiant essai récupéré: " + id);
+		System.out.println("Identifiant qualification récupéré: " + qualification);
+		//System.out.println("Identifiant domaine récupéré: " + domaine);
+		
 		formSequence.setEssai(id);
 		microServiceLab.enregistrerSequence(formSequence);
 		
 		
-		System.out.println("Valeur param qualification: " + qualification);
-		System.out.println("Valeur param nomDomaine: " + nomDomaine);
-		
 		redirectAttributes.addAttribute("id", qualification );
 		redirectAttributes.addAttribute("num", id);
-		redirectAttributes.addAttribute("domaine", nomDomaine );
+		//redirectAttributes.addAttribute("domaine", domaine );
 		
 		
 		return "redirect:/labplan/private/sequences";
@@ -202,15 +209,16 @@ public class Private {
 	public String voirSequencesParEssais2(	
 			@RequestParam (name = "id") Integer qualification,
 			@RequestParam (name = "num") Integer id,
-			@RequestParam (name = "domaine") String nomDomaine,
+			//@RequestParam (name = "domaine") String nomDomaine,
 			Model model, HttpSession session) {
 		
 		System.out.println(" *** entrée méthode voirSequencesParEssais2 ");
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
 		
-		EssaiAux essai = microServiceLab.obtenirEssaiParNumero(qualification);
+		EssaiAux essai = microServiceLab.obtenirEssaiParNumero(id);
 		model.addAttribute("essai", essai);
-		List<SequenceAux> sequences = microServiceLab.obtenirSequencesParEssai(qualification, id, nomDomaine);
+		//List<SequenceAux> sequences = microServiceLab.obtenirSequencesParEssai(qualification, id, null);
+		List<SequenceAux> sequences = microServiceLab.obtenirSequencesParEssai(qualification, id);
 		model.addAttribute("sequences", sequences);
 		QualificationAux qualif = microServiceLab.obtenirQualificationParNumero(qualification);
 		model.addAttribute("qualification", qualif);

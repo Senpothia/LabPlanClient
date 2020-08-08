@@ -140,10 +140,11 @@ public interface MicroServiceLab {
 	public void activerEchantillon(@PathVariable(name = "id") Integer id,
 			@PathVariable(name = "qualification") Integer qualification);
 
-	@GetMapping("/private/sequences/voir/{id}/{num}/{domaine}")
+	//@GetMapping("/private/sequences/voir/{id}/{num}/{domaine}")
+	@GetMapping("/private/sequences/voir/{id}/{num}")
 	public List<SequenceAux> obtenirSequencesParEssai(@PathVariable(name="id") Integer id
-			, @PathVariable(name="num") Integer num, 
-			@PathVariable(name="domaine") String domaine);
+			, @PathVariable(name="num") Integer num); 
+			//@PathVariable(name="domaine") String domaine);
 	
 	@GetMapping("/private/essai/{num}")
 	public EssaiAux obtenirEssaiParNumero(@PathVariable(name="num") Integer num);

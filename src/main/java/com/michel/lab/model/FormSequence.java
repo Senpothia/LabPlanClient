@@ -185,6 +185,12 @@ public class FormSequence {
 	public void setAvis(String avis) {
 		this.avis = avis;
 	}
+
+	@Override
+	public String toString() {
+		return "FormSequence [id=" + id + ", nom=" + nom + ", domaine=" + domaine + ", nomDomaine=" + nomDomaine
+				+ ", qualification=" + qualification + "]";
+	}
 	
 
 }
