@@ -62,8 +62,6 @@
 							<th scope="col">Statut</th>
 							<th scope="col">Résultat</th>
 
-
-
 						</tr>
 					</thead>
 					<tbody>
@@ -77,8 +75,6 @@
 							<td th:text="${qualification.createur}" />
 							<td th:text="${qualification.statut}" />
 							<td th:text="${qualification.resultat}" />
-
-
 
 						</tr>
 
@@ -181,18 +177,12 @@
 							<td th:text="${sequence.avis}" />
 
 
-							
 								<td><a
-									th:href="@{/labplan/private/echantillons/modifier/{id}/{qualification}/{sequence}(id=${essai.id}, qualification=${qualification.numero}, sequence=${sequence.id})}"><p
+									th:href="@{/labplan/private/sequence/modifier/{id}/{qualification}/{sequence}(id=${essai.id}, qualification=${qualification.numero}, sequence=${sequence.id})}"><p
 											type="text" class="btn btn-block"
 											style="background-color: #7e60fb; color: white">Modifier</p></a>
 							</td>
 							
-
-
-
-
-
 							</tr>
 
 						</tbody>

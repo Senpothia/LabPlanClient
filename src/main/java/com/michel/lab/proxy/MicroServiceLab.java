@@ -158,5 +158,9 @@ public interface MicroServiceLab {
 	@GetMapping("private/sequence/{id}")
 	public SequenceAux obtenirSequenceParId(@PathVariable(name="id") Integer id);
 	
+	@PostMapping("private/sequence/modifier") 
+	public void modifierSequence(FormSequence formSequence);
+	
+	
 }
 

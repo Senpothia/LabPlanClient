@@ -4,8 +4,10 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.tomcat.util.bcel.classfile.Constant;
 import org.bouncycastle.crypto.engines.SM2Engine.Mode;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.source.ConfigurationPropertyName.Form;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -190,7 +192,6 @@ public class Private {
 
 		return "redirect:/labplan/private/sequences";
 
-		// return "ok";
 	}
 
 	@GetMapping("/sequences") // id = id essai
@@ -224,22 +225,104 @@ public class Private {
 	}
 
 	@GetMapping("/sequences/voir/{id}/{num}/{sequence}")
-	public String voirSequence(
-			@PathVariable(name = "id") Integer id, // id = numéro de qualification
+	public String voirSequence(@PathVariable(name = "id") Integer id, // id = numéro de qualification
 			@PathVariable(name = "num") Integer num, // num = id de l'essai
 			@PathVariable(name = "sequence") Integer idSequence, Model model, HttpSession session) {
-		
+
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
 
 		SequenceAux sequence = microServiceLab.obtenirSequenceParId(idSequence);
 		model.addAttribute("sequence", sequence);
 		QualificationAux qualification = microServiceLab.obtenirQualificationParNumero(id);
 		model.addAttribute("qualification", qualification);
-		EssaiAux essai = microServiceLab.obtenirEssaiParNumero(num); 
+		EssaiAux essai = microServiceLab.obtenirEssaiParNumero(num);
 		model.addAttribute("essai", essai);
 		List<EchantillonAux> echantillons = microServiceLab.obtenirEchantillonsParQualification(id);
 		model.addAttribute("echantillons", echantillons);
-		
+
 		return Constants.SEQUENCE;
 	}
+
+	@GetMapping("/sequence/modifier/{id}/{qualification}/{sequence}")
+	public String modifierSequence(@PathVariable(name = "id") Integer idEssai, // id = id de l'essai
+			@PathVariable(name = "qualification") Integer numQualif, // numéro de la qualification
+			@PathVariable(name = "sequence") Integer idSequence, // id de la séquence
+			Model model, HttpSession session) {
+
+		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+
+		System.out.println("id essai reçu par url: " + idEssai);
+		System.out.println("num qualification reçu par url: " + numQualif);
+		System.out.println("id sequence reçu par url: " + idSequence);
+
+		SequenceAux sequence = microServiceLab.obtenirSequenceParId(idSequence);
+		FormSequence formSequence = new FormSequence();
+		formSequence.setId(sequence.getId());
+		formSequence.setNom(sequence.getNom());
+		formSequence.setNiveau(sequence.getNiveau());
+		formSequence.setDomaine(sequence.getDomaine());
+		formSequence.setDebut(sequence.getDebut());
+		formSequence.setFin(sequence.getFin());
+		formSequence.setProfil(sequence.getProfil());
+		formSequence.setCommentaire(sequence.getCommentaire());
+		formSequence.setActif(sequence.getActif());
+		formSequence.setAvis(sequence.getAvis());
+		formSequence.setEssai(idEssai);
+
+		model.addAttribute("formSequence", formSequence);
+		model.addAttribute("essai", idEssai);
+		model.addAttribute("qualification", numQualif);
+		model.addAttribute("sequence", idSequence);
+
+		return Constants.MODIFIER_SEQUENCE;
+	}
+
+	@PostMapping("/sequence/modifier/{essai}/{qualification}/{sequence}")
+	public String enregistrerModificationSequence(
+			@PathVariable(name = "essai") Integer idEssai,
+			@PathVariable(name = "qualification") Integer num, 
+			@PathVariable(name = "sequence") Integer idSequence,
+			FormSequence formSequence, Model model, HttpSession session, 
+			RedirectAttributes redirectAttributes) {
+		
+		System.out.println("*******Entrée méthode enregistrerModificationSequence()");
+		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		formSequence.setEssai(idEssai);
+		formSequence.setId(idSequence);
+
+		microServiceLab.modifierSequence(formSequence);
+
+		redirectAttributes.addAttribute("essai", idEssai);
+		redirectAttributes.addAttribute("qualification", num);
+		redirectAttributes.addAttribute("sequence", idSequence);
+
+		return "redirect:/labplan/private/sequences/voir/retour";
+		
+	}
+
+	@GetMapping("/sequences/voir/retour")
+	public String voirSequence2(
+			@RequestParam(name = "essai") Integer idEssai, // num = id de l'essai
+			@RequestParam(name = "qualification") Integer num, // id = numéro de qualification
+			@RequestParam(name = "sequence") Integer idSequence, Model model, HttpSession session) {
+
+		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		
+		System.out.println("redirect:/sequences/voir/{essai}/{qualification}/{sequence}");
+		System.out.println("id sequence recu: " + idSequence);
+		
+		SequenceAux sequence = microServiceLab.obtenirSequenceParId(idSequence);
+		model.addAttribute("sequence", sequence);
+		QualificationAux qualification = microServiceLab.obtenirQualificationParNumero(num);
+		model.addAttribute("qualification", qualification);
+		EssaiAux essai = microServiceLab.obtenirEssaiParNumero(idEssai);
+		model.addAttribute("essai", essai);
+		List<EchantillonAux> echantillons = microServiceLab.obtenirEchantillonsParQualification(num);
+		model.addAttribute("echantillons", echantillons);
+
+		return Constants.SEQUENCE;
+		
+
+	}
+
 }
