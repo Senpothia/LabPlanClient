@@ -171,5 +171,11 @@ public interface MicroServiceLab {
 			@PathVariable(name = "qualification") Integer numQualification,
 			@PathVariable(name = "sequence") Integer idSequence
 	);
+	
+	@PostMapping("private/echantillon/retirer/{echantillon}/{qualification}/{sequence}")
+	public void retirerEchantillon(@PathVariable(name = "echantillon") Integer idEchantillon,
+			@PathVariable(name = "qualification") Integer numQualification,
+			@PathVariable(name = "sequence") Integer idSequence
+	);
 
 }

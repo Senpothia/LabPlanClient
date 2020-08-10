@@ -115,16 +115,15 @@ public class Private {
 	}
 
 	@GetMapping("/sequences/{id}/{num}/{domaine}") // id = numéro qualification, num = id essai
-	public String voirSequencesParEssais(@PathVariable(name = "id") Integer id, @PathVariable(name = "num") Integer num,
-			// @PathVariable (name = "domaine") String domaine,
+	public String voirSequencesParEssais(@PathVariable(name = "id") Integer id, 
+			@PathVariable(name = "num") Integer num,
 			Model model, HttpSession session) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
 
 		EssaiAux essai = microServiceLab.obtenirEssaiParNumero(num);
 		model.addAttribute("essai", essai);
-		// List<SequenceAux> sequences = microServiceLab.obtenirSequencesParEssai(id,
-		// num, domaine);
+		
 		List<SequenceAux> sequences = microServiceLab.obtenirSequencesParEssai(id, num);
 		model.addAttribute("sequences", sequences);
 		QualificationAux qualification = microServiceLab.obtenirQualificationParNumero(id);
@@ -170,8 +169,6 @@ public class Private {
 	@PostMapping("/sequence/creer/{id}/{qualification}")
 	public String enregistrerSequence(@PathVariable(name = "id") Integer id,
 			@PathVariable(name = "qualification") Integer qualification,
-			// @PathVariable (name = "domaine") String domaine,
-
 			Model model, HttpSession session, FormSequence formSequence, RedirectAttributes redirectAttributes) {
 
 		System.out.println("méthode POST enregistrement sequence");
@@ -181,15 +178,13 @@ public class Private {
 
 		System.out.println("Identifiant essai récupéré: " + id);
 		System.out.println("Identifiant qualification récupéré: " + qualification);
-		// System.out.println("Identifiant domaine récupéré: " + domaine);
-
+		
 		formSequence.setEssai(id);
 		microServiceLab.enregistrerSequence(formSequence);
 
 		redirectAttributes.addAttribute("id", qualification);
 		redirectAttributes.addAttribute("num", id);
-		// redirectAttributes.addAttribute("domaine", domaine );
-
+		
 		return "redirect:/labplan/private/sequences";
 
 	}
@@ -197,7 +192,7 @@ public class Private {
 	@GetMapping("/sequences") // id = id essai
 	public String voirSequencesParEssais2(@RequestParam(name = "id") Integer qualification,
 			@RequestParam(name = "num") Integer id,
-			// @RequestParam (name = "domaine") String nomDomaine,
+			
 			Model model, HttpSession session) {
 
 		System.out.println(" *** entrée méthode voirSequencesParEssais2 ");
@@ -205,8 +200,7 @@ public class Private {
 
 		EssaiAux essai = microServiceLab.obtenirEssaiParNumero(id);
 		model.addAttribute("essai", essai);
-		// List<SequenceAux> sequences =
-		// microServiceLab.obtenirSequencesParEssai(qualification, id, null);
+		
 		List<SequenceAux> sequences = microServiceLab.obtenirSequencesParEssai(qualification, id);
 		model.addAttribute("sequences", sequences);
 		QualificationAux qualif = microServiceLab.obtenirQualificationParNumero(qualification);
@@ -334,6 +328,26 @@ public class Private {
 		
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
 		microServiceLab.ajouterEchantillon(idEchantillon, numQualification, idSequence);
+	
+		redirectAttributes.addAttribute("essai", idEssai);
+		redirectAttributes.addAttribute("qualification", numQualification);
+		redirectAttributes.addAttribute("sequence", idSequence);
+
+		return "redirect:/labplan/private/sequences/voir/retour";
+	}
+	
+	
+	@GetMapping("/echantillons/retirer/{echantillon}/{qualification}/{sequence}/{essai}")
+	public String retirerEchantillon(
+			@PathVariable(name = "echantillon") Integer idEchantillon,
+			@PathVariable(name = "qualification") Integer numQualification, 
+			@PathVariable(name = "sequence") Integer idSequence, 
+			@PathVariable(name = "essai") Integer idEssai, 
+			 Model model, HttpSession session, RedirectAttributes redirectAttributes
+			) {
+		
+		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		microServiceLab.retirerEchantillon(idEchantillon, numQualification, idSequence);
 	
 		redirectAttributes.addAttribute("essai", idEssai);
 		redirectAttributes.addAttribute("qualification", numQualification);

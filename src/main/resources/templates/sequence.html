@@ -271,9 +271,9 @@
 								</span>
 
 
-								<span th:unless="${echantillon.statut}">
+								<span th:if="${echantillon.statut}">
 									<td><a
-										th:href="@{/labplan/private/echantillons/retirer/{id}/{qualification}(id=${echantillon.id}, qualification=${qualification.numero})}"><p
+										th:href="@{/labplan/private/echantillons/retirer/{id}/{qualification}/{sequence}/{essai}(id=${echantillon.id}, qualification=${qualification.numero},sequence=${sequence.id}, essai=${essai.id})}"><p
 												type="text" class="btn btn-block"
 												style="background-color: #730800; color: white">Retirer</p></a>
 								</td>

@@ -55,7 +55,7 @@ public class EchantillonController {
 		redirectAttributes.addAttribute("id", id);
 
 		return "redirect:/labplan/private/echantillons/voir";
-		// return "ok";
+		
 	}
 
 	@GetMapping("/voir/{id}")
@@ -104,7 +104,9 @@ public class EchantillonController {
 	
 	
 	@GetMapping("/activer/{id}/{qualification}")
-	public String activerEchatillon(@PathVariable(name = "id") Integer id, @PathVariable(name = "qualification") Integer qualification
+	public String activerEchatillon(
+			@PathVariable(name = "id") Integer id
+			, @PathVariable(name = "qualification") Integer qualification
 			, Model model
 			, HttpSession session
 			, RedirectAttributes redirectAttributes) {
