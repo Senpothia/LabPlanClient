@@ -321,8 +321,25 @@ public class Private {
 		model.addAttribute("echantillons", echantillons);
 
 		return Constants.SEQUENCE;
+	}
+	
+	@GetMapping("/echantillons/ajouter/{echantillon}/{qualification}/{sequence}/{essai}")
+	public String selectionnerEchantillon(
+			@PathVariable(name = "echantillon") Integer idEchantillon,
+			@PathVariable(name = "qualification") Integer numQualification, 
+			@PathVariable(name = "sequence") Integer idSequence, 
+			@PathVariable(name = "essai") Integer idEssai, 
+			 Model model, HttpSession session, RedirectAttributes redirectAttributes
+			) {
 		
+		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		microServiceLab.ajouterEchantillon(idEchantillon, numQualification, idSequence);
+	
+		redirectAttributes.addAttribute("essai", idEssai);
+		redirectAttributes.addAttribute("qualification", numQualification);
+		redirectAttributes.addAttribute("sequence", idSequence);
 
+		return "redirect:/labplan/private/sequences/voir/retour";
 	}
 
 }
