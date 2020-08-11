@@ -61,6 +61,7 @@
 							<th scope="col">Statut</th>
 							<th scope="col">Résultat</th>
 							<th scope="col">Statut</th>
+							<th scope="col">Résultat</th>
 
 
 
@@ -81,7 +82,13 @@
 								th:href="@{/labplan/private/qualification/modifier/statut/{id}(id=${qualification.numero})}"><p
 										type="text" class="btn btn-block"
 										style="background-color: #7e60fb; color: white">Modifier</p></a>
-							<td />
+							</td>
+							
+							<td><a
+								th:href="@{/labplan/private/qualification/modifier/resultat/{id}(id=${qualification.numero})}"><p
+										type="text" class="btn btn-block"
+										style="background-color: #7e60fb; color: white">Modifier</p></a>
+							</td>
 
 
 

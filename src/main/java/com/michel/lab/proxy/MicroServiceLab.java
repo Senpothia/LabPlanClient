@@ -191,5 +191,11 @@ public interface MicroServiceLab {
 	
 	@PostMapping("/private/echantillon/modifier")
 	public void modifierEchantillon(FormEchantillon formEchantillon);
+	
+	@GetMapping("private/qualification/modifier/statut/{id}")
+	public void modifierStatutQualification(@PathVariable(name = "id") Integer numQualification);
+	
+	@GetMapping("private/qualification/modifier/resultat/{id}")
+	public void modifierResultatQualification(@PathVariable(name = "id") Integer numQualification);
 
 }

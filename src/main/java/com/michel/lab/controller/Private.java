@@ -382,5 +382,29 @@ public class Private {
 
 		return "redirect:/labplan/private/sequences/voir/retour";
 	}
+	
+	@GetMapping("/qualification/modifier/statut/{id}")
+	public String modifierStatutQualification(
+			@PathVariable(name = "id") Integer numQualification,
+			 Model model, HttpSession session) {
+		
+		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		microServiceLab.modifierStatutQualification(numQualification);
+		
+		
+		return "ok";
+	}
+	
+	@GetMapping("/qualification/modifier/resultat/{id}")
+	public String modifierResultatQualification(
+			@PathVariable(name = "id") Integer numQualification,
+			 Model model, HttpSession session) {
+		
+		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		microServiceLab.modifierResultatQualification(numQualification);
+		
+		
+		return "ok";
+	}
 
 }
