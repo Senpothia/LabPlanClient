@@ -177,5 +177,10 @@ public interface MicroServiceLab {
 			@PathVariable(name = "qualification") Integer numQualification,
 			@PathVariable(name = "sequence") Integer idSequence
 	);
+	
+	@GetMapping("/private/echantillon/sequence/selection/{qualification}/{sequence}")
+	public List<EchantillonAux> obtenirEchantillonSelectionParSequence(
+			@PathVariable(name = "qualification") Integer num,
+			@PathVariable(name = "sequence") Integer idSequence);
 
 }

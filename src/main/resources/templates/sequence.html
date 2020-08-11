@@ -262,7 +262,7 @@
 								</span>
 
 
-								<span th:if="${echantillon.statut}">
+								<span th:unless="${echantillon.selection}">
 									<td><a
 										th:href="@{/labplan/private/echantillons/ajouter/{id}/{qualification}/{sequence}/{essai}(id=${echantillon.id}, qualification=${qualification.numero},sequence=${sequence.id}, essai=${essai.id})}"><p
 												type="text" class="btn btn-block"
@@ -271,7 +271,7 @@
 								</span>
 
 
-								<span th:if="${echantillon.statut}">
+								<span th:if="${echantillon.selection}">
 									<td><a
 										th:href="@{/labplan/private/echantillons/retirer/{id}/{qualification}/{sequence}/{essai}(id=${echantillon.id}, qualification=${qualification.numero},sequence=${sequence.id}, essai=${essai.id})}"><p
 												type="text" class="btn btn-block"

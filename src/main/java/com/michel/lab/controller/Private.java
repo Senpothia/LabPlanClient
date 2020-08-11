@@ -162,7 +162,7 @@ public class Private {
 		model.addAttribute("qualification", qualification);
 		model.addAttribute("domaine", domaine);
 
-		return "createSequence";
+		return Constants.CREATION_SEQUENCE;
 
 	}
 
@@ -232,7 +232,10 @@ public class Private {
 		EssaiAux essai = microServiceLab.obtenirEssaiParNumero(num);
 		model.addAttribute("essai", essai);
 		List<EchantillonAux> echantillons = microServiceLab.obtenirEchantillonsParQualification(id);
-		model.addAttribute("echantillons", echantillons);
+		List<EchantillonAux> echSelection = microServiceLab.obtenirEchantillonSelectionParSequence(id, idSequence);
+		//model.addAttribute("echantillons", echantillons);
+		model.addAttribute("echantillons", echSelection);
+
 
 		return Constants.SEQUENCE;
 	}
@@ -312,7 +315,9 @@ public class Private {
 		EssaiAux essai = microServiceLab.obtenirEssaiParNumero(idEssai);
 		model.addAttribute("essai", essai);
 		List<EchantillonAux> echantillons = microServiceLab.obtenirEchantillonsParQualification(num);
-		model.addAttribute("echantillons", echantillons);
+		List<EchantillonAux> echSelection = microServiceLab.obtenirEchantillonSelectionParSequence(num, idSequence);
+		//model.addAttribute("echantillons", echantillons);
+		model.addAttribute("echantillons", echSelection);
 
 		return Constants.SEQUENCE;
 	}

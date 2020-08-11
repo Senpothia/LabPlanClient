@@ -1,6 +1,7 @@
 package com.michel.lab.model;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class EchantillonAux {
 	
@@ -12,6 +13,7 @@ public class EchantillonAux {
 	private String actif;
 	private boolean statut;
 	private Integer qualification;
+	private boolean selection;         // indicateur de sélection/présence dans la sequence de test
 	
 	public EchantillonAux() {
 		super();
@@ -93,6 +95,16 @@ public class EchantillonAux {
 
 	public void setQualification(Integer qualification) {
 		this.qualification = qualification;
+	}
+
+	public boolean isSelection() {
+		return selection;
+	}
+
+
+
+	public void setSelection(boolean selection) {
+		this.selection = selection;
 	}
 
 	
