@@ -7,7 +7,9 @@ public class EchantillonAux {
 	
 	private Integer id;
 	private Integer numero;
-	private LocalDateTime date;
+	//private LocalDateTime date;
+	private String date;
+	private String dateText;
 	private Integer version;
 	private String caracteristique;    // Variantes pouvant distinguer les échantillons
 	private String actif;
@@ -20,18 +22,24 @@ public class EchantillonAux {
 		// TODO Auto-generated constructor stub
 	}
 
-	public EchantillonAux(Integer id, Integer numero, LocalDateTime date, Integer version, String caracteristique,
-			String actif, boolean statut, Integer qualification) {
+	
+
+	public EchantillonAux(Integer id, Integer numero, String date, String dateText, Integer version,
+			String caracteristique, String actif, boolean statut, Integer qualification, boolean selection) {
 		super();
 		this.id = id;
 		this.numero = numero;
 		this.date = date;
+		this.dateText = dateText;
 		this.version = version;
 		this.caracteristique = caracteristique;
 		this.actif = actif;
 		this.statut = statut;
 		this.qualification = qualification;
+		this.selection = selection;
 	}
+
+
 
 	public Integer getId() {
 		return id;
@@ -49,11 +57,11 @@ public class EchantillonAux {
 		this.numero = numero;
 	}
 
-	public LocalDateTime getDate() {
+	public String getDate() {
 		return date;
 	}
 
-	public void setDate(LocalDateTime date) {
+	public void setDate(String date) {
 		this.date = date;
 	}
 
@@ -105,6 +113,18 @@ public class EchantillonAux {
 
 	public void setSelection(boolean selection) {
 		this.selection = selection;
+	}
+
+
+
+	public String getDateText() {
+		return dateText;
+	}
+
+
+
+	public void setDateText(String dateText) {
+		this.dateText = dateText;
 	}
 
 	

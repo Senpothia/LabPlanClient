@@ -1,5 +1,7 @@
 package com.michel.lab.controller;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -258,8 +260,14 @@ public class Private {
 		formSequence.setNom(sequence.getNom());
 		formSequence.setNiveau(sequence.getNiveau());
 		formSequence.setDomaine(sequence.getDomaine());
+		
+	
+		
 		formSequence.setDebut(sequence.getDebut());
 		formSequence.setFin(sequence.getFin());
+		
+		
+		
 		formSequence.setProfil(sequence.getProfil());
 		formSequence.setCommentaire(sequence.getCommentaire());
 		formSequence.setActif(sequence.getActif());
@@ -286,6 +294,20 @@ public class Private {
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
 		formSequence.setEssai(idEssai);
 		formSequence.setId(idSequence);
+		
+		String debText = formSequence.getDebutText();
+		String finText = formSequence.getDebutText();
+		//LocalDateTime dateTime = LocalDateTime.parse(deb);
+		
+		System.out.println("Date reçue: " + debText);
+		LocalDateTime debut = LocalDateTime.parse(debText,
+		        DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mm a"));
+		formSequence.setDebut(debut);
+		
+		LocalDateTime fin = LocalDateTime.parse(finText,
+		        DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mm a"));
+		formSequence.setFin(fin);
+		//System.out.println("conversion date: " + dateTime);
 
 		microServiceLab.modifierSequence(formSequence);
 
