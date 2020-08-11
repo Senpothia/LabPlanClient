@@ -182,5 +182,14 @@ public interface MicroServiceLab {
 	public List<EchantillonAux> obtenirEchantillonSelectionParSequence(
 			@PathVariable(name = "qualification") Integer num,
 			@PathVariable(name = "sequence") Integer idSequence);
+	
+	@GetMapping("/private/echantillon/modifier/{id}/{qualification}")
+	public EchantillonAux obtenirEchantillon(
+			@PathVariable(name = "id") Integer id);
+	
+	
+	
+	@PostMapping("/private/echantillon/modifier")
+	public void modifierEchantillon(FormEchantillon formEchantillon);
 
 }

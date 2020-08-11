@@ -122,4 +122,57 @@ public class EchantillonController {
 		return "redirect:/labplan/private/echantillons/voir";
 
 	}
+	
+	@GetMapping("/modifier/{id}/{qualification}")
+	public String modifierEchantillon(
+			@PathVariable(name = "id") Integer id,
+			@PathVariable(name = "qualification") Integer qualification,
+			Model model,
+			HttpSession session) {
+		
+		
+		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		EchantillonAux echantillon = microServiceLab.obtenirEchantillon(id);
+		
+		FormEchantillon formEchantillon = new FormEchantillon();
+		formEchantillon.setCaracteristique(echantillon.getCaracteristique());
+		formEchantillon.setNumero(echantillon.getNumero());
+		formEchantillon.setVersion(echantillon.getVersion());
+		formEchantillon.setId(id);
+		
+		model.addAttribute("formEchantillon", formEchantillon);
+		model.addAttribute("echantillon", id);
+		model.addAttribute("qualification", qualification);
+		
+		return Constants.MODIFIER_ECHANTILLON;
+		
+		
+		//return "ok";
+	}
+	
+	@PostMapping("/modifier/{id}/{qualification}")
+	public String enregistrerEchantillon(
+			@PathVariable(name = "id") Integer id,
+			@PathVariable(name = "qualification") Integer qualification,
+			Model model,
+			HttpSession session,
+			FormEchantillon formEchantillon,
+			RedirectAttributes redirectAttributes) {
+		
+		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		formEchantillon.setId(id);
+		microServiceLab.modifierEchantillon(formEchantillon);
+		System.out.println("id récupéré: " + id);
+		System.out.println("qualif récupéré: " + qualification);
+		
+		//return "ok";
+		
+		redirectAttributes.addAttribute("id", qualification);
+		List<EchantillonAux> echantillons = microServiceLab.obtenirEchantillonsParQualification(qualification);
+		model.addAttribute("echantillons", echantillons);
+		QualificationAux qualif = microServiceLab.obtenirQualification(qualification);
+		model.addAttribute("qualification", qualif);
+		
+		return "redirect:/labplan/private/echantillons/voir";
+	}
 }

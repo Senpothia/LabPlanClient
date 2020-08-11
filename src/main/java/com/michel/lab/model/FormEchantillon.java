@@ -2,6 +2,7 @@ package com.michel.lab.model;
 
 public class FormEchantillon {
 	
+	private Integer id;
 	private Integer numero;
 	private String caracteristique;
 	private Integer version;
@@ -12,13 +13,29 @@ public class FormEchantillon {
 		// TODO Auto-generated constructor stub
 	}
 
-	public FormEchantillon(Integer numero, String caracteristique, Integer version, Integer qualification) {
+	
+
+	public FormEchantillon(Integer id, Integer numero, String caracteristique, Integer version, Integer qualification) {
 		super();
+		this.id = id;
 		this.numero = numero;
 		this.caracteristique = caracteristique;
 		this.version = version;
 		this.qualification = qualification;
 	}
+
+	
+
+	public Integer getId() {
+		return id;
+	}
+
+	
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+
 
 	public Integer getNumero() {
 		return numero;
