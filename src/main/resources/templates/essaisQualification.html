@@ -117,6 +117,7 @@
 							<th scope="col">Statut</th>
 							<th scope="col">Résultat</th>
 							<th scope="col">Consulter</th>
+						    <th scope="col">Statut</th>
 
 
 						</tr>
@@ -135,7 +136,13 @@
 								th:href="@{/labplan/private/sequences/{id}/{num}/{domaine}(id=${qualification.numero},num=${essai.id},domaine=${essai.domaine})}"><p
 										type="text" class="btn btn-block"
 										style="background-color: #7e60fb; color: white">Séquences</p></a>
-							<td />
+							</td>
+							
+							<td><a
+								th:href="@{/labplan/private/essai/modifier/statut/{id}/{num}/{domaine}(id=${qualification.numero},num=${essai.id},domaine=${essai.domaine})}"><p
+										type="text" class="btn btn-block"
+										style="background-color: #7e60fb; color: white">Modifier</p></a>
+							</td>
 
 
 						</tr>
