@@ -23,6 +23,7 @@ import com.michel.lab.constants.Constants;
 import com.michel.lab.model.EchantillonAux;
 import com.michel.lab.model.EssaiAux;
 import com.michel.lab.model.FormEchantillon;
+import com.michel.lab.model.FormEssai;
 import com.michel.lab.model.FormQualif;
 import com.michel.lab.model.FormSequence;
 import com.michel.lab.model.QualificationAux;
@@ -496,9 +497,44 @@ public class Private {
 			Model model, HttpSession session) {
 		
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		EssaiAux essai = microServiceLab.obtenirEssaiParNumero(idEssai);
+		FormEssai formEssai = new FormEssai();
+		formEssai.setNumero(essai.getNumero());
+		formEssai.setNom(essai.getNom());
+		formEssai.setVersion(essai.getVersion());
+		formEssai.setVersion(essai.getVersion());
+		formEssai.setDomaine(essai.getDomaine());
+		formEssai.setStatut(essai.getStatut());
+		formEssai.setResultat(essai.getResultat());
 		
+		model.addAttribute("formEssai", formEssai);
+		model.addAttribute("num", numQualification);
+		model.addAttribute("id", idEssai);
+		model.addAttribute("domaine", nomDomaine);
 		
-		return "ok";    // Implémenter le return
+		return Constants.MODIFIER_ESSAI;   
+	}
+	
+	@PostMapping("/essai/modifier/{id}/{num}/{domaine}")
+	public String enregistrerModidificationEssai(
+			@PathVariable(name = "id") Integer idEssai, 
+			@PathVariable(name = "num") Integer numQualification,
+			@PathVariable(name = "domaine") String nomDomaine,
+			Model model, HttpSession session,
+			FormEssai formEssai) {
+		
+		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		formEssai.setId(idEssai);
+		microServiceLab.modifierEssai(formEssai);
+		
+		QualificationAux qualification = microServiceLab.obtenirQualification(numQualification);
+
+		List<EssaiAux> essais = microServiceLab.obtenirEssaisParQualification(numQualification);
+
+		model.addAttribute("qualification", qualification);
+		model.addAttribute("essais", essais);
+		return Constants.PAGE_ESSAIS;
+		//return "ok";
 	}
 
 }

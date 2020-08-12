@@ -59,7 +59,7 @@
 		<!-- ********************************************* -->
 
 		<div class="container">
-			<form th:action="@{/labplan/private/essai/creation}"
+			<form th:action="@{/labplan/private/essai/modifier/{id}/{num}/{domaine}(id=${id},num=${num},domaine=${domaine})}"
 				method="post" th:object="${formEssai}">
 
 
@@ -67,19 +67,45 @@
 					<h1>Essai</h1>
 
 					<div class="row mr-1">
-						<label for="text">Produit</label> <input type="text"
-							class="form-control" th:field="*{produit}">
+						<label for="text">Numéro</label> <input type="text"
+							class="form-control" th:field="*{numero}">
 					</div>
 
 					<div class="row  mr-1">
-						<label for="text">Projet</label> <input type="text"
-							class="form-control" th:field="*{projet}">
+						<label for="text">Nom</label> <input type="text"
+							class="form-control" th:field="*{nom}">
 					</div>
 
 					<div class="row  mr-1">
-						<label for="text">Objet</label> <input type="text"
-							class="form-control" th:field="*{Objet}">
+						<label for="text">Version</label> <input type="text"
+							class="form-control" th:field="*{version}">
 					</div>
+					
+						<div class="row  mr-1">
+						<label for="text">Domaine</label> <input type="text"
+							class="form-control" th:field="*{domaine}">
+					</div>
+					
+					<div class=" row form-group">
+						<label for="exampleFormControlSelect1">Statut</label> <select
+							class="form-control" id="exampleFormControlSelect1" th:field="*{statut}" >
+							<option th:value="'Ouverte'" th:text="Ouverte"> </option>
+							<option th:value="'Clôturée'" th:text="Clôturée"> </option>
+
+						</select>
+					</div>
+
+
+					<div class=" row form-group">
+						<label for="exampleFormControlSelect1">Résultat</label> <select
+							class="form-control" id="exampleFormControlSelect2" th:field="*{resultat}" >
+							<option th:value="'Actif'" th:text="Active"> </option>
+							<option th:value="'Conforme'" th:text="Conforme"> </option>
+							<option th:value="'Non-conforme'" th:text="Non-conforme"> </option>
+
+						</select>
+					</div>
+					
 
 					<!--
 					<div class="row  mr-1">

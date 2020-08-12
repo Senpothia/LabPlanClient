@@ -4,37 +4,56 @@ import java.time.LocalDateTime;
 
 public class FormEssai {
 	
-	private Integer numeo;
+	private Integer id;
+	private Integer numero;
 	private LocalDateTime date;
-	private boolean resultat;
-	private boolean statut;
+	private String nom;
+	private String resultat;
+	private String statut;
+	private String produit;
 	private Integer procedureId;
 	private Integer technicienId;
 	private Integer qualificationId;
+	private String version;
+	private String domaine;
 	
 	public FormEssai() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public FormEssai(Integer numeo, LocalDateTime date, boolean resultat, boolean statut, Integer procedureId,
-			Integer technicienId, Integer qualificationId) {
+	public FormEssai(Integer id, Integer numero, LocalDateTime date, String nom, String resultat, String statut,
+			String produit, Integer procedureId, Integer technicienId, Integer qualificationId, String version,
+			String domaine) {
 		super();
-		this.numeo = numeo;
+		this.id = id;
+		this.numero = numero;
 		this.date = date;
+		this.nom = nom;
 		this.resultat = resultat;
 		this.statut = statut;
+		this.produit = produit;
 		this.procedureId = procedureId;
 		this.technicienId = technicienId;
 		this.qualificationId = qualificationId;
+		this.version = version;
+		this.domaine = domaine;
 	}
 
-	public Integer getNumeo() {
-		return numeo;
+	public Integer getId() {
+		return id;
 	}
 
-	public void setNumeo(Integer numeo) {
-		this.numeo = numeo;
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public Integer getNumero() {
+		return numero;
+	}
+
+	public void setNumero(Integer numero) {
+		this.numero = numero;
 	}
 
 	public LocalDateTime getDate() {
@@ -45,20 +64,36 @@ public class FormEssai {
 		this.date = date;
 	}
 
-	public boolean isResultat() {
+	public String getNom() {
+		return nom;
+	}
+
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
+
+	public String getResultat() {
 		return resultat;
 	}
 
-	public void setResultat(boolean resultat) {
+	public void setResultat(String resultat) {
 		this.resultat = resultat;
 	}
 
-	public boolean isStatut() {
+	public String getStatut() {
 		return statut;
 	}
 
-	public void setStatut(boolean statut) {
+	public void setStatut(String statut) {
 		this.statut = statut;
+	}
+
+	public String getProduit() {
+		return produit;
+	}
+
+	public void setProduit(String produit) {
+		this.produit = produit;
 	}
 
 	public Integer getProcedureId() {
@@ -84,6 +119,23 @@ public class FormEssai {
 	public void setQualificationId(Integer qualificationId) {
 		this.qualificationId = qualificationId;
 	}
+
+	public String getVersion() {
+		return version;
+	}
+
+	public void setVersion(String version) {
+		this.version = version;
+	}
+
+	public String getDomaine() {
+		return domaine;
+	}
+
+	public void setDomaine(String domaine) {
+		this.domaine = domaine;
+	}
+
 	
-	
+
 }

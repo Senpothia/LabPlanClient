@@ -31,6 +31,7 @@ import com.michel.lab.model.Utilisateur;
 import com.michel.lab.model.UtilisateurAux;
 import com.michel.lab.model.EssaiAux;
 import com.michel.lab.model.FormEchantillon;
+import com.michel.lab.model.FormEssai;
 
 import feign.Body;
 import feign.Headers;
@@ -203,4 +204,9 @@ public interface MicroServiceLab {
 	@PostMapping("/private/sequence/supprimer/{id}")
 	public void supprimerSequence(@PathVariable(name = "id") Integer idSequence);
 
+	
+	@PostMapping("/private/essai/modifier")
+	public void modifierEssai(FormEssai formEssai);
+	
+	
 }
