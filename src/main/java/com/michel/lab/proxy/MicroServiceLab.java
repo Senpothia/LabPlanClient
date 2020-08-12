@@ -187,8 +187,6 @@ public interface MicroServiceLab {
 	public EchantillonAux obtenirEchantillon(
 			@PathVariable(name = "id") Integer id);
 	
-	
-	
 	@PostMapping("/private/echantillon/modifier")
 	public void modifierEchantillon(FormEchantillon formEchantillon);
 	
@@ -201,5 +199,8 @@ public interface MicroServiceLab {
 	@PostMapping("/private/qualification/modifier")
 	public void modifierQualification(
 			FormQualif formQualif);
+	
+	@PostMapping("/private/sequence/supprimer/{id}")
+	public void supprimerSequence(@PathVariable(name = "id") Integer idSequence);
 
 }

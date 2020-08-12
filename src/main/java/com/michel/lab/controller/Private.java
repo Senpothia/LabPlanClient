@@ -390,8 +390,12 @@ public class Private {
 		
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
 		microServiceLab.modifierStatutQualification(numQualification);
-		
-		return "ok";
+			
+		QualificationAux qualification = microServiceLab.obtenirQualification(numQualification);
+		model.addAttribute("qualification", qualification);
+		model.addAttribute("modification", false);
+		System.out.println("Référence qualification: " + qualification.getReference());
+		return Constants.QUALIFICATION;
 	}
 	
 	@GetMapping("/qualification/modifier/resultat/{id}")   // Non utilisée - 1ere version
@@ -445,13 +449,24 @@ public class Private {
 		formQualif.setNumero(numQualification);
 		microServiceLab.modifierQualification(formQualif);
 		
-		//return "ok";
 		QualificationAux qualification = microServiceLab.obtenirQualification(numQualification);
 		model.addAttribute("qualification", qualification);
 		model.addAttribute("modification", false);
 		System.out.println("Référence qualification: " + qualification.getReference());
 		return Constants.QUALIFICATION;
 		
+	}
+	
+	@GetMapping("/sequence/supprimer/{essai}/{qualification}/{sequence}")
+	public String supprimerSequence(@PathVariable(name = "essai") Integer idEssai,
+			@PathVariable(name = "qualification") Integer num, 
+			@PathVariable(name = "sequence") Integer idSequence,
+			FormSequence formSequence, Model model, HttpSession session, 
+			RedirectAttributes redirectAttributes) {
+		
+		microServiceLab.supprimerSequence(idSequence);
+		
+		return "ok";
 	}
 
 }
