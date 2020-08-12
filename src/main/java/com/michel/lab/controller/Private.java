@@ -464,9 +464,41 @@ public class Private {
 			FormSequence formSequence, Model model, HttpSession session, 
 			RedirectAttributes redirectAttributes) {
 		
+		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
 		microServiceLab.supprimerSequence(idSequence);
 		
-		return "ok";
+		EssaiAux essai = microServiceLab.obtenirEssaiParNumero(idEssai);
+		model.addAttribute("essai", essai);
+		
+		List<SequenceAux> sequences = microServiceLab.obtenirSequencesParEssai(num, idEssai);
+		model.addAttribute("sequences", sequences);
+		QualificationAux qualif = microServiceLab.obtenirQualificationParNumero(num);
+		model.addAttribute("qualification", qualif);
+
+		if (sequences.isEmpty()) {
+
+			model.addAttribute("vide", true);
+
+		} else {
+
+			model.addAttribute("vide", false);
+		}
+
+		return Constants.LISTE_SEQUENCES;
+		
+	}
+	
+	@GetMapping("/essai/modifier/{num}/{id}/{domaine}")
+	public String modifierEssais(
+			@PathVariable(name = "num") Integer numQualification,
+			@PathVariable(name = "id") Integer idEssai, 
+			@PathVariable(name = "domaine") String nomDomaine,
+			Model model, HttpSession session) {
+		
+		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		
+		
+		return "ok";    // Implémenter le return
 	}
 
 }
