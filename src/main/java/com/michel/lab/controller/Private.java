@@ -98,7 +98,7 @@ public class Private {
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
 		QualificationAux qualification = microServiceLab.obtenirQualification(id);
 		model.addAttribute("qualification", qualification);
-
+		model.addAttribute("modification", false);
 		System.out.println("Référence qualification: " + qualification.getReference());
 		return Constants.QUALIFICATION;
 	}
@@ -296,7 +296,7 @@ public class Private {
 		formSequence.setId(idSequence);
 		
 		String debText = formSequence.getDebutText();
-		String finText = formSequence.getDebutText();
+		String finText = formSequence.getFinText();
 		//LocalDateTime dateTime = LocalDateTime.parse(deb);
 		
 		System.out.println("Date reçue: " + debText);
@@ -391,7 +391,6 @@ public class Private {
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
 		microServiceLab.modifierStatutQualification(numQualification);
 		
-		
 		return "ok";
 	}
 	
@@ -401,10 +400,44 @@ public class Private {
 			 Model model, HttpSession session) {
 		
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		microServiceLab.modifierResultatQualification(numQualification);
+		//microServiceLab.modifierResultatQualification(numQualification);
+		
+		QualificationAux qualification = microServiceLab.obtenirQualification(numQualification);
+		model.addAttribute("qualification", qualification);
+		model.addAttribute("modification", true);
+
+		System.out.println("Référence qualification: " + qualification.getReference());
+		return Constants.QUALIFICATION;
+		//return "ok";
+	}
+	
+	@GetMapping("/qualification/modifier/{id}")
+	public String modifierQualification(
+			@PathVariable(name = "id") Integer numQualification,
+			 Model model, HttpSession session) {
+		
+		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		
+		//microServiceLab.modifierResultatQualification(numQualification);
+		
+		QualificationAux qualification = microServiceLab.obtenirQualification(numQualification);
+		model.addAttribute("qualification", qualification);
+		//model.addAttribute("modification", true);
+		FormQualif formQualif = new FormQualif();
+		
+		formQualif.setNumero(qualification.getNumero());
+		formQualif.setReference(qualification.getReference());
+		formQualif.setProduit(qualification.getProjet());
+		formQualif.setProjet(qualification.getProjet());
+		formQualif.setObjet(qualification.getObjet());
+				
+		model.addAttribute("formQualif", formQualif);
+		
+		System.out.println("Référence qualification: " + qualification.getReference());
+		return "modifierQualification";
 		
 		
-		return "ok";
+		//return "ok";
 	}
 
 }

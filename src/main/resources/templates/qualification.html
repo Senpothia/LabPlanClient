@@ -85,7 +85,7 @@
 							</td>
 							
 							<td><a
-								th:href="@{/labplan/private/qualification/modifier/resultat/{id}(id=${qualification.numero})}"><p
+								th:href="@{/labplan/private/qualification/modifier/{id}(id=${qualification.numero})}"><p
 										type="text" class="btn btn-block"
 										style="background-color: #7e60fb; color: white">Modifier</p></a>
 							</td>
@@ -105,112 +105,7 @@
 
 	
 
-	<!--  
 
-		<div class="row">
-
-			<div class="col donnees" style="margin: 5px;">
-
-				<table class="table table-striped">
-					<thead>
-						<tr>
-							<th scope="col">N°</th>
-							<th scope="col">Nom</th>
-							<th scope="col">Référentiel</th>
-							<th scope="col">Version</th>
-							<th scope="col">Domaine</th>
-							
-							<th scope="col">Consulter</th>
-
-
-						</tr>
-					</thead>
-					<tbody>
-						<tr th:each="essai, iStat: ${essais}">
-							<th scope="row"><span th:text="${iStat.count}"></span></th>
-							<td th:text="${essai.numero}" />
-							<td th:text="${essai.nom}" />
-							<td th:text="${essai.referentiel}" />
-							<td th:text="${essai.version}" />
-							<td th:text="${essai.domaine}" />	
-							<td th:text="${essai.statut}" />
-							<td th:text="${essai.resultat}" />
-							<td><a
-								th:href="@{/labplan/private/qualification/{id}(id=${qualification.numero})}"><p
-										type="text" class="btn btn-block"
-										style="background-color: #7e60fb; color: white">Voir</p></a>
-								<td />
-
-
-						</tr>
-
-					</tbody>
-				</table>
-
-
-			</div>
-
-
-		</div>
-		
-		 
-					
-
-		<div class="row d-flex justify-content-center">
-
-									<h2>Liste des échantillons</h2>
-
-
-
-		</div>
-
-
-
-		
-		<div class="row">
-
-			<div class="col donnees" style="margin: 5px;">
-
-				<table class="table table-striped">
-					<thead>
-						<tr>
-							<th scope="col">N°</th>
-							<th scope="col">Caractéristique</th>
-							<th scope="col">Version</th>
-							<th scope="col">Date</th>
-							<th scope="col">Statut</th>
-							
-
-						</tr>
-					</thead>
-					<tbody>
-						<tr th:each="echantillon, iStat: ${echantillons}">
-							<th scope="row"><span th:text="${iStat.count}"></span></th>
-							<td th:text="${echantillon.numero}" />
-							<td th:text="${echantillon.caracteristique}" />
-							<td th:text="${qualification.version}" />
-							<td th:text="${qualification.date}" />
-							<td th:text="${qualification.statut}" />
-							
-							<td><a
-														th:href="@{/labplan/private/qualification/{id}(id=${qualification.numero})}"><p
-																type="text" class="btn btn-block"
-																style="background-color: #7e60fb; color: white">Voir</p></a>
-							<td />
-
-
-						</tr>
-
-					</tbody>
-				</table>
-
-
-			</div>
-
-
-		</div>
-
-		 -->
 							<div class="row mt-3">
 			<div class="col d-flex justify-content-end">
 				
