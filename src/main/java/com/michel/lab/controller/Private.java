@@ -394,13 +394,12 @@ public class Private {
 		return "ok";
 	}
 	
-	@GetMapping("/qualification/modifier/resultat/{id}")
+	@GetMapping("/qualification/modifier/resultat/{id}")   // Non utilisée - 1ere version
 	public String modifierResultatQualification(
 			@PathVariable(name = "id") Integer numQualification,
 			 Model model, HttpSession session) {
 		
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		//microServiceLab.modifierResultatQualification(numQualification);
 		
 		QualificationAux qualification = microServiceLab.obtenirQualification(numQualification);
 		model.addAttribute("qualification", qualification);
@@ -408,7 +407,7 @@ public class Private {
 
 		System.out.println("Référence qualification: " + qualification.getReference());
 		return Constants.QUALIFICATION;
-		//return "ok";
+		
 	}
 	
 	@GetMapping("/qualification/modifier/{id}")
@@ -417,12 +416,10 @@ public class Private {
 			 Model model, HttpSession session) {
 		
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		
-		//microServiceLab.modifierResultatQualification(numQualification);
-		
+			
 		QualificationAux qualification = microServiceLab.obtenirQualification(numQualification);
 		model.addAttribute("qualification", qualification);
-		//model.addAttribute("modification", true);
+		
 		FormQualif formQualif = new FormQualif();
 		
 		formQualif.setNumero(qualification.getNumero());
@@ -434,10 +431,27 @@ public class Private {
 		model.addAttribute("formQualif", formQualif);
 		
 		System.out.println("Référence qualification: " + qualification.getReference());
-		return "modifierQualification";
+		return Constants.MODIFIER_QUALIFICATION;
+	
+	}
+	
+	@PostMapping("/qualification/modification/{id}")
+	public String enregistrerModificationQualification(
+			@PathVariable(name = "id") Integer numQualification,
+			 Model model, HttpSession session, FormQualif formQualif) {
 		
+		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		
+		formQualif.setNumero(numQualification);
+		microServiceLab.modifierQualification(formQualif);
 		
 		//return "ok";
+		QualificationAux qualification = microServiceLab.obtenirQualification(numQualification);
+		model.addAttribute("qualification", qualification);
+		model.addAttribute("modification", false);
+		System.out.println("Référence qualification: " + qualification.getReference());
+		return Constants.QUALIFICATION;
+		
 	}
 
 }

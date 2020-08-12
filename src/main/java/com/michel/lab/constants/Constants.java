@@ -24,6 +24,7 @@ public class Constants {
 	public static final String SEQUENCE = "sequence";
 	public static final String MODIFIER_SEQUENCE = "modifierSequence";
 	public static final String MODIFIER_ECHANTILLON = "modifierEchantillon";
+	public static final String MODIFIER_QUALIFICATION = "modifierQualification";
 	
 
 }

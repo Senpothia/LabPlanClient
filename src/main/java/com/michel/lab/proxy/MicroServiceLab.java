@@ -197,5 +197,9 @@ public interface MicroServiceLab {
 	
 	@GetMapping("private/qualification/modifier/resultat/{id}")
 	public void modifierResultatQualification(@PathVariable(name = "id") Integer numQualification);
+	
+	@PostMapping("/private/qualification/modifier")
+	public void modifierQualification(
+			FormQualif formQualif);
 
 }
