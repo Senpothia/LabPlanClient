@@ -262,12 +262,8 @@ public class Private {
 		formSequence.setNiveau(sequence.getNiveau());
 		formSequence.setDomaine(sequence.getDomaine());
 		
-	
-		
 		formSequence.setDebut(sequence.getDebut());
 		formSequence.setFin(sequence.getFin());
-		
-		
 		
 		formSequence.setProfil(sequence.getProfil());
 		formSequence.setCommentaire(sequence.getCommentaire());
@@ -302,11 +298,13 @@ public class Private {
 		
 		System.out.println("Date reçue: " + debText);
 		LocalDateTime debut = LocalDateTime.parse(debText,
-		        DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mm a"));
+				DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm a"));
+		       // DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mm a"));
 		formSequence.setDebut(debut);
 		
 		LocalDateTime fin = LocalDateTime.parse(finText,
-		        DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mm a"));
+				DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm a"));
+		       // DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mm a"));
 		formSequence.setFin(fin);
 		//System.out.println("conversion date: " + dateTime);
 
@@ -534,7 +532,7 @@ public class Private {
 		model.addAttribute("qualification", qualification);
 		model.addAttribute("essais", essais);
 		return Constants.PAGE_ESSAIS;
-		//return "ok";
+		
 	}
 
 }
