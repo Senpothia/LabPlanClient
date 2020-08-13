@@ -1,5 +1,6 @@
 package com.michel.lab.controller;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -41,6 +42,8 @@ public class Private {
 
 	@Autowired
 	private UserConnexion userConnexion;
+	
+	private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:MM");
 
 	@GetMapping("/qualification/creation") // Accès au formulaire de création d'un qualification
 	public String creer(Model model, HttpSession session) {
@@ -229,6 +232,12 @@ public class Private {
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
 
 		SequenceAux sequence = microServiceLab.obtenirSequenceParId(idSequence);
+		
+		Duration duration = Duration.between(sequence.getDebut(), sequence.getFin());
+		System.out.println("durée: "  + duration.toHours() + " hours");
+		long duree = duration.toHours(); 
+		sequence.setDuree(duree);
+		
 		model.addAttribute("sequence", sequence);
 		QualificationAux qualification = microServiceLab.obtenirQualificationParNumero(id);
 		model.addAttribute("qualification", qualification);
@@ -330,6 +339,12 @@ public class Private {
 		System.out.println("id sequence recu: " + idSequence);
 		
 		SequenceAux sequence = microServiceLab.obtenirSequenceParId(idSequence);
+		
+		Duration duration = Duration.between(sequence.getDebut(), sequence.getFin());
+		System.out.println("durée: "  + duration.toHours() + " hours");
+		long duree = duration.toHours(); 
+		sequence.setDuree(duree);
+		
 		model.addAttribute("sequence", sequence);
 		QualificationAux qualification = microServiceLab.obtenirQualificationParNumero(num);
 		model.addAttribute("qualification", qualification);
@@ -337,7 +352,7 @@ public class Private {
 		model.addAttribute("essai", essai);
 		List<EchantillonAux> echantillons = microServiceLab.obtenirEchantillonsParQualification(num);
 		List<EchantillonAux> echSelection = microServiceLab.obtenirEchantillonSelectionParSequence(num, idSequence);
-		//model.addAttribute("echantillons", echantillons);
+		
 		model.addAttribute("echantillons", echSelection);
 
 		return Constants.SEQUENCE;
@@ -533,6 +548,17 @@ public class Private {
 		model.addAttribute("essais", essais);
 		return Constants.PAGE_ESSAIS;
 		
+	}
+	
+	@GetMapping("/qualification/rapport/{num}")
+	public String rapport(
+			@PathVariable(name = "num") Integer numQualification,
+			Model model, HttpSession session) {
+		
+		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		
+		
+		return "ok";
 	}
 
 }
