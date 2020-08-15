@@ -268,6 +268,7 @@ public class Private {
 		SequenceAux sequence = microServiceLab.obtenirSequenceParId(idSequence);
 		FormSequence formSequence = new FormSequence();
 		formSequence.setId(sequence.getId());
+		formSequence.setNumero(sequence.getNumero());
 		formSequence.setNom(sequence.getNom());
 		formSequence.setNiveau(sequence.getNiveau());
 		formSequence.setDomaine(sequence.getDomaine());
