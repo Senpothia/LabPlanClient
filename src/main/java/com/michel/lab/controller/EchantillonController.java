@@ -1,5 +1,6 @@
 package com.michel.lab.controller;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -139,6 +140,8 @@ public class EchantillonController {
 		formEchantillon.setNumero(echantillon.getNumero());
 		formEchantillon.setVersion(echantillon.getVersion());
 		formEchantillon.setId(id);
+		
+		
 		
 		model.addAttribute("formEchantillon", formEchantillon);
 		model.addAttribute("echantillon", id);
