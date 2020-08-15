@@ -358,22 +358,95 @@ public class Private {
 		formSequence.setEssai(idEssai);
 		formSequence.setId(idSequence);
 		
-		String debText = formSequence.getDebutText();
+		String debutText = formSequence.getDebutText();
+		String debutHeureText = formSequence.getDebutHeureText();
 		String finText = formSequence.getFinText();
-		//LocalDateTime dateTime = LocalDateTime.parse(deb);
+		String finHeureText = formSequence.getFinHeureText();
 		
-		System.out.println("Date reçue: " + debText);
-		LocalDateTime debut = LocalDateTime.parse(debText,
-				DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm a"));
+		String dateDebutText = null;
+		String dateFinText = null;
+		
+		System.out.println("Date début reçue: " + debutText);
+		System.out.println("Heure début reçue: " + debutHeureText);
+		
+		System.out.println("Date fin reçue: " + finText);
+		System.out.println("Heure fin reçue: " + finHeureText);
+		 
+		System.out.println(debutText + " " + debutHeureText);
+		System.out.println(finText + " " + finHeureText);
+		
+		String segmentHeureDebut[] = debutHeureText.split(":");
+		String suffixe = null;
+		
+		String segmentHeureFin[] = finHeureText.split(":");
+		
+		
+		int heureDebut = Integer.parseInt(segmentHeureDebut[0]); 
+		
+		if (heureDebut >12) {
+			
+			suffixe = "PM";
+			heureDebut = heureDebut - 12;
+			System.out.println("heureFin: " + heureDebut);
+			debutHeureText =  String.valueOf(heureDebut);
+			if (heureDebut < 10) {
+				
+				debutHeureText = "0" + debutHeureText;
+				System.out.println("debutHeureText transformé: " + debutHeureText);
+				dateDebutText = debutText + " " + debutHeureText + ":" + segmentHeureDebut[1] + " " + suffixe;
+				System.out.println("dateDebutText = " + dateDebutText);
+			}
+			
+		}else {
+			
+			suffixe = "AM";
+			dateDebutText = debutText + " " + debutHeureText + " " + suffixe;
+			System.out.println("dateDebutText = " + dateDebutText);
+			
+		}
+		
+		
+		/////////////////////////////
+		
+		
+		suffixe = null;
+		
+		int heureFin = Integer.parseInt(segmentHeureFin[0]); 
+		
+		if (heureFin >12) {
+			
+			suffixe = "PM";
+			heureFin = heureFin - 12;
+			System.out.println("heureFin: " + heureFin);
+			finHeureText =  String.valueOf(heureFin);
+			if (heureFin<10) {
+				
+				finHeureText = "0" + finHeureText;
+				System.out.println("finHeureText transformé: " + finHeureText);
+				dateFinText = finText + " " + finHeureText + ":" + segmentHeureFin[1] + " " + suffixe;
+				System.out.println("dateFinText = " + dateFinText);
+			}
+			
+		}else {
+			
+			suffixe = "AM";
+			dateFinText = finText + " " + finHeureText + " " + suffixe;
+			System.out.println("dateFinText = " + dateFinText);
+		}
+		
+		
+		LocalDateTime debut = LocalDateTime.parse(dateDebutText,
+				DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm a"));
+				//DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm a"));
 		       // DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mm a"));
 		formSequence.setDebut(debut);
 		
-		LocalDateTime fin = LocalDateTime.parse(finText,
-				DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm a"));
+		LocalDateTime fin = LocalDateTime.parse(dateFinText,
+				DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm a"));
+				//DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm a"));
 		       // DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mm a"));
 		formSequence.setFin(fin);
-		//System.out.println("conversion date: " + dateTime);
-
+		
 		microServiceLab.modifierSequence(formSequence);
 
 		redirectAttributes.addAttribute("essai", idEssai);
