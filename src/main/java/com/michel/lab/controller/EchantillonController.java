@@ -141,7 +141,9 @@ public class EchantillonController {
 		formEchantillon.setVersion(echantillon.getVersion());
 		formEchantillon.setId(id);
 		
+		String date = echantillon.getDate();
 		
+		System.out.println("Date échantillon récupérée:" + date);
 		
 		model.addAttribute("formEchantillon", formEchantillon);
 		model.addAttribute("echantillon", id);
@@ -149,8 +151,6 @@ public class EchantillonController {
 		
 		return Constants.MODIFIER_ECHANTILLON;
 		
-		
-		//return "ok";
 	}
 	
 	@PostMapping("/modifier/{id}/{qualification}")
@@ -167,8 +167,6 @@ public class EchantillonController {
 		microServiceLab.modifierEchantillon(formEchantillon);
 		System.out.println("id récupéré: " + id);
 		System.out.println("qualif récupéré: " + qualification);
-		
-		//return "ok";
 		
 		redirectAttributes.addAttribute("id", qualification);
 		List<EchantillonAux> echantillons = microServiceLab.obtenirEchantillonsParQualification(qualification);
