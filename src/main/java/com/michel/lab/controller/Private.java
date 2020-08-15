@@ -149,7 +149,8 @@ public class Private {
 
 	@GetMapping("/sequence/creer/{id}/{qualification}/{domaine}")
 	public String creerSequence(@PathVariable(name = "id") Integer id, // id = identifiant essai
-			@PathVariable(name = "qualification") Integer qualification, @PathVariable(name = "domaine") String domaine,
+			@PathVariable(name = "qualification") Integer qualification, 
+			@PathVariable(name = "domaine") String domaine,
 			Model model, HttpSession session) {
 
 		System.out.println("Get: creerSequence");
@@ -272,7 +273,63 @@ public class Private {
 		formSequence.setDomaine(sequence.getDomaine());
 		
 		formSequence.setDebut(sequence.getDebut());
-		formSequence.setFin(sequence.getFin());
+		
+		
+		//formSequence.setDebutText("2020-08-22");   // valeur fonctionnelle : "2020-08-22"
+		//System.out.println("debutText = " + formSequence.getDebutText());
+		
+		String debutText = sequence.getDebutText();
+		System.out.println("valeur debutText: " + debutText);
+		
+		String[] tokensDebut = debutText.split("-");
+
+		for (String t : tokensDebut) {  
+			
+			System.out.println(t); 
+			
+		}
+		
+		String[] anneeDebut = tokensDebut[2].split(" ");
+		System.out.println("année: " + anneeDebut[0]);
+		String dateDebutText = anneeDebut[0] + "-" + tokensDebut[1] + "-" + tokensDebut[0];
+		System.out.println("dateFinText: " + dateDebutText);
+		
+		formSequence.setDebutText(dateDebutText);
+		System.out.println("debutText = " + formSequence.getDebutText());
+		
+		String finText = sequence.getFinText();
+		System.out.println("valeur finText: " + finText);
+		
+		String[] tokensFin = finText.split("-");
+
+		for (String t : tokensFin) {  
+			
+			System.out.println(t); 
+			
+		}
+		
+		String[] anneeFin = tokensFin[2].split(" ");
+		System.out.println("année: " + anneeFin[0]);
+		String dateFinText = anneeFin[0] + "-" + tokensFin[1] + "-" + tokensFin[0];
+		System.out.println("dateFinText: " + dateFinText);
+		
+		formSequence.setFinText(dateFinText);
+		System.out.println("finText = " + formSequence.getFinText());
+		
+		// transfert des heures 
+		
+	
+		System.out.println("date de debut prépa heure: " + debutText);
+		System.out.println("date de fin prépa heure: " + finText);
+		
+		String segmentDebut[] = debutText.split(" ");
+		String segmentFin[] = finText.split(" ");
+		
+		String debutHeureText =  segmentDebut[1];
+		String finHeureText =  segmentFin[1];
+		
+		formSequence.setDebutHeureText(debutHeureText);
+		formSequence.setFinHeureText(finHeureText);
 		
 		formSequence.setProfil(sequence.getProfil());
 		formSequence.setCommentaire(sequence.getCommentaire());
@@ -558,6 +615,71 @@ public class Private {
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
 		
 		
+		return "ok";
+	}
+	
+	@PostMapping("/sequence/creer/test/{id}/{qualification}") 
+	public String test(
+			@PathVariable(name = "id") Integer id,
+			@PathVariable(name = "qualification") Integer qualification,
+			FormSequence formSequence) {
+		
+		System.out.println("valeur début récupérée: " + formSequence.getDebutText());
+		System.out.println("valeur fin récupérée: " + formSequence.getFinText());
+		System.out.println("valeur heure début récupérée: " + formSequence.getDebutHeureText());
+		System.out.println("valeur heure fin récupérée: " + formSequence.getFinHeureText());
+		String debutText = formSequence.getDebutText();
+		String finText = formSequence.getFinText();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+		
+		if (formSequence.getDebutText() != "") {
+	//	String debutText = formSequence.getDebutText();
+		String debutHeureText = formSequence.getDebutHeureText();
+		
+		String debutTextConv = debutText+ " " + debutHeureText;
+		
+		LocalDateTime debut = LocalDateTime.parse(debutTextConv, formatter);
+		System.out.println("Date début convertie : " + debut);
+		formSequence.setDebut(debut);
+		
+		if (formSequence.getFinText() == "") {  // sans date de fin définie: debut = fin
+			
+			LocalDateTime fin = debut;
+			formSequence.setFin(debut);
+		}
+		
+		}else {
+			
+			System.out.println("Aucune date de debut définie!");
+			formSequence.setDebut(null);
+		}
+		
+		
+		if (formSequence.getFinText() != "") {
+	//	String finText = formSequence.getFinText();
+		String finHeureText = formSequence.getFinHeureText();
+		
+		String finTextConv = finText+ " " + finHeureText;
+		LocalDateTime fin = LocalDateTime.parse(finTextConv, formatter);
+		System.out.println("Date fin convertie : " + fin);
+		formSequence.setFin(fin);
+		
+		}else {
+			
+			if (formSequence.getDebutText() == "") {
+				
+			System.out.println("Aucune date de fin définie!");
+			formSequence.setFin(null);
+			
+			}
+		}
+		
+		
+		formSequence.setEssai(id);
+		formSequence.setQualification(qualification);
+		
+		
+		microServiceLab.enregistrerSequence(formSequence);
 		return "ok";
 	}
 

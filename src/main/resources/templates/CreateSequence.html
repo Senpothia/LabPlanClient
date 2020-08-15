@@ -58,7 +58,9 @@
 		<!-- ********************************************* -->
 
 		<div class="container">
-			<form th:action="@{/labplan/private/sequence/creer/{id}/{qualification}(id=${id}, qualification=${qualification})}"
+			<!--  <form th:action="@{/labplan/private/sequence/creer/{id}/{qualification}(id=${id}, qualification=${qualification})}"  -->
+			<form
+				th:action="@{/labplan/private/sequence/creer/test/{id}/{qualification}(id=${id}, qualification=${qualification})}"
 				method="post" th:object="${formSequence}">
 
 
@@ -81,16 +83,38 @@
 							class="form-control" th:field="*{niveau}">
 					</div>
 
-			
-					<div class="row  mr-1">
-						<label for="text">Début</label> <input  type="text"
-							class="form-control" th:field="*{debutText}">
-					</div>
 
 					<div class="row  mr-1">
-						<label for="text">fin</label> <input  type="text"
-							class="form-control" th:field="*{finText}">
+
+
+						<div class="col">
+							<label for="text">Début</label> <input type="date"
+								class="form-control" th:field="*{debutText}">
+						</div>
+
+
+						<div class="col">
+							<label for="text">Heure de début</label> <input type="time"
+								class="form-control" th:field="*{debutHeureText}">
+						</div>
+
+
 					</div>
+
+		
+					<div class="row  mr-1">
+
+						<div class="col">
+							<label for="text">fin</label> <input type="date"
+								class="form-control" th:field="*{finText}">
+						</div>
+
+						<div class="col">
+							<label for="text">Heure de fin</label> <input type="time"
+								class="form-control" th:field="*{finHeureText}">
+						</div>
+					</div>
+
 
 
 					<div class="row  mr-1">
@@ -103,8 +127,29 @@
 							class="form-control" th:field="*{commentaire}">
 					</div>
 
-				
 
+					<div class=" row form-group">
+						<label for="exampleFormControlSelect1">Statut</label> <select
+							class="form-control" id="exampleFormControlSelect1"
+							th:field="*{actif}">
+							<option th:value="'Ouverte'" th:text="Ouverte"></option>
+							<option th:value="'Clôturée'" th:text="Clôturée"></option>
+
+						</select>
+					</div>
+
+
+					<div class=" row form-group">
+						<label for="exampleFormControlSelect1">Résultat</label> <select
+							class="form-control" id="exampleFormControlSelect2"
+							th:field="*{avis}">
+							<option th:value="'Actif'" th:text="Active"></option>
+							<option th:value="'Conforme'" th:text="Conforme"></option>
+							<option th:value="'Non-conforme'" th:text="Non-conforme">
+							</option>
+
+						</select>
+					</div>
 
 					<div class="bouton row">
 

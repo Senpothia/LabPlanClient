@@ -49,10 +49,11 @@
 		<div class="row">
 
 			<div class="col">
-				<form th:action="@{/labplan/private/sequence/modifier/{essai}/{qualification}/{sequence}(essai=${essai}, qualification=${qualification}, sequence=${sequence})}" method="post"
-					th:object="${formSequence}">
-					
-						<div class="form-group">
+				<form
+					th:action="@{/labplan/private/sequence/modifier/{essai}/{qualification}/{sequence}(essai=${essai}, qualification=${qualification}, sequence=${sequence})}"
+					method="post" th:object="${formSequence}">
+
+					<div class="form-group">
 						<label for="exampleInputEmail1">Numéro</label> <input type="text"
 							class="form-control" th:field="*{numero}" th:value="*{numero}">
 					</div>
@@ -67,15 +68,35 @@
 							class="form-control" th:field="*{niveau}" th:value="*{niveau}">
 					</div>
 
-					<div class="form-group">
-						<label for="exampleInputEmail1">Début</label> <input type="text"
-							class="form-control" th:field="*{debutText}" th:value="*{debutText}" placeholder="jj/MM/yyyy HH:MM PM">
+					<div class="row  mr-1">
+
+
+						<div class="col">
+							<label for="text">Début</label> <input type="date"
+								class="form-control" th:field="*{debutText}" th:value="${debutText}">
+						</div>
+
+
+						<div class="col">
+							<label for="text">Heure de début</label> <input type="time"
+								class="form-control" th:field="*{debutHeureText}">
+						</div>
+
+
 					</div>
 
 
-					<div class="form-group">
-						<label for="exampleInputEmail1">Fin</label> <input type="text"
-							class="form-control" th:field="*{finText}" th:value="*{finText}" placeholder="jj/MM/yyyy HH:MM PM">
+					<div class="row  mr-1">
+
+						<div class="col">
+							<label for="text">fin</label> <input type="date"
+								class="form-control" th:field="*{finText}" th:value="*{finText}">
+						</div>
+
+						<div class="col">
+							<label for="text">Heure de fin</label> <input type="time"
+								class="form-control" th:field="*{finHeureText}" >
+						</div>
 					</div>
 
 					<div class="form-group">
@@ -95,16 +116,16 @@
 					</div>
 
 					<div class="form-group">
-						<label for="exampleInputEmail1">Résultat</label> <input type="text"
-							class="form-control" th:field="*{avis}" th:value="*{avis}">
+						<label for="exampleInputEmail1">Résultat</label> <input
+							type="text" class="form-control" th:field="*{avis}"
+							th:value="*{avis}">
 					</div>
 
 					<div class="d-flex justify-content-end">
-						
-						<a class="btn mr-1"
-							style="background-color: red; color: white;"
-							 th:href="@{/labplan/private/sequence/supprimer/{essai}/{qualification}/{sequence}(essai=${essai}, qualification=${qualification}, sequence=${sequence})}" role="button">Supprimer</a>
-						<a class="btn mr-1"
+
+						<a class="btn mr-1" style="background-color: red; color: white;"
+							th:href="@{/labplan/private/sequence/supprimer/{essai}/{qualification}/{sequence}(essai=${essai}, qualification=${qualification}, sequence=${sequence})}"
+							role="button">Supprimer</a> <a class="btn mr-1"
 							style="background-color: #7e60fb; color: white;"
 							href="/labplan/espace" role="button">Annuler</a> <input
 							class="btn" style="background-color: #7e60fb; color: white;"
