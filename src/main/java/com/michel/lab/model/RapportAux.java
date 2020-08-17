@@ -9,6 +9,7 @@ public class RapportAux {
 	private Integer version;
 	private String identifiant;
 	private String demande;
+	private Integer qualification;
 	
 	public RapportAux() {
 		super();
@@ -16,7 +17,7 @@ public class RapportAux {
 	}
 
 	public RapportAux(Integer id, String titre, String auteur, String date, Integer version, String identifiant,
-			String demande) {
+			String demande, Integer qualification) {
 		super();
 		this.id = id;
 		this.titre = titre;
@@ -25,6 +26,7 @@ public class RapportAux {
 		this.version = version;
 		this.identifiant = identifiant;
 		this.demande = demande;
+		this.qualification = qualification;
 	}
 
 	public Integer getId() {
@@ -82,6 +84,14 @@ public class RapportAux {
 	public void setDemande(String demande) {
 		this.demande = demande;
 	}
-	
 
+	public Integer getQualification() {
+		return qualification;
+	}
+
+	public void setQualification(Integer qualification) {
+		this.qualification = qualification;
+	}
+
+	
 }

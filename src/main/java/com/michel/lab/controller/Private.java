@@ -712,17 +712,23 @@ public class Private {
 		
 	}
 	
-	@GetMapping("/qualification/rapport/liste/{num}")
+	@GetMapping("/qualification/rapport/liste/{num}")   // accès à la liste de tous les rapports d'une qualification
 	public String rapportListe(@PathVariable(name = "num") Integer numQualification, Model model, HttpSession session) {
 	
+		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		
 		System.out.println("num qualification: " + numQualification);
 		List<RapportAux> rapports = microServiceLab.obtenirRapportsParQualification(numQualification);
 		
 		System.out.println("taille liste de rapports: " + rapports.size());
+		System.out.println("date rapport récupéré:" + rapports.get(0).getDate() );
 		
-		return "ok";
+		model.addAttribute("rapports", rapports);
+		model.addAttribute("qualification", numQualification);
+		
+		return Constants.RAPPORTS;
 	}
-	@GetMapping("/qualification/rapport/{num}")
+	@GetMapping("/qualification/rapport/{num}")   // création d'un nouveau rapport pour une qualification
 	public String rapport(@PathVariable(name = "num") Integer numQualification, Model model, HttpSession session) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
@@ -733,7 +739,7 @@ public class Private {
 		formInitRapport.setQualification(numQualification);
 		formInitRapport.setProjet(qualification.getProjet());
 		model.addAttribute("formInitRapport", formInitRapport);
-		return "initRapport";
+		return Constants.INIT_RAPPORT;
 	}
 	
 	@PostMapping("/qualification/rapport/{qualification}")

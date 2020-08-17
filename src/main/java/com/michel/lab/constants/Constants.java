@@ -26,6 +26,8 @@ public class Constants {
 	public static final String MODIFIER_ECHANTILLON = "modifierEchantillon";
 	public static final String MODIFIER_QUALIFICATION = "modifierQualification";
 	public static final String MODIFIER_ESSAI = "modifierEssai";
+	public static final String RAPPORTS = "rapports";
+	public static final String INIT_RAPPORT = "initRapport";
 	
 
 }
