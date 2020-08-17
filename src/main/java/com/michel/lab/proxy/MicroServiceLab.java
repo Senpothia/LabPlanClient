@@ -26,12 +26,14 @@ import com.michel.lab.model.Groupe;
 import com.michel.lab.model.Login;
 import com.michel.lab.model.ProcedureAux;
 import com.michel.lab.model.QualificationAux;
+import com.michel.lab.model.RapportAux;
 import com.michel.lab.model.SequenceAux;
 import com.michel.lab.model.Utilisateur;
 import com.michel.lab.model.UtilisateurAux;
 import com.michel.lab.model.EssaiAux;
 import com.michel.lab.model.FormEchantillon;
 import com.michel.lab.model.FormEssai;
+import com.michel.lab.model.FormInitRapport;
 
 import feign.Body;
 import feign.Headers;
@@ -207,6 +209,12 @@ public interface MicroServiceLab {
 	
 	@PostMapping("/private/essai/modifier")
 	public void modifierEssai(FormEssai formEssai);
+	
+	@PostMapping("/private/rapport/enregistrer")
+	public void enregistrerInitRapport(FormInitRapport formInitRapport);
+	
+	@GetMapping("/private/rapport/liste/{num}")
+	public List<RapportAux> obtenirRapportsParQualification(@PathVariable(name = "num") Integer numQualification);
 	
 	
 }

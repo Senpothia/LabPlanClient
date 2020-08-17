@@ -25,9 +25,11 @@ import com.michel.lab.model.EchantillonAux;
 import com.michel.lab.model.EssaiAux;
 import com.michel.lab.model.FormEchantillon;
 import com.michel.lab.model.FormEssai;
+import com.michel.lab.model.FormInitRapport;
 import com.michel.lab.model.FormQualif;
 import com.michel.lab.model.FormSequence;
 import com.michel.lab.model.QualificationAux;
+import com.michel.lab.model.RapportAux;
 import com.michel.lab.model.SequenceAux;
 import com.michel.lab.model.Utilisateur;
 import com.michel.lab.proxy.MicroServiceLab;
@@ -641,13 +643,7 @@ public class Private {
 
 	}
 
-	@GetMapping("/qualification/rapport/{num}")
-	public String rapport(@PathVariable(name = "num") Integer numQualification, Model model, HttpSession session) {
-
-		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-
-		return "ok";
-	}
+	
 
 	@PostMapping("/sequence/creer/enregistrer/{id}/{qualification}")
 	public String test(@PathVariable(name = "id") Integer idEssai,
@@ -714,6 +710,50 @@ public class Private {
 		
 		return "redirect:/labplan/private/sequences";
 		
+	}
+	
+	@GetMapping("/qualification/rapport/liste/{num}")
+	public String rapportListe(@PathVariable(name = "num") Integer numQualification, Model model, HttpSession session) {
+	
+		System.out.println("num qualification: " + numQualification);
+		List<RapportAux> rapports = microServiceLab.obtenirRapportsParQualification(numQualification);
+		
+		System.out.println("taille liste de rapports: " + rapports.size());
+		
+		return "ok";
+	}
+	@GetMapping("/qualification/rapport/{num}")
+	public String rapport(@PathVariable(name = "num") Integer numQualification, Model model, HttpSession session) {
+
+		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		
+		QualificationAux qualification = microServiceLab.obtenirQualificationParNumero(numQualification);
+		
+		FormInitRapport formInitRapport = new FormInitRapport();
+		formInitRapport.setQualification(numQualification);
+		formInitRapport.setProjet(qualification.getProjet());
+		model.addAttribute("formInitRapport", formInitRapport);
+		return "initRapport";
+	}
+	
+	@PostMapping("/qualification/rapport/{qualification}")
+	public String enregistrementInitRapport(
+			@PathVariable("qualification") Integer numQualification,
+			FormInitRapport formInitRapport, 
+			Model model, 
+			HttpSession session) {
+		
+		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		
+		System.out.println("num qualif: " + formInitRapport.getQualification());
+		
+		System.out.println("Objet: " + formInitRapport.getObjet());
+		
+		Integer auteur = utilisateur.getId();
+		formInitRapport.setAuteur(auteur);
+		microServiceLab.enregistrerInitRapport(formInitRapport);
+		
+		return "ok";
 	}
 
 }

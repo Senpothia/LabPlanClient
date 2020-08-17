@@ -1,0 +1,165 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+<!-- Required meta tags -->
+<meta charset="utf-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+	integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+	crossorigin="anonymous">
+<link rel="stylesheet" href="/css/styles.css">
+<title>Labplan</title>
+
+<script
+	src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js"
+	referrerpolicy="origin"></script>
+
+<script>
+	tinymce.init({
+		selector : '#myobjet'
+	});
+</script>
+
+</head>
+<body>
+	<div class="container">
+
+		<!-- Entete -->
+		<span th:if="${authentification}">
+			<div th:replace="fragments/entete_post :: entete_post"></div>
+		</span> <span th:unless="${authentification}">
+			<div th:replace="fragments/entete_init :: entete_init"></div>
+		</span>
+
+		<!-- ********************************************* -->
+
+		<!-- IMAGE -->
+
+		<div class="row">
+			<div class="col">
+				<img class="img-fluid" src="/images/bandeau3.png" alt=""
+					th:src="@{/images/bandeau3.png}" />
+			</div>
+		</div>
+
+		<!-- ********************************************* -->
+		<div class="message row">
+
+			<p>
+				<b>Création d'un rapport.</b>
+			</p>
+
+		</div>
+		<!-- ***********   Alerte erreur  ************ -->
+
+		<span th:if="${erreur}">
+			<div class="message row">
+
+				<p>
+					<b style="color: red;">Les sites, secteurs, voies longueurs
+						doivent avoir un nom unique! Enregistrement impossible!</b>
+				</p>
+
+			</div>
+		</span>
+		<!-- ********************************************* -->
+
+		<div class="container">
+			<form
+				th:action="@{/labplan/private/qualification/rapport/{qualification}(qualification=${formInitRapport.qualification})}"
+				method="post" th:object="${formInitRapport}">
+
+
+				<div class="col">
+					<h1>Rapport de qualification</h1>
+
+
+					<div class="row mr-1">
+						<label for="text">Titre</label> <input type="text"
+							class="form-control" th:field="*{titre}" required="required">
+					</div>
+
+					<div class="row mr-1">
+						<label for="text">Projet</label> <input type="text"
+							class="form-control" th:field="*{projet}" th:value="*{projet}" required="required">
+					</div>
+
+					<div class="row  mr-1">
+						<label for="text">Demande</label> <input type="text"
+							class="form-control" th:field="*{demande}" required="required">
+					</div>
+
+
+
+					<div class="row  mr-1">
+						<label for="text">Date</label> <input type="date"
+							class="form-control" th:field="*{date}" required="required">
+					</div>
+
+					<div class="row  mr-1">
+						<label for="text">Edition</label> <input type="text"
+							class="form-control" th:field="*{version}" required="required">
+					</div>
+
+					<div class="row  mr-1">
+						<label for="text">Référence du rapport</label> <input type="text"
+							class="form-control" th:field="*{identifiant}" required="required">
+					</div>
+
+					<div class="row  mr-1">
+
+						<label for="objet">Objet</label>
+						<textarea class="form-control" th:field="*{objet}" name="objet"
+							id="objet" rows="7" required="required"></textarea>
+
+					</div>
+
+
+					<div class="bouton row">
+
+						<div class="col">
+							<div class="d-flex justify-content-end">
+								<a class="btn mb-1 bouton2"
+									style="background-color: #7e60fb; color: white;"
+									href="/labplan/espace" role="button">Annuler</a> <input
+									type="submit" class="btn mb-1 bouton2"
+									style="background-color: #7e60fb; color: white;"
+									value="Enregistrer">
+
+							</div>
+						</div>
+					</div>
+			</form>
+
+			<!-- PIED DE PAGE -->
+
+			<div th:replace="fragments/footer :: footer"></div>
+
+			<!-- ********************************************* -->
+		</div>
+
+	</div>
+
+
+
+
+	<!-- Optional JavaScript -->
+	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+		integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+		integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+		integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+		crossorigin="anonymous"></script>
+</body>
+</html>
