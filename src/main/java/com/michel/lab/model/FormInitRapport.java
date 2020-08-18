@@ -13,6 +13,7 @@ public class FormInitRapport {
 	private int version;		    // Edition du rapport
 	private String identifiant;   	// référence du rapport, ex: R12-20
 	private String objet;			// Contexte de la qualification: retour client, validation seconde source, ect.
+	private String avis;
 	
 	public FormInitRapport() {
 		super();
@@ -20,7 +21,7 @@ public class FormInitRapport {
 	}
 
 	public FormInitRapport(Integer qualification, String titre, String projet, String demande, Integer auteur,
-			String date, int version, String identifiant, String objet) {
+			String date, int version, String identifiant, String objet, String avis) {
 		super();
 		this.qualification = qualification;
 		this.titre = titre;
@@ -31,6 +32,7 @@ public class FormInitRapport {
 		this.version = version;
 		this.identifiant = identifiant;
 		this.objet = objet;
+		this.avis = avis;
 	}
 
 	public Integer getQualification() {
@@ -105,7 +107,14 @@ public class FormInitRapport {
 		this.objet = objet;
 	}
 
-	
+	public String getAvis() {
+		return avis;
+	}
 
+	public void setAvis(String avis) {
+		this.avis = avis;
+	}
+
+	
 	
 }

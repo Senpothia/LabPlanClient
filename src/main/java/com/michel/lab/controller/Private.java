@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.michel.lab.constants.Constants;
@@ -31,9 +32,11 @@ import com.michel.lab.model.FormSequence;
 import com.michel.lab.model.QualificationAux;
 import com.michel.lab.model.RapportAux;
 import com.michel.lab.model.SequenceAux;
+import com.michel.lab.model.Upload;
 import com.michel.lab.model.Utilisateur;
 import com.michel.lab.proxy.MicroServiceLab;
 import com.michel.lab.service.UserConnexion;
+import com.michel.lab.utils.UploadImage;
 
 @Controller
 @RequestMapping("/labplan/private")
@@ -196,9 +199,9 @@ public class Private {
 
 	}
 
-	@GetMapping("/sequences") 
+	@GetMapping("/sequences")
 	public String voirSequencesParEssais2(@RequestParam(name = "id") Integer qualification,
-			@RequestParam(name = "num") Integer id,		// id = id essai
+			@RequestParam(name = "num") Integer id, // id = id essai
 
 			Model model, HttpSession session) {
 
@@ -643,13 +646,10 @@ public class Private {
 
 	}
 
-	
-
 	@PostMapping("/sequence/creer/enregistrer/{id}/{qualification}")
 	public String test(@PathVariable(name = "id") Integer idEssai,
-			@PathVariable(name = "qualification") Integer numQualification
-			, FormSequence formSequence
-			, RedirectAttributes redirectAttributes) {
+			@PathVariable(name = "qualification") Integer numQualification, FormSequence formSequence,
+			RedirectAttributes redirectAttributes) {
 
 		System.out.println("valeur début récupérée: " + formSequence.getDebutText());
 		System.out.println("valeur fin récupérée: " + formSequence.getFinText());
@@ -704,62 +704,122 @@ public class Private {
 		formSequence.setQualification(numQualification);
 
 		microServiceLab.enregistrerSequence(formSequence);
-		
+
 		redirectAttributes.addAttribute("id", numQualification);
 		redirectAttributes.addAttribute("num", idEssai);
-		
+
 		return "redirect:/labplan/private/sequences";
-		
+
 	}
-	
-	@GetMapping("/qualification/rapport/liste/{num}")   // accès à la liste de tous les rapports d'une qualification
+
+	@GetMapping("/qualification/rapport/liste/{num}") // accès à la liste de tous les rapports d'une qualification
 	public String rapportListe(@PathVariable(name = "num") Integer numQualification, Model model, HttpSession session) {
-	
+
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		
+
 		System.out.println("num qualification: " + numQualification);
 		List<RapportAux> rapports = microServiceLab.obtenirRapportsParQualification(numQualification);
 		
-		System.out.println("taille liste de rapports: " + rapports.size());
-		System.out.println("date rapport récupéré:" + rapports.get(0).getDate() );
+		if (!rapports.isEmpty()) {
 		
+		
+		System.out.println("taille liste de rapports: " + rapports.size());
+		System.out.println("date rapport récupéré:" + rapports.get(0).getDate());
+		model.addAttribute("vide", false);
 		model.addAttribute("rapports", rapports);
 		model.addAttribute("qualification", numQualification);
 		
+		}else {
+
+		model.addAttribute("rapports", rapports);
+		model.addAttribute("qualification", numQualification);
+		model.addAttribute("vide", true);
+		
+		}
 		return Constants.RAPPORTS;
 	}
-	@GetMapping("/qualification/rapport/{num}")   // création d'un nouveau rapport pour une qualification
+
+	@GetMapping("/qualification/rapport/{num}") // création d'un nouveau rapport pour une qualification
 	public String rapport(@PathVariable(name = "num") Integer numQualification, Model model, HttpSession session) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		
+
 		QualificationAux qualification = microServiceLab.obtenirQualificationParNumero(numQualification);
-		
+
 		FormInitRapport formInitRapport = new FormInitRapport();
 		formInitRapport.setQualification(numQualification);
 		formInitRapport.setProjet(qualification.getProjet());
 		model.addAttribute("formInitRapport", formInitRapport);
 		return Constants.INIT_RAPPORT;
 	}
-	
-	@PostMapping("/qualification/rapport/{qualification}")
-	public String enregistrementInitRapport(
-			@PathVariable("qualification") Integer numQualification,
-			FormInitRapport formInitRapport, 
-			Model model, 
-			HttpSession session) {
-		
+
+	@PostMapping("/qualification/rapport/{qualification}")   // Accès page de finalisation du rapport: upload images + formulation avis
+	public String enregistrementInitRapport(@PathVariable("qualification") Integer numQualification,
+			FormInitRapport formInitRapport, Model model, HttpSession session) {
+
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		
+
 		System.out.println("num qualif: " + formInitRapport.getQualification());
-		
+
 		System.out.println("Objet: " + formInitRapport.getObjet());
-		
+
 		Integer auteur = utilisateur.getId();
 		formInitRapport.setAuteur(auteur);
 		microServiceLab.enregistrerInitRapport(formInitRapport);
+		Upload upload = new Upload();
+		upload.setQualification(numQualification);
+		model.addAttribute("upload", upload);
+
+		return "finalisationRapport";
+	}
+
+	@PostMapping(value = "/qualification/rapport/upload/{qualification}")  // Upload des images de test
+	public String guardar(@RequestParam("repertoireImages") MultipartFile multiPart
+			, Model model
+			, HttpSession session
+			, Upload upload) {
+
+		if (!multiPart.isEmpty()) {
+			// String path = "/labplan/images/"; // Linux/MAC
+			String path = "C:/labplan/images/"; // Windows
+			String nomImage = UploadImage.guardarArchivo(multiPart, path);
+			if (nomImage != null) { 
+				
+				upload.setImage(nomImage);
+			}
+		}
+
+		return "ok";
+	}
+	
+	@GetMapping("/qualification/rapport/voir/{id}")
+	public String visualiserRapport(
+			@PathVariable("id") Integer IdRapport
+			, Model model, HttpSession session) {
+		
+		
+		RapportAux rapport = microServiceLab.obtenirRapportsParId(IdRapport);
+		System.out.println("id rapport récupéré: " + rapport.getId());
+		System.out.println("id/num qualification du rapport: " + rapport.getQualification());
+		model.addAttribute("rapport", rapport);
+		Integer qualification = rapport.getQualification();
+		List<EssaiAux> essais = microServiceLab.obtenirEssaisParQualification(qualification);
+		model.addAttribute("essais", essais);
+		List<EchantillonAux> echantillons = microServiceLab.obtenirEchantillonsParQualification(qualification);
+		model.addAttribute("echantillons", echantillons);
+		
+		System.out.println("prélèvement d'une sequence d'essai");
+		EssaiAux es = essais.get(0);
+		
+		System.out.println("Essai 0: " + es.getNom());
+		System.out.println("Essai 0, id: " + es.getId());
+		List<SequenceAux> seqs = es.getSequences();
+		SequenceAux seq = seqs.get(0);
+		System.out.println("Nom de sequence prélevée: " + seq.getNom());
+		
 		
 		return "ok";
 	}
+	
 
 }

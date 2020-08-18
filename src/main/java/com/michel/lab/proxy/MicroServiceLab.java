@@ -216,5 +216,14 @@ public interface MicroServiceLab {
 	@GetMapping("/private/rapport/liste/{num}")
 	public List<RapportAux> obtenirRapportsParQualification(@PathVariable(name = "num") Integer numQualification);
 	
+	@GetMapping("/private/rapport/{id}")
+	public RapportAux obtenirRapportsParId(@PathVariable(name = "id") Integer idRapport);
+	
+	@GetMapping("/private/qualification/id/{id}") 
+	public List<EssaiAux> obtenirEssaisParQualificationId(@PathVariable(name = "id") Integer qualification);
+	
+	@GetMapping("/private/echantillons/qualification/id/{qualification}")
+	public List<EchantillonAux> obtenirEchantillonParIdQualification(@PathVariable(name = "qualification") Integer qualification);
+	
 	
 }

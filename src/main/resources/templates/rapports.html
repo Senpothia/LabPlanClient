@@ -40,8 +40,17 @@
 			<h1>Liste de tous les rapports</h1>
 				
 		</div>
+		
+		<span th:if=${vide}>
+			<div class="row d-flex justify-content-center">
+		
+			<h2 style="color: red;">Il n'y a aucun rapport pour cette qualification!</h2>
+			</div>
+		
+		</span>
 
-
+		
+		<span th:unless=${vide}>
 		<div class="row">
 
 			<div class="col donnees" style="margin: 5px;">
@@ -85,6 +94,8 @@
 
 
 		</div>
+		
+		</span>
 
 		<div class="row mt-3">
 			<div class="col d-flex justify-content-end">

@@ -1,5 +1,7 @@
 package com.michel.lab.model;
 
+import java.util.List;
+
 public class EssaiAux {
 	
 	private Integer id;
@@ -9,6 +11,7 @@ public class EssaiAux {
 	private String domaine;
 	private String statut;
 	private String resultat;
+	private List<SequenceAux> sequences; 
 	
 	public EssaiAux() {
 		super();
@@ -16,7 +19,7 @@ public class EssaiAux {
 	}
 
 	public EssaiAux(Integer id, Integer numero, String nom, String version, String domaine, String statut,
-			String resultat) {
+			String resultat, List<SequenceAux> sequences) {
 		super();
 		this.id = id;
 		this.numero = numero;
@@ -25,6 +28,7 @@ public class EssaiAux {
 		this.domaine = domaine;
 		this.statut = statut;
 		this.resultat = resultat;
+		this.sequences = sequences;
 	}
 
 	public Integer getId() {
@@ -83,5 +87,13 @@ public class EssaiAux {
 		this.resultat = resultat;
 	}
 
-	
+	public List<SequenceAux> getSequences() {
+		return sequences;
+	}
+
+	public void setSequences(List<SequenceAux> sequences) {
+		this.sequences = sequences;
+	}
+
+
 }
