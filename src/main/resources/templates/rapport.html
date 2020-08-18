@@ -156,9 +156,6 @@
 							<th scope="col">Caractéristique</th>
 							<th scope="col">Statut</th>
 
-
-
-
 						</tr>
 					</thead>
 					<tbody>
@@ -169,9 +166,6 @@
 							<td th:text="${echantillon.version}" />
 							<td th:text="${echantillon.caracteristique}" />
 							<td th:text="${echantillon.actif}" />
-
-
-
 
 						</tr>
 
@@ -192,7 +186,7 @@
 
 		</div>
 
-		<!--  
+
 		<div class="row">
 
 			<div class="col donnees" style="margin: 5px;">
@@ -201,20 +195,25 @@
 					<thead>
 						<tr>
 
+							<th scope="col">Essai</th>
 							<th scope="col">N°</th>
 							<th scope="col">Nom</th>
+
 							<th scope="col">Version</th>
+							<th scope="col">Domaine</th>
 							<th scope="col">Statut</th>
 							<th scope="col">Résultat</th>
 
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-
+						<tr th:each="essai, iStat: ${essais}">
+							<th scope="row"><span th:text="${iStat.count}"></span></th>
 							<td th:text="${essai.numero}" />
 							<td th:text="${essai.nom}" />
+
 							<td th:text="${essai.version}" />
+							<td th:text="${essai.domaine}" />
 							<td th:text="${essai.statut}" />
 							<td th:text="${essai.resultat}" />
 
@@ -227,11 +226,7 @@
 			</div>
 
 
-		</div> 
-		
-		
-		 -->
-
+		</div>
 
 
 		<!--  
@@ -264,7 +259,7 @@
 								<th scope="col">Commentaire</th>
 								<th scope="col">Statut</th>
 								<th scope="col">Résultat</th>
-								<th scope="col">Consulter</th>
+							
 
 
 							</tr>
@@ -283,11 +278,7 @@
 								<td th:text="${sequence.commentaire}" />
 								<td th:text="${sequence.actif}" />
 								<td th:text="${sequence.avis}" />
-								<td><a
-									th:href="@{/labplan/private/sequences/voir/{id}/{num}/{sequence}(id=${qualification.numero},num=${essai.id}, sequence=${sequence.id})}"><p
-											type="text" class="btn btn-block"
-											style="background-color: #7e60fb; color: white">Consulter</p></a>
-								<td />
+								
 
 
 							</tr>
@@ -312,6 +303,20 @@
 		</span>
  -->
 
+		<div class="row">
+
+			<h2>Avis</h2>
+
+
+		</div>
+
+
+		<div class="row">
+
+			<p th:text=${rapport.avis}></p>
+
+		</div>
+
 		<div class="row mt-3">
 			<div class="col d-flex justify-content-end">
 
@@ -320,7 +325,7 @@
 				<div class="form-group mr-3 ">
 					<a th:href="@{/labplan/private/sequence/creer}"><p type="text"
 							class="btn btn-block"
-							style="background-color: #7e60fb; color: white">PDF</p></a>
+							style="background-color: #7e60fb; color: white">Export PDF</p></a>
 				</div>
 
 

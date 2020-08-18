@@ -788,7 +788,10 @@ public class Private {
 				upload.setImage(nomImage);
 			}
 		}
-
+		
+		// implémenter l'enregistrement de l'avis de confomité du rapport
+		
+		
 		return "ok";
 	}
 	

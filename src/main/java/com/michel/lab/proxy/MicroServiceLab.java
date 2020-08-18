@@ -28,6 +28,7 @@ import com.michel.lab.model.ProcedureAux;
 import com.michel.lab.model.QualificationAux;
 import com.michel.lab.model.RapportAux;
 import com.michel.lab.model.SequenceAux;
+import com.michel.lab.model.Upload;
 import com.michel.lab.model.Utilisateur;
 import com.michel.lab.model.UtilisateurAux;
 import com.michel.lab.model.EssaiAux;
@@ -224,6 +225,8 @@ public interface MicroServiceLab {
 	
 	@GetMapping("/private/echantillons/qualification/id/{qualification}")
 	public List<EchantillonAux> obtenirEchantillonParIdQualification(@PathVariable(name = "qualification") Integer qualification);
+	
+	
 	
 	
 }
