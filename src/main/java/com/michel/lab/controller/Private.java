@@ -797,10 +797,12 @@ public class Private {
 			@PathVariable("id") Integer IdRapport
 			, Model model, HttpSession session) {
 		
+		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
 		
 		RapportAux rapport = microServiceLab.obtenirRapportsParId(IdRapport);
 		System.out.println("id rapport récupéré: " + rapport.getId());
 		System.out.println("id/num qualification du rapport: " + rapport.getQualification());
+		
 		model.addAttribute("rapport", rapport);
 		Integer qualification = rapport.getQualification();
 		List<EssaiAux> essais = microServiceLab.obtenirEssaisParQualification(qualification);
@@ -818,7 +820,7 @@ public class Private {
 		System.out.println("Nom de sequence prélevée: " + seq.getNom());
 		
 		
-		return "ok";
+		return "rapport";
 	}
 	
 

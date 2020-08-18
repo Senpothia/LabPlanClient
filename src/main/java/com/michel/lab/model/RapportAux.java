@@ -10,14 +10,18 @@ public class RapportAux {
 	private String identifiant;
 	private String demande;
 	private Integer qualification;
+	private String objet;
+	private String projet;
 	
 	public RapportAux() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
+	
+
 	public RapportAux(Integer id, String titre, String auteur, String date, Integer version, String identifiant,
-			String demande, Integer qualification) {
+			String demande, Integer qualification, String objet, String projet) {
 		super();
 		this.id = id;
 		this.titre = titre;
@@ -27,7 +31,11 @@ public class RapportAux {
 		this.identifiant = identifiant;
 		this.demande = demande;
 		this.qualification = qualification;
+		this.objet = objet;
+		this.projet = projet;
 	}
+
+
 
 	public Integer getId() {
 		return id;
@@ -91,6 +99,30 @@ public class RapportAux {
 
 	public void setQualification(Integer qualification) {
 		this.qualification = qualification;
+	}
+
+
+
+	public String getObjet() {
+		return objet;
+	}
+
+
+
+	public void setObjet(String objet) {
+		this.objet = objet;
+	}
+
+
+
+	public String getProjet() {
+		return projet;
+	}
+
+
+
+	public void setProjet(String projet) {
+		this.projet = projet;
 	}
 
 	

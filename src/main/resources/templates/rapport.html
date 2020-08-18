@@ -1,0 +1,357 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+<!-- Required meta tags -->
+<meta charset="utf-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+	integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+	crossorigin="anonymous">
+
+<link rel="stylesheet" href="/css/styles.css">
+<link rel="shortcut icon" type="image/x-icon" href="/images/logo0.png" />
+<title>Labplan</title>
+</head>
+<body>
+	<div class="container">
+
+
+
+		<!-- IMAGE -->
+		<div class="row">
+			<div class="col">
+				<img class="img-fluid" src="/images/bandeau_entreprise1.png" alt=""
+					th:src="@{/images/bandeau_entreprise1.png}" />
+			</div>
+		</div>
+		<!-- ----------------- -->
+		<div class="row d-flex justify-content-center">
+
+			<h1 th:text=${rapport.titre}></h1>
+
+
+		</div>
+
+		<div class="row d-flex justify-content-center">
+
+			<h4 th:text=${rapport.auteur}></h4>
+
+		</div>
+
+		<div class="row d-flex justify-content-center">
+
+
+			<h4 th:text="'Edition: ' + ${rapport.version}"></h4>
+
+
+
+		</div>
+
+		<div class="row d-flex justify-content-center">
+
+
+			<h4 th:text=${rapport.date}></h4>
+
+
+		</div>
+
+		<div class="row d-flex justify-content-center">
+
+
+			<h4 th:text="'Projet: ' + ${rapport.projet}"></h4>
+
+
+		</div>
+
+
+
+
+		<div class="row">
+
+			<h2>Objet</h2>
+
+
+		</div>
+
+
+		<div class="row">
+
+			<p th:text=${rapport.objet}></p>
+
+		</div>
+
+		<!-- 
+		<div class="row">
+
+			<div class="col donnees" style="margin: 5px;">
+
+				<table class="table table-striped">
+					<thead>
+						<tr>
+
+							<th scope="col">N°</th>
+							<th scope="col">Référence</th>
+							<th scope="col">Produit</th>
+							<th scope="col">Date</th>
+							<th scope="col">Objet</th>
+							<th scope="col">Projet</th>
+							<th scope="col">Créateur</th>
+							<th scope="col">Statut</th>
+							<th scope="col">Résultat</th>
+
+
+
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td th:text="${qualification.numero}" />
+							<td th:text="${qualification.reference}" />
+							<td th:text="${qualification.produit}" />
+							<td th:text="${qualification.date}" />
+							<td th:text="${qualification.objet}" />
+							<td th:text="${qualification.projet}" />
+							<td th:text="${qualification.createur}" />
+							<td th:text="${qualification.statut}" />
+							<td th:text="${qualification.resultat}" />
+
+
+
+						</tr>
+
+					</tbody>
+				</table>
+
+
+			</div>
+
+
+		</div>
+		
+		 -->
+
+		<div class="row">
+
+			<h2>Echantillons</h2>
+
+		</div>
+
+
+		<div class="row">
+
+			<div class="col donnees" style="margin: 5px;">
+
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th scope="col">Ordre</th>
+							<th scope="col">Numéro</th>
+							<th scope="col">Date</th>
+							<th scope="col">Version</th>
+							<th scope="col">Caractéristique</th>
+							<th scope="col">Statut</th>
+
+
+
+
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="echantillon, iStat: ${echantillons}">
+							<th scope="row"><span th:text="${iStat.count}"></span></th>
+							<td th:text="${echantillon.numero}" />
+							<td th:text="${echantillon.date}" />
+							<td th:text="${echantillon.version}" />
+							<td th:text="${echantillon.caracteristique}" />
+							<td th:text="${echantillon.actif}" />
+
+
+
+
+						</tr>
+
+					</tbody>
+				</table>
+
+
+			</div>
+
+
+		</div>
+
+
+
+		<div class="row">
+
+			<h2>Essais</h2>
+
+		</div>
+
+		<!--  
+		<div class="row">
+
+			<div class="col donnees" style="margin: 5px;">
+
+				<table class="table table-striped">
+					<thead>
+						<tr>
+
+							<th scope="col">N°</th>
+							<th scope="col">Nom</th>
+							<th scope="col">Version</th>
+							<th scope="col">Statut</th>
+							<th scope="col">Résultat</th>
+
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+
+							<td th:text="${essai.numero}" />
+							<td th:text="${essai.nom}" />
+							<td th:text="${essai.version}" />
+							<td th:text="${essai.statut}" />
+							<td th:text="${essai.resultat}" />
+
+						</tr>
+
+					</tbody>
+				</table>
+
+
+			</div>
+
+
+		</div> 
+		
+		
+		 -->
+
+
+
+		<!--  
+
+		<div class="row d-flex justify-content-center">
+
+			<h2>Liste des séquences</h2>
+
+		</div>
+
+		<span th:unless=${vide}>
+		
+			<div class="row">
+
+				<div class="col donnees" style="margin: 5px;">
+
+					<table class="table table-striped">
+						<thead>
+							<tr>
+
+								<th scope="col">Ordre</th>
+								<th scope="col">N°</th>
+								<th scope="col">Nom</th>
+								<th scope="col">Niveau</th>
+								
+								<th scope="col">Début</th>
+								<th scope="col">Fin</th>
+								<th scope="col">Durée</th>
+								<th scope="col">Profil</th>
+								<th scope="col">Commentaire</th>
+								<th scope="col">Statut</th>
+								<th scope="col">Résultat</th>
+								<th scope="col">Consulter</th>
+
+
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="sequence, iStat: ${sequences}">
+								<th scope="row"><span th:text="${iStat.count}"></span></th>
+								<td th:text="${sequence.numero}" />
+								<td th:text="${sequence.nom}" />
+								<td th:text="${sequence.niveau}" />
+								
+								<td th:text="${sequence.debutText}" />
+								<td th:text="${sequence.finText}" />
+								<td th:text="${sequence.duree}" />
+								<td th:text="${sequence.profil}" />
+								<td th:text="${sequence.commentaire}" />
+								<td th:text="${sequence.actif}" />
+								<td th:text="${sequence.avis}" />
+								<td><a
+									th:href="@{/labplan/private/sequences/voir/{id}/{num}/{sequence}(id=${qualification.numero},num=${essai.id}, sequence=${sequence.id})}"><p
+											type="text" class="btn btn-block"
+											style="background-color: #7e60fb; color: white">Consulter</p></a>
+								<td />
+
+
+							</tr>
+
+						</tbody>
+					</table>
+
+
+				</div>
+
+
+			</div>
+
+		</span>
+		
+		<span th:if=${vide}>
+			<div class="row d-flex justify-content-center">
+		
+			<h2 style="color: red;">Il n'y a aucune séquence pour cet essai!</h2>
+			</div>
+		
+		</span>
+ -->
+
+		<div class="row mt-3">
+			<div class="col d-flex justify-content-end">
+
+
+
+				<div class="form-group mr-3 ">
+					<a th:href="@{/labplan/private/sequence/creer}"><p type="text"
+							class="btn btn-block"
+							style="background-color: #7e60fb; color: white">PDF</p></a>
+				</div>
+
+
+				<div class="form-group ">
+					<a href="/labplan/espace"><p type="text" class="btn btn-block"
+							style="background-color: #7e60fb; color: white">Retour</p></a>
+				</div>
+
+			</div>
+
+
+		</div>
+
+
+
+
+	</div>
+	<!-- fin conteneur -->
+
+
+	<!-- Optional JavaScript -->
+	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+		integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+		integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+		integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+		crossorigin="anonymous"></script>
+</body>
