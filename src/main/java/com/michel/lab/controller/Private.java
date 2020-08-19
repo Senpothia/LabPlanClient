@@ -40,7 +40,7 @@ import com.michel.lab.service.UserConnexion;
 import com.michel.lab.utils.UploadImage;
 
 @Controller
-@RequestMapping("/labplan/private")
+@RequestMapping("/private")
 public class Private {
 
 	@Autowired
