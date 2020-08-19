@@ -26,7 +26,7 @@
 		<div class="row">
 			<div class="col">
 				<img class="img-fluid" src="/images/bandeau_entreprise1.png" alt=""
-					th:src="@{/images/bandeausup1.jpg}" />
+					th:src="@{/images/bandeau_entreprise1.png}" />
 			</div>
 		</div>
 		<!-- ----------------- -->
@@ -191,38 +191,101 @@
 
 			<div class="col donnees" style="margin: 5px;">
 
-				<table class="table table-striped">
-					<thead>
-						<tr>
 
-							<th scope="col">Essai</th>
-							<th scope="col">N°</th>
-							<th scope="col">Nom</th>
+				<span th:each="essai: ${essais}">
 
-							<th scope="col">Version</th>
-							<th scope="col">Domaine</th>
-							<th scope="col">Statut</th>
-							<th scope="col">Résultat</th>
+					<table class="table table-striped">
+						<thead>
+							<tr>
 
-						</tr>
-					</thead>
-					<tbody>
-						<tr th:each="essai, iStat: ${essais}">
-							<th scope="row"><span th:text="${iStat.count}"></span></th>
-							<td th:text="${essai.numero}" />
-							<td th:text="${essai.nom}" />
+							
+								<th scope="col">N°</th>
+								<th scope="col">Nom</th>
+								<th scope="col">Version</th>
+								<th scope="col">Domaine</th>
+								<th scope="col">Statut</th>
+								<th scope="col">Résultat</th>
 
-							<td th:text="${essai.version}" />
-							<td th:text="${essai.domaine}" />
-							<td th:text="${essai.statut}" />
-							<td th:text="${essai.resultat}" />
+							</tr>
+						</thead>
+						<tbody>
+							
+								<td th:text="${essai.numero}" />
+								<td th:text="${essai.nom}" />
+								<td th:text="${essai.version}" />
+								<td th:text="${essai.domaine}" />
+								<td th:text="${essai.statut}" />
+								<td th:text="${essai.resultat}" />
 
-						</tr>
+							</tr>
 
-					</tbody>
-				</table>
+						</tbody>
+					</table>
+					
+					
+						<div class="row d-flex justify-content-center">
+
+			<h2>Liste des séquences</h2>
+
+		</div>
+
+		<span th:each="sequence: ${essai.sequences}">
+		
+			<div class="row">
+
+				<div class="col donnees" style="margin: 5px;">
+
+					<table class="table table-striped">
+						<thead>
+							<tr>
+
+								
+								<th scope="col">N°</th>
+								<th scope="col">Nom</th>
+								<th scope="col">Niveau</th>	
+								<th scope="col">Début</th>
+								<th scope="col">Fin</th>
+								<th scope="col">Durée</th>
+								<th scope="col">Profil</th>
+								<th scope="col">Commentaire</th>
+								<th scope="col">Statut</th>
+								<th scope="col">Résultat</th>
+							
 
 
+							</tr>
+						</thead>
+						<tbody>
+						
+								<td th:text="${sequence.numero}" />
+								<td th:text="${sequence.nom}" />
+								<td th:text="${sequence.niveau}" />
+								<td th:text="${sequence.debutText}" />
+								<td th:text="${sequence.finText}" />
+								<td th:text="${sequence.duree}" />
+								<td th:text="${sequence.profil}" />
+								<td th:text="${sequence.commentaire}" />
+								<td th:text="${sequence.actif}" />
+								<td th:text="${sequence.avis}" />
+								
+
+
+							</tr>
+
+						</tbody>
+					</table>
+
+
+				</div>
+
+
+			</div>
+
+		</span>
+		
+					
+
+				</span>
 			</div>
 
 

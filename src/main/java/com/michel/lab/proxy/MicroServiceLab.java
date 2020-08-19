@@ -23,6 +23,7 @@ import com.michel.lab.model.FormProcedure;
 import com.michel.lab.model.FormQualif;
 import com.michel.lab.model.FormSequence;
 import com.michel.lab.model.Groupe;
+import com.michel.lab.model.GroupeRapport;
 import com.michel.lab.model.Login;
 import com.michel.lab.model.ProcedureAux;
 import com.michel.lab.model.QualificationAux;
@@ -225,6 +226,11 @@ public interface MicroServiceLab {
 	
 	@GetMapping("/private/echantillons/qualification/id/{qualification}")
 	public List<EchantillonAux> obtenirEchantillonParIdQualification(@PathVariable(name = "qualification") Integer qualification);
+	
+	@PostMapping("/private/rapport/data/enregistrer")
+	public void enregistrerDataRapport(GroupeRapport groupeRapport);
+	
+	
 	
 	
 	

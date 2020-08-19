@@ -29,6 +29,7 @@ import com.michel.lab.model.FormEssai;
 import com.michel.lab.model.FormInitRapport;
 import com.michel.lab.model.FormQualif;
 import com.michel.lab.model.FormSequence;
+import com.michel.lab.model.GroupeRapport;
 import com.michel.lab.model.QualificationAux;
 import com.michel.lab.model.RapportAux;
 import com.michel.lab.model.SequenceAux;
@@ -822,6 +823,8 @@ public class Private {
 		SequenceAux seq = seqs.get(0);
 		System.out.println("Nom de sequence prélevée: " + seq.getNom());
 		
+		GroupeRapport groupeRapport = new GroupeRapport(IdRapport, rapport, essais, echantillons);
+		microServiceLab.enregistrerDataRapport(groupeRapport);
 		
 		return "rapport";
 	}
