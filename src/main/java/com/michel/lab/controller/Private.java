@@ -770,7 +770,7 @@ public class Private {
 		Upload upload = new Upload();
 		upload.setQualification(numQualification);
 		model.addAttribute("upload", upload);
-
+		
 		return "finalisationRapport";
 	}
 
@@ -822,10 +822,10 @@ public class Private {
 		List<SequenceAux> seqs = es.getSequences();
 		SequenceAux seq = seqs.get(0);
 		System.out.println("Nom de sequence prélevée: " + seq.getNom());
-		
+		/*
 		GroupeRapport groupeRapport = new GroupeRapport(IdRapport, rapport, essais, echantillons);
 		microServiceLab.enregistrerDataRapport(groupeRapport);
-		
+		*/
 		return "rapport";
 	}
 	
