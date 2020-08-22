@@ -766,7 +766,7 @@ public class Private {
 
 		Integer auteur = utilisateur.getId();
 		formInitRapport.setAuteur(auteur);
-		microServiceLab.enregistrerInitRapport(formInitRapport);
+		microServiceLab.enregistrerInitRapport2(formInitRapport);  // changé en 2 pour test!
 		Upload upload = new Upload();
 		upload.setQualification(numQualification);
 		model.addAttribute("upload", upload);
