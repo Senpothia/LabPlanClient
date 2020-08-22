@@ -244,79 +244,7 @@
 		</div>
 
 
-		<!--  
-
-		<div class="row d-flex justify-content-center">
-
-			<h2>Liste des séquences</h2>
-
-		</div>
-
-		<span th:unless=${vide}>
 		
-			<div class="row">
-
-				<div class="col donnees" style="margin: 5px;">
-
-					<table class="table table-striped">
-						<thead>
-							<tr>
-
-								<th scope="col">Ordre</th>
-								<th scope="col">N°</th>
-								<th scope="col">Nom</th>
-								<th scope="col">Niveau</th>
-								
-								<th scope="col">Début</th>
-								<th scope="col">Fin</th>
-								<th scope="col">Durée</th>
-								<th scope="col">Profil</th>
-								<th scope="col">Commentaire</th>
-								<th scope="col">Statut</th>
-								<th scope="col">Résultat</th>
-							
-
-
-							</tr>
-						</thead>
-						<tbody>
-							<tr th:each="sequence, iStat: ${sequences}">
-								<th scope="row"><span th:text="${iStat.count}"></span></th>
-								<td th:text="${sequence.numero}" />
-								<td th:text="${sequence.nom}" />
-								<td th:text="${sequence.niveau}" />
-								
-								<td th:text="${sequence.debutText}" />
-								<td th:text="${sequence.finText}" />
-								<td th:text="${sequence.duree}" />
-								<td th:text="${sequence.profil}" />
-								<td th:text="${sequence.commentaire}" />
-								<td th:text="${sequence.actif}" />
-								<td th:text="${sequence.avis}" />
-								
-
-
-							</tr>
-
-						</tbody>
-					</table>
-
-
-				</div>
-
-
-			</div>
-
-		</span>
-		
-		<span th:if=${vide}>
-			<div class="row d-flex justify-content-center">
-		
-			<h2 style="color: red;">Il n'y a aucune séquence pour cet essai!</h2>
-			</div>
-		
-		</span>
- -->
 
 		<div class="row">
 
