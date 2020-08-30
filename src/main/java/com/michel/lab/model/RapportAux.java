@@ -2,6 +2,7 @@ package com.michel.lab.model;
 
 public class RapportAux {
 	
+	private Integer index;
 	private Integer id;
 	private String titre;
 	private String auteur;
@@ -19,9 +20,12 @@ public class RapportAux {
 		// TODO Auto-generated constructor stub
 	}
 
-	public RapportAux(Integer id, String titre, String auteur, String date, Integer version, String identifiant,
-			String demande, Integer qualification, String objet, String projet, String avis) {
+	
+
+	public RapportAux(Integer index, Integer id, String titre, String auteur, String date, Integer version,
+			String identifiant, String demande, Integer qualification, String objet, String projet, String avis) {
 		super();
+		this.index = index;
 		this.id = id;
 		this.titre = titre;
 		this.auteur = auteur;
@@ -34,6 +38,20 @@ public class RapportAux {
 		this.projet = projet;
 		this.avis = avis;
 	}
+
+
+
+	public Integer getIndex() {
+		return index;
+	}
+
+
+
+	public void setIndex(Integer index) {
+		this.index = index;
+	}
+
+
 
 	public Integer getId() {
 		return id;

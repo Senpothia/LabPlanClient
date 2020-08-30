@@ -8,7 +8,7 @@ public class FormInitRapport {
 	private String titre;
 	private String projet;
 	private String demande;     	// référence de la demande d'essai
-	private Integer auteur;
+	private Integer auteur;			// Identifiant de l'auteur
 	private String date;
 	private int version;		    // Edition du rapport
 	private String identifiant;   	// référence du rapport, ex: R12-20

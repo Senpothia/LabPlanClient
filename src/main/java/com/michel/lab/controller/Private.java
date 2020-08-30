@@ -765,13 +765,49 @@ public class Private {
 		System.out.println("Objet: " + formInitRapport.getObjet());
 
 		Integer auteur = utilisateur.getId();
+		System.out.println("identifiant auteur: " + auteur);
+		
 		formInitRapport.setAuteur(auteur);
 		microServiceLab.enregistrerInitRapport2(formInitRapport);  // changé en 2 pour test!
+		
+		/*
 		Upload upload = new Upload();
 		upload.setQualification(numQualification);
 		model.addAttribute("upload", upload);
 		
 		return "finalisationRapport";
+		
+		*/
+		
+		/*
+		
+		RapportAux rapport = microServiceLab.obtenirRapportsParId(IdRapport);
+		System.out.println("id rapport récupéré: " + rapport.getId());
+		System.out.println("id/num qualification du rapport: " + rapport.getQualification());
+		
+		model.addAttribute("rapport", rapport);
+		Integer qualification = rapport.getQualification();
+		List<EssaiAux> essais = microServiceLab.obtenirEssaisParQualification(qualification);
+		model.addAttribute("essais", essais);
+		List<EchantillonAux> echantillons = microServiceLab.obtenirEchantillonsParQualification(qualification);
+		model.addAttribute("echantillons", echantillons);
+		
+		System.out.println("prélèvement d'une sequence d'essai");
+		EssaiAux es = essais.get(0);
+		
+		System.out.println("Essai 0: " + es.getNom());
+		System.out.println("Essai 0, id: " + es.getId());
+		List<SequenceAux> seqs = es.getSequences();
+		SequenceAux seq = seqs.get(0);
+		System.out.println("Nom de sequence prélevée: " + seq.getNom());
+		
+		
+		microServiceLab.enregistrerVersionRapport(rapport);
+		microServiceLab.enregistrerVersionEchantillons(echantillons);
+		microServiceLab.enregistrerVersionEssais(essais);
+		*/
+		
+		return "ok";  // a redéfinir
 	}
 
 	@PostMapping(value = "/qualification/rapport/upload/{qualification}")  // Upload des images de test
@@ -822,11 +858,31 @@ public class Private {
 		List<SequenceAux> seqs = es.getSequences();
 		SequenceAux seq = seqs.get(0);
 		System.out.println("Nom de sequence prélevée: " + seq.getNom());
+		
+		
+		microServiceLab.enregistrerVersionRapport(rapport);
+		microServiceLab.enregistrerVersionEchantillons(echantillons);
+		microServiceLab.enregistrerVersionEssais(essais);
+		
 		/*
 		GroupeRapport groupeRapport = new GroupeRapport(IdRapport, rapport, essais, echantillons);
 		microServiceLab.enregistrerDataRapport(groupeRapport);
+		
 		*/
+		
 		return "rapport";
+	}
+	
+	@GetMapping("/qualification/rapport/supprimer/{id}")
+	public String supprimerRapport(
+			@PathVariable("id") Integer IdRapport
+			, Model model, HttpSession session) {
+		
+		
+		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		microServiceLab.supprimerRapportsParId(IdRapport);
+		
+		return "ok";
 	}
 	
 

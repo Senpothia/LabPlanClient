@@ -215,7 +215,7 @@ public interface MicroServiceLab {
 	@PostMapping("/private/rapport/enregistrer")
 	public void enregistrerInitRapport(FormInitRapport formInitRapport);
 	
-	@PostMapping("/private/rapport/enregistrer")   // ajout en version pour test!
+	@PostMapping("/private/rapport/test/enregistrer")   // ajout en version pour test!
 	public void enregistrerInitRapport2(FormInitRapport formInitRapport);
 	
 	@GetMapping("/private/rapport/liste/{num}")
@@ -232,6 +232,18 @@ public interface MicroServiceLab {
 	
 	@PostMapping("/private/rapport/data/enregistrer")
 	public void enregistrerDataRapport(GroupeRapport groupeRapport);
+	
+	@GetMapping("/private/rapport/supprimer/{id}")
+	public void supprimerRapportsParId(@PathVariable("id") Integer idRapport);
+	
+	@PostMapping("/private/rapport/version/enregistrer")
+	public void enregistrerVersionRapport(RapportAux rapport);
+	
+	@PostMapping("/private/echantillons/version/enregistrer")
+	public void enregistrerVersionEchantillons(List<EchantillonAux> echantillons);
+	
+	@PostMapping("/private/essais/version/enregistrer")
+	public void enregistrerVersionEssais(List<EssaiAux> essais);
 	
 	
 	

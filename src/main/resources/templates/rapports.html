@@ -65,8 +65,9 @@
 							<th scope="col">Version</th>
 							<th scope="col">Référence</th>
 							<th scope="col">Demande</th>
-							<th scope="col">Consulter</th>
+							
 							<th scope="col">Supprimer</th>
+							<th scope="col">Consulter</th>
 							
 						</tr>
 					</thead>
@@ -79,16 +80,18 @@
 							<td th:text="${rapport.version}" />
 							<td th:text="${rapport.identifiant}" />
 							<td th:text="${rapport.demande}" />
-							<td><a th:href="@{/labplan/private/qualification/rapport/voir/{id}(id=${rapport.id})}"><p type="text"
-										class="btn btn-block"
-										style="background-color: #7e60fb; color: white">Voir</p></a>
-							</td>
 							
+									
 							<td><a th:href="@{/labplan/private/qualification/rapport/supprimer/{id}(id=${rapport.id})}"><p type="text"
 										class="btn btn-block"
 										style="background-color: red; color: white">Supprimer</p></a>
 							</td>
-
+							
+							<td><a th:href="@{/labplan/private/qualification/rapport/voir/{id}(id=${rapport.id})}"><p type="text"
+										class="btn btn-block"
+										style="background-color: #7e60fb; color: white">Voir</p></a>
+							</td>
+					
 
 						</tr>
 
