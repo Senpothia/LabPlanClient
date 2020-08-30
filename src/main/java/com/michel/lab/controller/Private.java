@@ -768,7 +768,9 @@ public class Private {
 		System.out.println("identifiant auteur: " + auteur);
 		
 		formInitRapport.setAuteur(auteur);
-		microServiceLab.enregistrerInitRapport2(formInitRapport);  // changé en 2 pour test!
+		Integer idRapport = microServiceLab.enregistrerInitRapport2(formInitRapport);  // changé en 2 pour test!
+		System.out.println("Identifiant rapport enregistrer: " + idRapport);
+		
 		
 		/*
 		Upload upload = new Upload();
@@ -832,7 +834,7 @@ public class Private {
 		return "ok";
 	}
 	
-	@GetMapping("/qualification/rapport/voir/{id}")
+	@GetMapping("/qualification/rapport/voir/{id}")  // Visualisation d'un rapport
 	public String visualiserRapport(
 			@PathVariable("id") Integer IdRapport
 			, Model model, HttpSession session) {
