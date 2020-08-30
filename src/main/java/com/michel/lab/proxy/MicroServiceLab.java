@@ -236,14 +236,13 @@ public interface MicroServiceLab {
 	@GetMapping("/private/rapport/supprimer/{id}")
 	public void supprimerRapportsParId(@PathVariable("id") Integer idRapport);
 	
-	@PostMapping("/private/rapport/version/enregistrer")
-	public void enregistrerVersionRapport(RapportAux rapport);
+	@GetMapping("/private/rapport/echantillons/{id}")
+	public List<EchantillonAux> obtenirEchantillonsParRapportId(@PathVariable(name = "id")Integer idRapport);
 	
-	@PostMapping("/private/echantillons/version/enregistrer")
-	public void enregistrerVersionEchantillons(List<EchantillonAux> echantillons);
+	@GetMapping("/private/rapport/essais/{id}")
+	public List<EssaiAux> obtenirEssaisParRapportId(@PathVariable(name = "id")Integer idRapport);
 	
-	@PostMapping("/private/essais/version/enregistrer")
-	public void enregistrerVersionEssais(List<EssaiAux> essais);
+	
 	
 	
 	
