@@ -212,11 +212,9 @@ public interface MicroServiceLab {
 	@PostMapping("/private/essai/modifier")
 	public void modifierEssai(FormEssai formEssai);
 	
-	@PostMapping("/private/rapport/enregistrer")
-	public void enregistrerInitRapport(FormInitRapport formInitRapport);
 	
-	@PostMapping("/private/rapport/test/enregistrer")   // ajout en version pour test!
-	public Integer enregistrerInitRapport2(FormInitRapport formInitRapport);
+	@PostMapping("/private/rapport/enregistrer")   // ajout en version pour test!
+	public Integer enregistrerInitRapport(FormInitRapport formInitRapport);
 	
 	@GetMapping("/private/rapport/liste/{num}")
 	public List<RapportAux> obtenirRapportsParQualification(@PathVariable(name = "num") Integer numQualification);

@@ -28,6 +28,7 @@ public class Constants {
 	public static final String MODIFIER_ESSAI = "modifierEssai";
 	public static final String RAPPORTS = "rapports";
 	public static final String INIT_RAPPORT = "initRapport";
+	public static final String RAPPORT = "rapport";
 	
 
 }
