@@ -818,7 +818,7 @@ public class Private {
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
 		microServiceLab.supprimerRapportsParId(IdRapport);
 		
-		return "ok";
+		return Constants.ESPACE_PERSONEL;
 	}
 	
 	@GetMapping("/qualification/rapport/voir/{id}")  // Visualisation d'un rapport - version 2
