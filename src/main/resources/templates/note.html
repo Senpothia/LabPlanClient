@@ -1,6 +1,6 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org">
-<html lang="en">
+<html lang="fr">
 <head>
 <!-- Required meta tags -->
 <meta charset="utf-8" />
@@ -14,87 +14,85 @@
 	crossorigin="anonymous">
 
 <link rel="stylesheet" href="/css/styles.css">
+
+<title>LabPlan</title>
 <link rel="shortcut icon" type="image/x-icon" href="/images/logo0.png" />
-<title>Labplan</title>
 </head>
 <body>
 	<div class="container">
 
-		<!-- ENTETE -->
 
-
-		<div th:replace="fragments/entete_post :: entete_post"></div>
+		<!-- Entete -->
+		<span th:if="${authentification}">
+			<div th:replace="fragments/entete_post :: entete_post"></div>
+		</span> <span th:unless="${authentification}">
+			<div th:replace="fragments/entete_init :: entete_init"></div>
+		</span>
 		<!-- ---------------- -->
 
-
-		<!-- IMAGE -->
 		<div class="row">
 			<div class="col">
-				<img class="img-fluid" src="/images/bandeau3.png" alt=""
-					th:src="@{/images/bandeau2.png}" />
+				<img class="img-fluid" src="/images/bandeau7.png"
+					th:src="@{/images/bandeau6.png}" />
 			</div>
 		</div>
-		<!-- ----------------- -->
-		<div class="row d-flex justify-content-center">
 
-			<h1>Liste de toutes les notes</h1>
+		<div class="row">
+
+			<h1>Présentation de la note</h1>
+
 
 		</div>
 
-		<span th:if=${vide}>
-			<div class="row d-flex justify-content-center">
+		<div class="col">
 
-				<h2 style="color: red;">Il n'y a aucune note pour cette
-					qualification!</h2>
-			</div>
-
-		</span> <span th:unless=${vide}>
 			<div class="row">
-
-				<div class="col donnees" style="margin: 5px;">
-
-					<table class="table table-striped">
-						<thead>
-							<tr>
-								<th scope="col">N°</th>
-								<th scope="col">Date</th>
-								<th scope="col">Auteur</th>
-								<th scope="col">Texte</th>
-								<th scope="col">Consulter</th>
-
-							</tr>
-						</thead>
-						<tbody>
-								<tr th:each="note, iStat: ${notes}">
-							<th scope="row"><span th:text="${note.numero}"></span></th>
-							<td th:text="${note.date}" />
-							<td th:text="${note.auteur}" />
-							<td th:text="${note.texte}" />
-							<td><a th:href="@{/labplan/private/note/voir/{id}(id=${note.id})}"><p
-										type="text" class="btn btn-block"
-										style="background-color: #7e60fb; color: white">voir</p></a></td>
-							</tr>
-
-						</tbody>
-					</table>
-
-
-				</div>
-
+				<strong><label>Numéro: </label></strong>
+				<p th:text=${note.numero}></p>
 
 			</div>
 
-		</span>
+			<div class="row">
+				<strong><label>Date: </label></strong>
+				<p th:text=${note.date}></p>
+
+			</div>
+
+			<div class="row">
+				<strong><label>Auteur: </label></strong>
+				<p th:text=${note.auteur}></p>
+
+			</div>
+
+			<div class="row">
+				<strong><label>Texte: </label></strong>
+			</div>
+
+			<div class="row">
+				<p th:text=${note.texte}></p>
+			</div>
+
+		</div>
 
 		<div class="row mt-3">
 			<div class="col d-flex justify-content-end">
 
+			
+				
 				<div class="form-group mr-3">
 					<a
-						th:href="@{/labplan/private/note/ajouter/{qualification}(qualification=${qualification.numero})}"><p
+						th:href="@{/labplan/private/note/supprimer/{id}(id=${note.id})}"><p
 							type="text" class="btn btn-block"
-							style="background-color: #7e60fb; color: white">Ajouter</p></a>
+							style="background-color: red; color: white">Supprimer</p></a>
 				</div>
+				
+					<div class="form-group mr-3">
+					<a
+						th:href="@{/labplan/private/note/modifier/{id}(id=${note.id})}"><p
+							type="text" class="btn btn-block"
+							style="background-color: #7e60fb; color: white">Modifier</p></a>
+				</div>
+				
 				<div class="form-group ">
 					<a href="/labplan/espace"><p type="text" class="btn btn-block"
 							style="background-color: #7e60fb; color: white">Retour</p></a>
@@ -104,16 +102,18 @@
 
 		</div>
 
+
+
+		<!-- footer -->
+
 		<!-- PIED DE PAGE -->
 
 		<div th:replace="fragments/footer :: footer"></div>
 
 		<!-- ********************************************* -->
 
-
+		<!-- footer -->
 	</div>
-	<!-- fin conteneur -->
-
 
 	<!-- Optional JavaScript -->
 	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -129,3 +129,4 @@
 		integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
 		crossorigin="anonymous"></script>
 </body>
+</html>

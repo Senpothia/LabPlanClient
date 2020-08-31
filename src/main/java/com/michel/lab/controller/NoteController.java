@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.michel.lab.constants.Constants;
 import com.michel.lab.model.FormNote;
 
 import com.michel.lab.model.NoteAux;
@@ -52,7 +53,7 @@ public class NoteController {
 			model.addAttribute("vide", false);
 		}
 		
-		return "notes";
+		return Constants.NOTES;
 	}
 	
 	@GetMapping("/ajouter/{id}")
@@ -66,7 +67,7 @@ public class NoteController {
 		model.addAttribute("qualification", qualification);
 		model.addAttribute("formNote", new FormNote());
 		
-		return "createNote";
+		return Constants.CREATION_NOTE;
 	}
 	
 	@PostMapping("/creer/{id}")
@@ -82,9 +83,35 @@ public class NoteController {
 	
 		microServiceLab.ajouterNote(formNote);
 		
-		return "ok";
+		QualificationAux qualification = microServiceLab.obtenirQualificationParNumero(numQualification);
+		model.addAttribute("qualification", qualification);
+		List<NoteAux> notes = microServiceLab.obtenirListeNotesParQualification(numQualification);
+		System.out.println("Taille liste de notes: " + notes.size()); 
+		model.addAttribute("notes", notes);
+		
+		if(notes.isEmpty()) {
+			
+			model.addAttribute("vide", true);
+			
+		}else {
+			
+			model.addAttribute("vide", false);
+		}
+		
+		return Constants.NOTES;
+		
 	}
 	
-	
+	@GetMapping("/voir/{id}")
+	public String afficherNote(
+			@PathVariable(name="id") Integer idNote
+			, Model model, HttpSession session) {
+		
+		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		NoteAux note = microServiceLab.obtenirNote(idNote);
+		System.out.println("numéro de note: " + note.getNumero());
+		model.addAttribute("note", note);
+		return "note";
+	}
 
 }

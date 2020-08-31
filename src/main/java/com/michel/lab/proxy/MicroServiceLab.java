@@ -249,6 +249,9 @@ public interface MicroServiceLab {
 	@PostMapping("/private/note/enregistrer")
 	public void ajouterNote(FormNote formNote);
 	
+	@GetMapping("/private/note/voir/{id}")
+	public NoteAux obtenirNote(@PathVariable(name = "id") Integer idNote);
+	
 	
 	
 	

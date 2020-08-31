@@ -29,6 +29,8 @@ public class Constants {
 	public static final String RAPPORTS = "rapports";
 	public static final String INIT_RAPPORT = "initRapport";
 	public static final String RAPPORT = "rapport";
+	public static final String NOTES= "notes";
+	public static final String CREATION_NOTE= "createNote";
 	
 
 }

@@ -9,7 +9,6 @@ public class NoteAux {
 	private String date;
 	private String texte;
 	private String auteur;
-
 	private boolean active;
 
 	public NoteAux() {
