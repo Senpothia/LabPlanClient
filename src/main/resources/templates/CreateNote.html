@@ -58,8 +58,8 @@
 		<!-- ********************************************* -->
 
 		<div class="container">
-			<form
-				<form th:action="@{/labplan/private/note/creer}"
+			
+				<form th:action="@{/labplan/private/note/creer/{id}(id=${qualification.numero})}"
 				method="post" th:object="${formNote}">
 
 				<div class="col">

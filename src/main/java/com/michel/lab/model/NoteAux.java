@@ -2,24 +2,22 @@ package com.michel.lab.model;
 
 import java.time.LocalDateTime;
 
-public class Note {
+public class NoteAux {
 
 	private Integer id;
-
 	private Integer numero;
-	private LocalDateTime date;
+	private String date;
 	private String texte;
-
-	private Utilisateur auteur;
+	private String auteur;
 
 	private boolean active;
 
-	public Note() {
+	public NoteAux() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Note(Integer id, Integer numero, LocalDateTime date, String texte, Utilisateur auteur, boolean active) {
+	public NoteAux(Integer id, Integer numero, String date, String texte, String auteur, boolean active) {
 		super();
 		this.id = id;
 		this.numero = numero;
@@ -45,11 +43,11 @@ public class Note {
 		this.numero = numero;
 	}
 
-	public LocalDateTime getDate() {
+	public String getDate() {
 		return date;
 	}
 
-	public void setDate(LocalDateTime date) {
+	public void setDate(String date) {
 		this.date = date;
 	}
 
@@ -61,11 +59,11 @@ public class Note {
 		this.texte = texte;
 	}
 
-	public Utilisateur getAuteur() {
+	public String getAuteur() {
 		return auteur;
 	}
 
-	public void setAuteur(Utilisateur auteur) {
+	public void setAuteur(String auteur) {
 		this.auteur = auteur;
 	}
 

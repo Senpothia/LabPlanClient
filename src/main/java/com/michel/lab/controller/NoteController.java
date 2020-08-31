@@ -13,7 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.michel.lab.model.FormNote;
-import com.michel.lab.model.Note;
+
+import com.michel.lab.model.NoteAux;
 import com.michel.lab.model.QualificationAux;
 import com.michel.lab.model.Utilisateur;
 import com.michel.lab.proxy.MicroServiceLab;
@@ -38,11 +39,14 @@ public class NoteController {
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
 		QualificationAux qualification = microServiceLab.obtenirQualificationParNumero(numQualification);
 		model.addAttribute("qualification", qualification);
-		List<Note> notes = microServiceLab.obtenirListeNotesParQualification(numQualification);
+		List<NoteAux> notes = microServiceLab.obtenirListeNotesParQualification(numQualification);
+		System.out.println("Taille liste de notes: " + notes.size()); 
 		model.addAttribute("notes", notes);
+		
 		if(notes.isEmpty()) {
 			
 			model.addAttribute("vide", true);
+			
 		}else {
 			
 			model.addAttribute("vide", false);
@@ -73,28 +77,14 @@ public class NoteController {
 		
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
 		Integer auteur = utilisateur.getId();
-		//formNote.setAuteur(auteur);
-		//formNote.setQualification(numQualification);
+		formNote.setAuteur(auteur);
+		formNote.setQualification(numQualification);
 	
-	//	microServiceLab.ajouterNote(formNote);
+		microServiceLab.ajouterNote(formNote);
 		
 		return "ok";
 	}
 	
-	@PostMapping("/creer")
-	public String CreerNote2(    // enregistrement de la nouvelle note
-		//	@PathVariable(name="id") Integer numQualification
-			Model model, HttpSession session
-			, FormNote formNote) {
-		
-		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		Integer auteur = utilisateur.getId();
-		//formNote.setAuteur(auteur);
-		//formNote.setQualification(numQualification);
 	
-	//	microServiceLab.ajouterNote(formNote);
-		
-		return "ok";
-	}
 
 }
