@@ -109,6 +109,13 @@
 
 				<div class="form-group mr-3 ">
 					<a
+						th:href="@{/labplan/private/note/liste/{id}(id=${qualification.numero})}"><p
+							type="text" class="btn btn-block"
+							style="background-color: #7e60fb; color: white">Notes</p></a>
+				</div>
+
+				<div class="form-group mr-3 ">
+					<a
 						th:href="@{/labplan/private/qualification/rapport/liste/{id}(id=${qualification.numero})}"><p
 							type="text" class="btn btn-block"
 							style="background-color: #7e60fb; color: white">Rapports</p></a>

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.michel.lab.model.Note;
 import com.michel.lab.model.DomaineAux;
 import com.michel.lab.model.EchantillonAux;
 import com.michel.lab.model.FormProcedure;
@@ -36,6 +37,7 @@ import com.michel.lab.model.EssaiAux;
 import com.michel.lab.model.FormEchantillon;
 import com.michel.lab.model.FormEssai;
 import com.michel.lab.model.FormInitRapport;
+import com.michel.lab.model.FormNote;
 
 import feign.Body;
 import feign.Headers;
@@ -239,6 +241,15 @@ public interface MicroServiceLab {
 	
 	@GetMapping("/private/rapport/essais/{id}")
 	public List<EssaiAux> obtenirEssaisParRapportId(@PathVariable(name = "id")Integer idRapport);
+	
+	@GetMapping("/private/note/liste/{id}")
+	public List<Note> obtenirListeNotesParQualification(@PathVariable(name = "id") Integer numQualification);
+	
+	@PostMapping("/private/note/enregistrer/{id}")
+	public void ajouterNote(FormNote formNote);
+	
+	
+	
 	
 	
 	
