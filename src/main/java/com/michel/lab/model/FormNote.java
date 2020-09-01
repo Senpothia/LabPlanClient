@@ -1,7 +1,8 @@
 package com.michel.lab.model;
 
 public class FormNote {
-	
+
+	private Integer id;
 	private Integer auteur; // identifiant de l'auteur
 	private Integer qualification; // numéro de la qualification
 	private String Date;
@@ -12,12 +13,21 @@ public class FormNote {
 		// TODO Auto-generated constructor stub
 	}
 
-	public FormNote(Integer auteur, Integer qualification, String date, String texte) {
+	public FormNote(Integer id, Integer auteur, Integer qualification, String date, String texte) {
 		super();
+		this.id = id;
 		this.auteur = auteur;
 		this.qualification = qualification;
 		Date = date;
 		this.texte = texte;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public Integer getAuteur() {
@@ -52,5 +62,4 @@ public class FormNote {
 		this.texte = texte;
 	}
 
-	
 }

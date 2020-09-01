@@ -252,6 +252,12 @@ public interface MicroServiceLab {
 	@GetMapping("/private/note/voir/{id}")
 	public NoteAux obtenirNote(@PathVariable(name = "id") Integer idNote);
 	
+	@GetMapping("/private/note/supprimer/{id}")
+	public void supprimerNote(@PathVariable(name = "id") Integer idNote);
+	
+	@PostMapping("/private/note/modifier")
+	public void modifierNote(FormNote formNote);
+	
 	
 	
 	
