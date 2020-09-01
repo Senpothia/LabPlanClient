@@ -24,189 +24,205 @@ import com.michel.lab.service.UserConnexion;
 @Controller
 @RequestMapping("/labplan/private/note")
 public class NoteController {
-	
+
 	@Autowired
 	private MicroServiceLab microServiceLab;
 
 	@Autowired
 	private UserConnexion userConnexion;
 
-	
 	@GetMapping("/liste/{id}")
-	public String listerNotes(
-			@PathVariable(name="id") Integer numQualification
-			, Model model, HttpSession session) {
-		
+	public String listerNotes(@PathVariable(name = "id") Integer numQualification, Model model, HttpSession session) {
+
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
 		QualificationAux qualification = microServiceLab.obtenirQualificationParNumero(numQualification);
 		model.addAttribute("qualification", qualification);
 		List<NoteAux> notes = microServiceLab.obtenirListeNotesParQualification(numQualification);
-		System.out.println("Taille liste de notes: " + notes.size()); 
+
+		for (NoteAux n : notes) {
+
+			String text = n.getTexte();
+
+			if (text.length() > 12) {
+				String texte = text.substring(0, 13);
+				n.setTexte(texte);
+			}
+
+		}
+
+		System.out.println("Taille liste de notes: " + notes.size());
 		model.addAttribute("notes", notes);
-		
-		if(notes.isEmpty()) {
-			
+
+		if (notes.isEmpty()) {
+
 			model.addAttribute("vide", true);
-			
-		}else {
-			
+
+		} else {
+
 			model.addAttribute("vide", false);
 		}
-		
+
 		return Constants.NOTES;
 	}
-	
+
 	@GetMapping("/ajouter/{id}")
-	public String ajouterNote(    // accès au formulaire de création de note
-			@PathVariable(name="id") Integer numQualification
-			, Model model, HttpSession session) {
-		
+	public String ajouterNote( // accès au formulaire de création de note
+			@PathVariable(name = "id") Integer numQualification, Model model, HttpSession session) {
+
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
 		QualificationAux qualification = microServiceLab.obtenirQualificationParNumero(numQualification);
 		System.out.println("num qualification: " + qualification.getNumero());
 		model.addAttribute("qualification", qualification);
 		model.addAttribute("formNote", new FormNote());
-		
+
 		return Constants.CREATION_NOTE;
 	}
-	
+
 	@PostMapping("/creer/{id}")
-	public String CreerNote(    // enregistrement de la nouvelle note
-			@PathVariable(name="id") Integer numQualification
-			, Model model, HttpSession session
-			, FormNote formNote) {
-		
+	public String CreerNote( // enregistrement de la nouvelle note
+			@PathVariable(name = "id") Integer numQualification, Model model, HttpSession session, FormNote formNote) {
+
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
 		Integer auteur = utilisateur.getId();
 		formNote.setAuteur(auteur);
 		formNote.setQualification(numQualification);
-	
+
 		microServiceLab.ajouterNote(formNote);
-		
+
 		QualificationAux qualification = microServiceLab.obtenirQualificationParNumero(numQualification);
 		model.addAttribute("qualification", qualification);
 		List<NoteAux> notes = microServiceLab.obtenirListeNotesParQualification(numQualification);
-		System.out.println("Taille liste de notes: " + notes.size()); 
+
+		for (NoteAux n : notes) {
+
+			String text = n.getTexte();
+
+			if (text.length() > 12) {
+				String texte = text.substring(0, 13);
+				n.setTexte(texte);
+			}
+
+		}
+
+		System.out.println("Taille liste de notes: " + notes.size());
 		model.addAttribute("notes", notes);
-		
-		if(notes.isEmpty()) {
-			
+
+		if (notes.isEmpty()) {
+
 			model.addAttribute("vide", true);
-			
-		}else {
-			
+
+		} else {
+
 			model.addAttribute("vide", false);
 		}
-		
+
 		return Constants.NOTES;
-		
+
 	}
-	
+
 	@GetMapping("/voir/{id}")
-	public String afficherNote(
-			@PathVariable(name="id") Integer idNote
-			, Model model, HttpSession session) {
-		
+	public String afficherNote(@PathVariable(name = "id") Integer idNote, Model model, HttpSession session) {
+
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
 		NoteAux note = microServiceLab.obtenirNote(idNote);
 		System.out.println("numéro de note: " + note.getNumero());
 		model.addAttribute("note", note);
 		return "note";
 	}
-	
+
 	@GetMapping("/supprimer/{id}")
-	public String supprimerNote(
-			@PathVariable(name="id") Integer idNote
-			, Model model, HttpSession session) {
-		
+	public String supprimerNote(@PathVariable(name = "id") Integer idNote, Model model, HttpSession session) {
+
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
 		NoteAux note = microServiceLab.obtenirNote(idNote);
-		
+
 		Integer numQualification = note.getQualification();
-		
+
 		microServiceLab.supprimerNote(idNote);
-		
+
 		QualificationAux qualification = microServiceLab.obtenirQualificationParNumero(numQualification);
 		model.addAttribute("qualification", qualification);
 		List<NoteAux> notes = microServiceLab.obtenirListeNotesParQualification(numQualification);
-		System.out.println("Taille liste de notes: " + notes.size()); 
+
+		for (NoteAux n : notes) {
+
+			String text = n.getTexte();
+
+			if (text.length() > 12) {
+				String texte = text.substring(0, 13);
+				n.setTexte(texte);
+			}
+
+		}
+		System.out.println("Taille liste de notes: " + notes.size());
 		model.addAttribute("notes", notes);
-		
-		if(notes.isEmpty()) {
-			
+
+		if (notes.isEmpty()) {
+
 			model.addAttribute("vide", true);
-			
-		}else {
-			
+
+		} else {
+
 			model.addAttribute("vide", false);
 		}
-		
+
 		return Constants.NOTES;
 	}
-	
+
 	@GetMapping("/modifier/{id}")
-	public String modifierNote(
-			@PathVariable(name="id") Integer idNote
-			, Model model, HttpSession session) {
-		
-		
+	public String modifierNote(@PathVariable(name = "id") Integer idNote, Model model, HttpSession session) {
+
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
 		NoteAux note = microServiceLab.obtenirNote(idNote);
 		Integer numQualification = note.getQualification();
 		QualificationAux qualification = microServiceLab.obtenirQualificationParNumero(numQualification);
 		model.addAttribute("qualification", qualification);
-		
+
 		FormNote formNote = new FormNote();
 		formNote.setId(idNote);
 		formNote.setTexte(note.getTexte());
 		formNote.setDate(note.getDate());
 		formNote.setQualification(numQualification);
-		
+
 		model.addAttribute("formNote", formNote);
-		
+
 		return Constants.MODIFICATION_NOTE;
 	}
-	
+
 	@PostMapping("/modifier/{id}/{note}")
-	public String modifierNote(    // enregistrement de la nouvelle note
-			@PathVariable(name="id") Integer numQualification
-			,@PathVariable(name="note") Integer idNote
-			, Model model, HttpSession session
-			, FormNote formNote) {
-		
+	public String modifierNote( // enregistrement de la nouvelle note
+			@PathVariable(name = "id") Integer numQualification, @PathVariable(name = "note") Integer idNote,
+			Model model, HttpSession session, FormNote formNote) {
+
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
 		Integer auteur = utilisateur.getId();
 		formNote.setAuteur(auteur);
 		formNote.setId(idNote);
-		
+
 		NoteAux note = microServiceLab.obtenirNote(idNote);
-		
-		
+
 		System.out.println("id note récupéré: " + formNote.getId());
-		
-	
+
 		microServiceLab.modifierNote(formNote);
-		
+
 		QualificationAux qualification = microServiceLab.obtenirQualificationParNumero(numQualification);
 		model.addAttribute("qualification", qualification);
 		List<NoteAux> notes = microServiceLab.obtenirListeNotesParQualification(numQualification);
-		System.out.println("Taille liste de notes: " + notes.size()); 
+		System.out.println("Taille liste de notes: " + notes.size());
 		model.addAttribute("notes", notes);
-		
-		if(notes.isEmpty()) {
-			
+
+		if (notes.isEmpty()) {
+
 			model.addAttribute("vide", true);
-			
-		}else {
-			
+
+		} else {
+
 			model.addAttribute("vide", false);
 		}
-		
+
 		return Constants.NOTES;
-		
-		
-		//return "ok";
+
+		// return "ok";
 	}
-		
 
 }
