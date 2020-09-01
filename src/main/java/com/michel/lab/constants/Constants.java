@@ -30,6 +30,7 @@ public class Constants {
 	public static final String INIT_RAPPORT = "initRapport";
 	public static final String RAPPORT = "rapport";
 	public static final String NOTES= "notes";
+	public static final String NOTE= "note";
 	public static final String CREATION_NOTE= "createNote";
 	public static final String MODIFICATION_NOTE = "modifierNote";
 	
