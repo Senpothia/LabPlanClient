@@ -63,5 +63,13 @@ public class ProcedureController {
 		return Constants.ESPACE_PERSONEL;
 		
 	}
+	
+	@GetMapping("/procedure/voir")
+	public String voirProcedure(Model model, HttpSession session) {
+		
+		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		return "ok";
+		
+	}
 
 }

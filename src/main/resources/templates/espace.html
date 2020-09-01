@@ -14,7 +14,7 @@
 	crossorigin="anonymous">
 
 <link rel="stylesheet" href="/css/styles.css">
- <link rel="shortcut icon" type="image/x-icon" href="/images/logo0.png" />
+<link rel="shortcut icon" type="image/x-icon" href="/images/logo0.png" />
 <title>Labplan</title>
 </head>
 <body>
@@ -59,7 +59,7 @@
 					<p th:text="'Prénom: ' + ${utilisateur.prenom}"></p>
 				</div>
 
-				
+
 				<div class="row d-flex justify-content-center">
 					<p th:text="'email: ' + ${utilisateur.username}"></p>
 				</div>
@@ -67,11 +67,14 @@
 
 				<div class="row d-flex justify-content-center">
 					<a href="/labplan/compte/modifier"><button type="button"
-							class="btn mb-1 bouton2" style="background-color: #7e60fb; color: white;">Modifier</button></a>
+							class="btn mb-1 bouton2"
+							style="background-color: #7e60fb; color: white;">Modifier</button></a>
 				</div>
-				
+
 				<div class="row d-flex justify-content-center">
-					<a class="btn mb-1 bouton2" style="background-color: #7e60fb; color: white;" th:href="@{/labplan/logout}">Déconnexion</a>
+					<a class="btn mb-1 bouton2"
+						style="background-color: #7e60fb; color: white;"
+						th:href="@{/labplan/logout}">Déconnexion</a>
 				</div>
 
 			</div>
@@ -82,35 +85,54 @@
 						<strong>Fonctionnalités</strong></br>
 					</h3>
 				</div>
-				
+
 				<div class="row d-flex justify-content-center">
-					<a 	th:href="@{/labplan/private/qualifications/{id}(id=${utilisateur.id})}"><button type="button"
-								
-							class="btn mb-1 bouton2" style="background-color: #7e60fb; color: white;">Mes qualifications en cours</button></a>
+					<a
+						th:href="@{/labplan/private/qualifications/{id}(id=${utilisateur.id})}"><button
+							type="button" class="btn mb-1 bouton2"
+							style="background-color: #7e60fb; color: white;">Mes
+							qualifications en cours</button></a>
 				</div>
 
 
 				<div class="row d-flex justify-content-center">
-					<a 	th:href="@{/labplan/private/historique/{id}(id=${utilisateur.id})}"><button type="button"
-							class="btn mb-1 bouton2" style="background-color: #7e60fb; color: white;">Toutes mes qualifications</button></a>
+					<a
+						th:href="@{/labplan/private/historique/{id}(id=${utilisateur.id})}"><button
+							type="button" class="btn mb-1 bouton2"
+							style="background-color: #7e60fb; color: white;">Toutes
+							mes qualifications</button></a>
 				</div>
-				
-					<div class="row d-flex justify-content-center">
+
+				<div class="row d-flex justify-content-center">
 					<a href="/labplan/private/qualifications"><button type="button"
-							class="btn mb-1 bouton2" style="background-color: #7e60fb; color: white;">Toutes les qualifications</button></a>
+							class="btn mb-1 bouton2"
+							style="background-color: #7e60fb; color: white;">Toutes
+							les qualifications</button></a>
 				</div>
 
 				<div class="row d-flex justify-content-center">
-					<a href="/labplan/private/qualification/creation"><button type="button"
-							class="btn mb-1 bouton2" style="background-color:  #7e60fb; color: white;">Créer une qualification</button></a>
+					<a href="/labplan/private/qualification/creation"><button
+							type="button" class="btn mb-1 bouton2"
+							style="background-color: #7e60fb; color: white;">Créer
+							une qualification</button></a>
 				</div>
 				
 					<div class="row d-flex justify-content-center">
-					<a href="/labplan/private/procedure/creation"><button type="button"
-							class="btn mb-1 bouton2" style="background-color:  #7e60fb; color: white;">Créer une procédure</button></a>
+					<a href="/labplan/private/procedure/voir"><button
+							type="button" class="btn mb-1 bouton2"
+							style="background-color: #7e60fb; color: white;">voir
+							les procédures</button></a>
 				</div>
-						
-			
+				
+
+				<div class="row d-flex justify-content-center">
+					<a href="/labplan/private/procedure/creation"><button
+							type="button" class="btn mb-1 bouton2"
+							style="background-color: #7e60fb; color: white;">Créer
+							une procédure</button></a>
+				</div>
+
+
 			</div>
 
 
