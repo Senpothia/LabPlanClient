@@ -1,23 +1,33 @@
 package com.michel.lab.model;
 
 public class FormProcedure {
-	
+
+	private Integer id;
 	private String nom;
 	private String referentiel;
 	private String version;
 	private String domaine;
-	
+
 	public FormProcedure() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public FormProcedure(String nom, String referentiel, String version, String domaine) {
+	public FormProcedure(Integer id, String nom, String referentiel, String version, String domaine) {
 		super();
+		this.id = id;
 		this.nom = nom;
 		this.referentiel = referentiel;
 		this.version = version;
 		this.domaine = domaine;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public String getNom() {
@@ -51,6 +61,5 @@ public class FormProcedure {
 	public void setDomaine(String domaine) {
 		this.domaine = domaine;
 	}
-
 
 }

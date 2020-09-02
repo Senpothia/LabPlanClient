@@ -32,94 +32,106 @@ public class ProcedureController {
 	private UserConnexion userConnexion;
 
 	@GetMapping("/procedure/creation")
-	public String creationProcedure(@RequestParam(name = "selection", defaultValue = "true", required = false) boolean selection,Model model, HttpSession session) {
-		
+	public String creationProcedure(
+			@RequestParam(name = "selection", defaultValue = "true", required = false) boolean selection, Model model,
+			HttpSession session) {
+
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		
+
 		model.addAttribute("formProcedure", new FormProcedure());
-		//List<String> nomsDomaines = microServiceLab.tousLesDomaines();
-		//model.addAttribute("domaines", nomsDomaines);
-		
+		// List<String> nomsDomaines = microServiceLab.tousLesDomaines();
+		// model.addAttribute("domaines", nomsDomaines);
+
 		if (!selection) {
-			
+
 			model.addAttribute("selection", false);
-			
+
 		} else {
-			
+
 			List<String> nomsDomaines = microServiceLab.tousLesDomaines();
 			model.addAttribute("domaines", nomsDomaines);
 			model.addAttribute("selection", true);
-		
+
 		}
-		
+
 		return Constants.CREATION_PROCEDURE;
 
 	}
-	
+
 	@PostMapping("/procedure/creation")
 	public String enregistrerProcedure(String domaine, Model model, HttpSession session, FormProcedure formProcedure) {
-		
+
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
 		System.out.println("Domaine récupéré: " + domaine);
 		microServiceLab.saveProcedure(formProcedure);
 		return Constants.ESPACE_PERSONEL;
-		
+
 	}
-	
+
 	@GetMapping("/procedure/liste/voir")
 	public String voirProcedure(Model model, HttpSession session) {
-		
+
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
 		List<String> nomsDomaines = microServiceLab.tousLesDomaines();
 		model.addAttribute("domaines", nomsDomaines);
 		model.addAttribute("formProcedure", new FormProcedure());
-		
+
 		return "choisirProcedure";
-		
+
 	}
-	
+
 	@PostMapping("/procedure/liste/voir")
 	public String listerProcedures(String domaine, Model model, HttpSession session, FormProcedure formProcedure) {
-		
+
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
 		System.out.println("Domaine récupéré: " + domaine);
 		List<ProcedureAux> procedures = microServiceLab.obtenirProceduresParDomaine(domaine);
 		for (ProcedureAux p : procedures) {
-			
+
 			System.out.println("Nom procédure: " + p.getNom());
 		}
 		model.addAttribute("procedures", procedures);
-		
+
 		return "procedures";
-		
+
 	}
-	
+
 	@GetMapping("/procedure/modifier/{id}")
-	public String modifierProcedure(
-			@PathVariable(name = "id") Integer id,
-			Model model, HttpSession session) {
-		
+	public String modifierProcedure(@PathVariable(name = "id") Integer id, Model model, HttpSession session) {
+
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
 		ProcedureAux procedure = microServiceLab.obtenirUneProcedure(id);
-		
+
 		FormProcedure formProcedure = new FormProcedure();
-		
+
 		formProcedure.setDomaine(procedure.getDomaine());
 		formProcedure.setNom(procedure.getNom());
 		formProcedure.setReferentiel(procedure.getReferentiel());
 		formProcedure.setVersion(procedure.getVersion());
-		
-		model.addAttribute("formProcedure", formProcedure );
+
+		model.addAttribute("formProcedure", formProcedure);
 		model.addAttribute("id", id);
 		return "modifierProcedure";
-		
+
 	}
-	
+
 	@PostMapping("/procedure/modifier/{id}")
-	public String enregistrerModificationProcedure(@PathVariable(name = "id") Integer id,
-			Model model, HttpSession session) {
+	public String enregistrerModificationProcedure(@PathVariable(name = "id") Integer id, Model model,
+			HttpSession session, FormProcedure formProcedure) {
 		
-		return "ok";
+		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		formProcedure.setId(id);
+		microServiceLab.modifierProcedure(formProcedure);
+		
+		List<ProcedureAux> procedures = microServiceLab.obtenirProceduresParDomaine(formProcedure.getDomaine());
+		for (ProcedureAux p : procedures) {
+
+			System.out.println("Nom procédure: " + p.getNom());
+		}
+		model.addAttribute("procedures", procedures);
+
+		return "procedures";
+		//return "ok";
 	}
 
 }

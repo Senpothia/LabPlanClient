@@ -264,6 +264,9 @@ public interface MicroServiceLab {
 	@GetMapping("/private/procedure/obtenir/{id}")
 	public ProcedureAux obtenirUneProcedure(@PathVariable(name = "id") Integer id);
 	
+	@PostMapping("/private/procedure/modifier")
+	public void modifierProcedure(FormProcedure formProcedure);
+	
 	
 	
 	
