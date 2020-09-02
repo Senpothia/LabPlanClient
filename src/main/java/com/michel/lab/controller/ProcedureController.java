@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -91,6 +92,34 @@ public class ProcedureController {
 		
 		return "procedures";
 		
+	}
+	
+	@GetMapping("/procedure/modifier/{id}")
+	public String modifierProcedure(
+			@PathVariable(name = "id") Integer id,
+			Model model, HttpSession session) {
+		
+		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		ProcedureAux procedure = microServiceLab.obtenirUneProcedure(id);
+		
+		FormProcedure formProcedure = new FormProcedure();
+		
+		formProcedure.setDomaine(procedure.getDomaine());
+		formProcedure.setNom(procedure.getNom());
+		formProcedure.setReferentiel(procedure.getReferentiel());
+		formProcedure.setVersion(procedure.getVersion());
+		
+		model.addAttribute("formProcedure", formProcedure );
+		model.addAttribute("id", id);
+		return "modifierProcedure";
+		
+	}
+	
+	@PostMapping("/procedure/modifier/{id}")
+	public String enregistrerModificationProcedure(@PathVariable(name = "id") Integer id,
+			Model model, HttpSession session) {
+		
+		return "ok";
 	}
 
 }

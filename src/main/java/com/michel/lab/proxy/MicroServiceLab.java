@@ -261,6 +261,9 @@ public interface MicroServiceLab {
 	@GetMapping("/private/procedure/liste/domaine/{domaine}")
 	public List<ProcedureAux> obtenirProceduresParDomaine(@PathVariable(name = "domaine") String domaine);
 	
+	@GetMapping("/private/procedure/obtenir/{id}")
+	public ProcedureAux obtenirUneProcedure(@PathVariable(name = "id") Integer id);
+	
 	
 	
 	
