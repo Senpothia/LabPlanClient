@@ -258,6 +258,9 @@ public interface MicroServiceLab {
 	@PostMapping("/private/note/modifier")
 	public void modifierNote(FormNote formNote);
 	
+	@GetMapping("/private/procedure/liste/domaine/{domaine}")
+	public List<ProcedureAux> obtenirProceduresParDomaine(@PathVariable(name = "domaine") String domaine);
+	
 	
 	
 	

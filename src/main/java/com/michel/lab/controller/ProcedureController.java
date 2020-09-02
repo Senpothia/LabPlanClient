@@ -16,6 +16,7 @@ import com.michel.lab.service.UserConnexion;
 import com.michel.lab.constants.Constants;
 import com.michel.lab.model.FormProcedure;
 import com.michel.lab.model.FormQualif;
+import com.michel.lab.model.ProcedureAux;
 import com.michel.lab.model.Utilisateur;
 import com.michel.lab.proxy.MicroServiceLab;
 
@@ -64,11 +65,31 @@ public class ProcedureController {
 		
 	}
 	
-	@GetMapping("/procedure/voir")
+	@GetMapping("/procedure/liste/voir")
 	public String voirProcedure(Model model, HttpSession session) {
 		
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		return "ok";
+		List<String> nomsDomaines = microServiceLab.tousLesDomaines();
+		model.addAttribute("domaines", nomsDomaines);
+		model.addAttribute("formProcedure", new FormProcedure());
+		
+		return "choisirProcedure";
+		
+	}
+	
+	@PostMapping("/procedure/liste/voir")
+	public String listerProcedures(String domaine, Model model, HttpSession session, FormProcedure formProcedure) {
+		
+		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		System.out.println("Domaine récupéré: " + domaine);
+		List<ProcedureAux> procedures = microServiceLab.obtenirProceduresParDomaine(domaine);
+		for (ProcedureAux p : procedures) {
+			
+			System.out.println("Nom procédure: " + p.getNom());
+		}
+		model.addAttribute("procedures", procedures);
+		
+		return "procedures";
 		
 	}
 
