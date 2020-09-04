@@ -131,7 +131,7 @@ public class ProcedureController {
 		model.addAttribute("procedures", procedures);
 
 		return "procedures";
-		//return "ok";
+		
 	}
 
 }
