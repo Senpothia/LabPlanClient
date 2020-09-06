@@ -83,42 +83,42 @@ public class RapportViewPdf extends AbstractPdfView {
 		document.add(margeSup);
 
 		Paragraph titre = new Paragraph(
-				new Chunk(rapport.getTitre(), FontFactory.getFont(FontFactory.TIMES_ROMAN, 24)));
+				new Chunk(rapport.getTitre(), FontFactory.getFont(FontFactory.TIMES_ROMAN, 28)));
 		titre.setAlignment(Element.ALIGN_CENTER);
 		titre.setSpacingAfter(40);
 		document.add(titre);
 
 		Paragraph auteur = new Paragraph(
-				new Chunk(rapport.getAuteur(), FontFactory.getFont(FontFactory.TIMES_ROMAN, 12)));
+				new Chunk(rapport.getAuteur(), FontFactory.getFont(FontFactory.TIMES_ROMAN, 16)));
 		auteur.setAlignment(Element.ALIGN_CENTER);
 		auteur.setSpacingAfter(10);
 		document.add(auteur);
 
-		Paragraph date = new Paragraph(new Chunk(rapport.getDate(), FontFactory.getFont(FontFactory.TIMES_ROMAN, 12)));
+		Paragraph date = new Paragraph(new Chunk(rapport.getDate(), FontFactory.getFont(FontFactory.TIMES_ROMAN, 16)));
 		date.setAlignment(Element.ALIGN_CENTER);
 		date.setSpacingAfter(10);
 		document.add(date);
 
 		Paragraph edition = new Paragraph(new Chunk("Edition: " + rapport.getVersion().toString(),
-				FontFactory.getFont(FontFactory.TIMES_ROMAN, 12)));
+				FontFactory.getFont(FontFactory.TIMES_ROMAN, 16)));
 		edition.setAlignment(Element.ALIGN_CENTER);
 		edition.setSpacingAfter(10);
 		document.add(edition);
 
 		Paragraph projet = new Paragraph(
-				new Chunk("Projet: " + rapport.getProjet(), FontFactory.getFont(FontFactory.TIMES_ROMAN, 12)));
+				new Chunk("Projet: " + rapport.getProjet(), FontFactory.getFont(FontFactory.TIMES_ROMAN, 16)));
 		projet.setAlignment(Element.ALIGN_CENTER);
 		projet.setSpacingAfter(10);
 		document.add(projet);
 
 		Paragraph demande = new Paragraph(
-				new Chunk("Demande: " + rapport.getDemande(), FontFactory.getFont(FontFactory.TIMES_ROMAN, 12)));
+				new Chunk("Demande: " + rapport.getDemande(), FontFactory.getFont(FontFactory.TIMES_ROMAN, 16)));
 		demande.setAlignment(Element.ALIGN_CENTER);
 		demande.setSpacingAfter(10);
 		document.add(demande);
 
 		Paragraph reference = new Paragraph(
-				new Chunk("Référence: " + rapport.getIdentifiant(), FontFactory.getFont(FontFactory.TIMES_ROMAN, 12)));
+				new Chunk("Référence: " + rapport.getIdentifiant(), FontFactory.getFont(FontFactory.TIMES_ROMAN, 16)));
 		reference.setAlignment(Element.ALIGN_CENTER);
 		reference.setSpacingAfter(10);
 		document.add(reference);
