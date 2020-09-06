@@ -36,6 +36,7 @@ import com.michel.lab.constants.Constants;
 import com.michel.lab.model.EchantillonAux;
 import com.michel.lab.model.EssaiAux;
 import com.michel.lab.model.RapportAux;
+import com.michel.lab.model.SequenceAux;
 
 import rx.annotations.Beta;
 
@@ -154,13 +155,132 @@ public class RapportViewPdf extends AbstractPdfView {
 				new Chunk("Echantillons", FontFactory.getFont(FontFactory.TIMES_ROMAN, 24)));
 		EchantillonsTitre.setSpacingAfter(20);
 		document.add(EchantillonsTitre);
-		
+
 		//////////////////////////////////////////////////////////
 
-		PdfPTable table = new PdfPTable(6);
+		PdfPTable tableEchantillon = new PdfPTable(6);
+		tableEchantillon.setWidths(new float[] { 1, 1, 1.5f, 1, 3, 1 });
+
+		tableEchantillon.addCell("Ordre");
+		tableEchantillon.addCell("Numéro");
+		tableEchantillon.addCell("Date");
+		tableEchantillon.addCell("Version");
+		tableEchantillon.addCell("Caractéristique");
+		tableEchantillon.addCell("Statut");
+		int i = 1;
+		for (EchantillonAux e : echantillons) {
+
+			tableEchantillon.addCell(String.valueOf(i));
+			tableEchantillon.addCell(e.getNumero().toString());
+			tableEchantillon.addCell(e.getDate());
+			tableEchantillon.addCell(String.valueOf(e.getVersion()));
+			tableEchantillon.addCell(e.getCaracteristique());
+
+			boolean statut = e.isStatut();
+			String etat = null;
+			if (statut) {
+
+				etat = "Actif";
+			} else {
+
+				etat = "Inactif";
+			}
+			tableEchantillon.addCell(etat);
+			i++;
+		}
+
+		tableEchantillon.setSpacingAfter(20);
+		document.add(tableEchantillon);
+
+		Paragraph EssaisTitre = new Paragraph(new Chunk("Essais", FontFactory.getFont(FontFactory.TIMES_ROMAN, 24)));
+		EssaisTitre.setSpacingAfter(30);
+		document.add(EssaisTitre);
+
+		for (EssaiAux es : essais) {
+
+			PdfPTable esTable = new PdfPTable(6);
+			esTable.setWidths(new float[] { 0.5f, 3.5f, 1, 1, 1, 1 });
+
+			esTable.addCell("N°");
+			esTable.addCell("Essai");
+			esTable.addCell("Version");
+			esTable.addCell("Domaine");
+			esTable.addCell("Statut");
+			esTable.addCell("Résultat");
+			int j = 1;
+
+			esTable.addCell(es.getNumero().toString());
+			esTable.addCell(es.getNom());
+			esTable.addCell(es.getVersion());
+			esTable.addCell(es.getDomaine());
+			esTable.addCell(es.getStatut());
+			esTable.addCell(es.getResultat());
+
+			esTable.setSpacingAfter(20);
+			document.add(esTable);
+
+			List<SequenceAux> sequences = es.getSequences();
+
+			Paragraph sequenceTitre = new Paragraph(
+					new Chunk("    Séquences", FontFactory.getFont(FontFactory.TIMES_ROMAN, 18)));
+			sequenceTitre.setSpacingAfter(30);
+			document.add(sequenceTitre);
+
+			for (SequenceAux s : sequences) {
+
+				PdfPTable seqTable = new PdfPTable(10);
+				seqTable.setWidths(new float[] { 1, 2f, 2.5f, 3.0f, 3.0f, 2.5f, 2.0f, 5.0f, 2.0f, 2.5f });
+
+				seqTable.addCell(new Phrase("N°", FontFactory.getFont(FontFactory.TIMES_ROMAN, 9)));
+				seqTable.addCell(new Phrase("Nom", FontFactory.getFont(FontFactory.TIMES_ROMAN, 9)));
+				seqTable.addCell(new Phrase("Niveau", FontFactory.getFont(FontFactory.TIMES_ROMAN, 9)));
+				seqTable.addCell(new Phrase("Début", FontFactory.getFont(FontFactory.TIMES_ROMAN, 9)));
+				seqTable.addCell(new Phrase("Fin", FontFactory.getFont(FontFactory.TIMES_ROMAN, 9)));
+				seqTable.addCell(new Phrase("Durée", FontFactory.getFont(FontFactory.TIMES_ROMAN, 9)));
+				seqTable.addCell(new Phrase("Profil", FontFactory.getFont(FontFactory.TIMES_ROMAN, 9)));
+				seqTable.addCell(new Phrase("Commentaire", FontFactory.getFont(FontFactory.TIMES_ROMAN, 9)));
+				seqTable.addCell(new Phrase("Statut", FontFactory.getFont(FontFactory.TIMES_ROMAN, 9)));
+				seqTable.addCell(new Phrase("Résultat", FontFactory.getFont(FontFactory.TIMES_ROMAN, 9)));
+				int k = 1;
+
+				//seqTable.addCell(String.valueOf(k));
+				seqTable.addCell(new Phrase(String.valueOf(k), FontFactory.getFont(FontFactory.TIMES_ROMAN, 10)));
+				seqTable.addCell(new Phrase(s.getNom(), FontFactory.getFont(FontFactory.TIMES_ROMAN, 10)));
+				seqTable.addCell(new Phrase(s.getNiveau(), FontFactory.getFont(FontFactory.TIMES_ROMAN, 10)));
+				seqTable.addCell(new Phrase(s.getDebutText(), FontFactory.getFont(FontFactory.TIMES_ROMAN, 10)));
+				seqTable.addCell(new Phrase(s.getFinText(), FontFactory.getFont(FontFactory.TIMES_ROMAN, 10)));
+				seqTable.addCell(new Phrase("Durée", FontFactory.getFont(FontFactory.TIMES_ROMAN, 10)));
+				seqTable.addCell(new Phrase(s.getProfil(), FontFactory.getFont(FontFactory.TIMES_ROMAN, 10)));
+				seqTable.addCell(new Phrase(s.getCommentaire(), FontFactory.getFont(FontFactory.TIMES_ROMAN, 10)));
+				seqTable.addCell(new Phrase(s.getActif(), FontFactory.getFont(FontFactory.TIMES_ROMAN, 10)));
+				seqTable.addCell(new Phrase( s.getAvis(), FontFactory.getFont(FontFactory.TIMES_ROMAN, 10)));
+
+				seqTable.setSpacingAfter(20);
+				document.add(seqTable);
+			}
+
+			document.newPage();
+			
+			Paragraph margeSup2 = new Paragraph(new Chunk(" ", FontFactory.getFont(FontFactory.TIMES_ROMAN, 24)));
+			margeSup2.setAlignment(Element.ALIGN_CENTER);
+			margeSup2.setSpacingAfter(-20);
+			document.add(margeSup2);
+			
 		
-		table.addCell("Qualification");
-		document.add(table);
+
+		}
+		
+		Paragraph avisTitre = new Paragraph(
+				new Chunk("Avis", FontFactory.getFont(FontFactory.TIMES_ROMAN, 24)));
+		avisTitre.setSpacingAfter(20);
+		document.add(avisTitre);
+		
+		Paragraph avis = new Paragraph(
+				new Chunk(rapport.getAvis(), FontFactory.getFont(FontFactory.TIMES_ROMAN, 12)));
+		avis.setSpacingAfter(20);
+		document.add(avis);
+		
+		
 
 	}
 
