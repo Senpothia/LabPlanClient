@@ -143,7 +143,7 @@ public class RapportViewPdf extends AbstractPdfView {
 		margeSup1.setSpacingAfter(-20);
 		document.add(margeSup1);
 
-		Paragraph objetTitre = new Paragraph(new Chunk("Objet", FontFactory.getFont(FontFactory.TIMES_ROMAN, 24)));
+		Paragraph objetTitre = new Paragraph(new Chunk("1. Objet", FontFactory.getFont(FontFactory.TIMES_ROMAN, 24)));
 		Paragraph objet = new Paragraph(
 				new Chunk(rapport.getObjet(), FontFactory.getFont(FontFactory.TIMES_ROMAN, 12)));
 		objet.setSpacingAfter(20);
@@ -152,7 +152,7 @@ public class RapportViewPdf extends AbstractPdfView {
 		document.add(objet);
 
 		Paragraph EchantillonsTitre = new Paragraph(
-				new Chunk("Echantillons", FontFactory.getFont(FontFactory.TIMES_ROMAN, 24)));
+				new Chunk("2. Echantillons", FontFactory.getFont(FontFactory.TIMES_ROMAN, 24)));
 		EchantillonsTitre.setSpacingAfter(20);
 		document.add(EchantillonsTitre);
 
@@ -192,7 +192,7 @@ public class RapportViewPdf extends AbstractPdfView {
 		tableEchantillon.setSpacingAfter(20);
 		document.add(tableEchantillon);
 
-		Paragraph EssaisTitre = new Paragraph(new Chunk("Essais", FontFactory.getFont(FontFactory.TIMES_ROMAN, 24)));
+		Paragraph EssaisTitre = new Paragraph(new Chunk("3. Essais", FontFactory.getFont(FontFactory.TIMES_ROMAN, 24)));
 		EssaisTitre.setSpacingAfter(30);
 		document.add(EssaisTitre);
 
@@ -225,9 +225,10 @@ public class RapportViewPdf extends AbstractPdfView {
 					new Chunk("    Séquences", FontFactory.getFont(FontFactory.TIMES_ROMAN, 18)));
 			sequenceTitre.setSpacingAfter(30);
 			document.add(sequenceTitre);
-
+			int k = 1;
+			
 			for (SequenceAux s : sequences) {
-
+/*
 				PdfPTable seqTable = new PdfPTable(10);
 				seqTable.setWidths(new float[] { 1, 2f, 2.5f, 3.0f, 3.0f, 2.5f, 2.0f, 5.0f, 2.0f, 2.5f });
 
@@ -255,8 +256,38 @@ public class RapportViewPdf extends AbstractPdfView {
 				seqTable.addCell(new Phrase(s.getActif(), FontFactory.getFont(FontFactory.TIMES_ROMAN, 10)));
 				seqTable.addCell(new Phrase( s.getAvis(), FontFactory.getFont(FontFactory.TIMES_ROMAN, 10)));
 
+ 				*/
+				
+				PdfPTable seqTable = new PdfPTable(2);
+				seqTable.setWidths(new float[] { 1, 2f});
+				
+				seqTable.addCell(new Phrase("N°", FontFactory.getFont(FontFactory.TIMES_ROMAN, 9)));
+				
+				seqTable.addCell(new Phrase(String.valueOf(k), FontFactory.getFont(FontFactory.TIMES_ROMAN, 10)));
+				seqTable.addCell(new Phrase("Nom", FontFactory.getFont(FontFactory.TIMES_ROMAN, 9)));
+				seqTable.addCell(new Phrase(s.getNom(), FontFactory.getFont(FontFactory.TIMES_ROMAN, 10)));
+				
+				seqTable.addCell(new Phrase("Niveau", FontFactory.getFont(FontFactory.TIMES_ROMAN, 9)));
+				seqTable.addCell(new Phrase(s.getNiveau(), FontFactory.getFont(FontFactory.TIMES_ROMAN, 10)));
+				seqTable.addCell(new Phrase("Début", FontFactory.getFont(FontFactory.TIMES_ROMAN, 9)));
+				seqTable.addCell(new Phrase(s.getDebutText(), FontFactory.getFont(FontFactory.TIMES_ROMAN, 10)));
+				seqTable.addCell(new Phrase("Fin", FontFactory.getFont(FontFactory.TIMES_ROMAN, 9)));
+				seqTable.addCell(new Phrase(s.getFinText(), FontFactory.getFont(FontFactory.TIMES_ROMAN, 10)));
+				seqTable.addCell(new Phrase("Durée", FontFactory.getFont(FontFactory.TIMES_ROMAN, 9)));
+				seqTable.addCell(new Phrase("Durée", FontFactory.getFont(FontFactory.TIMES_ROMAN, 10)));
+				seqTable.addCell(new Phrase("Profil", FontFactory.getFont(FontFactory.TIMES_ROMAN, 9)));
+				seqTable.addCell(new Phrase(s.getProfil(), FontFactory.getFont(FontFactory.TIMES_ROMAN, 10)));
+				seqTable.addCell(new Phrase("Commentaire", FontFactory.getFont(FontFactory.TIMES_ROMAN, 9)));
+				seqTable.addCell(new Phrase(s.getCommentaire(), FontFactory.getFont(FontFactory.TIMES_ROMAN, 10)));
+				seqTable.addCell(new Phrase("Statut", FontFactory.getFont(FontFactory.TIMES_ROMAN, 9)));
+				seqTable.addCell(new Phrase(s.getActif(), FontFactory.getFont(FontFactory.TIMES_ROMAN, 10)));
+				seqTable.addCell(new Phrase("Résultat", FontFactory.getFont(FontFactory.TIMES_ROMAN, 9)));
+				seqTable.addCell(new Phrase( s.getAvis(), FontFactory.getFont(FontFactory.TIMES_ROMAN, 10)));
+				
+				///////////////////////////////
 				seqTable.setSpacingAfter(20);
 				document.add(seqTable);
+				k++;
 			}
 
 			document.newPage();
@@ -271,7 +302,7 @@ public class RapportViewPdf extends AbstractPdfView {
 		}
 		
 		Paragraph avisTitre = new Paragraph(
-				new Chunk("Avis", FontFactory.getFont(FontFactory.TIMES_ROMAN, 24)));
+				new Chunk("4. Avis", FontFactory.getFont(FontFactory.TIMES_ROMAN, 24)));
 		avisTitre.setSpacingAfter(20);
 		document.add(avisTitre);
 		
