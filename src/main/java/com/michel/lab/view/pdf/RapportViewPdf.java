@@ -6,6 +6,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -55,7 +57,7 @@ public class RapportViewPdf extends AbstractPdfView {
 		RapportAux rapport = (RapportAux) model.get("rapport");
 
 		try {
-			Image entete = Image.getInstance("src\\main\\resources\\static\\images\\Bandeausup1.jpg");
+			Image entete = Image.getInstance("src\\main\\resources\\static\\images\\bandeau_entreprise1.png");
 			entete.scaleAbsolute(523, 100);
 			HeaderFooter header = new HeaderFooter(new Phrase(new Chunk(entete, 0, -35)), false);
 			HeaderFooter footer = new HeaderFooter(
@@ -282,45 +284,7 @@ public class RapportViewPdf extends AbstractPdfView {
 			int k = 1;
 
 			for (SequenceAux s : sequences) {
-				/*
-				 * PdfPTable seqTable = new PdfPTable(10); seqTable.setWidths(new float[] { 1,
-				 * 2f, 2.5f, 3.0f, 3.0f, 2.5f, 2.0f, 5.0f, 2.0f, 2.5f });
-				 * 
-				 * seqTable.addCell(new Phrase("N°",
-				 * FontFactory.getFont(FontFactory.TIMES_ROMAN, 9))); seqTable.addCell(new
-				 * Phrase("Nom", FontFactory.getFont(FontFactory.TIMES_ROMAN, 9)));
-				 * seqTable.addCell(new Phrase("Niveau",
-				 * FontFactory.getFont(FontFactory.TIMES_ROMAN, 9))); seqTable.addCell(new
-				 * Phrase("Début", FontFactory.getFont(FontFactory.TIMES_ROMAN, 9)));
-				 * seqTable.addCell(new Phrase("Fin",
-				 * FontFactory.getFont(FontFactory.TIMES_ROMAN, 9))); seqTable.addCell(new
-				 * Phrase("Durée", FontFactory.getFont(FontFactory.TIMES_ROMAN, 9)));
-				 * seqTable.addCell(new Phrase("Profil",
-				 * FontFactory.getFont(FontFactory.TIMES_ROMAN, 9))); seqTable.addCell(new
-				 * Phrase("Commentaire", FontFactory.getFont(FontFactory.TIMES_ROMAN, 9)));
-				 * seqTable.addCell(new Phrase("Statut",
-				 * FontFactory.getFont(FontFactory.TIMES_ROMAN, 9))); seqTable.addCell(new
-				 * Phrase("Résultat", FontFactory.getFont(FontFactory.TIMES_ROMAN, 9))); int k =
-				 * 1;
-				 * 
-				 * //seqTable.addCell(String.valueOf(k)); seqTable.addCell(new
-				 * Phrase(String.valueOf(k), FontFactory.getFont(FontFactory.TIMES_ROMAN, 10)));
-				 * seqTable.addCell(new Phrase(s.getNom(),
-				 * FontFactory.getFont(FontFactory.TIMES_ROMAN, 10))); seqTable.addCell(new
-				 * Phrase(s.getNiveau(), FontFactory.getFont(FontFactory.TIMES_ROMAN, 10)));
-				 * seqTable.addCell(new Phrase(s.getDebutText(),
-				 * FontFactory.getFont(FontFactory.TIMES_ROMAN, 10))); seqTable.addCell(new
-				 * Phrase(s.getFinText(), FontFactory.getFont(FontFactory.TIMES_ROMAN, 10)));
-				 * seqTable.addCell(new Phrase("Durée",
-				 * FontFactory.getFont(FontFactory.TIMES_ROMAN, 10))); seqTable.addCell(new
-				 * Phrase(s.getProfil(), FontFactory.getFont(FontFactory.TIMES_ROMAN, 10)));
-				 * seqTable.addCell(new Phrase(s.getCommentaire(),
-				 * FontFactory.getFont(FontFactory.TIMES_ROMAN, 10))); seqTable.addCell(new
-				 * Phrase(s.getActif(), FontFactory.getFont(FontFactory.TIMES_ROMAN, 10)));
-				 * seqTable.addCell(new Phrase( s.getAvis(),
-				 * FontFactory.getFont(FontFactory.TIMES_ROMAN, 10)));
-				 * 
-				 */
+				
 
 				System.out.println("Numéro de page: " + writer.getPageNumber() + " k: " + k);
 
@@ -332,7 +296,7 @@ public class RapportViewPdf extends AbstractPdfView {
 					Paragraph margeSup2 = new Paragraph(
 							new Chunk(" ", FontFactory.getFont(FontFactory.TIMES_ROMAN, 24)));
 					margeSup2.setAlignment(Element.ALIGN_CENTER);
-					margeSup2.setSpacingAfter(20);
+					margeSup2.setSpacingAfter(30);
 					document.add(margeSup2);
 
 				}
@@ -351,10 +315,25 @@ public class RapportViewPdf extends AbstractPdfView {
 				 * 
 				 */
 				
+				LocalDateTime debut = s.getDebut();
+				LocalDateTime fin = s.getFin();
+				Duration duration = Duration.between(debut, fin);
+				Long dureeLongHours = duration.toHours();
+				Long dureeLongMins = duration.toMinutes();
+				String duree = null;
+				
+				if (dureeLongHours<1) {
+					
+					duree = Long.toString(dureeLongMins) + "min";
+				}else {
+					
+					duree = Long.toString(dureeLongHours) + "h";
+				}
+				
 				PdfPCell cell21 = new PdfPCell(new Paragraph("N°"));
 				cell21.setBackgroundColor(new Color(17, 142, 46));
 				
-				PdfPCell cell22 = new PdfPCell(new Phrase(String.valueOf(k), FontFactory.getFont(FontFactory.TIMES_ROMAN, 10)));
+				PdfPCell cell22 = new PdfPCell(new Phrase(String.valueOf(k), FontFactory.getFont(FontFactory.TIMES_ROMAN, 12)));
 				cell22.setBackgroundColor(new Color(17, 142, 46));
 				
 
@@ -367,22 +346,22 @@ public class RapportViewPdf extends AbstractPdfView {
 				seqTable.addCell(cell21);
 				seqTable.addCell(cell22);
 
-				seqTable.addCell(new Phrase("Niveau", FontFactory.getFont(FontFactory.TIMES_ROMAN, 9)));
-				seqTable.addCell(new Phrase(s.getNiveau(), FontFactory.getFont(FontFactory.TIMES_ROMAN, 10)));
-				seqTable.addCell(new Phrase("Début", FontFactory.getFont(FontFactory.TIMES_ROMAN, 9)));
-				seqTable.addCell(new Phrase(s.getDebutText(), FontFactory.getFont(FontFactory.TIMES_ROMAN, 10)));
-				seqTable.addCell(new Phrase("Fin", FontFactory.getFont(FontFactory.TIMES_ROMAN, 9)));
-				seqTable.addCell(new Phrase(s.getFinText(), FontFactory.getFont(FontFactory.TIMES_ROMAN, 10)));
-				seqTable.addCell(new Phrase("Durée", FontFactory.getFont(FontFactory.TIMES_ROMAN, 9)));
-				seqTable.addCell(new Phrase("Durée", FontFactory.getFont(FontFactory.TIMES_ROMAN, 10)));
-				seqTable.addCell(new Phrase("Profil", FontFactory.getFont(FontFactory.TIMES_ROMAN, 9)));
-				seqTable.addCell(new Phrase(s.getProfil(), FontFactory.getFont(FontFactory.TIMES_ROMAN, 10)));
-				seqTable.addCell(new Phrase("Commentaire", FontFactory.getFont(FontFactory.TIMES_ROMAN, 9)));
-				seqTable.addCell(new Phrase(s.getCommentaire(), FontFactory.getFont(FontFactory.TIMES_ROMAN, 10)));
-				seqTable.addCell(new Phrase("Statut", FontFactory.getFont(FontFactory.TIMES_ROMAN, 9)));
-				seqTable.addCell(new Phrase(s.getActif(), FontFactory.getFont(FontFactory.TIMES_ROMAN, 10)));
-				seqTable.addCell(new Phrase("Résultat", FontFactory.getFont(FontFactory.TIMES_ROMAN, 9)));
-				seqTable.addCell(new Phrase(s.getAvis(), FontFactory.getFont(FontFactory.TIMES_ROMAN, 10)));
+				seqTable.addCell(new Phrase("Niveau", FontFactory.getFont(FontFactory.TIMES_ROMAN, 12)));
+				seqTable.addCell(new Phrase(s.getNiveau(), FontFactory.getFont(FontFactory.TIMES_ROMAN, 12)));
+				seqTable.addCell(new Phrase("Début", FontFactory.getFont(FontFactory.TIMES_ROMAN, 12)));
+				seqTable.addCell(new Phrase(s.getDebutText(), FontFactory.getFont(FontFactory.TIMES_ROMAN, 12)));
+				seqTable.addCell(new Phrase("Fin", FontFactory.getFont(FontFactory.TIMES_ROMAN, 12)));
+				seqTable.addCell(new Phrase(s.getFinText(), FontFactory.getFont(FontFactory.TIMES_ROMAN, 12)));
+				seqTable.addCell(new Phrase("Durée", FontFactory.getFont(FontFactory.TIMES_ROMAN, 12)));
+				seqTable.addCell(new Phrase( duree, FontFactory.getFont(FontFactory.TIMES_ROMAN, 12)));
+				seqTable.addCell(new Phrase("Profil", FontFactory.getFont(FontFactory.TIMES_ROMAN, 12)));
+				seqTable.addCell(new Phrase(s.getProfil(), FontFactory.getFont(FontFactory.TIMES_ROMAN, 12)));
+				seqTable.addCell(new Phrase("Commentaire", FontFactory.getFont(FontFactory.TIMES_ROMAN, 12)));
+				seqTable.addCell(new Phrase(s.getCommentaire(), FontFactory.getFont(FontFactory.TIMES_ROMAN, 12)));
+				seqTable.addCell(new Phrase("Statut", FontFactory.getFont(FontFactory.TIMES_ROMAN, 12)));
+				seqTable.addCell(new Phrase(s.getActif(), FontFactory.getFont(FontFactory.TIMES_ROMAN, 12)));
+				seqTable.addCell(new Phrase("Résultat", FontFactory.getFont(FontFactory.TIMES_ROMAN, 12)));
+				seqTable.addCell(new Phrase(s.getAvis(), FontFactory.getFont(FontFactory.TIMES_ROMAN, 12)));
 
 				seqTable.setSpacingAfter(20);
 				document.add(seqTable);
