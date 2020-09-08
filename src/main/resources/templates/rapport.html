@@ -85,7 +85,7 @@
 
 		</div>
 
-	
+
 
 		<div class="row">
 
@@ -150,7 +150,7 @@
 						<thead>
 							<tr class="table-primary">
 
-							
+
 								<th scope="col">N°</th>
 								<th scope="col">Essai</th>
 								<th scope="col">Version</th>
@@ -161,66 +161,13 @@
 							</tr>
 						</thead>
 						<tbody>
-							
-								<td th:text="${essai.numero}" />
-								<td th:text="${essai.nom}" />
-								<td th:text="${essai.version}" />
-								<td th:text="${essai.domaine}" />
-								<td th:text="${essai.statut}" />
-								<td th:text="${essai.resultat}" />
 
-							</tr>
-
-						</tbody>
-					</table>
-					
-					
-						<div class="row d-flex justify-content-center">
-
-			<h3>Liste des séquences</h3>
-
-		</div>
-
-		<span th:each="sequence: ${essai.sequences}">
-		
-			<div class="row">
-
-				<div class="col donnees" style="margin: 5px;">
-
-					<table class="table table-striped">
-						<thead>
-							<tr>
-
-								
-								<th scope="col">N°</th>
-								<th scope="col">Nom</th>
-								<th scope="col">Niveau</th>	
-								<th scope="col">Début</th>
-								<th scope="col">Fin</th>
-								<th scope="col">Durée</th>
-								<th scope="col">Profil</th>
-								<th scope="col">Commentaire</th>
-								<th scope="col">Statut</th>
-								<th scope="col">Résultat</th>
-							
-
-
-							</tr>
-						</thead>
-						<tbody>
-						
-								<td th:text="${sequence.numero}" />
-								<td th:text="${sequence.nom}" />
-								<td th:text="${sequence.niveau}" />
-								<td th:text="${sequence.debutText}" />
-								<td th:text="${sequence.finText}" />
-								<td th:text="${sequence.duree}" />
-								<td th:text="${sequence.profil}" />
-								<td th:text="${sequence.commentaire}" />
-								<td th:text="${sequence.actif}" />
-								<td th:text="${sequence.avis}" />
-								
-
+							<td th:text="${essai.numero}" />
+							<td th:text="${essai.nom}" />
+							<td th:text="${essai.version}" />
+							<td th:text="${essai.domaine}" />
+							<td th:text="${essai.statut}" />
+							<td th:text="${essai.resultat}" />
 
 							</tr>
 
@@ -228,14 +175,65 @@
 					</table>
 
 
-				</div>
+					<div class="row d-flex justify-content-center">
+
+						<h3>Liste des séquences</h3>
+
+					</div> <span th:each="sequence: ${essai.sequences}">
+
+						<div class="row">
+
+							<div class="col donnees" style="margin: 5px;">
+
+								<table class="table table-striped">
+									<thead>
+										<tr>
 
 
-			</div>
+											<th scope="col">N°</th>
+											<th scope="col">Nom</th>
+											<th scope="col">Niveau</th>
+											<th scope="col">Début</th>
+											<th scope="col">Fin</th>
+											<th scope="col">Durée</th>
+											<th scope="col">Profil</th>
+											<th scope="col">Commentaire</th>
+											<th scope="col">Statut</th>
+											<th scope="col">Résultat</th>
 
-		</span>
-		
-					
+
+
+										</tr>
+									</thead>
+									<tbody>
+
+										<td th:text="${sequence.numero}" />
+										<td th:text="${sequence.nom}" />
+										<td th:text="${sequence.niveau}" />
+										<td th:text="${sequence.debutText}" />
+										<td th:text="${sequence.finText}" />
+										<td th:text="${sequence.duree}" />
+										<td th:text="${sequence.profil}" />
+										<td th:text="${sequence.commentaire}" />
+										<td th:text="${sequence.actif}" />
+										<td th:text="${sequence.avis}" />
+
+
+
+										</tr>
+
+									</tbody>
+								</table>
+
+
+							</div>
+
+
+						</div>
+
+				</span>
+
+
 
 				</span>
 			</div>
@@ -244,7 +242,7 @@
 		</div>
 
 
-		
+
 
 		<div class="row">
 
@@ -264,13 +262,23 @@
 			<div class="col d-flex justify-content-end">
 
 
-
+				<!--  
 				<div class="form-group mr-3 ">
 					<a th:href="@{'/labplan/private/qualification/rapport/voir/' + ${rapport.id} (format=pdf)}"><p type="text"
 							class="btn btn-block"
 							style="background-color: #7e60fb; color: white">Export PDF</p></a>
 				</div>
+				
+				
+ -->
 
+
+				<div class="form-group mr-3 ">
+					<a
+						th:href="@{/labplan/private/rapport/pdf/{id}(id=${rapport.id})}"><p
+							type="text" class="btn btn-block"
+							style="background-color: #7e60fb; color: white">Export PDF</p></a>
+				</div>
 
 				<div class="form-group ">
 					<a href="/labplan/espace"><p type="text" class="btn btn-block"
