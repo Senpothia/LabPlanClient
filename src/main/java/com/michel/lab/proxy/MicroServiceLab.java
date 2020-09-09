@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 
 import com.michel.lab.model.NoteAux;
+import com.michel.lab.model.DemandeAux;
 import com.michel.lab.model.DomaineAux;
 import com.michel.lab.model.EchantillonAux;
 import com.michel.lab.model.FormProcedure;
@@ -268,9 +269,17 @@ public interface MicroServiceLab {
 	@PostMapping("/private/procedure/modifier")
 	public void modifierProcedure(FormProcedure formProcedure);
 	
-	
 	@PostMapping("/private/demande/enregistrer")
 	public void enregistrerDemande(FormDemande formDemande);
+	
+	@GetMapping("/private/demande/liste")
+	public List<DemandeAux> listeDemandes();
+	
+	@GetMapping("/private/demande/voir/{id}")
+	public DemandeAux voirDemande(@PathVariable(name = "id") Integer id);
+	
+	@GetMapping("/private/demande/supprimer/{id}")
+	public void supprimerDemande(@PathVariable(name = "id") Integer id);
 	
 	
 	

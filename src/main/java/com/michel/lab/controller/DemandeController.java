@@ -1,5 +1,7 @@
 package com.michel.lab.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.michel.lab.model.DemandeAux;
 import com.michel.lab.model.FormDemande;
 import com.michel.lab.model.Utilisateur;
 import com.michel.lab.proxy.MicroServiceLab;
@@ -32,7 +35,7 @@ public class DemandeController {
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
 		
 		FormDemande formDemande = new FormDemande();
-		
+		//formDemande.setDemandeur(utilisateur.getId());
 		model.addAttribute("formDemande", formDemande);
 		
 		
@@ -45,14 +48,50 @@ public class DemandeController {
 	public String enregistrerDemande(Model model, HttpSession session, FormDemande formDemande) {
 		
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		System.out.println("id demandeur: " + utilisateur.getId()); 
+		
 		formDemande.setDemandeur(utilisateur.getId());
 		microServiceLab.enregistrerDemande(formDemande);
 		
 		
 		return "ok";
 	}
+	
+	@GetMapping("/liste")
+	public String voirDemandes(Model model, HttpSession session) {
 		
+		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		List<DemandeAux> demandes = microServiceLab.listeDemandes();
+		model.addAttribute("demandes", demandes);
+		
+		return "demandes";
+		
+		}
+	
+	@GetMapping("/voir/{id}")
+	public String VoirDemande(@PathVariable(name = "id") Integer id, Model model
+			, HttpSession session ) {
+		
+		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		DemandeAux demande = microServiceLab.voirDemande(id);
+		model.addAttribute("demande", demande);
+		
+		return "demande";
+		
+	}
+	
+	@GetMapping("/supprimer/{id}")
+	public String supprimerDemande(@PathVariable(name = "id") Integer id, Model model
+			, HttpSession session ) {
+		
+		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		microServiceLab.supprimerDemande(id);
+		List<DemandeAux> demandes = microServiceLab.listeDemandes();
+		model.addAttribute("demandes", demandes);
+		
+		return "demandes";
+		
+	}
+	
 		
 	
 	
