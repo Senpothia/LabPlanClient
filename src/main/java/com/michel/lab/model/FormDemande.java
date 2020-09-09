@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 public class FormDemande {
 	
 	private Integer id;
-	private Integer numero;
+	private String numero;
 	private LocalDateTime date;
 	private boolean statut; // Close, ouverte
 	private String produit;
@@ -23,7 +23,7 @@ public class FormDemande {
 		// TODO Auto-generated constructor stub
 	}
 
-	public FormDemande(Integer id, Integer numero, LocalDateTime date, boolean statut, String produit,
+	public FormDemande(Integer id, String numero, LocalDateTime date, boolean statut, String produit,
 			String echantillon, String origine, String essai, String objectif, String resultat, String avis,
 			Integer qualification, Integer demandeur) {
 		super();
@@ -50,11 +50,11 @@ public class FormDemande {
 		this.id = id;
 	}
 
-	public Integer getNumero() {
+	public String getNumero() {
 		return numero;
 	}
 
-	public void setNumero(Integer numero) {
+	public void setNumero(String numero) {
 		this.numero = numero;
 	}
 
@@ -145,7 +145,7 @@ public class FormDemande {
 	public void setDemandeur(Integer demandeur) {
 		this.demandeur = demandeur;
 	}
-	
-	
+
+
 
 }
