@@ -281,6 +281,9 @@ public interface MicroServiceLab {
 	@GetMapping("/private/demande/supprimer/{id}")
 	public void supprimerDemande(@PathVariable(name = "id") Integer id);
 	
+	@PostMapping("/private/demande/modifier")
+	public void modifierDemande(FormDemande formDemande);
+	
 	
 	
 	
