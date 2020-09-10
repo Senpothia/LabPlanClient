@@ -75,7 +75,7 @@ public class DemandeController {
 		DemandeAux demande = microServiceLab.voirDemande(id);
 		model.addAttribute("demande", demande);
 
-		return "demande";
+		return "demande2";
 
 	}
 
