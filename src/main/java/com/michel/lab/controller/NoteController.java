@@ -127,7 +127,8 @@ public class NoteController {
 		NoteAux note = microServiceLab.obtenirNote(idNote);
 		System.out.println("numéro de note: " + note.getNumero());
 		model.addAttribute("note", note);
-		return Constants.NOTE;
+		return "note2";
+		//return Constants.NOTE;
 	}
 
 	@GetMapping("/supprimer/{id}")
