@@ -39,6 +39,7 @@ import com.michel.lab.model.EssaiAux;
 import com.michel.lab.model.FormDemande;
 import com.michel.lab.model.FormEchantillon;
 import com.michel.lab.model.FormEssai;
+import com.michel.lab.model.FormFiche;
 import com.michel.lab.model.FormInitRapport;
 import com.michel.lab.model.FormNote;
 
@@ -283,6 +284,9 @@ public interface MicroServiceLab {
 	
 	@PostMapping("/private/demande/modifier")
 	public void modifierDemande(FormDemande formDemande);
+	
+	@PostMapping("/private/fiche/enregistrer")
+	public void enregistrerFiche(FormFiche formFiche);
 	
 	
 	

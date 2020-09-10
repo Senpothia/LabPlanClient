@@ -40,7 +40,8 @@
 		<div class="message row">
 
 			<p>
-				<b>Pour créer une fiche d'anomalie technique, remplir ce formulaire.</b>
+				<b>Pour créer une fiche d'anomalie technique, remplir ce
+					formulaire.</b>
 			</p>
 
 		</div>
@@ -59,26 +60,63 @@
 		<!-- ********************************************* -->
 
 		<div class="container">
-			<form th:action="@{/labplan/private/essai/creation}"
-				method="post" th:object="${formEssai}">
+			<form th:action="@{/labplan/private/fiche/creation}" method="post"
+				th:object="${formFiche}">
 
 
 				<div class="col">
-					<h1>Essai</h1>
+					<h1>Fiche d'anomalie technique</h1>
 
+					<!--  
 					<div class="row mr-1">
-						<label for="text">Produit</label> <input type="text"
-							class="form-control" th:field="*{produit}">
+						<label for="text">Date</label> <input type="date"
+							class="form-control" th:field="*{date}">
 					</div>
-
+-->
 					<div class="row  mr-1">
 						<label for="text">Projet</label> <input type="text"
 							class="form-control" th:field="*{projet}">
 					</div>
 
 					<div class="row  mr-1">
-						<label for="text">Objet</label> <input type="text"
-							class="form-control" th:field="*{Objet}">
+						<label for="text">Code</label> <input type="text"
+							class="form-control" th:field="*{code}">
+					</div>
+
+					<div class="row  mr-1">
+						<label for="text">Circonstances de l'observation</label> <input
+							type="text" class="form-control" th:field="*{circonstance}">
+					</div>
+
+					<div class="row  mr-1">
+						<label for="text">Observation</label> <input type="text"
+							class="form-control" th:field="*{observation}">
+					</div>
+
+					<div class="row  mr-1">
+						<label for="text">Incidence</label> <input type="text"
+							class="form-control" th:field="*{incidence}">
+					</div>
+
+					<div class="row  mr-1">
+						<label for="text">Doamine</label> <input type="text"
+							class="form-control" th:field="*{domaine}">
+					</div>
+
+					<div class="row  mr-1">
+						<label for="text">Organe affecté</label> <input type="text"
+							class="form-control" th:field="*{objet}">
+					</div>
+
+					<div class="row  mr-1">
+						<label for="text">Solutution</label> <input type="text"
+							class="form-control" th:field="*{circonstance}">
+					</div>
+
+
+					<div class="row  mr-1">
+						<label for="text">Réponse BE</label> <input type="text"
+							class="form-control" th:field="*{reponse}">
 					</div>
 
 					<!--

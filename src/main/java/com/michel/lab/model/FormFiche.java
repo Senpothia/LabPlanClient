@@ -3,33 +3,40 @@ package com.michel.lab.model;
 import java.time.LocalDateTime;
 
 public class FormFiche {
-	
+
 	private Integer numero;
 	private LocalDateTime date;
-	private String statut;			// Close, ouverte
-	private Integer niveau;			// gravité
+	private boolean statut; // Close, ouverte
+	private String etat;
+	private Integer niveau; // gravité
+	private String projet;
+	private String code;
 	private String circonstance;
-	private String observation;		// description du symptome, phénomène observé
-	private String incidence;		// conséquences
-	private String solution; 		// proposition
-	private String domaine;			// électronique, mécanique
-	private String objet;  			// n° de carte, pièce mécanique
+	private String observation; // description du symptome, phénomène observé
+	private String incidence; // conséquences
+	private String solution; // proposition
+	private String domaine; // électronique, mécanique
+	private String objet; // n° de carte, pièce mécanique
 	private Integer qualification;
 	private Integer auteur;
-	
+	private String reponse;
+
 	public FormFiche() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public FormFiche(Integer numero, LocalDateTime date, String statut, Integer niveau, String circonstance,
-			String observation, String incidence, String solution, String domaine, String objet, Integer qualification,
-			Integer auteur) {
+	public FormFiche(Integer numero, LocalDateTime date, boolean statut, String etat, Integer niveau, String projet,
+			String code, String circonstance, String observation, String incidence, String solution, String domaine,
+			String objet, Integer qualification, Integer auteur, String reponse) {
 		super();
 		this.numero = numero;
 		this.date = date;
 		this.statut = statut;
+		this.etat = etat;
 		this.niveau = niveau;
+		this.projet = projet;
+		this.code = code;
 		this.circonstance = circonstance;
 		this.observation = observation;
 		this.incidence = incidence;
@@ -38,6 +45,7 @@ public class FormFiche {
 		this.objet = objet;
 		this.qualification = qualification;
 		this.auteur = auteur;
+		this.reponse = reponse;
 	}
 
 	public Integer getNumero() {
@@ -54,14 +62,6 @@ public class FormFiche {
 
 	public void setDate(LocalDateTime date) {
 		this.date = date;
-	}
-
-	public String getStatut() {
-		return statut;
-	}
-
-	public void setStatut(String statut) {
-		this.statut = statut;
 	}
 
 	public Integer getNiveau() {
@@ -136,6 +136,44 @@ public class FormFiche {
 		this.auteur = auteur;
 	}
 
-	
-	
+	public String getProjet() {
+		return projet;
+	}
+
+	public void setProjet(String projet) {
+		this.projet = projet;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+	public String getEtat() {
+		return etat;
+	}
+
+	public void setEtat(String etat) {
+		this.etat = etat;
+	}
+
+	public void setStatut(boolean statut) {
+		this.statut = statut;
+	}
+
+	public String getReponse() {
+		return reponse;
+	}
+
+	public void setReponse(String reponse) {
+		this.reponse = reponse;
+	}
+
+	public boolean isStatut() {
+		return statut;
+	}
+
 }

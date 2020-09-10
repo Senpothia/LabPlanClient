@@ -7,9 +7,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.michel.lab.model.FormFiche;
 import com.michel.lab.model.Utilisateur;
+import com.michel.lab.proxy.MicroServiceLab;
 import com.michel.lab.service.UserConnexion;
 
 @Controller
@@ -18,6 +21,10 @@ public class FicheController {
 	
 	@Autowired
 	private UserConnexion userConnexion;
+	
+	@Autowired
+	private MicroServiceLab microServiceLab;
+
 	
 	@GetMapping("/liste/{id}")
 	public String listesFiches(@PathVariable("id") Integer numQualification
@@ -28,4 +35,27 @@ public class FicheController {
 		
 		return "ok";
 	}
+	
+	
+	@GetMapping("/creation")
+	public String listesFiches(Model model, HttpSession session) {
+		
+		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		model.addAttribute("formFiche", new FormFiche());
+		
+		
+		return "CreateFiche";
+	}
+	
+	@PostMapping("/creation")
+	public String listesFiches(Model model, HttpSession session, FormFiche formFiche) {
+		
+		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		formFiche.setAuteur(utilisateur.getId());
+		microServiceLab.enregistrerFiche(formFiche);
+		
+		return "ok";
+	}
+	
+	
 }
