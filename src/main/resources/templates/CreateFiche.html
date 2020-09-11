@@ -67,6 +67,11 @@
 				<div class="col">
 					<h1>Fiche d'anomalie technique</h1>
 
+					<div class="row  mr-1">
+						<label for="text">Numéro</label> <input type="text"
+							class="form-control" th:field="*{numero}">
+					</div>
+
 					<!--  
 					<div class="row mr-1">
 						<label for="text">Date</label> <input type="date"
@@ -99,7 +104,12 @@
 					</div>
 
 					<div class="row  mr-1">
-						<label for="text">Doamine</label> <input type="text"
+						<label for="text">Niveau</label> <input type="number"
+							class="form-control" th:field="*{niveau}">
+					</div>
+
+					<div class="row  mr-1">
+						<label for="text">Domaine</label> <input type="text"
 							class="form-control" th:field="*{domaine}">
 					</div>
 
@@ -109,8 +119,8 @@
 					</div>
 
 					<div class="row  mr-1">
-						<label for="text">Solutution</label> <input type="text"
-							class="form-control" th:field="*{circonstance}">
+						<label for="text">Solution</label> <input type="text"
+							class="form-control" th:field="*{solution}">
 					</div>
 
 

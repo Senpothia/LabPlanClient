@@ -1,5 +1,7 @@
 package com.michel.lab.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.michel.lab.model.FicheAux;
 import com.michel.lab.model.FormFiche;
 import com.michel.lab.model.Utilisateur;
 import com.michel.lab.proxy.MicroServiceLab;
@@ -55,6 +58,16 @@ public class FicheController {
 		microServiceLab.enregistrerFiche(formFiche);
 		
 		return "ok";
+	}
+	
+	@GetMapping("/voir")
+	public String voirLesFiches(Model model, HttpSession session) {
+		
+		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		List<FicheAux> fiches = microServiceLab.voirLesFiches();
+		model.addAttribute("fiches", fiches);
+		
+		return "fiches";
 	}
 	
 	

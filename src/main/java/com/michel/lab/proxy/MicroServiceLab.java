@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 
 import com.michel.lab.model.NoteAux;
+
 import com.michel.lab.model.DemandeAux;
 import com.michel.lab.model.DomaineAux;
 import com.michel.lab.model.EchantillonAux;
@@ -36,6 +37,7 @@ import com.michel.lab.model.Upload;
 import com.michel.lab.model.Utilisateur;
 import com.michel.lab.model.UtilisateurAux;
 import com.michel.lab.model.EssaiAux;
+import com.michel.lab.model.FicheAux;
 import com.michel.lab.model.FormDemande;
 import com.michel.lab.model.FormEchantillon;
 import com.michel.lab.model.FormEssai;
@@ -287,6 +289,10 @@ public interface MicroServiceLab {
 	
 	@PostMapping("/private/fiche/enregistrer")
 	public void enregistrerFiche(FormFiche formFiche);
+	
+	@GetMapping("/private/fiche/voir")
+	public List<FicheAux> voirLesFiches();
+	
 	
 	
 	

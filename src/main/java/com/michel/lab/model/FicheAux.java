@@ -2,15 +2,16 @@ package com.michel.lab.model;
 
 import java.time.LocalDateTime;
 
-public class FormFiche {
+public class FicheAux {
 
+	private Integer id;
 	private Integer numero;
 	private LocalDateTime date;
 	private boolean statut; // Close, ouverte
 	private String etat;
 	private Integer niveau; // gravité
-	private String degre;
 	private String projet;
+	private String produit;
 	private String code;
 	private String circonstance;
 	private String observation; // description du symptome, phénomène observé
@@ -22,23 +23,23 @@ public class FormFiche {
 	private Integer auteur;
 	private String reponse;
 
-	public FormFiche() {
+	public FicheAux() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	
-	public FormFiche(Integer numero, LocalDateTime date, boolean statut, String etat, Integer niveau, String degre,
-			String projet, String code, String circonstance, String observation, String incidence, String solution,
-			String domaine, String objet, Integer qualification, Integer auteur, String reponse) {
+	public FicheAux(Integer id, Integer numero, LocalDateTime date, boolean statut, String etat, Integer niveau,
+			String projet, String produit, String code, String circonstance, String observation, String incidence,
+			String solution, String domaine, String objet, Integer qualification, Integer auteur, String reponse) {
 		super();
+		this.id = id;
 		this.numero = numero;
 		this.date = date;
 		this.statut = statut;
 		this.etat = etat;
 		this.niveau = niveau;
-		this.degre = degre;
 		this.projet = projet;
+		this.produit = produit;
 		this.code = code;
 		this.circonstance = circonstance;
 		this.observation = observation;
@@ -51,6 +52,13 @@ public class FormFiche {
 		this.reponse = reponse;
 	}
 
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
 	public Integer getNumero() {
 		return numero;
@@ -68,12 +76,52 @@ public class FormFiche {
 		this.date = date;
 	}
 
+	public boolean isStatut() {
+		return statut;
+	}
+
+	public void setStatut(boolean statut) {
+		this.statut = statut;
+	}
+
+	public String getEtat() {
+		return etat;
+	}
+
+	public void setEtat(String etat) {
+		this.etat = etat;
+	}
+
 	public Integer getNiveau() {
 		return niveau;
 	}
 
 	public void setNiveau(Integer niveau) {
 		this.niveau = niveau;
+	}
+
+	public String getProjet() {
+		return projet;
+	}
+
+	public void setProjet(String projet) {
+		this.projet = projet;
+	}
+
+	public String getProduit() {
+		return produit;
+	}
+
+	public void setProduit(String produit) {
+		this.produit = produit;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
 	}
 
 	public String getCirconstance() {
@@ -140,34 +188,6 @@ public class FormFiche {
 		this.auteur = auteur;
 	}
 
-	public String getProjet() {
-		return projet;
-	}
-
-	public void setProjet(String projet) {
-		this.projet = projet;
-	}
-
-	public String getCode() {
-		return code;
-	}
-
-	public void setCode(String code) {
-		this.code = code;
-	}
-
-	public String getEtat() {
-		return etat;
-	}
-
-	public void setEtat(String etat) {
-		this.etat = etat;
-	}
-
-	public void setStatut(boolean statut) {
-		this.statut = statut;
-	}
-
 	public String getReponse() {
 		return reponse;
 	}
@@ -175,21 +195,5 @@ public class FormFiche {
 	public void setReponse(String reponse) {
 		this.reponse = reponse;
 	}
-
-	public boolean isStatut() {
-		return statut;
-	}
-
-
-	public String getDegre() {
-		return degre;
-	}
-
-
-	public void setDegre(String degre) {
-		this.degre = degre;
-	}
-	
-	
 
 }
