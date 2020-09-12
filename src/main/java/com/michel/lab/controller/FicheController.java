@@ -191,11 +191,14 @@ public class FicheController {
 			Model model, HttpSession session,
 			FormFiche formFiche) {
 		
+		
+		System.out.println("Valeur id: " + id);
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
 		FicheAux fiche = microServiceLab.voirLaFiches(id);
 		Integer numQualification = fiche.getNumQualification();
-		
-		microServiceLab.modifierLaFiche(id);
+		formFiche.setId(id);
+		formFiche.setAuteur(utilisateur.getId());
+		microServiceLab.modifierLaFiche(formFiche);
 		
 		List<FicheAux> fiches = microServiceLab.voirLesFichesParQualification(numQualification);
 		model.addAttribute("fiches", fiches);
