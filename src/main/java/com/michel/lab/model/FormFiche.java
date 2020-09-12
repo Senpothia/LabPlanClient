@@ -3,7 +3,8 @@ package com.michel.lab.model;
 import java.time.LocalDateTime;
 
 public class FormFiche {
-
+	
+	private Integer id;
 	private Integer numero;
 	private LocalDateTime date;
 	private boolean statut; // Close, ouverte
@@ -11,6 +12,7 @@ public class FormFiche {
 	private Integer niveau; // gravité
 	private String degre;
 	private String projet;
+	private String produit;
 	private String code;
 	private String circonstance;
 	private String observation; // description du symptome, phénomène observé
@@ -28,10 +30,13 @@ public class FormFiche {
 	}
 
 	
-	public FormFiche(Integer numero, LocalDateTime date, boolean statut, String etat, Integer niveau, String degre,
-			String projet, String code, String circonstance, String observation, String incidence, String solution,
-			String domaine, String objet, Integer qualification, Integer auteur, String reponse) {
+	
+	public FormFiche(Integer id, Integer numero, LocalDateTime date, boolean statut, String etat, Integer niveau,
+			String degre, String projet, String produit, String code, String circonstance, String observation,
+			String incidence, String solution, String domaine, String objet, Integer qualification, Integer auteur,
+			String reponse) {
 		super();
+		this.id = id;
 		this.numero = numero;
 		this.date = date;
 		this.statut = statut;
@@ -39,6 +44,7 @@ public class FormFiche {
 		this.niveau = niveau;
 		this.degre = degre;
 		this.projet = projet;
+		this.produit = produit;
 		this.code = code;
 		this.circonstance = circonstance;
 		this.observation = observation;
@@ -50,6 +56,7 @@ public class FormFiche {
 		this.auteur = auteur;
 		this.reponse = reponse;
 	}
+
 
 
 	public Integer getNumero() {
@@ -180,14 +187,32 @@ public class FormFiche {
 		return statut;
 	}
 
-
 	public String getDegre() {
 		return degre;
 	}
 
-
 	public void setDegre(String degre) {
 		this.degre = degre;
+	}
+
+	public String getProduit() {
+		return produit;
+	}
+
+	public void setProduit(String produit) {
+		this.produit = produit;
+	}
+
+
+
+	public Integer getId() {
+		return id;
+	}
+
+
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 	
 	

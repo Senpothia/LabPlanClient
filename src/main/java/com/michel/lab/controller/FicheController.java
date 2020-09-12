@@ -149,4 +149,61 @@ public class FicheController {
 	}
 	
 	
+	@GetMapping("/modifier/{id}")
+	public String modifierLaFiche(
+			@PathVariable("id") Integer id,
+			Model model, HttpSession session) {
+		
+		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		FicheAux fiche = microServiceLab.voirLaFiches(id);
+		
+		FormFiche formFiche = new FormFiche();
+		
+		formFiche.setId(fiche.getId());
+		formFiche.setNumero(fiche.getNumero());
+		formFiche.setAuteur(fiche.getAuteur());
+		formFiche.setCirconstance(fiche.getCirconstance());
+		formFiche.setCode(fiche.getCode());
+		formFiche.setDate(fiche.getDate());
+		formFiche.setDomaine(fiche.getDomaine());
+		formFiche.setEtat(fiche.getEtat());
+		formFiche.setIncidence(fiche.getIncidence());
+		formFiche.setNiveau(fiche.getNiveau());
+		formFiche.setObjet(fiche.getObjet());
+		formFiche.setObservation(fiche.getObservation());
+		formFiche.setProjet(fiche.getProjet());
+		formFiche.setProduit(fiche.getProduit());
+		formFiche.setQualification(fiche.getQualification());
+		formFiche.setReponse(fiche.getReponse());
+		formFiche.setSolution(fiche.getSolution());
+		formFiche.setStatut(fiche.isStatut());
+		
+		model.addAttribute("formFiche", formFiche);
+		
+		return "modifierFiche";
+		
+	}
+	
+	
+	@PostMapping("/modifier/{id}")
+	public String enregistrerModificationFiche(
+			@PathVariable("id") Integer id,
+			Model model, HttpSession session,
+			FormFiche formFiche) {
+		
+		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		FicheAux fiche = microServiceLab.voirLaFiches(id);
+		Integer numQualification = fiche.getNumQualification();
+		
+		microServiceLab.modifierLaFiche(id);
+		
+		List<FicheAux> fiches = microServiceLab.voirLesFichesParQualification(numQualification);
+		model.addAttribute("fiches", fiches);
+		model.addAttribute("qualification", numQualification);
+		
+		return "fichesParQualification";
+		
+	}
+	
+	
 }

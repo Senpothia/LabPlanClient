@@ -307,6 +307,9 @@ public interface MicroServiceLab {
 	@GetMapping("/private/qualification/identifiant/{id}") 
 	public QualificationAux obtenirQualificationParId(Integer idQualification);
 	
+	@GetMapping("/private/fiche/modifier/{id}")
+	public void modifierLaFiche(@PathVariable(name = "id") Integer id);
+	
 	
 	
 	
