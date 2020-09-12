@@ -47,27 +47,23 @@
 		</div>
 		<!-- ***********   Alerte erreur  ************ -->
 
-		<span th:if="${erreur}">
-			<div class="message row">
+		
+			<!-- ********************************************* -->
 
-				<p>
-					<b style="color: red;">Les sites, secteurs, voies longueurs
-						doivent avoir un nom unique! Enregistrement impossible!</b>
-				</p>
-
-			</div>
-		</span>
-		<!-- ********************************************* -->
 
 		<div class="container">
-			<form th:action="@{/labplan/private/fiche/creation}" method="post"
-				th:object="${formFiche}">
+
+		
+
+				<form
+					th:action="@{/labplan/private/fiche/ajouter/{qualification}(qualification=${qualification})}"
+					method="post" th:object="${formFiche}">
 
 
-				<div class="col">
-					<h1>Fiche d'anomalie technique</h1>
-	
-					<!--  
+					<div class="col">
+						<h1>Fiche d'anomalie technique</h1>
+
+						<!--  
 					<div class="row  mr-1">
 						<label for="text">Numéro</label> <input type="text"
 							class="form-control" th:field="*{numero}">
@@ -75,38 +71,38 @@
 					
 					-->
 
-					<!--  
+						<!--  
 					<div class="row mr-1">
 						<label for="text">Date</label> <input type="date"
 							class="form-control" th:field="*{date}">
 					</div>
 -->
-					<div class="row  mr-1">
-						<label for="text">Projet</label> <input type="text"
-							class="form-control" th:field="*{projet}">
-					</div>
+						<div class="row  mr-1">
+							<label for="text">Projet</label> <input type="text"
+								class="form-control" th:field="*{projet}">
+						</div>
 
-					<div class="row  mr-1">
-						<label for="text">Code</label> <input type="text"
-							class="form-control" th:field="*{code}">
-					</div>
+						<div class="row  mr-1">
+							<label for="text">Code</label> <input type="text"
+								class="form-control" th:field="*{code}">
+						</div>
 
-					<div class="row  mr-1">
-						<label for="text">Circonstances de l'observation</label> <input
-							type="text" class="form-control" th:field="*{circonstance}">
-					</div>
+						<div class="row  mr-1">
+							<label for="text">Circonstances de l'observation</label> <input
+								type="text" class="form-control" th:field="*{circonstance}">
+						</div>
 
-					<div class="row  mr-1">
-						<label for="text">Observation</label> <input type="text"
-							class="form-control" th:field="*{observation}">
-					</div>
+						<div class="row  mr-1">
+							<label for="text">Observation</label> <input type="text"
+								class="form-control" th:field="*{observation}">
+						</div>
 
-					<div class="row  mr-1">
-						<label for="text">Conséquences de l'anomalie</label> <input type="text"
-							class="form-control" th:field="*{incidence}">
-					</div>
+						<div class="row  mr-1">
+							<label for="text">Conséquences de l'anomalie</label> <input
+								type="text" class="form-control" th:field="*{incidence}">
+						</div>
 
-					<!-- 
+						<!-- 
 
 					<div class="row  mr-1">
 						<label for="text">Niveau</label> <input type="number"
@@ -114,75 +110,78 @@
 					</div>
 					
 					 -->
-				
-
-
-					<div class="form-group">
-						<label for="exampleFormControlSelect1">Incidence de l'anomalie</label> <select
-							class="form-control" id="exampleFormControlSelect1" th:field="*{degre}">
-							<option th:value="'1'" th:text="'Très' + ' ' +'faible'"></option>
-							<option th:value="'2'" th:text="Faible"></option>
-							<option th:value="'3'" th:text="Moyen"></option>
-							<option th:value="'4'" th:text="Elevé"></option>
-							<option th:value="'5'" th:text="'Très' + ' ' + 'élevé'"></option>
-							
-						</select>
-					</div>
 
 
 
+						<div class="form-group">
+							<label for="exampleFormControlSelect1">Incidence de
+								l'anomalie</label> <select class="form-control"
+								id="exampleFormControlSelect1" th:field="*{degre}">
+								<option th:value="'1'" th:text="'Très' + ' ' +'faible'"></option>
+								<option th:value="'2'" th:text="Faible"></option>
+								<option th:value="'3'" th:text="Moyen"></option>
+								<option th:value="'4'" th:text="Elevé"></option>
+								<option th:value="'5'" th:text="'Très' + ' ' + 'élevé'"></option>
 
-					<div class="row  mr-1">
-						<label for="text">Domaine</label> <input type="text"
-							class="form-control" th:field="*{domaine}">
-					</div>
-
-					<div class="row  mr-1">
-						<label for="text">Organe affecté</label> <input type="text"
-							class="form-control" th:field="*{objet}">
-					</div>
-
-					<div class="row  mr-1">
-						<label for="text">Solution</label> <input type="text"
-							class="form-control" th:field="*{solution}">
-					</div>
+							</select>
+						</div>
 
 
-					<div class="row  mr-1">
-						<label for="text">Réponse BE</label> <input type="text"
-							class="form-control" th:field="*{reponse}">
-					</div>
 
-					<!--
+
+						<div class="row  mr-1">
+							<label for="text">Domaine</label> <input type="text"
+								class="form-control" th:field="*{domaine}">
+						</div>
+
+						<div class="row  mr-1">
+							<label for="text">Organe affecté</label> <input type="text"
+								class="form-control" th:field="*{objet}">
+						</div>
+
+						<div class="row  mr-1">
+							<label for="text">Solution</label> <input type="text"
+								class="form-control" th:field="*{solution}">
+						</div>
+
+
+						<div class="row  mr-1">
+							<label for="text">Réponse BE</label> <input type="text"
+								class="form-control" th:field="*{reponse}">
+						</div>
+
+						<!--
 					<div class="row  mr-1">
 						<label for="text">Date</label> <input type="date"
 							class="form-control" th:field="*{date}">
 					</div>
 
   -->
+			
+			<div class="bouton row">
 
-					<div class="bouton row">
+				<div class="col">
+					<div class="d-flex justify-content-end">
+						<a class="btn mb-1 bouton2"
+							style="background-color: #7e60fb; color: white;"
+							href="/labplan/espace" role="button">Annuler</a> <input
+							type="submit" class="btn mb-1 bouton2"
+							style="background-color: #7e60fb; color: white;"
+							value="Enregistrer">
 
-						<div class="col">
-							<div class="d-flex justify-content-end">
-								<a class="btn mb-1 bouton2"
-									style="background-color: #7e60fb; color: white;"
-									href="/labplan/espace" role="button">Annuler</a> <input
-									type="submit" class="btn mb-1 bouton2"
-									style="background-color: #7e60fb; color: white;"
-									value="Enregistrer">
-
-							</div>
-						</div>
 					</div>
+				</div>
+			</div>
 			</form>
-
 			<!-- PIED DE PAGE -->
 
 			<div th:replace="fragments/footer :: footer"></div>
-
 			<!-- ********************************************* -->
+
+
 		</div>
+
+
 
 	</div>
 

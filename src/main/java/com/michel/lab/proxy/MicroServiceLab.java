@@ -293,6 +293,12 @@ public interface MicroServiceLab {
 	@GetMapping("/private/fiche/voir")
 	public List<FicheAux> voirLesFiches();
 	
+	@GetMapping("/private/fiche/qualification/{id}")
+	public List<FicheAux> voirLesFichesParQualification(@PathVariable(name = "id") Integer numQualification);
+	
+	@PostMapping("/private/fiche/qualification/ajouter")
+	public void ajouterFiche(FormFiche formFiche);
+	
 	
 	
 	

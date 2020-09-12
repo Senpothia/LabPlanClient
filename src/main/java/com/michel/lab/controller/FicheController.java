@@ -34,9 +34,12 @@ public class FicheController {
 			, Model model, HttpSession session) {
 		
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		List<FicheAux> fiches = microServiceLab.voirLesFichesParQualification(numQualification);
+		model.addAttribute("fiches", fiches);
+		model.addAttribute("qualification", numQualification);
 		
+		return "fichesParQualification";
 		
-		return "ok";
 	}
 	
 	
@@ -56,8 +59,11 @@ public class FicheController {
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
 		formFiche.setAuteur(utilisateur.getId());
 		microServiceLab.enregistrerFiche(formFiche);
+		System.out.println("dégré: " + formFiche.getDegre());
+		List<FicheAux> fiches = microServiceLab.voirLesFiches();
+		model.addAttribute("fiches", fiches);
 		
-		return "ok";
+		return "fiches";
 	}
 	
 	@GetMapping("/voir")
@@ -68,6 +74,44 @@ public class FicheController {
 		model.addAttribute("fiches", fiches);
 		
 		return "fiches";
+	}
+	
+	@GetMapping("/ajouter/{qualification}")
+	public String ajouterFicheQualification(
+			@PathVariable("qualification") Integer numQualification,
+			Model model, HttpSession session) {
+		
+		System.out.println("numQual: " + numQualification);
+		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		FormFiche formFiche = new FormFiche();
+		formFiche.setQualification(numQualification);
+	
+		model.addAttribute("formFiche", formFiche);
+		model.addAttribute("qualification", numQualification);
+		
+		
+		return "ajouterFiche";
+		
+	}
+	
+	@PostMapping("/ajouter/{qualification}")
+	public String ajouterFiches(
+			@PathVariable("qualification") Integer numQualification,
+			Model model, HttpSession session, FormFiche formFiche) {
+		
+		System.out.println("numQualif: " + numQualification);
+		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		formFiche.setAuteur(utilisateur.getId());
+		formFiche.setQualification(numQualification);
+		microServiceLab.ajouterFiche(formFiche);
+		
+		List<FicheAux> fiches = microServiceLab.voirLesFiches();
+		model.addAttribute("fiches", fiches);
+		
+		return "fiches";
+		
+		
+		//return "ok";
 	}
 	
 	
