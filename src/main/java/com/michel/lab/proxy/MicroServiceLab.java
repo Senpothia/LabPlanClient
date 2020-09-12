@@ -114,8 +114,7 @@ public interface MicroServiceLab {
 												// utilisateur
 	public List<QualificationAux> mesQualificationsEnCours(@PathVariable(name = "id") Integer id);
 
-	@GetMapping("/private/qualification/{id}") // récupération de la liste de toutes les qualifications en cours par
-												// utilisateur
+	@GetMapping("/private/qualification/{id}") // récupération de la liste de toutes les qualifications en cours par											// utilisateur
 	public QualificationAux obtenirQualification(@PathVariable(name = "id") Integer id);
 
 	@GetMapping("/private/procedures") // Récupérer la liste des procédures
@@ -298,6 +297,16 @@ public interface MicroServiceLab {
 	
 	@PostMapping("/private/fiche/qualification/ajouter")
 	public void ajouterFiche(FormFiche formFiche);
+	
+	@GetMapping("/private/fiche/voir/{id}")
+	public FicheAux voirLaFiches(@PathVariable(name = "id") Integer id);
+	
+	@GetMapping("/private/fiche/supprimer/{id}")
+	public void supprimerLaFiches(@PathVariable(name = "id") Integer id);
+	
+	@GetMapping("/private/qualification/identifiant/{id}") 
+	public QualificationAux obtenirQualificationParId(Integer idQualification);
+	
 	
 	
 	

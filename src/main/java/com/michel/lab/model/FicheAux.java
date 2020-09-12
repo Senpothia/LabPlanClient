@@ -20,7 +20,9 @@ public class FicheAux {
 	private String domaine; // électronique, mécanique
 	private String objet; // n° de carte, pièce mécanique
 	private Integer qualification;
+	private Integer numQualification;
 	private Integer auteur;
+	private String nomAuteur;
 	private String reponse;
 
 	public FicheAux() {
@@ -30,7 +32,8 @@ public class FicheAux {
 
 	public FicheAux(Integer id, Integer numero, LocalDateTime date, boolean statut, String etat, Integer niveau,
 			String projet, String produit, String code, String circonstance, String observation, String incidence,
-			String solution, String domaine, String objet, Integer qualification, Integer auteur, String reponse) {
+			String solution, String domaine, String objet, Integer qualification, Integer numQualification,
+			Integer auteur, String nomAuteur, String reponse) {
 		super();
 		this.id = id;
 		this.numero = numero;
@@ -48,7 +51,9 @@ public class FicheAux {
 		this.domaine = domaine;
 		this.objet = objet;
 		this.qualification = qualification;
+		this.numQualification = numQualification;
 		this.auteur = auteur;
+		this.nomAuteur = nomAuteur;
 		this.reponse = reponse;
 	}
 
@@ -194,6 +199,22 @@ public class FicheAux {
 
 	public void setReponse(String reponse) {
 		this.reponse = reponse;
+	}
+
+	public String getNomAuteur() {
+		return nomAuteur;
+	}
+
+	public void setNomAuteur(String nomAuteur) {
+		this.nomAuteur = nomAuteur;
+	}
+
+	public Integer getNumQualification() {
+		return numQualification;
+	}
+
+	public void setNumQualification(Integer numQualification) {
+		this.numQualification = numQualification;
 	}
 
 }

@@ -21,6 +21,8 @@ public class UserConnexion {
 	@Autowired
 	MicroServiceLab microServiceLab;
 	
+	
+	
 
 
 	public Utilisateur identifierUtilisateur(Login login, HttpSession session) {
@@ -75,5 +77,7 @@ public class UserConnexion {
 		return utilisateur;
 		
 	}
+
+	
 
 }

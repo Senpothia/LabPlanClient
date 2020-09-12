@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.michel.lab.model.FicheAux;
 import com.michel.lab.model.FormFiche;
+import com.michel.lab.model.QualificationAux;
 import com.michel.lab.model.Utilisateur;
 import com.michel.lab.proxy.MicroServiceLab;
 import com.michel.lab.service.UserConnexion;
@@ -27,7 +28,7 @@ public class FicheController {
 	
 	@Autowired
 	private MicroServiceLab microServiceLab;
-
+	
 	
 	@GetMapping("/liste/{id}")
 	public String listesFiches(@PathVariable("id") Integer numQualification
@@ -105,13 +106,46 @@ public class FicheController {
 		formFiche.setQualification(numQualification);
 		microServiceLab.ajouterFiche(formFiche);
 		
-		List<FicheAux> fiches = microServiceLab.voirLesFiches();
+		List<FicheAux> fiches = microServiceLab.voirLesFichesParQualification(numQualification);
 		model.addAttribute("fiches", fiches);
+		model.addAttribute("qualification", numQualification);
 		
-		return "fiches";
+		return "fichesParQualification";
 		
 		
-		//return "ok";
+	}
+	
+	@GetMapping("/voir/{id}")
+	public String voirLaFiche(
+			@PathVariable("id") Integer id,
+			Model model, HttpSession session) {
+		
+		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		FicheAux fiche = microServiceLab.voirLaFiches(id);
+		
+		
+		model.addAttribute("fiche", fiche);
+		
+		return "fiche";
+	}
+	
+	@GetMapping("/supprimer/{id}")
+	public String supprimerLaFiche(
+			@PathVariable("id") Integer id,
+			Model model, HttpSession session) {
+		
+		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		FicheAux fiche = microServiceLab.voirLaFiches(id);
+		Integer numQualification = fiche.getNumQualification();
+		System.out.println("numQualif pour suppression: " + numQualification);
+		microServiceLab.supprimerLaFiches(id);
+		
+		List<FicheAux> fiches = microServiceLab.voirLesFichesParQualification(numQualification);
+		model.addAttribute("fiches", fiches);
+		model.addAttribute("qualification", numQualification);
+		
+		return "fichesParQualification";
+		
 	}
 	
 	
