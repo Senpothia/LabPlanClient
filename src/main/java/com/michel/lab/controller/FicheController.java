@@ -106,7 +106,7 @@ public class FicheController {
 		formFiche.setQualification(numQualification);
 		microServiceLab.ajouterFiche(formFiche);
 		
-		List<FicheAux> fiches = microServiceLab.voirLesFichesParQualification(numQualification);
+		List<FicheAux> fiches = microServiceLab.voirLesFiches();
 		model.addAttribute("fiches", fiches);
 		model.addAttribute("qualification", numQualification);
 		
@@ -144,7 +144,7 @@ public class FicheController {
 		model.addAttribute("fiches", fiches);
 		model.addAttribute("qualification", numQualification);
 		
-		return "fichesParQualification";
+		return "fiches";
 		
 	}
 	

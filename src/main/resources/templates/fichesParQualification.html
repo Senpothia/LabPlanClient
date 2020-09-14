@@ -37,8 +37,8 @@
 		<!-- ----------------- -->
 		<div class="row d-flex justify-content-center">
 
-			<h1>Liste de toutes les fiches</h1>
-				
+			<h1 th:text="'Liste des fiches de la qualification numéro: ' + ${qualification}" />
+			
 		</div>
 		
 		<span th:if=${vide}>
