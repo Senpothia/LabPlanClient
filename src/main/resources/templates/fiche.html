@@ -46,7 +46,7 @@
 
 		<div class="col">
 
-		
+
 
 
 
@@ -68,7 +68,7 @@
 						<td th:text="${fiche.numero}" />
 
 					</tr>
-					
+
 					<!-- 
 					<tr>
 						<th scope="row">Date</th>
@@ -89,31 +89,31 @@
 						<td th:text="${fiche.produit}" />
 
 					</tr>
-					
+
 					<tr>
 						<th scope="row">Code produit</th>
 						<td th:text="${fiche.code}" />
 
 					</tr>
-					
+
 					<tr>
 						<th scope="row">Projet</th>
 						<td th:text="${fiche.projet}" />
 
 					</tr>
-					
+
 					<tr>
 						<th scope="row">Circonstance de l'observation</th>
 						<td th:text="${fiche.circonstance}" />
 
 					</tr>
-					
+
 					<tr>
 						<th scope="row">Objet</th>
 						<td th:text="${fiche.objet}" />
 
 					</tr>
-					
+
 					<tr>
 						<th scope="row">Solution proposée</th>
 						<td th:text="${fiche.solution}" />
@@ -129,16 +129,23 @@
 		<div class="row mt-3">
 			<div class="col d-flex justify-content-end">
 
-
+				<div class="form-group mr-3 ">
+					<a
+						th:href="@{'/labplan/private/fiche/voir/' + ${fiche.id} (format=pdf)}"><p
+							type="text" class="btn btn-block"
+							style="background-color: #7e60fb; color: white">Export PDF</p></a>
+				</div>
 
 				<div class="form-group mr-3">
-					<a th:href="@{/labplan/private/fiche/supprimer/{id}(id=${fiche.id})}"><p
+					<a
+						th:href="@{/labplan/private/fiche/supprimer/{id}(id=${fiche.id})}"><p
 							type="text" class="btn btn-block"
 							style="background-color: red; color: white">Supprimer</p></a>
 				</div>
 
 				<div class="form-group mr-3">
-					<a th:href="@{/labplan/private/fiche/modifier/{id}(id=${fiche.id})}"><p
+					<a
+						th:href="@{/labplan/private/fiche/modifier/{id}(id=${fiche.id})}"><p
 							type="text" class="btn btn-block"
 							style="background-color: #7e60fb; color: white">Modifier</p></a>
 				</div>
