@@ -81,6 +81,7 @@ public class FicheViewPdf extends AbstractPdfView {
 		cellTitre.setBackgroundColor(new Color( 153, 204, 255 ));
 		cellTitre.setColspan(8);
 		cellTitre.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+		cellTitre.setPadding(15);
 		table.addCell(cellTitre);
 		
 		PdfPCell cellAuteur = new PdfPCell(new Phrase("Auteur:",
@@ -160,7 +161,7 @@ public class FicheViewPdf extends AbstractPdfView {
 		table.addCell(cellProjet2);
 		
 		PdfPCell cellOrgane = new PdfPCell(new Phrase("Organe affecté:",
-				 FontFactory.getFont(FontFactory.TIMES, 10)));
+				 FontFactory.getFont(FontFactory.TIMES, 12)));
 		cellOrgane.setColspan(1);
 		cellOrgane.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
 		table.addCell(cellOrgane);
@@ -172,11 +173,12 @@ public class FicheViewPdf extends AbstractPdfView {
 		table.addCell(cellOrgane2);
 		
 		PdfPCell cellNature = new PdfPCell(new Phrase("Nature du problème",
-				 FontFactory.getFont(FontFactory.TIMES_BOLD, 10)));
+				 FontFactory.getFont(FontFactory.TIMES_BOLD, 12)));
 		
 		cellNature.setBackgroundColor(new Color( 153, 204, 255 ));
 		cellNature.setColspan(8);
 		cellNature.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+	
 		table.addCell(cellNature);
 		
 		PdfPCell cellNature2 = new PdfPCell(new Phrase(fiche.getDomaine(),
@@ -184,11 +186,12 @@ public class FicheViewPdf extends AbstractPdfView {
 		
 		
 		cellNature2.setColspan(8);
+		cellNature2.setMinimumHeight(40);
 		cellNature2.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
 		table.addCell(cellNature2);
 		
 		PdfPCell cellSubTitre2 = new PdfPCell(new Phrase("Niveau de gravité",
-				 FontFactory.getFont(FontFactory.TIMES_BOLD, 10)));
+				 FontFactory.getFont(FontFactory.TIMES_BOLD, 12)));
 		
 		cellSubTitre2.setBackgroundColor(new Color( 153, 204, 255 ));
 		cellSubTitre2.setColspan(8);
@@ -211,7 +214,7 @@ public class FicheViewPdf extends AbstractPdfView {
 		
 		/////
 		PdfPCell cellSubTitre3= new PdfPCell(new Phrase("Circonstance de l'observation",
-				 FontFactory.getFont(FontFactory.TIMES_BOLD, 10)));
+				 FontFactory.getFont(FontFactory.TIMES_BOLD, 12)));
 		
 		cellSubTitre3.setBackgroundColor(new Color( 153, 204, 255 ));
 		cellSubTitre3.setColspan(8);
@@ -221,13 +224,14 @@ public class FicheViewPdf extends AbstractPdfView {
 		PdfPCell cellCirconstances = new PdfPCell(new Phrase(fiche.getCirconstance(),
 				 FontFactory.getFont(FontFactory.TIMES, 10)));
 		cellCirconstances.setColspan(8);
+		cellCirconstances.setMinimumHeight(40);
 		cellCirconstances.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
 		table.addCell(cellCirconstances);
 		
 		/////
 		
 		PdfPCell cellSubTitre4= new PdfPCell(new Phrase("Documents complémentaires joints",
-				 FontFactory.getFont(FontFactory.TIMES_BOLD, 10)));
+				 FontFactory.getFont(FontFactory.TIMES_BOLD, 12)));
 		
 		cellSubTitre4.setBackgroundColor(new Color( 153, 204, 255 ));
 		cellSubTitre4.setColspan(8);
@@ -237,6 +241,7 @@ public class FicheViewPdf extends AbstractPdfView {
 		PdfPCell cellDocs = new PdfPCell(new Phrase(fiche.getCirconstance(),
 				 FontFactory.getFont(FontFactory.TIMES, 10)));
 		cellDocs.setColspan(8);
+		cellDocs.setMinimumHeight(40);
 		cellDocs.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
 		table.addCell(cellDocs);
 		
@@ -244,7 +249,7 @@ public class FicheViewPdf extends AbstractPdfView {
 		///
 		
 		PdfPCell cellSubTitre5= new PdfPCell(new Phrase("Degré d'incidence de l'anomalie",
-				 FontFactory.getFont(FontFactory.TIMES_BOLD, 10)));
+				 FontFactory.getFont(FontFactory.TIMES_BOLD, 12)));
 		
 		cellSubTitre5.setBackgroundColor(new Color( 153, 204, 255 ));
 		cellSubTitre5.setColspan(8);
@@ -254,13 +259,14 @@ public class FicheViewPdf extends AbstractPdfView {
 		PdfPCell cellIncidence = new PdfPCell(new Phrase(fiche.getIncidence(),
 				 FontFactory.getFont(FontFactory.TIMES, 10)));
 		cellIncidence.setColspan(8);
+		cellIncidence.setMinimumHeight(40);
 		cellIncidence.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
 		table.addCell(cellIncidence);
 		
 		///
 		
 		PdfPCell cellSubTitre6= new PdfPCell(new Phrase("Opérations correctives",
-				 FontFactory.getFont(FontFactory.TIMES_BOLD, 10)));
+				 FontFactory.getFont(FontFactory.TIMES_BOLD, 12)));
 		
 		cellSubTitre6.setBackgroundColor(new Color( 153, 204, 255 ));
 		cellSubTitre6.setColspan(8);
@@ -270,6 +276,7 @@ public class FicheViewPdf extends AbstractPdfView {
 		PdfPCell cellCorrections = new PdfPCell(new Phrase(fiche.getSolution(),
 				 FontFactory.getFont(FontFactory.TIMES, 10)));
 		cellCorrections.setColspan(8);
+		cellCorrections.setMinimumHeight(40);
 		cellCorrections.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
 		table.addCell(cellCorrections);
 		
@@ -277,7 +284,7 @@ public class FicheViewPdf extends AbstractPdfView {
 		///
 		
 		PdfPCell cellSubTitre7= new PdfPCell(new Phrase("Réponse envisagée du BE",
-				 FontFactory.getFont(FontFactory.TIMES_BOLD, 10)));
+				 FontFactory.getFont(FontFactory.TIMES_BOLD, 12)));
 		
 		cellSubTitre7.setBackgroundColor(new Color( 153, 204, 255 ));
 		cellSubTitre7.setColspan(8);
@@ -287,20 +294,9 @@ public class FicheViewPdf extends AbstractPdfView {
 		PdfPCell cellReponse = new PdfPCell(new Phrase(fiche.getReponse(),
 				 FontFactory.getFont(FontFactory.TIMES, 10)));
 		cellReponse.setColspan(8);
+		cellReponse.setMinimumHeight(80);
 		cellReponse.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
 		table.addCell(cellReponse);
-		
-		
-		
-		
-		
-	
-		
-		
-		
-		
-		
-		
 		
 		document.add(table);
 
