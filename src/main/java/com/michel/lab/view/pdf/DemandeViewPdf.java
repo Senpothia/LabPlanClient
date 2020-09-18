@@ -37,7 +37,7 @@ public class DemandeViewPdf extends AbstractPdfView {
 		try {
 			document.setMargins(30, 30, 30, 30);
 			Image entete = Image.getInstance("src\\main\\resources\\static\\images\\bandeau_entreprise1.png");
-			// Image entete =
+			
 			// Image.getInstance("src\\main\\resources\\static\\images\\BandeauSup1.jpg");
 			entete.scaleAbsolute(535, 100);
 			HeaderFooter header = new HeaderFooter(new Phrase(new Chunk(entete, 0, -35)), false);
@@ -170,7 +170,7 @@ public class DemandeViewPdf extends AbstractPdfView {
 		table.addCell(cellUrgence);
 
 		PdfPCell cellUrgence2 = new PdfPCell(
-				new Phrase("Elements auxiliaires", FontFactory.getFont(FontFactory.TIMES, 10)));
+				new Phrase("Degré d'urgence", FontFactory.getFont(FontFactory.TIMES, 10)));
 		cellUrgence2.setColspan(1);
 		cellUrgence2.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
 		table.addCell(cellUrgence2);

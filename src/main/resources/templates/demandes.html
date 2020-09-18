@@ -82,11 +82,19 @@
 								<td th:text="${demande.resultat}" />
 
 
-								<td><a th:href="@{/labplan/private/demande/supprimer/{id}(id=${demande.id})}"><p
+								<td><a
+									th:href="@{/labplan/private/demande/supprimer/{id}(id=${demande.id})}"><p
 											type="text" class="btn btn-block"
 											style="background-color: red; color: white">Supprimer</p></a></td>
 
-								<td><a th:href="@{/labplan/private/demande/voir/{id}(id=${demande.id})}"><p
+
+								<td><a
+									th:href="@{/labplan/private/demande/repondre/{id}(id=${demande.id})}"><p
+											type="text" class="btn btn-block"
+											style="background-color: #7e60fb; color: white">Répondre</p></a></td>
+
+								<td><a
+									th:href="@{/labplan/private/demande/voir/{id}(id=${demande.id})}"><p
 											type="text" class="btn btn-block"
 											style="background-color: #7e60fb; color: white">Voir</p></a></td>
 
@@ -108,8 +116,7 @@
 			<div class="col d-flex justify-content-end">
 
 				<div class="form-group mr-3">
-					<a
-						th:href="@{/labplan/private/demande/creation}"><p
+					<a th:href="@{/labplan/private/demande/creation}"><p
 							type="text" class="btn btn-block"
 							style="background-color: #7e60fb; color: white">Ajouter</p></a>
 				</div>

@@ -40,7 +40,7 @@
 		<div class="message row">
 
 			<p>
-				<b>Pour créer une demande, remplir ce formulaire.</b>
+				<b>Pour répondre à la demande, remplir ce formulaire.</b>
 			</p>
 
 		</div>
@@ -59,12 +59,18 @@
 		<!-- ********************************************* -->
 
 		<div class="container">
-			<form th:action="@{/labplan/private/demande/creation}" method="post"
+			<form th:action="@{/labplan/private/demande/repondre/{id}(id=${formDemande.id})}" method="post"
 				th:object="${formDemande}">
 
 
 				<div class="col">
 					<h1>Demande d'essai</h1>
+					
+					<div>
+					
+						<h2>Partie demandeur</h2>
+
+					</div>
 
 					<div class="row mr-1">
 						<label for="text">Numéro</label> <input type="text"
@@ -75,24 +81,19 @@
 						<label for="text">Produit</label> <input type="text"
 							class="form-control" th:field="*{produit}">
 					</div>
-					
-					<div class="row  mr-1">
-						<label for="text">Code produit</label> <input type="text"
-							class="form-control" th:field="*{code}">
-					</div>
 
 					<div class="row  mr-1">
 						<label for="text">Echantillon</label> <input type="text"
 							class="form-control" th:field="*{echantillon}">
 					</div>
 
-					
+					<!--
 					<div class="row  mr-1">
 						<label for="text">Date</label> <input type="date"
 							class="form-control" th:field="*{date}">
 					</div>
 
- 
+  -->
 
 					<div class="row  mr-1">
 						<label for="text">Objectif</label> <input type="text"
@@ -104,43 +105,32 @@
 							class="form-control" th:field="*{origine}">
 					</div>
 
-					
+
 
 					<div class="row  mr-1">
 						<label for="text">Essai demandé</label> <input type="text"
 							class="form-control" th:field="*{essai}">
 					</div>
-					
-					<div class="row  mr-1">
-						<label for="text">Eléments auxiliaires</label> <input type="text"
-							class="form-control" th:field="*{auxiliaire}">
-					</div>
-					
-					<div class="form-group">
-						<label for="exampleFormControlSelect1">Degré d'urgence</label> <select
-							class="form-control" id="exampleFormControlSelect1" th:field="*{urgence}">
-							<option th:value="Faible" th:text="Faible"></option>
-							<option th:value="Moyenne" th:text="Moyenne"></option>
-							<option th:value="Elevéé" th:text="Elevée"></option>
-							
-						</select>
-					</div>
 
-					<!--  
+					<div>
+					
+						<h2>Partie laboratoire</h2>
+
+					</div>
 
 					<div class="row  mr-1">
 						<label for="text">Résultat</label> <input type="text"
 							class="form-control" th:field="*{resultat}">
 					</div>
-					
-					
-					
-						<div class="row  mr-1">
+
+
+
+					<div class="row  mr-1">
 						<label for="text">Avis</label> <input type="text"
 							class="form-control" th:field="*{avis}">
 					</div>
-					
-					-->
+
+
 
 					<div class="bouton row">
 

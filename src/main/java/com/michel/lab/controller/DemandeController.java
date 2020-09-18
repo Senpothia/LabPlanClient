@@ -121,5 +121,44 @@ public class DemandeController {
 
 		return "demandes";
 	}
+	
+	@GetMapping("/repondre/{id}")
+	public String creationDemande(
+			@PathVariable(name = "id") Integer id,
+			Model model, HttpSession session) {
+
+		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		
+		DemandeAux demande = microServiceLab.voirDemande(id);
+		System.out.println("num demande: " + demande.getNumero());
+		FormDemande formDemande = new FormDemande();
+		formDemande.setId(id);
+		formDemande.setNumero(demande.getNumero());
+		formDemande.setProduit(demande.getProduit());
+		formDemande.setEchantillon(demande.getEchantillon());
+		formDemande.setObjectif(demande.getObjectif());
+		formDemande.setOrigine(demande.getOrigine());
+		formDemande.setEssai(demande.getEssai());
+		
+		model.addAttribute("formDemande", formDemande);
+
+		return "repondreDemande";
+
+	}
+	
+	@PostMapping("/repondre/{id}")
+	public String enregistrerReponseDemande(
+			@PathVariable(name = "id") Integer id,
+			Model model, HttpSession session,
+			FormDemande formDemande) {
+
+		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		
+	
+
+		return "ok";
+
+	}
+
 
 }
