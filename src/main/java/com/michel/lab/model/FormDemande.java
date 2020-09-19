@@ -3,10 +3,10 @@ package com.michel.lab.model;
 import java.time.LocalDateTime;
 
 public class FormDemande {
-	
+
 	private Integer id;
 	private String numero;
-	private LocalDateTime date;
+	private String date;
 	private boolean statut; // Close, ouverte
 	private String produit;
 	private String echantillon; // Description de l'échantillon
@@ -17,24 +17,25 @@ public class FormDemande {
 	private String avis;
 	private Integer qualification;
 	private Integer demandeur;
-	
+
 	private String rapport;
 	private String auxiliaire;
 	private String dateReponse;
 	private String urgence;
 	private String code;
 	private String observation;
-	
+	private Integer technicien;
+	private String nomTechnicien;
+
 	public FormDemande() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	
-	public FormDemande(Integer id, String numero, LocalDateTime date, boolean statut, String produit,
-			String echantillon, String origine, String essai, String objectif, String resultat, String avis,
-			Integer qualification, Integer demandeur, String rapport, String auxiliaire, String dateReponse,
-			String urgence, String code, String observation) {
+	public FormDemande(Integer id, String numero, String date, boolean statut, String produit, String echantillon,
+			String origine, String essai, String objectif, String resultat, String avis, Integer qualification,
+			Integer demandeur, String rapport, String auxiliaire, String dateReponse, String urgence, String code,
+			String observation, Integer technicien, String nomTechnicien) {
 		super();
 		this.id = id;
 		this.numero = numero;
@@ -55,8 +56,9 @@ public class FormDemande {
 		this.urgence = urgence;
 		this.code = code;
 		this.observation = observation;
+		this.technicien = technicien;
+		this.nomTechnicien = nomTechnicien;
 	}
-
 
 	public Integer getId() {
 		return id;
@@ -74,11 +76,11 @@ public class FormDemande {
 		this.numero = numero;
 	}
 
-	public LocalDateTime getDate() {
+	public String getDate() {
 		return date;
 	}
 
-	public void setDate(LocalDateTime date) {
+	public void setDate(String date) {
 		this.date = date;
 	}
 
@@ -162,66 +164,68 @@ public class FormDemande {
 		this.demandeur = demandeur;
 	}
 
-
 	public String getRapport() {
 		return rapport;
 	}
-
 
 	public void setRapport(String rapport) {
 		this.rapport = rapport;
 	}
 
-
 	public String getAuxiliaire() {
 		return auxiliaire;
 	}
-
 
 	public void setAuxiliaire(String auxiliaire) {
 		this.auxiliaire = auxiliaire;
 	}
 
-
 	public String getDateReponse() {
 		return dateReponse;
 	}
-
 
 	public void setDateReponse(String dateReponse) {
 		this.dateReponse = dateReponse;
 	}
 
-
 	public String getUrgence() {
 		return urgence;
 	}
-
 
 	public void setUrgence(String urgence) {
 		this.urgence = urgence;
 	}
 
-
 	public String getCode() {
 		return code;
 	}
-
 
 	public void setCode(String code) {
 		this.code = code;
 	}
 
-
 	public String getObservation() {
 		return observation;
 	}
-
 
 	public void setObservation(String observation) {
 		this.observation = observation;
 	}
 
+	public Integer getTechnicien() {
+		return technicien;
+	}
 
+	public void setTechnicien(Integer technicien) {
+		this.technicien = technicien;
+	}
+
+	public String getNomTechnicien() {
+		return nomTechnicien;
+	}
+
+	public void setNomTechnicien(String nomTechnicien) {
+		this.nomTechnicien = nomTechnicien;
+	}
 
 }

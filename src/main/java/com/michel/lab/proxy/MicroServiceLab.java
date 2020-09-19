@@ -310,6 +310,16 @@ public interface MicroServiceLab {
 	@PostMapping("/private/fiche/modifier")
 	public void modifierLaFiche(FormFiche formFiche);
 	
+	@PostMapping("/private/demande/reponse/enregistrer")
+	public void enregistrerReponse(FormDemande formDemande);
+	
+	@GetMapping("/private/demande/traiter/{id}")
+	public void traiterDemande(@PathVariable(name = "id") Integer id);
+	
+	
+	
+	@GetMapping("/private/utilisateur/{id}")
+	public Utilisateur obtenirUtilisateurParId(@PathVariable(name = "id") Integer id);
 	
 	
 	

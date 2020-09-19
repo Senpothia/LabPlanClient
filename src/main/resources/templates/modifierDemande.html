@@ -59,8 +59,9 @@
 		<!-- ********************************************* -->
 
 		<div class="container">
-			<form th:action="@{/labplan/private/demande/modifier/{id}(id=${formDemande.id})}" method="post"
-				th:object="${formDemande}">
+			<form
+				th:action="@{/labplan/private/demande/modifier/{id}(id=${formDemande.id})}"
+				method="post" th:object="${formDemande}">
 
 
 				<div class="col">
@@ -72,55 +73,59 @@
 					</div>
 
 					<div class="row  mr-1">
+						<label for="text">Date de la demande</label> <input type="date"
+							class="form-control" th:field="*{date}">
+					</div>
+
+					<div class="row  mr-1">
 						<label for="text">Produit</label> <input type="text"
-							class="form-control" th:field="*{produit}"  th:value="*{produit}">
+							class="form-control" th:field="*{produit}" th:value="*{produit}">
+					</div>
+
+					<div class="row  mr-1">
+						<label for="text">Code</label> <input type="text"
+							class="form-control" th:field="*{produit}" th:value="*{code}">
 					</div>
 
 					<div class="row  mr-1">
 						<label for="text">Echantillon</label> <input type="text"
-							class="form-control" th:field="*{echantillon}"  th:value="*{echantillon}">
+							class="form-control" th:field="*{echantillon}"
+							th:value="*{echantillon}">
 					</div>
 
-					<!--
-					<div class="row  mr-1">
-						<label for="text">Date</label> <input type="date"
-							class="form-control" th:field="*{date}">
-					</div>
 
-  -->
 
 					<div class="row  mr-1">
 						<label for="text">Objectif</label> <input type="text"
-							class="form-control" th:field="*{objectif}"  th:value="*{objectif}">
+							class="form-control" th:field="*{objectif}"
+							th:value="*{objectif}">
 					</div>
 
 					<div class="row  mr-1">
 						<label for="text">Origine</label> <input type="text"
-							class="form-control" th:field="*{origine}"  th:value="*{origine}">
+							class="form-control" th:field="*{origine}" th:value="*{origine}">
 					</div>
 
-					
+
 
 					<div class="row  mr-1">
 						<label for="text">Essai demandé</label> <input type="text"
-							class="form-control" th:field="*{essai}"  th:value="*{essai}">
+							class="form-control" th:field="*{essai}" th:value="*{essai}">
 					</div>
 
-					<!--  
 
 					<div class="row  mr-1">
-						<label for="text">Résultat</label> <input type="text"
-							class="form-control" th:field="*{resultat}">
+						<label for="text">Equipements auxiliaires fournis</label> <input
+							type="text" class="form-control" th:field="*{auxiliaire}"
+							th:value="*{auxiliaire}">
 					</div>
-					
-					
-					
-						<div class="row  mr-1">
-						<label for="text">Avis</label> <input type="text"
-							class="form-control" th:field="*{avis}">
+
+					<div class="row  mr-1">
+						<label for="text">Degré d'urgence</label> <input type="text"
+							class="form-control" th:field="*{urgence}" th:value="*{urgence}">
 					</div>
-					
-					-->
+
+
 
 					<div class="bouton row">
 

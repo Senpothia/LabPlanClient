@@ -59,15 +59,16 @@
 		<!-- ********************************************* -->
 
 		<div class="container">
-			<form th:action="@{/labplan/private/demande/repondre/{id}(id=${formDemande.id})}" method="post"
-				th:object="${formDemande}">
+			<form
+				th:action="@{/labplan/private/demande/repondre/{id}(id=${formDemande.id})}"
+				method="post" th:object="${formDemande}">
 
 
 				<div class="col">
 					<h1>Demande d'essai</h1>
-					
+
 					<div>
-					
+
 						<h2>Partie demandeur</h2>
 
 					</div>
@@ -87,13 +88,13 @@
 							class="form-control" th:field="*{echantillon}">
 					</div>
 
-					<!--
+
 					<div class="row  mr-1">
-						<label for="text">Date</label> <input type="date"
+						<label for="text">Date de la demande</label> <input type="date"
 							class="form-control" th:field="*{date}">
 					</div>
 
-  -->
+
 
 					<div class="row  mr-1">
 						<label for="text">Objectif</label> <input type="text"
@@ -111,26 +112,48 @@
 						<label for="text">Essai demandé</label> <input type="text"
 							class="form-control" th:field="*{essai}">
 					</div>
+					
+						<div class="row  mr-1">
+						<label for="text">Equipements auxiliaires fournis</label> <input type="text"
+							class="form-control" th:field="*{auxiliaire}">
+					</div>
 
 					<div>
-					
+
 						<h2>Partie laboratoire</h2>
 
 					</div>
-
-					<div class="row  mr-1">
-						<label for="text">Résultat</label> <input type="text"
-							class="form-control" th:field="*{resultat}">
+					
+					
+						<div class="row  mr-1">
+						<label for="text">Essais réalisés par</label> <input type="text"
+							class="form-control" th:field="*{NomTechnicien}">
 					</div>
 
 
-
 					<div class="row  mr-1">
-						<label for="text">Avis</label> <input type="text"
+						<label for="text">Avis du laboratoire</label> <input type="text"
 							class="form-control" th:field="*{avis}">
 					</div>
 
 
+					<div class="row  mr-1">
+						<label for="text">Observations</label> <input type="text"
+							class="form-control" th:field="*{observation}">
+					</div>
+
+
+					<div class="row  mr-1">
+						<label for="text">Date de la réponse</label> <input type="date"
+							class="form-control" th:field="*{dateReponse}">
+
+					</div>
+					
+					
+					<div class="row  mr-1">
+						<label for="text">Numéro de rapport</label> <input type="text"
+							class="form-control" th:field="*{rapport}">
+					</div>
 
 					<div class="bouton row">
 

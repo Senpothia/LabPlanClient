@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+
 import com.michel.lab.model.DemandeAux;
 import com.michel.lab.model.FormDemande;
 import com.michel.lab.model.Utilisateur;
@@ -47,6 +48,7 @@ public class DemandeController {
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
 
 		formDemande.setDemandeur(utilisateur.getId());
+		formDemande.setStatut(true);
 		microServiceLab.enregistrerDemande(formDemande);
 
 		List<DemandeAux> demandes = microServiceLab.listeDemandes();
@@ -102,7 +104,15 @@ public class DemandeController {
 		formDemande.setId(id);
 		formDemande.setNumero(demande.getNumero());
 		formDemande.setDemandeur(utilisateur.getId());
+		formDemande.setDate(demande.getDate());
+		formDemande.setCode(demande.getCode());
+		formDemande.setProduit(demande.getProduit());
 		formDemande.setEchantillon(demande.getEchantillon());
+		formDemande.setObjectif(demande.getObjectif());
+		formDemande.setOrigine(demande.getOrigine());
+		formDemande.setEssai(demande.getEssai());
+		formDemande.setAuxiliaire(demande.getAuxiliaire());
+		formDemande.setUrgence(demande.getUrgence());
 
 		return "modifierDemande";
 
@@ -153,10 +163,64 @@ public class DemandeController {
 			FormDemande formDemande) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		DemandeAux demande = microServiceLab.voirDemande(id);
+		formDemande.setStatut(false);
+		formDemande.setId(id);
+		formDemande.setTechnicien(utilisateur.getId());
+		microServiceLab.enregistrerReponse(formDemande);
 		
-	
+		List<DemandeAux> demandes = microServiceLab.listeDemandes();
+		model.addAttribute("demandes", demandes);
 
-		return "ok";
+		return "demandes";
+		
+
+	}
+	
+	@GetMapping("/traiter/{id}")
+	public String traiterDemande(
+			@PathVariable(name = "id") Integer id,
+			Model model, HttpSession session) {
+		
+		
+		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		
+		microServiceLab.traiterDemande(id);
+		List<DemandeAux> demandes = microServiceLab.listeDemandes();
+		model.addAttribute("demandes", demandes);
+
+		return "demandes";
+	}
+	
+	@GetMapping("/repondre/modifier/{id}")
+	public String modifierReponseDemande(@PathVariable(name = "id") Integer id,
+			Model model, HttpSession session) {
+		
+		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		DemandeAux demande = microServiceLab.voirDemande(id);
+		System.out.println("num demande: " + demande.getNumero());
+		FormDemande formDemande = new FormDemande();
+		formDemande.setId(id);
+		formDemande.setNumero(demande.getNumero());
+		formDemande.setDate(demande.getDate());
+		formDemande.setCode(demande.getCode());
+		formDemande.setProduit(demande.getProduit());
+		formDemande.setEchantillon(demande.getEchantillon());
+		formDemande.setObjectif(demande.getObjectif());
+		formDemande.setOrigine(demande.getOrigine());
+		formDemande.setEssai(demande.getEssai());
+		formDemande.setAuxiliaire(demande.getAuxiliaire());
+		formDemande.setUrgence(demande.getUrgence());
+		
+		formDemande.setNomTechnicien(demande.getTechnicien());
+		formDemande.setAvis(demande.getAvis());
+		formDemande.setObservation(demande.getObservation());
+		formDemande.setDateReponse(demande.getDateReponse());
+		formDemande.setRapport(demande.getRapport());
+		
+		model.addAttribute("formDemande", formDemande);
+
+		return "repondreDemande";
 
 	}
 

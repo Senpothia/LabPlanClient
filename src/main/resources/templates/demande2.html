@@ -68,6 +68,12 @@
 						<td th:text="${demande.numero}" />
 
 					</tr>
+					
+						<tr>
+						<th scope="row">Date de la demande</th>
+						<td th:text="${demande.date}" />
+
+					</tr>
 					<tr>
 						<th scope="row">Demandeur</th>
 						<td th:text="${demande.demandeur}" />
@@ -103,6 +109,13 @@
 						<td th:text="${demande.essai}" />
 
 					</tr>
+					
+					
+					<tr>
+						<th scope="row">Equipements auxiliares fournis</th>
+						<td th:text="${demande.auxiliaire}" />
+
+					</tr>
 
 					<tr>
 						<th scope="row">Degré d'urgence</th>
@@ -116,11 +129,7 @@
 
 					</tr>
 
-					<tr>
-						<th scope="row">Résultat</th>
-						<td th:text="${demande.resultat}" />
-
-					</tr>
+					
 
 				</tbody>
 			</table>

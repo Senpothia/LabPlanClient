@@ -82,6 +82,7 @@ public class DemandeViewPdf extends AbstractPdfView {
 		cellSubTitre2.setBackgroundColor(new Color(244, 176, 131));
 		cellSubTitre2.setColspan(8);
 		cellSubTitre2.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+		cellSubTitre2.setPadding(5);
 		table.addCell(cellSubTitre2);
 
 		////
@@ -100,7 +101,7 @@ public class DemandeViewPdf extends AbstractPdfView {
 		/////
 
 		PdfPCell cellEchantillon = new PdfPCell(
-				new Phrase("Echantillon:", FontFactory.getFont(FontFactory.TIMES_BOLD, 10)));
+				new Phrase("Echantillons:", FontFactory.getFont(FontFactory.TIMES_BOLD, 10)));
 		cellEchantillon.setColspan(1);
 		cellEchantillon.setBackgroundColor(new Color(244, 176, 131));
 		cellEchantillon.setMinimumHeight(60);
@@ -115,7 +116,7 @@ public class DemandeViewPdf extends AbstractPdfView {
 
 		/////
 
-		PdfPCell cellObjectif = new PdfPCell(new Phrase("Objectif:", FontFactory.getFont(FontFactory.TIMES_BOLD, 10)));
+		PdfPCell cellObjectif = new PdfPCell(new Phrase("Objectif des essais:", FontFactory.getFont(FontFactory.TIMES_BOLD, 10)));
 		cellObjectif.setColspan(1);
 		cellObjectif.setBackgroundColor(new Color(244, 176, 131));
 		cellObjectif.setMinimumHeight(60);
@@ -127,6 +128,21 @@ public class DemandeViewPdf extends AbstractPdfView {
 		cellObjectif2.setColspan(1);
 		cellObjectif2.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
 		table.addCell(cellObjectif2);
+
+		////////
+		
+		PdfPCell cellOrigine = new PdfPCell(new Phrase("Origine de la demande:", FontFactory.getFont(FontFactory.TIMES_BOLD, 10)));
+		cellOrigine.setColspan(1);
+		cellOrigine.setBackgroundColor(new Color(244, 176, 131));
+		cellOrigine.setMinimumHeight(60);
+		cellOrigine.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
+		table.addCell(cellOrigine);
+
+		PdfPCell cellOrigine2 = new PdfPCell(
+				new Phrase(demande.getOrigine(), FontFactory.getFont(FontFactory.TIMES, 10)));
+		cellOrigine2.setColspan(1);
+		cellOrigine2.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
+		table.addCell(cellOrigine2);
 
 		//////
 
@@ -146,7 +162,7 @@ public class DemandeViewPdf extends AbstractPdfView {
 		/////
 
 		PdfPCell cellAuxiliaire = new PdfPCell(
-				new Phrase("Eléments auxiliaires:", FontFactory.getFont(FontFactory.TIMES_BOLD, 10)));
+				new Phrase("Eléments auxiliaires fournis:", FontFactory.getFont(FontFactory.TIMES_BOLD, 10)));
 		cellAuxiliaire.setColspan(1);
 		cellAuxiliaire.setBackgroundColor(new Color(244, 176, 131));
 		cellAuxiliaire.setMinimumHeight(60);
@@ -213,6 +229,7 @@ public class DemandeViewPdf extends AbstractPdfView {
 		cellSubTitre3.setBackgroundColor(new Color(153, 204, 255));
 		cellSubTitre3.setColspan(8);
 		cellSubTitre3.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+		cellSubTitre3.setPadding(5);
 		table.addCell(cellSubTitre3);
 
 		/////
