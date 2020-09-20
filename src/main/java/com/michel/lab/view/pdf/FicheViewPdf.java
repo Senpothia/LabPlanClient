@@ -161,7 +161,7 @@ public class FicheViewPdf extends AbstractPdfView {
 		table.addCell(cellProjet2);
 		
 		PdfPCell cellOrgane = new PdfPCell(new Phrase("Organe affecté:",
-				 FontFactory.getFont(FontFactory.TIMES, 10)));
+				 FontFactory.getFont(FontFactory.TIMES_BOLD, 9)));
 		cellOrgane.setColspan(1);
 		cellOrgane.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
 		table.addCell(cellOrgane);

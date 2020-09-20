@@ -100,7 +100,6 @@ public class DemandeController {
 		DemandeAux demande = microServiceLab.voirDemande(id);
 		FormDemande formDemande = new FormDemande();
 
-		model.addAttribute("formDemande", formDemande);
 		formDemande.setId(id);
 		formDemande.setNumero(demande.getNumero());
 		formDemande.setDemandeur(utilisateur.getId());
@@ -113,7 +112,8 @@ public class DemandeController {
 		formDemande.setEssai(demande.getEssai());
 		formDemande.setAuxiliaire(demande.getAuxiliaire());
 		formDemande.setUrgence(demande.getUrgence());
-
+		model.addAttribute("formDemande", formDemande);
+		
 		return "modifierDemande";
 
 	}
@@ -125,6 +125,7 @@ public class DemandeController {
 		
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
 		formDemande.setDemandeur(utilisateur.getId());
+		System.out.println("Nom de produit: " + formDemande.getProduit());
 		microServiceLab.modifierDemande(formDemande);
 		List<DemandeAux> demandes = microServiceLab.listeDemandes();
 		model.addAttribute("demandes", demandes);
