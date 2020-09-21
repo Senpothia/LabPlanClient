@@ -73,11 +73,12 @@
 					</thead>
 					<tbody>
 						<tr th:each="fiche, iStat: ${fiches}">
-							<th scope="row"><span th:text="${iStat.count}"></span></th>
+						
 							<td th:text="${fiche.numero}" />
 							<td th:text="${fiche.date}" />
 							<td th:text="${fiche.auteur}" />
 							<td th:text="${fiche.projet}" />
+							<td th:text="${fiche.code}" />
 							<td th:text="${fiche.produit}" />
 							<td th:text="${fiche.etat}" />
 							

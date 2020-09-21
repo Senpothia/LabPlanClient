@@ -69,18 +69,23 @@
 
 					</tr>
 
-					<!-- 
+
 					<tr>
 						<th scope="row">Date</th>
 						<td th:text="${fiche.date}" />
 
 					</tr>
-					
-					 -->
+
 
 					<tr>
 						<th scope="row">Auteur</th>
 						<td th:text="${fiche.nomAuteur}" />
+
+					</tr>
+
+					<tr>
+						<th scope="row">Service</th>
+						<td th:text="${fiche.service}" />
 
 					</tr>
 
@@ -115,8 +120,40 @@
 					</tr>
 
 					<tr>
+						<th scope="row">Description de l'anomalie</th>
+						<td th:text="${fiche.observation}" />
+
+					</tr>
+					
+					
+					<tr>
+						<th scope="row">Documents joints</th>
+						<td th:text="${fiche.document}" />
+
+					</tr>
+
+					<tr>
+						<th scope="row">Incidence de l'anomalie</th>
+						<td th:text="${fiche.incidence}" />
+
+					</tr>
+
+					<tr>
+						<th scope="row">Degré de gravité de l'anomalie</th>
+						<td th:text="${fiche.niveau}" />
+
+					</tr>
+
+					<tr>
 						<th scope="row">Solution proposée</th>
 						<td th:text="${fiche.solution}" />
+
+					</tr>
+
+
+					<tr>
+						<th scope="row">Réponse envisagée du BE</th>
+						<td th:text="${fiche.reponse}" />
 
 					</tr>
 

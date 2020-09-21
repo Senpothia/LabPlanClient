@@ -200,7 +200,7 @@ public class FicheController {
 		formFiche.setAuteur(fiche.getAuteur());
 		formFiche.setCirconstance(fiche.getCirconstance());
 		formFiche.setCode(fiche.getCode());
-		formFiche.setDate(fiche.getDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
+		formFiche.setDate(fiche.getDate());
 		formFiche.setDomaine(fiche.getDomaine());
 		formFiche.setEtat(fiche.getEtat());
 		formFiche.setIncidence(fiche.getIncidence());
