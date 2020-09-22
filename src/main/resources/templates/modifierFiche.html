@@ -60,27 +60,26 @@
 		<!-- ********************************************* -->
 
 		<div class="container">
-			<form th:action="@{/labplan/private/fiche/modifier/{id}(id=${formFiche.id})}" method="post"
-				th:object="${formFiche}">
+			<form
+				th:action="@{/labplan/private/fiche/modifier/{id}(id=${formFiche.id})}"
+				method="post" th:object="${formFiche}">
 
 
 				<div class="col">
 					<h1>Fiche d'anomalie technique</h1>
-	
-					<!--  
+
+
 					<div class="row  mr-1">
 						<label for="text">Numéro</label> <input type="text"
 							class="form-control" th:field="*{numero}">
 					</div>
-					
-					-->
 
-					<!--  
+
 					<div class="row mr-1">
 						<label for="text">Date</label> <input type="date"
 							class="form-control" th:field="*{date}">
 					</div>
--->
+
 					<div class="row  mr-1">
 						<label for="text">Projet</label> <input type="text"
 							class="form-control" th:field="*{projet}" th:value="*{projet}">
@@ -93,39 +92,34 @@
 
 					<div class="row  mr-1">
 						<label for="text">Circonstances de l'observation</label> <input
-							type="text" class="form-control" th:field="*{circonstance}" th:value="*{circonstance}">
+							type="text" class="form-control" th:field="*{circonstance}"
+							th:value="*{circonstance}">
 					</div>
 
 					<div class="row  mr-1">
-						<label for="text">Observation</label> <input type="text"
-							class="form-control" th:field="*{observation}" th:value="*{observation}">
+						<label for="text">Description de l'anomalie</label> <input
+							type="text" class="form-control" th:field="*{observation}"
+							th:value="*{observation}">
 					</div>
 
 					<div class="row  mr-1">
-						<label for="text">Conséquences de l'anomalie</label> <input type="text"
-							class="form-control" th:field="*{incidence}" th:value="*{incidence}">
+						<label for="text">Conséquences de l'anomalie</label> <input
+							type="text" class="form-control" th:field="*{incidence}"
+							th:value="*{incidence}">
 					</div>
-
-					<!-- 
-
-					<div class="row  mr-1">
-						<label for="text">Niveau</label> <input type="number"
-							class="form-control" th:field="*{niveau}">
-					</div>
-					
-					 -->
-				
 
 
 					<div class="form-group">
-						<label for="exampleFormControlSelect1">Incidence de l'anomalie</label> <select
-							class="form-control" id="exampleFormControlSelect1" th:field="*{degre}" th:value="*{degre}">
+						<label for="exampleFormControlSelect1">Incidence de
+							l'anomalie</label> <select class="form-control"
+							id="exampleFormControlSelect1" th:field="*{degre}"
+							th:value="*{degre}">
 							<option th:value="'1'" th:text="'Très' + ' ' +'faible'"></option>
 							<option th:value="'2'" th:text="Faible"></option>
 							<option th:value="'3'" th:text="Moyen"></option>
 							<option th:value="'4'" th:text="Elevé"></option>
 							<option th:value="'5'" th:text="'Très' + ' ' + 'élevé'"></option>
-							
+
 						</select>
 					</div>
 
@@ -144,7 +138,14 @@
 
 					<div class="row  mr-1">
 						<label for="text">Solution</label> <input type="text"
-							class="form-control" th:field="*{solution}" th:value="*{solution}">
+							class="form-control" th:field="*{solution}"
+							th:value="*{solution}">
+					</div>
+
+					<div class="row  mr-1">
+						<label for="text">Documents joints</label> <input type="text"
+							class="form-control" th:field="*{document}"
+							th:value="*{solution}">
 					</div>
 
 

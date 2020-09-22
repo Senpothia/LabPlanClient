@@ -156,45 +156,39 @@ public class FicheController {
 	}
 
 	@GetMapping("/supprimer/{id}")
-	public String supprimerLaFiche(
-			@PathVariable("id") Integer id,
-			Model model, HttpSession session) {
-		
+	public String supprimerLaFiche(@PathVariable("id") Integer id, Model model, HttpSession session) {
+
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
 		FicheAux fiche = microServiceLab.voirLaFiches(id);
 		Integer numQualification = fiche.getNumQualification();
 		System.out.println("numQualif pour suppression: " + numQualification);
 		microServiceLab.supprimerLaFiches(id);
-		
-		if(numQualification != null) {
-			
+
+		if (numQualification != null) {
+
 			List<FicheAux> fiches = microServiceLab.voirLesFichesParQualification(numQualification);
 			model.addAttribute("fiches", fiches);
 			model.addAttribute("qualification", numQualification);
 			return "fichesParQualification";
 
-			
 		} else {
-			
+
 			List<FicheAux> fiches = microServiceLab.voirLesFiches();
 			model.addAttribute("fiches", fiches);
-			return"fiches";
-			
+			return "fiches";
+
 		}
-		
 
 	}
 
 	@GetMapping("/modifier/{id}")
-	public String modifierLaFiche(
-			@PathVariable("id") Integer id,
-			Model model, HttpSession session) {
-		
+	public String modifierLaFiche(@PathVariable("id") Integer id, Model model, HttpSession session) {
+
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
 		FicheAux fiche = microServiceLab.voirLaFiches(id);
-		
+
 		FormFiche formFiche = new FormFiche();
-		
+
 		formFiche.setId(fiche.getId());
 		formFiche.setNumero(fiche.getNumero());
 		formFiche.setAuteur(fiche.getAuteur());
@@ -213,20 +207,17 @@ public class FicheController {
 		formFiche.setReponse(fiche.getReponse());
 		formFiche.setSolution(fiche.getSolution());
 		formFiche.setStatut(fiche.isStatut());
-		
+
 		model.addAttribute("formFiche", formFiche);
-		
+
 		return "modifierFiche";
-		
+
 	}
 
 	@PostMapping("/modifier/{id}")
-	public String enregistrerModificationFiche(
-			@PathVariable("id") Integer id,
-			Model model, HttpSession session,
+	public String enregistrerModificationFiche(@PathVariable("id") Integer id, Model model, HttpSession session,
 			FormFiche formFiche) {
-		
-		
+
 		System.out.println("Valeur id: " + id);
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
 		FicheAux fiche = microServiceLab.voirLaFiches(id);
@@ -234,13 +225,23 @@ public class FicheController {
 		formFiche.setId(id);
 		formFiche.setAuteur(utilisateur.getId());
 		microServiceLab.modifierLaFiche(formFiche);
-		
-		List<FicheAux> fiches = microServiceLab.voirLesFichesParQualification(numQualification);
-		model.addAttribute("fiches", fiches);
-		model.addAttribute("qualification", numQualification);
-		
-		return "fichesParQualification";
-		
+
+		if (numQualification != null) {
+
+			List<FicheAux> fiches = microServiceLab.voirLesFichesParQualification(numQualification);
+			model.addAttribute("fiches", fiches);
+			model.addAttribute("qualification", numQualification);
+
+			return "fichesParQualification";
+
+		} else {
+
+			List<FicheAux> fiches = microServiceLab.voirLesFiches();
+			model.addAttribute("fiches", fiches);
+			return "fiches";
+
+		}
+
 	}
 
 }
