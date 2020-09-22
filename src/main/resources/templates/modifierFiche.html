@@ -80,6 +80,18 @@
 							class="form-control" th:field="*{date}">
 					</div>
 
+
+					<div class="row  mr-1">
+						<label for="text">Service</label> <input type="text"
+							class="form-control" th:field="*{service}" th:value="*{projet}">
+					</div>
+					
+					
+					<div class="row  mr-1">
+						<label for="text">Produit</label> <input type="text"
+							class="form-control" th:field="*{produit}" th:value="*{projet}">
+					</div>
+					
 					<div class="row  mr-1">
 						<label for="text">Projet</label> <input type="text"
 							class="form-control" th:field="*{projet}" th:value="*{projet}">
@@ -114,11 +126,11 @@
 							l'anomalie</label> <select class="form-control"
 							id="exampleFormControlSelect1" th:field="*{degre}"
 							th:value="*{degre}">
-							<option th:value="'1'" th:text="'Très' + ' ' +'faible'"></option>
-							<option th:value="'2'" th:text="Faible"></option>
-							<option th:value="'3'" th:text="Moyen"></option>
-							<option th:value="'4'" th:text="Elevé"></option>
-							<option th:value="'5'" th:text="'Très' + ' ' + 'élevé'"></option>
+							<option th:value="'Remarque'" th:text="'Très' + ' ' +'faible'"></option>
+							<option th:value="'Faible'" th:text="Faible"></option>
+							<option th:value="'Moyen'" th:text="Moyen"></option>
+							<option th:value="'Elevée'" th:text="Elevé"></option>
+							<option th:value="'Grave'" th:text="'Très' + ' ' + 'élevé'"></option>
 
 						</select>
 					</div>
