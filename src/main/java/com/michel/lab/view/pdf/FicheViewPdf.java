@@ -186,29 +186,33 @@ public class FicheViewPdf extends AbstractPdfView {
 		table.addCell(cellGravite);
 		String libelle = null;
 
-		if (fiche.getDegre().equals("Remaque")) {
+		if (fiche.getDegre() != null) {
 
-			libelle = "Simple remarque sans incidence";
-		}
+			if (fiche.getDegre().equals("Remaque")) {
 
-		if (fiche.getDegre().equals("Faible")) {
+				libelle = "Simple remarque sans incidence";
+			}
 
-			libelle = "Le problème dévalorise légèrement le produit";
-		}
+			if (fiche.getDegre().equals("Faible")) {
 
-		if (fiche.getDegre().equals("Moyen")) {
+				libelle = "Le problème dévalorise légèrement le produit";
+			}
 
-			libelle = "Le problème est significatif mais pas totalement bloquant";
-		}
-		
-		if (fiche.getDegre().equals("Elevé")) {
+			if (fiche.getDegre().equals("Moyen")) {
 
-			libelle = "Le problème doit être résolu le plus rapidement possible";
-		}
-		
-		if (fiche.getDegre().equals("Grave")) {
+				libelle = "Le problème est significatif mais pas totalement bloquant";
+			}
 
-			libelle = "Le problème est totalement inacceptable";
+			if (fiche.getDegre().equals("Elevé")) {
+
+				libelle = "Le problème doit être résolu le plus rapidement possible";
+			}
+
+			if (fiche.getDegre().equals("Grave")) {
+
+				libelle = "Le problème est totalement inacceptable";
+			}
+
 		}
 
 		PdfPCell cellGravite2 = new PdfPCell(new Phrase(libelle, FontFactory.getFont(FontFactory.TIMES, 10)));
