@@ -89,10 +89,10 @@ public interface MicroServiceLab {
 	public void modifierCompte(@PathVariable Integer id, @RequestHeader("Authorization") String token,
 			@RequestBody UtilisateurAux utilisateurAux);
 
-	@PostMapping("connexion/")
+	@PostMapping("/connexion")
 	public ResponseEntity<UtilisateurAux> generate(@RequestBody final Login login);
 
-	@PostMapping("compte/")
+	@PostMapping("/compte")
 	public void creerCompte(UtilisateurAux user);
 
 	@PostMapping("/save/qualification") // Enregistrement d'une qualification
@@ -105,7 +105,7 @@ public interface MicroServiceLab {
 	public List<String> tousLesDomaines();
 
 	@GetMapping("/private/qualifications") // récupération de la liste de toutes les qualifications
-	public List<QualificationAux> toutesLesQualifications();
+	public List<QualificationAux> toutesLesQualifications(@RequestHeader("Authorization") String token);
 
 	@GetMapping("/private/historique/{id}") // récupération de la liste de toutes les qualifications par utilisateur
 	public List<QualificationAux> mesQualifications(@PathVariable(name = "id") Integer id);

@@ -73,7 +73,10 @@ public class Private {
 	public String qualifications(Model model, HttpSession session) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		List<QualificationAux> qualifications = microServiceLab.toutesLesQualifications();
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
+		System.out.println("Token header: " + token);
+		List<QualificationAux> qualifications = microServiceLab.toutesLesQualifications(token);
 		model.addAttribute("qualifications", qualifications);
 		model.addAttribute("access", "1");
 		return Constants.QUALIFICATIONS;
