@@ -34,7 +34,9 @@ public class FicheController {
 	public String listesFiches(@PathVariable("id") Integer numQualification, Model model, HttpSession session) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		List<FicheAux> fiches = microServiceLab.voirLesFichesParQualification(numQualification);
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
+		List<FicheAux> fiches = microServiceLab.voirLesFichesParQualification(token, numQualification);
 		model.addAttribute("fiches", fiches);
 		model.addAttribute("qualification", numQualification);
 
@@ -55,10 +57,12 @@ public class FicheController {
 	public String listesFiches(Model model, HttpSession session, FormFiche formFiche) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
 		formFiche.setAuteur(utilisateur.getId());
-		microServiceLab.enregistrerFiche(formFiche);
+		microServiceLab.enregistrerFiche(token, formFiche);
 		System.out.println("dégré: " + formFiche.getDegre());
-		List<FicheAux> fiches = microServiceLab.voirLesFiches();
+		List<FicheAux> fiches = microServiceLab.voirLesFiches(token);
 		model.addAttribute("fiches", fiches);
 
 		return "fiches";
@@ -68,7 +72,9 @@ public class FicheController {
 	public String voirLesFiches(Model model, HttpSession session) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		List<FicheAux> fiches = microServiceLab.voirLesFiches();
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
+		List<FicheAux> fiches = microServiceLab.voirLesFiches(token);
 		model.addAttribute("fiches", fiches);
 
 		return "fiches";
@@ -96,11 +102,13 @@ public class FicheController {
 
 		System.out.println("numQualif: " + numQualification);
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
 		formFiche.setAuteur(utilisateur.getId());
 		formFiche.setQualification(numQualification);
-		microServiceLab.ajouterFiche(formFiche);
+		microServiceLab.ajouterFiche(token, formFiche);
 
-		List<FicheAux> fiches = microServiceLab.voirLesFichesParQualification(numQualification);
+		List<FicheAux> fiches = microServiceLab.voirLesFichesParQualification(token, numQualification);
 		model.addAttribute("fiches", fiches);
 		model.addAttribute("qualification", numQualification);
 
@@ -132,11 +140,13 @@ public class FicheController {
 
 		// System.out.println("numQualif: " + numQualification);
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
 		formFiche.setAuteur(utilisateur.getId());
 		// formFiche.setQualification(numQualification);
-		microServiceLab.ajouterFiche(formFiche);
+		microServiceLab.ajouterFiche(token, formFiche);
 
-		List<FicheAux> fiches = microServiceLab.voirLesFiches();
+		List<FicheAux> fiches = microServiceLab.voirLesFiches(token);
 		model.addAttribute("fiches", fiches);
 		// model.addAttribute("qualification", numQualification);
 
@@ -148,7 +158,9 @@ public class FicheController {
 	public String voirLaFiche(@PathVariable("id") Integer id, Model model, HttpSession session) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		FicheAux fiche = microServiceLab.voirLaFiches(id);
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
+		FicheAux fiche = microServiceLab.voirLaFiches(token, id);
 
 		model.addAttribute("fiche", fiche);
 
@@ -159,21 +171,23 @@ public class FicheController {
 	public String supprimerLaFiche(@PathVariable("id") Integer id, Model model, HttpSession session) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		FicheAux fiche = microServiceLab.voirLaFiches(id);
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
+		FicheAux fiche = microServiceLab.voirLaFiches(token, id);
 		Integer numQualification = fiche.getNumQualification();
 		System.out.println("numQualif pour suppression: " + numQualification);
-		microServiceLab.supprimerLaFiches(id);
+		microServiceLab.supprimerLaFiches(token, id);
 
 		if (numQualification != null) {
 
-			List<FicheAux> fiches = microServiceLab.voirLesFichesParQualification(numQualification);
+			List<FicheAux> fiches = microServiceLab.voirLesFichesParQualification(token, numQualification);
 			model.addAttribute("fiches", fiches);
 			model.addAttribute("qualification", numQualification);
 			return "fichesParQualification";
 
 		} else {
 
-			List<FicheAux> fiches = microServiceLab.voirLesFiches();
+			List<FicheAux> fiches = microServiceLab.voirLesFiches(token);
 			model.addAttribute("fiches", fiches);
 			return "fiches";
 
@@ -185,7 +199,9 @@ public class FicheController {
 	public String modifierLaFiche(@PathVariable("id") Integer id, Model model, HttpSession session) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		FicheAux fiche = microServiceLab.voirLaFiches(id);
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
+		FicheAux fiche = microServiceLab.voirLaFiches(token, id);
 
 		FormFiche formFiche = new FormFiche();
 
@@ -220,15 +236,17 @@ public class FicheController {
 
 		System.out.println("Valeur id: " + id);
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		FicheAux fiche = microServiceLab.voirLaFiches(id);
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
+		FicheAux fiche = microServiceLab.voirLaFiches(token, id);
 		Integer numQualification = fiche.getNumQualification();
 		formFiche.setId(id);
 		formFiche.setAuteur(utilisateur.getId());
-		microServiceLab.modifierLaFiche(formFiche);
+		microServiceLab.modifierLaFiche(token, formFiche);
 
 		if (numQualification != null) {
 
-			List<FicheAux> fiches = microServiceLab.voirLesFichesParQualification(numQualification);
+			List<FicheAux> fiches = microServiceLab.voirLesFichesParQualification(token, numQualification);
 			model.addAttribute("fiches", fiches);
 			model.addAttribute("qualification", numQualification);
 
@@ -236,7 +254,7 @@ public class FicheController {
 
 		} else {
 
-			List<FicheAux> fiches = microServiceLab.voirLesFiches();
+			List<FicheAux> fiches = microServiceLab.voirLesFiches(token);
 			model.addAttribute("fiches", fiches);
 			return "fiches";
 

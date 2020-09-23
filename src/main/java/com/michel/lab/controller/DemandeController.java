@@ -46,12 +46,13 @@ public class DemandeController {
 	public String enregistrerDemande(Model model, HttpSession session, FormDemande formDemande) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
 		formDemande.setDemandeur(utilisateur.getId());
 		formDemande.setStatut(true);
-		microServiceLab.enregistrerDemande(formDemande);
+		microServiceLab.enregistrerDemande(token, formDemande);
 
-		List<DemandeAux> demandes = microServiceLab.listeDemandes();
+		List<DemandeAux> demandes = microServiceLab.listeDemandes(token);
 		model.addAttribute("demandes", demandes);
 
 		return "demandes";
@@ -63,7 +64,9 @@ public class DemandeController {
 	public String voirDemandes(Model model, HttpSession session) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		List<DemandeAux> demandes = microServiceLab.listeDemandes();
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
+		List<DemandeAux> demandes = microServiceLab.listeDemandes(token);
 		model.addAttribute("demandes", demandes);
 
 		return "demandes";
@@ -74,7 +77,9 @@ public class DemandeController {
 	public String VoirDemande(@PathVariable(name = "id") Integer id, Model model, HttpSession session) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		DemandeAux demande = microServiceLab.voirDemande(id);
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
+		DemandeAux demande = microServiceLab.voirDemande(token,id);
 		model.addAttribute("demande", demande);
 
 		return "demande2";
@@ -85,8 +90,10 @@ public class DemandeController {
 	public String supprimerDemande(@PathVariable(name = "id") Integer id, Model model, HttpSession session) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		microServiceLab.supprimerDemande(id);
-		List<DemandeAux> demandes = microServiceLab.listeDemandes();
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
+		microServiceLab.supprimerDemande(token, id);
+		List<DemandeAux> demandes = microServiceLab.listeDemandes(token);
 		model.addAttribute("demandes", demandes);
 
 		return "demandes";
@@ -97,7 +104,9 @@ public class DemandeController {
 	public String modifierDemande(@PathVariable(name = "id") Integer id, Model model, HttpSession session) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		DemandeAux demande = microServiceLab.voirDemande(id);
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
+		DemandeAux demande = microServiceLab.voirDemande(token, id);
 		FormDemande formDemande = new FormDemande();
 
 		formDemande.setId(id);
@@ -124,10 +133,12 @@ public class DemandeController {
 			, FormDemande formDemande) {
 		
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
 		formDemande.setDemandeur(utilisateur.getId());
 		System.out.println("Nom de produit: " + formDemande.getProduit());
-		microServiceLab.modifierDemande(formDemande);
-		List<DemandeAux> demandes = microServiceLab.listeDemandes();
+		microServiceLab.modifierDemande(token, formDemande);
+		List<DemandeAux> demandes = microServiceLab.listeDemandes(token);
 		model.addAttribute("demandes", demandes);
 
 		return "demandes";
@@ -139,8 +150,10 @@ public class DemandeController {
 			Model model, HttpSession session) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
+		DemandeAux demande = microServiceLab.voirDemande(token, id);
 		
-		DemandeAux demande = microServiceLab.voirDemande(id);
 		System.out.println("num demande: " + demande.getNumero());
 		FormDemande formDemande = new FormDemande();
 		formDemande.setId(id);
@@ -164,13 +177,15 @@ public class DemandeController {
 			FormDemande formDemande) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		DemandeAux demande = microServiceLab.voirDemande(id);
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
+		DemandeAux demande = microServiceLab.voirDemande(token, id);
 		formDemande.setStatut(false);
 		formDemande.setId(id);
 		formDemande.setTechnicien(utilisateur.getId());
-		microServiceLab.enregistrerReponse(formDemande);
+		microServiceLab.enregistrerReponse(token, formDemande);
 		
-		List<DemandeAux> demandes = microServiceLab.listeDemandes();
+		List<DemandeAux> demandes = microServiceLab.listeDemandes(token);
 		model.addAttribute("demandes", demandes);
 
 		return "demandes";
@@ -185,9 +200,11 @@ public class DemandeController {
 		
 		
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
 		
-		microServiceLab.traiterDemande(id);
-		List<DemandeAux> demandes = microServiceLab.listeDemandes();
+		microServiceLab.traiterDemande(token, id);
+		List<DemandeAux> demandes = microServiceLab.listeDemandes(token);
 		model.addAttribute("demandes", demandes);
 
 		return "demandes";
@@ -198,7 +215,9 @@ public class DemandeController {
 			Model model, HttpSession session) {
 		
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		DemandeAux demande = microServiceLab.voirDemande(id);
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
+		DemandeAux demande = microServiceLab.voirDemande(token, id);
 		System.out.println("num demande: " + demande.getNumero());
 		FormDemande formDemande = new FormDemande();
 		formDemande.setId(id);

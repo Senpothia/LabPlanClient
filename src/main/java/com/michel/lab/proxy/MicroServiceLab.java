@@ -96,230 +96,338 @@ public interface MicroServiceLab {
 	public void creerCompte(UtilisateurAux user);
 
 	@PostMapping("/save/qualification") // Enregistrement d'une qualification
-	public void saveQualification(FormQualif formQualif);
+	public void saveQualification(@RequestHeader("Authorization") String token, FormQualif formQualif);
 
 	@PostMapping("/save/procedure") // Enregistrement d'une procédure
-	public void saveProcedure(FormProcedure formProcedure);
+	public void saveProcedure(@RequestHeader("Authorization") String token,FormProcedure formProcedure);
 
 	@GetMapping("/private/domaines") // récupération de la liste des domaines
-	public List<String> tousLesDomaines();
+	public List<String> tousLesDomaines(@RequestHeader("Authorization") String token);
 
 	@GetMapping("/private/qualifications") // récupération de la liste de toutes les qualifications
 	public List<QualificationAux> toutesLesQualifications(@RequestHeader("Authorization") String token);
 
 	@GetMapping("/private/historique/{id}") // récupération de la liste de toutes les qualifications par utilisateur
-	public List<QualificationAux> mesQualifications(@PathVariable(name = "id") Integer id);
+	public List<QualificationAux> mesQualifications(@RequestHeader("Authorization") String token, @PathVariable(name = "id") Integer id);
 
 	@GetMapping("/private/qualifications/{id}") // récupération de la liste de toutes les qualifications en cours par
 												// utilisateur
-	public List<QualificationAux> mesQualificationsEnCours(@PathVariable(name = "id") Integer id);
+	public List<QualificationAux> mesQualificationsEnCours(@RequestHeader("Authorization") String token,@PathVariable(name = "id") Integer id);
 
 	@GetMapping("/private/qualification/{id}") // récupération de la liste de toutes les qualifications en cours par											// utilisateur
-	public QualificationAux obtenirQualification(@PathVariable(name = "id") Integer id);
+	public QualificationAux obtenirQualification(
+			@RequestHeader("Authorization") String token,
+			@PathVariable(name = "id") Integer id);
 
 	@GetMapping("/private/procedures") // Récupérer la liste des procédures
-	public List<ProcedureAux> obtenirProcedures();
+	public List<ProcedureAux> obtenirProcedures(@RequestHeader("Authorization") String token);
 
 	@GetMapping("/private/liste/domaines") // Récupérer la liste des domaines
-	public List<DomaineAux> obtenirDomaines();
+	public List<DomaineAux> obtenirDomaines(@RequestHeader("Authorization") String token);
 
 	@GetMapping("/private/liste/domaine/{id}") // Récupérer une liste de procédure pour un domaine
 												// id = identifiant du domaine concerné
-	public List<ProcedureAux> obtenirProceduresParDomaine(@PathVariable(name = "id") Integer id);
+	public List<ProcedureAux> obtenirProceduresParDomaine(
+			@RequestHeader("Authorization") String token,
+			@PathVariable(name = "id") Integer id);
 
 	@PostMapping("/essai/ajouter/procedure/{id}/{qualification}/{idUser}")
-	public void ajouterProcedure(@PathVariable(name = "id") Integer id // id = identifiant procedure
+	public void ajouterProcedure(
+			@RequestHeader("Authorization") String token,
+			@PathVariable(name = "id") Integer id // id = identifiant procedure
 			, @PathVariable(name = "qualification") Integer qualification // qualification = numéro de qualification
 			, @PathVariable(name = "idUser") Integer idUser); // utilisateur = identifiant utilisateur
 
 	// Récuperer l'ensemble des procédure sélectionnées pour une qualification
 	@PostMapping("/private/liste/procedure/selection") // donnée et un domaine donné
-	public List<Integer> obtenirSelectionProcedure(Groupe groupe); // Qualification = numéro de la qualification
+	public List<Integer> obtenirSelectionProcedure(
+			@RequestHeader("Authorization") String token,
+			Groupe groupe); // Qualification = numéro de la qualification
 
 	@GetMapping("/private/liste/essais/{id}")
-	public List<EssaiAux> obtenirEssaisParQualification(@PathVariable(name = "id") Integer id);
+	public List<EssaiAux> obtenirEssaisParQualification(
+			@RequestHeader("Authorization") String token,
+			@PathVariable(name = "id") Integer id);
 
 	@PostMapping("private/echantillon/save") // Enregistrement d'une procédure
-	public void saveEchantillon(FormEchantillon formEchantillon);
+	public void saveEchantillon(
+			@RequestHeader("Authorization") String token,
+			FormEchantillon formEchantillon);
 
 	@GetMapping("/private/echantillon/voir/{id}")
-	public List<EchantillonAux> obtenirEchantillonsParQualification(@PathVariable(name = "id") Integer id);
+	public List<EchantillonAux> obtenirEchantillonsParQualification(
+			@RequestHeader("Authorization") String token,
+			@PathVariable(name = "id") Integer id);
 
 	@GetMapping("/private/echantillon/desactiver/{id}/{qualification}")
-	public void desactiverEchantillon(@PathVariable(name = "id") Integer id,
+	public void desactiverEchantillon(
+			@RequestHeader("Authorization") String token,
+			@PathVariable(name = "id") Integer id,
 			@PathVariable(name = "qualification") Integer qualification);
 
 	@GetMapping("/private/echantillon/voir")
 	public List<EchantillonAux> obtenirEchantillonsParQualification2(@RequestParam(name = "id") Integer id);
 
 	@GetMapping("/private/echantillon/activer/{id}/{qualification}")
-	public void activerEchantillon(@PathVariable(name = "id") Integer id,
+	public void activerEchantillon(
+			@RequestHeader("Authorization") String token,
+			@PathVariable(name = "id") Integer id,
 			@PathVariable(name = "qualification") Integer qualification);
 
 	// @GetMapping("/private/sequences/voir/{id}/{num}/{domaine}")
 	@GetMapping("/private/sequences/voir/{id}/{num}")
-	public List<SequenceAux> obtenirSequencesParEssai(@PathVariable(name = "id") Integer id,
+	public List<SequenceAux> obtenirSequencesParEssai(
+			@RequestHeader("Authorization") String token,
+			@PathVariable(name = "id") Integer id,
 			@PathVariable(name = "num") Integer num);
 	// @PathVariable(name="domaine") String domaine);
 
 	@GetMapping("/private/essai/{num}")
-	public EssaiAux obtenirEssaiParNumero(@PathVariable(name = "num") Integer num);
+	public EssaiAux obtenirEssaiParNumero(
+			@RequestHeader("Authorization") String token,
+			@PathVariable(name = "num") Integer num);
 
 	@GetMapping("/private/qualification/numero/{id}")
-	public QualificationAux obtenirQualificationParNumero(@PathVariable(name = "id") Integer id);
+	public QualificationAux obtenirQualificationParNumero(
+			@RequestHeader("Authorization") String token,
+			@PathVariable(name = "id") Integer id);
 
 	@PostMapping("private/sequence/save")
-	public void enregistrerSequence(FormSequence formSequence);
+	public void enregistrerSequence(
+			@RequestHeader("Authorization") String token,
+			FormSequence formSequence);
 
 	@GetMapping("private/sequence/{id}")
-	public SequenceAux obtenirSequenceParId(@PathVariable(name = "id") Integer id);
+	public SequenceAux obtenirSequenceParId(
+			@RequestHeader("Authorization") String token,
+			@PathVariable(name = "id") Integer id);
 
 	@PostMapping("private/sequence/modifier")
-	public void modifierSequence(FormSequence formSequence);
+	public void modifierSequence(
+			@RequestHeader("Authorization") String token,
+			FormSequence formSequence);
 
 	@PostMapping("private/echantillon/ajouter/{echantillon}/{qualification}/{sequence}")
 	public void ajouterEchantillon(
+			@RequestHeader("Authorization") String token,
 			@PathVariable(name = "echantillon") Integer idEchantillon,
 			@PathVariable(name = "qualification") Integer numQualification,
 			@PathVariable(name = "sequence") Integer idSequence
 	);
 	
 	@PostMapping("private/echantillon/retirer/{echantillon}/{qualification}/{sequence}")
-	public void retirerEchantillon(@PathVariable(name = "echantillon") Integer idEchantillon,
+	public void retirerEchantillon(
+			@RequestHeader("Authorization") String token,
+			@PathVariable(name = "echantillon") Integer idEchantillon,
 			@PathVariable(name = "qualification") Integer numQualification,
 			@PathVariable(name = "sequence") Integer idSequence
 	);
 	
 	@GetMapping("/private/echantillon/sequence/selection/{qualification}/{sequence}")
 	public List<EchantillonAux> obtenirEchantillonSelectionParSequence(
+			@RequestHeader("Authorization") String token,
 			@PathVariable(name = "qualification") Integer num,
 			@PathVariable(name = "sequence") Integer idSequence);
 	
 	@GetMapping("/private/echantillon/modifier/{id}/{qualification}")
 	public EchantillonAux obtenirEchantillon(
+			@RequestHeader("Authorization") String token,
 			@PathVariable(name = "id") Integer id);
 	
 	@PostMapping("/private/echantillon/modifier")
-	public void modifierEchantillon(FormEchantillon formEchantillon);
+	public void modifierEchantillon(
+			@RequestHeader("Authorization") String token,
+			FormEchantillon formEchantillon);
 	
 	@GetMapping("private/qualification/modifier/statut/{id}")
-	public void modifierStatutQualification(@PathVariable(name = "id") Integer numQualification);
+	public void modifierStatutQualification(
+			@RequestHeader("Authorization") String token,
+			@PathVariable(name = "id") Integer numQualification);
 	
 	@GetMapping("private/qualification/modifier/resultat/{id}")
-	public void modifierResultatQualification(@PathVariable(name = "id") Integer numQualification);
+	public void modifierResultatQualification(
+			@RequestHeader("Authorization") String token,
+			@PathVariable(name = "id") Integer numQualification);
 	
 	@PostMapping("/private/qualification/modifier")
 	public void modifierQualification(
+			@RequestHeader("Authorization") String token,
 			FormQualif formQualif);
 	
 	@PostMapping("/private/sequence/supprimer/{id}")
-	public void supprimerSequence(@PathVariable(name = "id") Integer idSequence);
+	public void supprimerSequence(
+			@RequestHeader("Authorization") String token,
+			@PathVariable(name = "id") Integer idSequence);
 
 	
 	@PostMapping("/private/essai/modifier")
-	public void modifierEssai(FormEssai formEssai);
+	public void modifierEssai(
+			@RequestHeader("Authorization") String token,
+			FormEssai formEssai);
 	
 	
 	@PostMapping("/private/rapport/enregistrer")   // ajout en version pour test!
-	public Integer enregistrerInitRapport(FormInitRapport formInitRapport);
+	public Integer enregistrerInitRapport(
+			@RequestHeader("Authorization") String token,
+			FormInitRapport formInitRapport);
 	
 	@GetMapping("/private/rapport/liste/{num}")
-	public List<RapportAux> obtenirRapportsParQualification(@PathVariable(name = "num") Integer numQualification);
+	public List<RapportAux> obtenirRapportsParQualification(
+			@RequestHeader("Authorization") String token,
+			@PathVariable(name = "num") Integer numQualification);
 	
 	@GetMapping("/private/rapport/{id}")
-	public RapportAux obtenirRapportsParId(@PathVariable(name = "id") Integer idRapport);
+	public RapportAux obtenirRapportsParId(
+			@RequestHeader("Authorization") String token,
+			@PathVariable(name = "id") Integer idRapport);
 	
 	@GetMapping("/private/qualification/id/{id}") 
-	public List<EssaiAux> obtenirEssaisParQualificationId(@PathVariable(name = "id") Integer qualification);
+	public List<EssaiAux> obtenirEssaisParQualificationId(
+			@RequestHeader("Authorization") String token,
+			@PathVariable(name = "id") Integer qualification);
 	
 	@GetMapping("/private/echantillons/qualification/id/{qualification}")
-	public List<EchantillonAux> obtenirEchantillonParIdQualification(@PathVariable(name = "qualification") Integer qualification);
+	public List<EchantillonAux> obtenirEchantillonParIdQualification(
+			@RequestHeader("Authorization") String token,
+			@PathVariable(name = "qualification") Integer qualification);
 	
 	@PostMapping("/private/rapport/data/enregistrer")
-	public void enregistrerDataRapport(GroupeRapport groupeRapport);
+	public void enregistrerDataRapport(
+			@RequestHeader("Authorization") String token,
+			GroupeRapport groupeRapport);
 	
 	@GetMapping("/private/rapport/supprimer/{id}")
-	public void supprimerRapportsParId(@PathVariable("id") Integer idRapport);
+	public void supprimerRapportsParId(
+			@RequestHeader("Authorization") String token,
+			@PathVariable("id") Integer idRapport);
 	
 	@GetMapping("/private/rapport/echantillons/{id}")
-	public List<EchantillonAux> obtenirEchantillonsParRapportId(@PathVariable(name = "id")Integer idRapport);
+	public List<EchantillonAux> obtenirEchantillonsParRapportId(
+			@RequestHeader("Authorization") String token,
+			@PathVariable(name = "id")Integer idRapport);
 	
 	@GetMapping("/private/rapport/essais/{id}")
-	public List<EssaiAux> obtenirEssaisParRapportId(@PathVariable(name = "id")Integer idRapport);
+	public List<EssaiAux> obtenirEssaisParRapportId(
+			@RequestHeader("Authorization") String token,
+			@PathVariable(name = "id")Integer idRapport);
 	
 	@GetMapping("/private/note/liste/{id}")
-	public List<NoteAux> obtenirListeNotesParQualification(@PathVariable(name = "id") Integer numQualification);
+	public List<NoteAux> obtenirListeNotesParQualification(
+			@RequestHeader("Authorization") String token,
+			@PathVariable(name = "id") Integer numQualification);
 	
 	@PostMapping("/private/note/enregistrer")
-	public void ajouterNote(FormNote formNote);
+	public void ajouterNote(
+			@RequestHeader("Authorization") String token,
+			FormNote formNote);
 	
 	@GetMapping("/private/note/voir/{id}")
-	public NoteAux obtenirNote(@PathVariable(name = "id") Integer idNote);
+	public NoteAux obtenirNote(
+			@RequestHeader("Authorization") String token,
+			@PathVariable(name = "id") Integer idNote);
 	
 	@GetMapping("/private/note/supprimer/{id}")
-	public void supprimerNote(@PathVariable(name = "id") Integer idNote);
+	public void supprimerNote(
+			@RequestHeader("Authorization") String token,
+			@PathVariable(name = "id") Integer idNote);
 	
 	@PostMapping("/private/note/modifier")
-	public void modifierNote(FormNote formNote);
+	public void modifierNote(
+			@RequestHeader("Authorization") String token,
+			FormNote formNote);
 	
 	@GetMapping("/private/procedure/liste/domaine/{domaine}")
-	public List<ProcedureAux> obtenirProceduresParDomaine(@PathVariable(name = "domaine") String domaine);
+	public List<ProcedureAux> obtenirProceduresParDomaine(
+			@RequestHeader("Authorization") String token,
+			@PathVariable(name = "domaine") String domaine);
 	
 	@GetMapping("/private/procedure/obtenir/{id}")
-	public ProcedureAux obtenirUneProcedure(@PathVariable(name = "id") Integer id);
+	public ProcedureAux obtenirUneProcedure(
+			@RequestHeader("Authorization") String token,
+			@PathVariable(name = "id") Integer id);
 	
 	@PostMapping("/private/procedure/modifier")
-	public void modifierProcedure(FormProcedure formProcedure);
+	public void modifierProcedure(
+			@RequestHeader("Authorization") String token,
+			FormProcedure formProcedure);
 	
 	@PostMapping("/private/demande/enregistrer")
-	public void enregistrerDemande(FormDemande formDemande);
+	public void enregistrerDemande(
+			@RequestHeader("Authorization") String token,
+			FormDemande formDemande);
 	
 	@GetMapping("/private/demande/liste")
-	public List<DemandeAux> listeDemandes();
+	public List<DemandeAux> listeDemandes(@RequestHeader("Authorization") String token);
 	
 	@GetMapping("/private/demande/voir/{id}")
-	public DemandeAux voirDemande(@PathVariable(name = "id") Integer id);
+	public DemandeAux voirDemande(
+			@RequestHeader("Authorization") String token,
+			@PathVariable(name = "id") Integer id);
 	
 	@GetMapping("/private/demande/supprimer/{id}")
-	public void supprimerDemande(@PathVariable(name = "id") Integer id);
+	public void supprimerDemande(
+			@RequestHeader("Authorization") String token,
+			@PathVariable(name = "id") Integer id);
 	
 	@PostMapping("/private/demande/modifier")
-	public void modifierDemande(FormDemande formDemande);
+	public void modifierDemande(
+			@RequestHeader("Authorization") String token,
+			FormDemande formDemande);
 	
 	@PostMapping("/private/fiche/enregistrer")
-	public void enregistrerFiche(FormFiche formFiche);
+	public void enregistrerFiche(
+			@RequestHeader("Authorization") String token,
+			FormFiche formFiche);
 	
 	@GetMapping("/private/fiche/voir")
-	public List<FicheAux> voirLesFiches();
+	public List<FicheAux> voirLesFiches(@RequestHeader("Authorization") String token);
 	
 	@GetMapping("/private/fiche/qualification/{id}")
-	public List<FicheAux> voirLesFichesParQualification(@PathVariable(name = "id") Integer numQualification);
+	public List<FicheAux> voirLesFichesParQualification(
+			@RequestHeader("Authorization") String token,
+			@PathVariable(name = "id") Integer numQualification);
 	
 	@PostMapping("/private/fiche/qualification/ajouter")
-	public void ajouterFiche(FormFiche formFiche);
+	public void ajouterFiche(
+			@RequestHeader("Authorization") String token,
+			FormFiche formFiche);
 	
 	@GetMapping("/private/fiche/voir/{id}")
-	public FicheAux voirLaFiches(@PathVariable(name = "id") Integer id);
+	public FicheAux voirLaFiches(
+			@RequestHeader("Authorization") String token,
+			@PathVariable(name = "id") Integer id);
 	
 	@GetMapping("/private/fiche/supprimer/{id}")
-	public void supprimerLaFiches(@PathVariable(name = "id") Integer id);
+	public void supprimerLaFiches(
+			@RequestHeader("Authorization") String token,
+			@PathVariable(name = "id") Integer id);
 	
 	@GetMapping("/private/qualification/identifiant/{id}") 
-	public QualificationAux obtenirQualificationParId(Integer idQualification);
+	public QualificationAux obtenirQualificationParId(
+			@RequestHeader("Authorization") String token,
+			Integer idQualification);
 	
 	@PostMapping("/private/fiche/modifier")
-	public void modifierLaFiche(FormFiche formFiche);
+	public void modifierLaFiche(
+			@RequestHeader("Authorization") String token,
+			FormFiche formFiche);
 	
 	@PostMapping("/private/demande/reponse/enregistrer")
-	public void enregistrerReponse(FormDemande formDemande);
+	public void enregistrerReponse(
+			@RequestHeader("Authorization") String token,
+			FormDemande formDemande);
 	
 	@GetMapping("/private/demande/traiter/{id}")
-	public void traiterDemande(@PathVariable(name = "id") Integer id);
+	public void traiterDemande(
+			@RequestHeader("Authorization") String token,
+			@PathVariable(name = "id") Integer id);
 	
 	
 	
 	@GetMapping("/private/utilisateur/{id}")
-	public Utilisateur obtenirUtilisateurParId(@PathVariable(name = "id") Integer id);
+	public Utilisateur obtenirUtilisateurParId(
+			@RequestHeader("Authorization") String token,
+			@PathVariable(name = "id") Integer id);
 	
 	
 	

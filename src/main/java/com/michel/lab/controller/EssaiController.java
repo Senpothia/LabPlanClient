@@ -46,9 +46,11 @@ public class EssaiController {
 	public String choisir(@PathVariable(name = "id") Integer id, Model model, HttpSession session) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		QualificationAux qualification = microServiceLab.obtenirQualification(id);
-		List<ProcedureAux> procedures = microServiceLab.obtenirProcedures();
-		List<DomaineAux> domaines = microServiceLab.obtenirDomaines();
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
+		QualificationAux qualification = microServiceLab.obtenirQualification(token, id);
+		List<ProcedureAux> procedures = microServiceLab.obtenirProcedures(token);
+		List<DomaineAux> domaines = microServiceLab.obtenirDomaines(token);
 		System.out.println("Taille liste procedures: " + procedures.size());
 		System.out.println("Taille liste domaines: " + domaines.size());
 
@@ -65,11 +67,13 @@ public class EssaiController {
 		
 		System.out.println("*** entrée méthode choisirEssais ***");
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
 
 		System.out.println("id domaine: " + id);
 		System.out.println("id qualification: " + qualification);
 
-		List<ProcedureAux> procedures0 = microServiceLab.obtenirProceduresParDomaine(id);  // liste de toutes les procédures du domaine
+		List<ProcedureAux> procedures0 = microServiceLab.obtenirProceduresParDomaine(token, id);  // liste de toutes les procédures du domaine
 		List<Integer> listeIdProcedures = new ArrayList<Integer>();
 
 		for (ProcedureAux pro : procedures0) {  // Récupération de tous les id de toutes les procédures existantes dans le domaine
@@ -81,7 +85,7 @@ public class EssaiController {
 		System.out.println("Taille liste listeIdProcedure: " + listeIdProcedures.size());
 		
 		Groupe groupe = new Groupe(id, qualification);
-		List<Integer> idProcedures = microServiceLab.obtenirSelectionProcedure(groupe); // procédures sélectionnées pour
+		List<Integer> idProcedures = microServiceLab.obtenirSelectionProcedure(token, groupe); // procédures sélectionnées pour
 																						// la qualification
 		System.out.println("Taille liste des procédures sélectionnées pour la qualification choisie: " + idProcedures.size());
 		
@@ -139,8 +143,10 @@ public class EssaiController {
 			Model model, HttpSession session) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
 		Integer idUser = utilisateur.getId();
-		microServiceLab.ajouterProcedure(id, qualification, idUser);
+		microServiceLab.ajouterProcedure(token, id, qualification, idUser);
 
 		redirectAttributes.addAttribute("id", id);
 		redirectAttributes.addAttribute("domaine", domaineId);
@@ -157,12 +163,14 @@ public class EssaiController {
 			Model model, HttpSession session) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
 		System.out.println("*** méthode choisoirEssai2 *** ");
 		System.out.println("Avant");
 		System.out.println("id domaine: " + domaineId);
 		System.out.println("id qualification: " + qualification);
 
-		List<ProcedureAux> procedures0 = microServiceLab.obtenirProceduresParDomaine(domaineId);  // liste de toutes les procédures du domaine
+		List<ProcedureAux> procedures0 = microServiceLab.obtenirProceduresParDomaine(token, domaineId);  // liste de toutes les procédures du domaine
 		List<Integer> listeIdProcedures = new ArrayList<Integer>();
 
 		for (ProcedureAux pro : procedures0) {  // Récupération de tous les id de toutes les procédures existantes dans le domaine
@@ -174,7 +182,7 @@ public class EssaiController {
 		System.out.println("Taille liste listeIdProcedure: " + listeIdProcedures.size());
 		
 		Groupe groupe = new Groupe(domaineId, qualification);
-		List<Integer> idProcedures = microServiceLab.obtenirSelectionProcedure(groupe); // procédures sélectionnées pour
+		List<Integer> idProcedures = microServiceLab.obtenirSelectionProcedure(token, groupe); // procédures sélectionnées pour
 																						// la qualification
 		System.out.println("Taille liste des procédures sélectionnées pour la qualification choisie: " + idProcedures.size());
 		

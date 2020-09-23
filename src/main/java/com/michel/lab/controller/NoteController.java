@@ -35,9 +35,11 @@ public class NoteController {
 	public String listerNotes(@PathVariable(name = "id") Integer numQualification, Model model, HttpSession session) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		QualificationAux qualification = microServiceLab.obtenirQualificationParNumero(numQualification);
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
+		QualificationAux qualification = microServiceLab.obtenirQualificationParNumero(token, numQualification);
 		model.addAttribute("qualification", qualification);
-		List<NoteAux> notes = microServiceLab.obtenirListeNotesParQualification(numQualification);
+		List<NoteAux> notes = microServiceLab.obtenirListeNotesParQualification(token, numQualification);
 
 		for (NoteAux n : notes) {
 
@@ -70,7 +72,9 @@ public class NoteController {
 			@PathVariable(name = "id") Integer numQualification, Model model, HttpSession session) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		QualificationAux qualification = microServiceLab.obtenirQualificationParNumero(numQualification);
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
+		QualificationAux qualification = microServiceLab.obtenirQualificationParNumero(token, numQualification);
 		System.out.println("num qualification: " + qualification.getNumero());
 		model.addAttribute("qualification", qualification);
 		model.addAttribute("formNote", new FormNote());
@@ -83,15 +87,17 @@ public class NoteController {
 			@PathVariable(name = "id") Integer numQualification, Model model, HttpSession session, FormNote formNote) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
 		Integer auteur = utilisateur.getId();
 		formNote.setAuteur(auteur);
 		formNote.setQualification(numQualification);
 
-		microServiceLab.ajouterNote(formNote);
+		microServiceLab.ajouterNote(token, formNote);
 
-		QualificationAux qualification = microServiceLab.obtenirQualificationParNumero(numQualification);
+		QualificationAux qualification = microServiceLab.obtenirQualificationParNumero(token, numQualification);
 		model.addAttribute("qualification", qualification);
-		List<NoteAux> notes = microServiceLab.obtenirListeNotesParQualification(numQualification);
+		List<NoteAux> notes = microServiceLab.obtenirListeNotesParQualification(token, numQualification);
 
 		for (NoteAux n : notes) {
 
@@ -124,7 +130,9 @@ public class NoteController {
 	public String afficherNote(@PathVariable(name = "id") Integer idNote, Model model, HttpSession session) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		NoteAux note = microServiceLab.obtenirNote(idNote);
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
+		NoteAux note = microServiceLab.obtenirNote(token, idNote);
 		System.out.println("numéro de note: " + note.getNumero());
 		model.addAttribute("note", note);
 		return "note2";
@@ -135,15 +143,17 @@ public class NoteController {
 	public String supprimerNote(@PathVariable(name = "id") Integer idNote, Model model, HttpSession session) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		NoteAux note = microServiceLab.obtenirNote(idNote);
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
+		NoteAux note = microServiceLab.obtenirNote(token, idNote);
 
 		Integer numQualification = note.getQualification();
 
-		microServiceLab.supprimerNote(idNote);
+		microServiceLab.supprimerNote(token, idNote);
 
-		QualificationAux qualification = microServiceLab.obtenirQualificationParNumero(numQualification);
+		QualificationAux qualification = microServiceLab.obtenirQualificationParNumero(token, numQualification);
 		model.addAttribute("qualification", qualification);
-		List<NoteAux> notes = microServiceLab.obtenirListeNotesParQualification(numQualification);
+		List<NoteAux> notes = microServiceLab.obtenirListeNotesParQualification(token, numQualification);
 
 		for (NoteAux n : notes) {
 
@@ -174,9 +184,11 @@ public class NoteController {
 	public String modifierNote(@PathVariable(name = "id") Integer idNote, Model model, HttpSession session) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		NoteAux note = microServiceLab.obtenirNote(idNote);
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
+		NoteAux note = microServiceLab.obtenirNote(token, idNote);
 		Integer numQualification = note.getQualification();
-		QualificationAux qualification = microServiceLab.obtenirQualificationParNumero(numQualification);
+		QualificationAux qualification = microServiceLab.obtenirQualificationParNumero(token, numQualification);
 		model.addAttribute("qualification", qualification);
 
 		FormNote formNote = new FormNote();
@@ -196,19 +208,21 @@ public class NoteController {
 			Model model, HttpSession session, FormNote formNote) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
 		Integer auteur = utilisateur.getId();
 		formNote.setAuteur(auteur);
 		formNote.setId(idNote);
 
-		NoteAux note = microServiceLab.obtenirNote(idNote);
+		NoteAux note = microServiceLab.obtenirNote(token, idNote);
 
 		System.out.println("id note récupéré: " + formNote.getId());
 
-		microServiceLab.modifierNote(formNote);
+		microServiceLab.modifierNote(token, formNote);
 
-		QualificationAux qualification = microServiceLab.obtenirQualificationParNumero(numQualification);
+		QualificationAux qualification = microServiceLab.obtenirQualificationParNumero(token, numQualification);
 		model.addAttribute("qualification", qualification);
-		List<NoteAux> notes = microServiceLab.obtenirListeNotesParQualification(numQualification);
+		List<NoteAux> notes = microServiceLab.obtenirListeNotesParQualification(token, numQualification);
 		System.out.println("Taille liste de notes: " + notes.size());
 		model.addAttribute("notes", notes);
 

@@ -41,14 +41,16 @@ public class RapportController {
 		
 		
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
 		
-		RapportAux rapport = microServiceLab.obtenirRapportsParId(idRapport);
+		RapportAux rapport = microServiceLab.obtenirRapportsParId(token, idRapport);
 		System.out.println("id rapport récupéré: " + rapport.getId());
 		System.out.println("id/num qualification du rapport: " + rapport.getQualification());
 		
-		List<EchantillonAux> echantillons = microServiceLab.obtenirEchantillonsParRapportId(idRapport);
+		List<EchantillonAux> echantillons = microServiceLab.obtenirEchantillonsParRapportId(token, idRapport);
 		
-		List<EssaiAux> essais = microServiceLab.obtenirEssaisParRapportId(idRapport);
+		List<EssaiAux> essais = microServiceLab.obtenirEssaisParRapportId(token, idRapport);
 		
 		//*******************************************************************
 		

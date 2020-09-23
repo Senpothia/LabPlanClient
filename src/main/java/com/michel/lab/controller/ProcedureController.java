@@ -37,6 +37,8 @@ public class ProcedureController {
 			HttpSession session) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
 
 		model.addAttribute("formProcedure", new FormProcedure());
 		// List<String> nomsDomaines = microServiceLab.tousLesDomaines();
@@ -48,7 +50,7 @@ public class ProcedureController {
 
 		} else {
 
-			List<String> nomsDomaines = microServiceLab.tousLesDomaines();
+			List<String> nomsDomaines = microServiceLab.tousLesDomaines(token);
 			model.addAttribute("domaines", nomsDomaines);
 			model.addAttribute("selection", true);
 
@@ -62,8 +64,10 @@ public class ProcedureController {
 	public String enregistrerProcedure(String domaine, Model model, HttpSession session, FormProcedure formProcedure) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
 		System.out.println("Domaine récupéré: " + domaine);
-		microServiceLab.saveProcedure(formProcedure);
+		microServiceLab.saveProcedure(token, formProcedure);
 		return Constants.ESPACE_PERSONEL;
 
 	}
@@ -72,7 +76,9 @@ public class ProcedureController {
 	public String voirProcedure(Model model, HttpSession session) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		List<String> nomsDomaines = microServiceLab.tousLesDomaines();
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
+		List<String> nomsDomaines = microServiceLab.tousLesDomaines(token);
 		model.addAttribute("domaines", nomsDomaines);
 		model.addAttribute("formProcedure", new FormProcedure());
 
@@ -84,8 +90,10 @@ public class ProcedureController {
 	public String listerProcedures(String domaine, Model model, HttpSession session, FormProcedure formProcedure) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
 		System.out.println("Domaine récupéré: " + domaine);
-		List<ProcedureAux> procedures = microServiceLab.obtenirProceduresParDomaine(domaine);
+		List<ProcedureAux> procedures = microServiceLab.obtenirProceduresParDomaine(token, domaine);
 		for (ProcedureAux p : procedures) {
 
 			System.out.println("Nom procédure: " + p.getNom());
@@ -100,7 +108,9 @@ public class ProcedureController {
 	public String modifierProcedure(@PathVariable(name = "id") Integer id, Model model, HttpSession session) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		ProcedureAux procedure = microServiceLab.obtenirUneProcedure(id);
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
+		ProcedureAux procedure = microServiceLab.obtenirUneProcedure(token, id);
 
 		FormProcedure formProcedure = new FormProcedure();
 
@@ -120,10 +130,12 @@ public class ProcedureController {
 			HttpSession session, FormProcedure formProcedure) {
 		
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
 		formProcedure.setId(id);
-		microServiceLab.modifierProcedure(formProcedure);
+		microServiceLab.modifierProcedure(token, formProcedure);
 		
-		List<ProcedureAux> procedures = microServiceLab.obtenirProceduresParDomaine(formProcedure.getDomaine());
+		List<ProcedureAux> procedures = microServiceLab.obtenirProceduresParDomaine(token, formProcedure.getDomaine());
 		for (ProcedureAux p : procedures) {
 
 			System.out.println("Nom procédure: " + p.getNom());

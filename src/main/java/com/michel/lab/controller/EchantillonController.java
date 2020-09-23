@@ -37,8 +37,10 @@ public class EchantillonController {
 	public String creation(@PathVariable(name = "id") Integer id, Model model, HttpSession session) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
 		model.addAttribute("formEchantillon", new FormEchantillon());
-		QualificationAux qualification = microServiceLab.obtenirQualification(id);
+		QualificationAux qualification = microServiceLab.obtenirQualification(token, id);
 		model.addAttribute("qualification", qualification);
 		return Constants.CREATION_ECHANTILLON;
 	}
@@ -49,9 +51,11 @@ public class EchantillonController {
 		
 		System.out.println("Numéro de qualification pour enregistrement ech: " + id);
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
 		formEchantillon.setQualification(id);
 		System.out.println("Numéro de qualification pour enregistrement ech dans form: " + formEchantillon.getQualification());
-		microServiceLab.saveEchantillon(formEchantillon);
+		microServiceLab.saveEchantillon(token, formEchantillon);
 
 		redirectAttributes.addAttribute("id", id);
 
@@ -63,9 +67,11 @@ public class EchantillonController {
 	public String listeEchantillons(@PathVariable(name = "id") Integer id, Model model, HttpSession session) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		List<EchantillonAux> echantillons = microServiceLab.obtenirEchantillonsParQualification(id);
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
+		List<EchantillonAux> echantillons = microServiceLab.obtenirEchantillonsParQualification(token, id);
 		model.addAttribute("echantillons", echantillons);
-		QualificationAux qualif = microServiceLab.obtenirQualification(id);
+		QualificationAux qualif = microServiceLab.obtenirQualification(token, id);
 		model.addAttribute("qualification", qualif);
 
 		return Constants.ECHANTILLONS;
@@ -79,11 +85,13 @@ public class EchantillonController {
 			, RedirectAttributes redirectAttributes) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		microServiceLab.desactiverEchantillon(id, qualification);
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
+		microServiceLab.desactiverEchantillon(token, id, qualification);
 		redirectAttributes.addAttribute("id", qualification);
-		List<EchantillonAux> echantillons = microServiceLab.obtenirEchantillonsParQualification(qualification);
+		List<EchantillonAux> echantillons = microServiceLab.obtenirEchantillonsParQualification(token, qualification);
 		model.addAttribute("echantillons", echantillons);
-		QualificationAux qualif = microServiceLab.obtenirQualification(qualification);
+		QualificationAux qualif = microServiceLab.obtenirQualification(token, qualification);
 		model.addAttribute("qualification", qualif);
 		
 		return "redirect:/labplan/private/echantillons/voir";
@@ -94,9 +102,11 @@ public class EchantillonController {
 	public String listeEchantillons2(@RequestParam(name = "id") Integer id, Model model, HttpSession session) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		List<EchantillonAux> echantillons = microServiceLab.obtenirEchantillonsParQualification(id);
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
+		List<EchantillonAux> echantillons = microServiceLab.obtenirEchantillonsParQualification(token, id);
 		model.addAttribute("echantillons", echantillons);
-		QualificationAux qualif = microServiceLab.obtenirQualification(id);
+		QualificationAux qualif = microServiceLab.obtenirQualification(token, id);
 		model.addAttribute("qualification", qualif);
 
 		return Constants.ECHANTILLONS;
@@ -113,11 +123,13 @@ public class EchantillonController {
 			, RedirectAttributes redirectAttributes) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		microServiceLab.activerEchantillon(id, qualification);
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
+		microServiceLab.activerEchantillon(token, id, qualification);
 		redirectAttributes.addAttribute("id", qualification);
-		List<EchantillonAux> echantillons = microServiceLab.obtenirEchantillonsParQualification(qualification);
+		List<EchantillonAux> echantillons = microServiceLab.obtenirEchantillonsParQualification(token, qualification);
 		model.addAttribute("echantillons", echantillons);
-		QualificationAux qualif = microServiceLab.obtenirQualification(qualification);
+		QualificationAux qualif = microServiceLab.obtenirQualification(token, qualification);
 		model.addAttribute("qualification", qualif);
 		
 		return "redirect:/labplan/private/echantillons/voir";
@@ -133,7 +145,9 @@ public class EchantillonController {
 		
 		
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		EchantillonAux echantillon = microServiceLab.obtenirEchantillon(id);
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
+		EchantillonAux echantillon = microServiceLab.obtenirEchantillon(token, id);
 		
 		FormEchantillon formEchantillon = new FormEchantillon();
 		formEchantillon.setCaracteristique(echantillon.getCaracteristique());
@@ -163,15 +177,17 @@ public class EchantillonController {
 			RedirectAttributes redirectAttributes) {
 		
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
 		formEchantillon.setId(id);
-		microServiceLab.modifierEchantillon(formEchantillon);
+		microServiceLab.modifierEchantillon(token, formEchantillon);
 		System.out.println("id récupéré: " + id);
 		System.out.println("qualif récupéré: " + qualification);
 		
 		redirectAttributes.addAttribute("id", qualification);
-		List<EchantillonAux> echantillons = microServiceLab.obtenirEchantillonsParQualification(qualification);
+		List<EchantillonAux> echantillons = microServiceLab.obtenirEchantillonsParQualification(token, qualification);
 		model.addAttribute("echantillons", echantillons);
-		QualificationAux qualif = microServiceLab.obtenirQualification(qualification);
+		QualificationAux qualif = microServiceLab.obtenirQualification(token, qualification);
 		model.addAttribute("qualification", qualif);
 		
 		return "redirect:/labplan/private/echantillons/voir";

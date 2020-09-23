@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -63,9 +64,12 @@ public class Private {
 	public String enregistrerQualification(Model model, HttpSession session, FormQualif formQualif) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
+		System.out.println("Token header: " + token);
 		Integer createurId = utilisateur.getId();
 		formQualif.setCreateurId(createurId);
-		microServiceLab.saveQualification(formQualif);
+		microServiceLab.saveQualification(token, formQualif);
 		return Constants.ESPACE_PERSONEL;
 	}
 
@@ -87,7 +91,10 @@ public class Private {
 	public String mesQualifications(@PathVariable(name = "id") Integer id, Model model, HttpSession session) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		List<QualificationAux> qualifications = microServiceLab.mesQualifications(id);
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
+		System.out.println("Token header: " + token);
+		List<QualificationAux> qualifications = microServiceLab.mesQualifications(token, id);
 		model.addAttribute("qualifications", qualifications);
 		model.addAttribute("access", "2");
 		return Constants.QUALIFICATIONS;
@@ -98,7 +105,10 @@ public class Private {
 	public String qualificationsEnCours(@PathVariable(name = "id") Integer id, Model model, HttpSession session) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		List<QualificationAux> qualifications = microServiceLab.mesQualificationsEnCours(id);
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
+		System.out.println("Token header: " + token);
+		List<QualificationAux> qualifications = microServiceLab.mesQualificationsEnCours(token, id);
 		model.addAttribute("qualifications", qualifications);
 		model.addAttribute("access", "3");
 		return Constants.QUALIFICATIONS;
@@ -109,7 +119,9 @@ public class Private {
 	public String qualification(@PathVariable(name = "id") Integer id, Model model, HttpSession session) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		QualificationAux qualification = microServiceLab.obtenirQualification(id);
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
+		QualificationAux qualification = microServiceLab.obtenirQualification(token, id);
 		model.addAttribute("qualification", qualification);
 		model.addAttribute("modification", false);
 		System.out.println("Référence qualification: " + qualification.getReference());
@@ -120,9 +132,11 @@ public class Private {
 	public String visualiserEssais(@PathVariable(name = "id") Integer id, Model model, HttpSession session) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		QualificationAux qualification = microServiceLab.obtenirQualification(id);
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
+		QualificationAux qualification = microServiceLab.obtenirQualification(token, id);
 
-		List<EssaiAux> essais = microServiceLab.obtenirEssaisParQualification(id);
+		List<EssaiAux> essais = microServiceLab.obtenirEssaisParQualification(token, id);
 
 		model.addAttribute("qualification", qualification);
 		model.addAttribute("essais", essais);
@@ -134,13 +148,14 @@ public class Private {
 			Model model, HttpSession session) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-
-		EssaiAux essai = microServiceLab.obtenirEssaiParNumero(num);
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
+		EssaiAux essai = microServiceLab.obtenirEssaiParNumero(token,num);
 		model.addAttribute("essai", essai);
 
-		List<SequenceAux> sequences = microServiceLab.obtenirSequencesParEssai(id, num);
+		List<SequenceAux> sequences = microServiceLab.obtenirSequencesParEssai(token, id, num);
 		model.addAttribute("sequences", sequences);
-		QualificationAux qualification = microServiceLab.obtenirQualificationParNumero(id);
+		QualificationAux qualification = microServiceLab.obtenirQualificationParNumero(token, id);
 		model.addAttribute("qualification", qualification);
 
 		if (sequences.isEmpty()) {
@@ -189,12 +204,14 @@ public class Private {
 		System.out.println(formSequence.toString());
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
 
 		System.out.println("Identifiant essai récupéré: " + id);
 		System.out.println("Identifiant qualification récupéré: " + qualification);
 
 		formSequence.setEssai(id);
-		microServiceLab.enregistrerSequence(formSequence);
+		microServiceLab.enregistrerSequence(token, formSequence);
 
 		redirectAttributes.addAttribute("id", qualification);
 		redirectAttributes.addAttribute("num", id);
@@ -211,13 +228,14 @@ public class Private {
 
 		System.out.println(" *** entrée méthode voirSequencesParEssais2 ");
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-
-		EssaiAux essai = microServiceLab.obtenirEssaiParNumero(id);
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
+		EssaiAux essai = microServiceLab.obtenirEssaiParNumero(token, id);
 		model.addAttribute("essai", essai);
 
-		List<SequenceAux> sequences = microServiceLab.obtenirSequencesParEssai(qualification, id);
+		List<SequenceAux> sequences = microServiceLab.obtenirSequencesParEssai(token, qualification, id);
 		model.addAttribute("sequences", sequences);
-		QualificationAux qualif = microServiceLab.obtenirQualificationParNumero(qualification);
+		QualificationAux qualif = microServiceLab.obtenirQualificationParNumero(token, qualification);
 		model.addAttribute("qualification", qualif);
 
 		if (sequences.isEmpty()) {
@@ -238,8 +256,9 @@ public class Private {
 			@PathVariable(name = "sequence") Integer idSequence, Model model, HttpSession session) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-
-		SequenceAux sequence = microServiceLab.obtenirSequenceParId(idSequence);
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
+		SequenceAux sequence = microServiceLab.obtenirSequenceParId(token, idSequence);
 
 		Duration duration = Duration.between(sequence.getDebut(), sequence.getFin());
 		System.out.println("durée: " + duration.toHours() + " hours");
@@ -247,12 +266,12 @@ public class Private {
 		sequence.setDuree(duree);
 
 		model.addAttribute("sequence", sequence);
-		QualificationAux qualification = microServiceLab.obtenirQualificationParNumero(id);
+		QualificationAux qualification = microServiceLab.obtenirQualificationParNumero(token, id);
 		model.addAttribute("qualification", qualification);
-		EssaiAux essai = microServiceLab.obtenirEssaiParNumero(num);
+		EssaiAux essai = microServiceLab.obtenirEssaiParNumero(token, num);
 		model.addAttribute("essai", essai);
-		List<EchantillonAux> echantillons = microServiceLab.obtenirEchantillonsParQualification(id);
-		List<EchantillonAux> echSelection = microServiceLab.obtenirEchantillonSelectionParSequence(id, idSequence);
+		List<EchantillonAux> echantillons = microServiceLab.obtenirEchantillonsParQualification(token,id);
+		List<EchantillonAux> echSelection = microServiceLab.obtenirEchantillonSelectionParSequence(token, id, idSequence);
 		// model.addAttribute("echantillons", echantillons);
 		model.addAttribute("echantillons", echSelection);
 
@@ -270,8 +289,11 @@ public class Private {
 		System.out.println("id essai reçu par url: " + idEssai);
 		System.out.println("num qualification reçu par url: " + numQualif);
 		System.out.println("id sequence reçu par url: " + idSequence);
+		
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
 
-		SequenceAux sequence = microServiceLab.obtenirSequenceParId(idSequence);
+		SequenceAux sequence = microServiceLab.obtenirSequenceParId(token,idSequence);
 		FormSequence formSequence = new FormSequence();
 		formSequence.setId(sequence.getId());
 		formSequence.setNumero(sequence.getNumero());
@@ -352,6 +374,9 @@ public class Private {
 
 		System.out.println("*******Entrée méthode enregistrerModificationSequence()");
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
+		
 		formSequence.setEssai(idEssai);
 		formSequence.setId(idSequence);
 
@@ -436,7 +461,7 @@ public class Private {
 		// DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mm a"));
 		formSequence.setFin(fin);
 
-		microServiceLab.modifierSequence(formSequence);
+		microServiceLab.modifierSequence(token, formSequence);
 
 		redirectAttributes.addAttribute("essai", idEssai);
 		redirectAttributes.addAttribute("qualification", num);
@@ -452,11 +477,13 @@ public class Private {
 			@RequestParam(name = "sequence") Integer idSequence, Model model, HttpSession session) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
 
 		System.out.println("redirect:/sequences/voir/{essai}/{qualification}/{sequence}");
 		System.out.println("id sequence recu: " + idSequence);
 
-		SequenceAux sequence = microServiceLab.obtenirSequenceParId(idSequence);
+		SequenceAux sequence = microServiceLab.obtenirSequenceParId(token, idSequence);
 
 		Duration duration = Duration.between(sequence.getDebut(), sequence.getFin());
 		System.out.println("durée: " + duration.toHours() + " hours");
@@ -464,12 +491,12 @@ public class Private {
 		sequence.setDuree(duree);
 
 		model.addAttribute("sequence", sequence);
-		QualificationAux qualification = microServiceLab.obtenirQualificationParNumero(num);
+		QualificationAux qualification = microServiceLab.obtenirQualificationParNumero(token, num);
 		model.addAttribute("qualification", qualification);
-		EssaiAux essai = microServiceLab.obtenirEssaiParNumero(idEssai);
+		EssaiAux essai = microServiceLab.obtenirEssaiParNumero(token, idEssai);
 		model.addAttribute("essai", essai);
-		List<EchantillonAux> echantillons = microServiceLab.obtenirEchantillonsParQualification(num);
-		List<EchantillonAux> echSelection = microServiceLab.obtenirEchantillonSelectionParSequence(num, idSequence);
+		List<EchantillonAux> echantillons = microServiceLab.obtenirEchantillonsParQualification(token, num);
+		List<EchantillonAux> echSelection = microServiceLab.obtenirEchantillonSelectionParSequence(token, num, idSequence);
 
 		model.addAttribute("echantillons", echSelection);
 
@@ -483,7 +510,10 @@ public class Private {
 			Model model, HttpSession session, RedirectAttributes redirectAttributes) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		microServiceLab.ajouterEchantillon(idEchantillon, numQualification, idSequence);
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
+		
+		microServiceLab.ajouterEchantillon(token, idEchantillon, numQualification, idSequence);
 
 		redirectAttributes.addAttribute("essai", idEssai);
 		redirectAttributes.addAttribute("qualification", numQualification);
@@ -499,7 +529,10 @@ public class Private {
 			Model model, HttpSession session, RedirectAttributes redirectAttributes) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		microServiceLab.retirerEchantillon(idEchantillon, numQualification, idSequence);
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
+		
+		microServiceLab.retirerEchantillon(token, idEchantillon, numQualification, idSequence);
 
 		redirectAttributes.addAttribute("essai", idEssai);
 		redirectAttributes.addAttribute("qualification", numQualification);
@@ -513,9 +546,12 @@ public class Private {
 			HttpSession session) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		microServiceLab.modifierStatutQualification(numQualification);
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
+		
+		microServiceLab.modifierStatutQualification(token, numQualification);
 
-		QualificationAux qualification = microServiceLab.obtenirQualification(numQualification);
+		QualificationAux qualification = microServiceLab.obtenirQualification(token, numQualification);
 		model.addAttribute("qualification", qualification);
 		model.addAttribute("modification", false);
 		System.out.println("Référence qualification: " + qualification.getReference());
@@ -527,8 +563,10 @@ public class Private {
 			HttpSession session) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-
-		QualificationAux qualification = microServiceLab.obtenirQualification(numQualification);
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
+		
+		QualificationAux qualification = microServiceLab.obtenirQualification(token, numQualification);
 		model.addAttribute("qualification", qualification);
 		model.addAttribute("modification", true);
 
@@ -542,8 +580,10 @@ public class Private {
 			HttpSession session) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
 
-		QualificationAux qualification = microServiceLab.obtenirQualification(numQualification);
+		QualificationAux qualification = microServiceLab.obtenirQualification(token, numQualification);
 		model.addAttribute("qualification", qualification);
 
 		FormQualif formQualif = new FormQualif();
@@ -566,11 +606,13 @@ public class Private {
 			HttpSession session, FormQualif formQualif) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
 
 		formQualif.setNumero(numQualification);
-		microServiceLab.modifierQualification(formQualif);
+		microServiceLab.modifierQualification(token, formQualif);
 
-		QualificationAux qualification = microServiceLab.obtenirQualification(numQualification);
+		QualificationAux qualification = microServiceLab.obtenirQualification(token, numQualification);
 		model.addAttribute("qualification", qualification);
 		model.addAttribute("modification", false);
 		System.out.println("Référence qualification: " + qualification.getReference());
@@ -584,14 +626,17 @@ public class Private {
 			FormSequence formSequence, Model model, HttpSession session, RedirectAttributes redirectAttributes) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		microServiceLab.supprimerSequence(idSequence);
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
+		
+		microServiceLab.supprimerSequence(token, idSequence);
 
-		EssaiAux essai = microServiceLab.obtenirEssaiParNumero(idEssai);
+		EssaiAux essai = microServiceLab.obtenirEssaiParNumero(token, idEssai);
 		model.addAttribute("essai", essai);
 
-		List<SequenceAux> sequences = microServiceLab.obtenirSequencesParEssai(num, idEssai);
+		List<SequenceAux> sequences = microServiceLab.obtenirSequencesParEssai(token, num, idEssai);
 		model.addAttribute("sequences", sequences);
-		QualificationAux qualif = microServiceLab.obtenirQualificationParNumero(num);
+		QualificationAux qualif = microServiceLab.obtenirQualificationParNumero(token, num);
 		model.addAttribute("qualification", qualif);
 
 		if (sequences.isEmpty()) {
@@ -613,7 +658,10 @@ public class Private {
 			HttpSession session) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		EssaiAux essai = microServiceLab.obtenirEssaiParNumero(idEssai);
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
+		
+		EssaiAux essai = microServiceLab.obtenirEssaiParNumero(token, idEssai);
 		FormEssai formEssai = new FormEssai();
 		formEssai.setNumero(essai.getNumero());
 		formEssai.setNom(essai.getNom());
@@ -637,12 +685,15 @@ public class Private {
 			Model model, HttpSession session, FormEssai formEssai) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
+		
 		formEssai.setId(idEssai);
-		microServiceLab.modifierEssai(formEssai);
+		microServiceLab.modifierEssai(token, formEssai);
 
-		QualificationAux qualification = microServiceLab.obtenirQualification(numQualification);
+		QualificationAux qualification = microServiceLab.obtenirQualification(token, numQualification);
 
-		List<EssaiAux> essais = microServiceLab.obtenirEssaisParQualification(numQualification);
+		List<EssaiAux> essais = microServiceLab.obtenirEssaisParQualification(token, numQualification);
 
 		model.addAttribute("qualification", qualification);
 		model.addAttribute("essais", essais);
@@ -652,9 +703,14 @@ public class Private {
 
 	@PostMapping("/sequence/creer/enregistrer/{id}/{qualification}")
 	public String test(@PathVariable(name = "id") Integer idEssai,
-			@PathVariable(name = "qualification") Integer numQualification, FormSequence formSequence,
+			@PathVariable(name = "qualification") Integer numQualification, 
+			FormSequence formSequence,
+			HttpSession session,
 			RedirectAttributes redirectAttributes) {
-
+		
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
+		
 		System.out.println("valeur début récupérée: " + formSequence.getDebutText());
 		System.out.println("valeur fin récupérée: " + formSequence.getFinText());
 		System.out.println("valeur heure début récupérée: " + formSequence.getDebutHeureText());
@@ -707,7 +763,7 @@ public class Private {
 		formSequence.setEssai(idEssai);
 		formSequence.setQualification(numQualification);
 
-		microServiceLab.enregistrerSequence(formSequence);
+		microServiceLab.enregistrerSequence(token, formSequence);
 
 		redirectAttributes.addAttribute("id", numQualification);
 		redirectAttributes.addAttribute("num", idEssai);
@@ -721,8 +777,11 @@ public class Private {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
 
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
+
 		System.out.println("num qualification: " + numQualification);
-		List<RapportAux> rapports = microServiceLab.obtenirRapportsParQualification(numQualification);
+		List<RapportAux> rapports = microServiceLab.obtenirRapportsParQualification(token, numQualification);
 		
 		if (!rapports.isEmpty()) {
 		
@@ -748,7 +807,12 @@ public class Private {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
 
-		QualificationAux qualification = microServiceLab.obtenirQualificationParNumero(numQualification);
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
+
+		QualificationAux qualification = microServiceLab.obtenirQualificationParNumero(
+				token,
+				numQualification);
 
 		FormInitRapport formInitRapport = new FormInitRapport();
 		formInitRapport.setQualification(numQualification);
@@ -763,6 +827,9 @@ public class Private {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
 
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
+		
 		System.out.println("num qualif: " + formInitRapport.getQualification());
 
 		System.out.println("Objet: " + formInitRapport.getObjet());
@@ -771,19 +838,20 @@ public class Private {
 		System.out.println("identifiant auteur: " + auteur);
 		
 		formInitRapport.setAuteur(auteur);
-		Integer idRapport = microServiceLab.enregistrerInitRapport(formInitRapport);  // changé en 2 pour test!
+		Integer idRapport = microServiceLab.enregistrerInitRapport(token, formInitRapport);  // changé en 2 pour test!
 		System.out.println("Identifiant rapport enregistrer: " + idRapport);
 		
-		RapportAux rapport = microServiceLab.obtenirRapportsParId(idRapport);
+		RapportAux rapport = microServiceLab.obtenirRapportsParId(token, idRapport);
 		System.out.println("id rapport récupéré: " + rapport.getId());
 		System.out.println("id/num qualification du rapport: " + rapport.getQualification());
 		
 		model.addAttribute("rapport", rapport);
 		
-		List<EchantillonAux> echantillons = microServiceLab.obtenirEchantillonsParRapportId(idRapport);
+		List<EchantillonAux> echantillons = microServiceLab.obtenirEchantillonsParRapportId(
+				token,idRapport);
 		model.addAttribute("echantillons", echantillons);
 		
-		List<EssaiAux> essais = microServiceLab.obtenirEssaisParRapportId(idRapport);
+		List<EssaiAux> essais = microServiceLab.obtenirEssaisParRapportId(token, idRapport);
 		model.addAttribute("essais", essais);
 		
 		return Constants.RAPPORT;  
@@ -819,7 +887,11 @@ public class Private {
 		
 		
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		microServiceLab.supprimerRapportsParId(IdRapport);
+
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
+		
+		microServiceLab.supprimerRapportsParId(token, IdRapport);
 		
 		return Constants.ESPACE_PERSONEL;
 	}
@@ -830,17 +902,21 @@ public class Private {
 			, Model model, HttpSession session) {
 		
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
 		
-		RapportAux rapport = microServiceLab.obtenirRapportsParId(idRapport);
+		RapportAux rapport = microServiceLab.obtenirRapportsParId(token, idRapport);
 		System.out.println("id rapport récupéré: " + rapport.getId());
 		System.out.println("id/num qualification du rapport: " + rapport.getQualification());
 		
 		model.addAttribute("rapport", rapport);
 		
-		List<EchantillonAux> echantillons = microServiceLab.obtenirEchantillonsParRapportId(idRapport);
+		List<EchantillonAux> echantillons = microServiceLab.obtenirEchantillonsParRapportId(
+				token, idRapport);
 		model.addAttribute("echantillons", echantillons);
 		
-		List<EssaiAux> essais = microServiceLab.obtenirEssaisParRapportId(idRapport);
+		List<EssaiAux> essais = microServiceLab.obtenirEssaisParRapportId(token, idRapport);
 		model.addAttribute("essais", essais);
 		
 		return Constants.RAPPORT;
