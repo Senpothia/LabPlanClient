@@ -46,6 +46,7 @@
 		</div>
 		<!-- ***********   Alerte erreur  ************ -->
 
+
 		<span th:if="${erreur}">
 			<div class="message row">
 
@@ -56,22 +57,22 @@
 
 			</div>
 		</span>
+
+
 		<!-- ********************************************* -->
 
 		<div class="container">
-			<form th:action="@{/labplan/private/qualification/creation}"
-				method="post" th:object="${formQualif}">
+
+
+			<form th:action="@{/private/qualification/creation}" method="post"
+				th:object="${formQualif}">
 
 
 				<div class="col">
 					<h1>Qualification</h1>
-					<!-- 
-					<div class="row mr-1">
-						<label for="text">Numéro</label> <input type="text"
-							class="form-control" th:field="*{numero}">
-					</div>
-					
-					 -->
+
+
+
 					<div class="row mr-1">
 						<label for="text">Référence</label> <input type="text"
 							class="form-control" th:field="*{reference}">
@@ -87,24 +88,19 @@
 							class="form-control" th:field="*{projet}">
 					</div>
 
-					<div class="row  mr-1">
+					<div class="row  mr-1 mb-3">
 						<label for="text">Objet</label> <input type="text"
-							class="form-control" th:field="*{Objet}">
+							class="form-control" th:field="*{objet}">
 					</div>
 
-					<!--
-					<div class="row  mr-1">
-						<label for="text">Date</label> <input type="date"
-							class="form-control" th:field="*{date}">
-					</div>
 
-  -->
+
 
 					<div class="bouton row">
 
 						<div class="col">
 							<div class="d-flex justify-content-end">
-								<a class="btn mb-1 bouton2"
+								<a class="btn mb-1 mr-1 bouton2"
 									style="background-color: #7e60fb; color: white;"
 									href="/labplan/espace" role="button">Annuler</a> <input
 									type="submit" class="btn mb-1 bouton2"
@@ -115,6 +111,8 @@
 						</div>
 					</div>
 			</form>
+
+
 
 			<!-- PIED DE PAGE -->
 

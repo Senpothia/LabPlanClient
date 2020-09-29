@@ -46,48 +46,14 @@
 
 		<div class="col">
 
-			<!--  
-			<div class="row">
-				<strong><label class="mr-1">Numéro: </label></strong>
-				<p th:text=${note.numero}></p>
-
-			</div>
-
-			<div class="row">
-				<strong><label class="mr-1">Date: </label></strong>
-				<p th:text=${note.date}></p>
-
-			</div>
-
-			<div class="row" >
-				<strong><label class="mr-1">Auteur: </label></strong>
-				<p th:text=${note.auteur}></p>
-
-			</div>
-
-			<div class="row">
-				<strong><label>Texte: </label></strong>
-			</div>
-
-			<div class="row">
-				<p th:text=${note.texte}></p>
-			</div>
-			
--->
+		
 
 
 
 			<table class="table table-striped">
 				<thead>
 
-					<!-- 
-					<tr>
-						<th scope="col">Rubrique</th>
-						<th scope="col">Decription</th>
-						
-					</tr>
 					
-					 -->
 				</thead>
 				<tbody>
 					<tr>
@@ -125,13 +91,13 @@
 
 
 				<div class="form-group mr-3">
-					<a th:href="@{/labplan/private/note/supprimer/{id}(id=${note.id})}"><p
+					<a th:href="@{/private/note/supprimer/{id}(id=${note.id})}"><p
 							type="text" class="btn btn-block"
 							style="background-color: red; color: white">Supprimer</p></a>
 				</div>
 
 				<div class="form-group mr-3">
-					<a th:href="@{/labplan/private/note/modifier/{id}(id=${note.id})}"><p
+					<a th:href="@{/private/note/modifier/{id}(id=${note.id})}"><p
 							type="text" class="btn btn-block"
 							style="background-color: #7e60fb; color: white">Modifier</p></a>
 				</div>

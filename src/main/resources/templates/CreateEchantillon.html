@@ -58,7 +58,7 @@
 		<!-- ********************************************* -->
 
 		<div class="container">
-			<form th:href="@{/labplan/private/echantillons/creer/{id}(id=${qualification.numero})}"
+			<form th:href="@{/private/echantillons/creer/{id}(id=${qualification.numero})}"
 				method="post" th:object="${formEchantillon}">
 
 
@@ -92,7 +92,7 @@
 
 						<div class="col">
 							<div class="d-flex justify-content-end">
-								<a class="btn mb-1 bouton2"
+								<a class="btn mb-1 mr-1 bouton2"
 									style="background-color: #7e60fb; color: white;"
 									href="/labplan/espace" role="button">Annuler</a> <input
 									type="submit" class="btn mb-1 bouton2"

@@ -195,21 +195,21 @@
 
 				<div class="form-group mr-3 ">
 					<a
-						th:href="@{'/labplan/private/demande/voir/' + ${demande.id} (format=pdf)}"><p
+						th:href="@{'/private/demande/voir/' + ${demande.id} (format=pdf)}"><p
 							type="text" class="btn btn-block"
 							style="background-color: #7e60fb; color: white">Export PDF</p></a>
 				</div>
 
 				<div class="form-group mr-3">
 					<a
-						th:href="@{/labplan/private/demande/supprimer/{id}(id=${demande.id})}"><p
+						th:href="@{/private/demande/supprimer/{id}(id=${demande.id})}"><p
 							type="text" class="btn btn-block"
 							style="background-color: red; color: white">Supprimer</p></a>
 				</div>
 
 				<div class="form-group mr-3">
 					<a
-						th:href="@{/labplan/private/demande/modifier/{id}(id=${demande.id})}"><p
+						th:href="@{/private/demande/modifier/{id}(id=${demande.id})}"><p
 							type="text" class="btn btn-block"
 							style="background-color: #7e60fb; color: white">Modifier</p></a>
 				</div>

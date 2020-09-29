@@ -24,7 +24,7 @@ import com.michel.lab.proxy.MicroServiceLab;
 import com.michel.lab.service.UserConnexion;
 
 @Controller
-@RequestMapping("/labplan/private/echantillons")
+@RequestMapping("/private/echantillons")
 public class EchantillonController {
 
 	@Autowired
@@ -59,7 +59,7 @@ public class EchantillonController {
 
 		redirectAttributes.addAttribute("id", id);
 
-		return "redirect:/labplan/private/echantillons/voir";
+		return "redirect:/private/echantillons/voir";
 		
 	}
 
@@ -94,7 +94,7 @@ public class EchantillonController {
 		QualificationAux qualif = microServiceLab.obtenirQualification(token, qualification);
 		model.addAttribute("qualification", qualif);
 		
-		return "redirect:/labplan/private/echantillons/voir";
+		return "redirect:/private/echantillons/voir";
 
 	}
 	
@@ -132,7 +132,7 @@ public class EchantillonController {
 		QualificationAux qualif = microServiceLab.obtenirQualification(token, qualification);
 		model.addAttribute("qualification", qualif);
 		
-		return "redirect:/labplan/private/echantillons/voir";
+		return "redirect:/private/echantillons/voir";
 
 	}
 	
@@ -190,6 +190,6 @@ public class EchantillonController {
 		QualificationAux qualif = microServiceLab.obtenirQualification(token, qualification);
 		model.addAttribute("qualification", qualif);
 		
-		return "redirect:/labplan/private/echantillons/voir";
+		return "redirect:/private/echantillons/voir";
 	}
 }

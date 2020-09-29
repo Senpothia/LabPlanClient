@@ -48,7 +48,7 @@ import com.michel.lab.model.FormNote;
 import feign.Body;
 import feign.Headers;
 
-@FeignClient(name = "lab-service", url = "localhost:8081/lab-service")
+@FeignClient(name = "lab-service", url = "localhost:8080/lab-service")
 public interface MicroServiceLab {
 	/*
 	 * @GetMapping("/ouvrage/liste") List<OuvrageAux>

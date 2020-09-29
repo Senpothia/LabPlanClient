@@ -59,7 +59,7 @@
 		<!-- ********************************************* -->
 
 		<div class="container">
-			<form th:action="@{/labplan/private/essai/creation}"
+			<form th:action="@{/private/essai/creation}"
 				method="post" th:object="${formEssai}">
 
 
@@ -81,19 +81,12 @@
 							class="form-control" th:field="*{Objet}">
 					</div>
 
-					<!--
-					<div class="row  mr-1">
-						<label for="text">Date</label> <input type="date"
-							class="form-control" th:field="*{date}">
-					</div>
-
-  -->
 
 					<div class="bouton row">
 
 						<div class="col">
 							<div class="d-flex justify-content-end">
-								<a class="btn mb-1 bouton2"
+								<a class="btn mb-1 mr-1 bouton2"
 									style="background-color: #7e60fb; color: white;"
 									href="/labplan/espace" role="button">Annuler</a> <input
 									type="submit" class="btn mb-1 bouton2"

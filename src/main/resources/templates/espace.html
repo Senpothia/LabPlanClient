@@ -13,7 +13,7 @@
 	integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
 	crossorigin="anonymous">
 
-<link rel="stylesheet" href="/css/styles.css">
+<link rel="stylesheet" th:href="@{/css/styles.css}">
 <link rel="shortcut icon" type="image/x-icon" href="/images/logo0.png" />
 <title>Labplan</title>
 </head>
@@ -30,8 +30,8 @@
 		<!-- IMAGE -->
 		<div class="row">
 			<div class="col">
-				<img class="img-fluid" src="/images/bandeau4.png" alt=""
-					th:src="@{/images/bandeau4.png}" />
+				<img class="img-fluid" src="/images/bandeau3.png" alt=""
+					th:src="@{/images/bandeau2.png}" />
 			</div>
 		</div>
 		<!-- ----------------- -->
@@ -74,7 +74,7 @@
 				<div class="row d-flex justify-content-center">
 					<a class="btn mb-1 bouton2"
 						style="background-color: #7e60fb; color: white;"
-						th:href="@{/labplan/logout}">Déconnexion</a>
+						th:href="@{/logout}">Déconnexion</a>
 				</div>
 
 			</div>
@@ -88,7 +88,7 @@
 
 				<div class="row d-flex justify-content-center">
 					<a
-						th:href="@{/labplan/private/qualifications/{id}(id=${utilisateur.id})}"><button
+						th:href="@{/private/qualifications/{id}(id=${utilisateur.id})}"><button
 							type="button" class="btn mb-1 bouton2"
 							style="background-color: #7e60fb; color: white;">Mes
 							qualifications en cours</button></a>
@@ -97,28 +97,28 @@
 
 				<div class="row d-flex justify-content-center">
 					<a
-						th:href="@{/labplan/private/historique/{id}(id=${utilisateur.id})}"><button
+						th:href="@{/private/historique/{id}(id=${utilisateur.id})}"><button
 							type="button" class="btn mb-1 bouton2"
 							style="background-color: #7e60fb; color: white;">Toutes
 							mes qualifications</button></a>
 				</div>
 
 				<div class="row d-flex justify-content-center">
-					<a href="/labplan/private/qualifications"><button type="button"
+					<a th:href="@{/private/qualifications}"><button type="button"
 							class="btn mb-1 bouton2"
 							style="background-color: #7e60fb; color: white;">Toutes
 							les qualifications</button></a>
 				</div>
 
 				<div class="row d-flex justify-content-center">
-					<a href="/labplan/private/qualification/creation"><button
+					<a th:href="@{/private/qualification/creation}"><button
 							type="button" class="btn mb-1 bouton2"
 							style="background-color: #7e60fb; color: white;">Créer
 							une qualification</button></a>
 				</div>
 
 				<div class="row d-flex justify-content-center">
-					<a href="/labplan/private/procedure/liste/voir"><button
+					<a th:href="@{/private/procedure/liste/voir}"><button
 							type="button" class="btn mb-1 bouton2"
 							style="background-color: #7e60fb; color: white;">Voir
 							les procédures</button></a>
@@ -126,35 +126,35 @@
 
 
 				<div class="row d-flex justify-content-center">
-					<a href="/labplan/private/procedure/creation"><button
+					<a th:href="@{/private/procedure/creation}"><button
 							type="button" class="btn mb-1 bouton2"
 							style="background-color: #7e60fb; color: white;">Créer
 							une procédure</button></a>
 				</div>
 
 				<div class="row d-flex justify-content-center">
-					<a href="/labplan/private/demande/liste"><button type="button"
+					<a th:href="@{/private/demande/liste}"><button type="button"
 							class="btn mb-1 bouton2"
 							style="background-color: #7e60fb; color: white;">Voir
 							les demandes</button></a>
 				</div>
 
 				<div class="row d-flex justify-content-center">
-					<a href="/labplan/private/demande/creation"><button
+					<a th:href="@{/private/demande/creation}"><button
 							type="button" class="btn mb-1 bouton2"
 							style="background-color: #7e60fb; color: white;">Créer
 							une demande</button></a>
 				</div>
 
 				<div class="row d-flex justify-content-center">
-					<a href="/labplan/private/fiche/voir"><button type="button"
+					<a th:href="@{/private/fiche/voir}"><button type="button"
 							class="btn mb-1 bouton2"
 							style="background-color: #7e60fb; color: white;">Voir
 							les fiches</button></a>
 				</div>
 
 				<div class="row d-flex justify-content-center">
-					<a href="/labplan/private/fiche/creation"><button type="button"
+					<a th:href="@{/private/fiche/creation}"><button type="button"
 							class="btn mb-1 bouton2"
 							style="background-color: #7e60fb; color: white;">Créer
 							une fiche</button></a>

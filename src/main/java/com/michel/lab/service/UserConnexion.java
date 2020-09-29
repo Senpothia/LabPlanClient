@@ -21,9 +21,6 @@ public class UserConnexion {
 	@Autowired
 	MicroServiceLab microServiceLab;
 	
-	
-	
-
 
 	public Utilisateur identifierUtilisateur(Login login, HttpSession session) {
 		
@@ -74,8 +71,8 @@ public class UserConnexion {
 			model.addAttribute("authentification", true);
 			
 		}
-		return utilisateur;
 		
+		return utilisateur;
 	}
 
 	

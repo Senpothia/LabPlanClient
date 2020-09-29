@@ -31,9 +31,11 @@
 		<!-- IMAGE -->
 		<div class="row">
 			<div class="col">
-				<img class="img-fluid" src="/images/bandeau1.png" alt="" />
+				<img class="img-fluid" src="/images/bandeau3.png" alt=""
+					th:src="@{/images/bandeau2.png}" />
 			</div>
 		</div>
+		<!-- ----------------- -->
 
 		<div class="message row">
 
@@ -45,7 +47,7 @@
 		<div class="row">
 
 			<div class="col">
-				<form th:action="@{/labplan/compte}" method="post"
+				<form th:action="@{/compte}" method="post"
 					th:object="${formCompte}">
 
 

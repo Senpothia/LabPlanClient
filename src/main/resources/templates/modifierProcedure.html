@@ -58,39 +58,14 @@
 		<!-- ********************************************* -->
 
 		<div class="container">
-			<form th:action="@{/labplan/private/procedure/modifier/{id}(id=${id})}"
+			<form th:action="@{/private/procedure/modifier/{id}(id=${id})}"
 				method="post" th:object="${formProcedure}">
 
 
 				<div class="col">
 					<h1>Procédure</h1>
 
-					<!--  
-						<div class="form-group" th:if="${selection}">
-						<label for="text">Sélectionnez un domaine</label> <select
-							class="form-control" name="domaine">
-							<option th:each="domaine: ${domaines}" th:text="${domaine}"></option>
-
-						</select>
-					</div>
-					
-					
-					<div class="bouton row" th:if="${selection}">
-
-						<div class="col">
-							<div class="d-flex justify-content-end">
-								<a class="btn mb-1 bouton2"
-									style="background-color: #7e60fb; color: white;"
-									href="/labplan/private/procedure/creation?selection=false"
-									role="button">Créer un domaine</a>
-
-							</div>
-
-
-						</div>
-					</div>
-					
-					 -->
+			
 
 					<div class="row  mr-1" >
 						<label for="text">Domaine</label> <input type="text"
@@ -114,17 +89,6 @@
 
 
 
-
-
-
-					<!--
-					<div class="row  mr-1">
-						<label for="text">Date</label> <input type="date"
-							class="form-control" th:field="*{date}">
-					</div>
-
-  -->
-
 					<div class="bouton row">
 
 						<div class="col">
@@ -132,7 +96,7 @@
 								<a class="btn mb-1 bouton2"
 									style="background-color: #7e60fb; color: white;"
 									href="/labplan/espace" role="button">Annuler</a> <input
-									type="submit" class="btn mb-1 bouton2"
+									type="submit" class="btn mb-1 mr-1 bouton2"
 									style="background-color: #7e60fb; color: white;"
 									value="Enregistrer">
 

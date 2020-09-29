@@ -50,7 +50,7 @@
 
 			<div class="col">
 				<form
-					th:action="@{/labplan/private/sequence/modifier/{essai}/{qualification}/{sequence}(essai=${essai}, qualification=${qualification}, sequence=${sequence})}"
+					th:action="@{/private/sequence/modifier/{essai}/{qualification}/{sequence}(essai=${essai}, qualification=${qualification}, sequence=${sequence})}"
 					method="post" th:object="${formSequence}">
 
 					<div class="form-group">
@@ -124,7 +124,7 @@
 					<div class="d-flex justify-content-end">
 
 						<a class="btn mr-1" style="background-color: red; color: white;"
-							th:href="@{/labplan/private/sequence/supprimer/{essai}/{qualification}/{sequence}(essai=${essai}, qualification=${qualification}, sequence=${sequence})}"
+							th:href="@{/private/sequence/supprimer/{essai}/{qualification}/{sequence}(essai=${essai}, qualification=${qualification}, sequence=${sequence})}"
 							role="button">Supprimer</a> <a class="btn mr-1"
 							style="background-color: #7e60fb; color: white;"
 							href="/labplan/espace" role="button">Annuler</a> <input
