@@ -19,13 +19,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 
 import com.michel.lab.model.NoteAux;
-
 import com.michel.lab.model.DemandeAux;
 import com.michel.lab.model.DomaineAux;
 import com.michel.lab.model.EchantillonAux;
 import com.michel.lab.model.FormProcedure;
 import com.michel.lab.model.FormQualif;
 import com.michel.lab.model.FormSequence;
+import com.michel.lab.model.FormSite;
 import com.michel.lab.model.Groupe;
 import com.michel.lab.model.GroupeRapport;
 import com.michel.lab.model.Login;
@@ -50,40 +50,7 @@ import feign.Headers;
 
 @FeignClient(name = "lab-service", url = "localhost:8081/lab-service")
 public interface MicroServiceLab {
-	/*
-	 * @GetMapping("/ouvrage/liste") List<OuvrageAux>
-	 * tousLesOuvrages(@RequestHeader("Authorization") String token);
-	 * 
-	 * @GetMapping("/ouvrage/{id}") ResponseEntity<?> unOuvrage(@PathVariable("id")
-	 * Integer id, @RequestHeader("Authorization") String token);
-	 * 
-	 * @GetMapping("/ouvrage/rubriques") public List<String>
-	 * toutesLesRubriques(@RequestHeader("Authorization") String token);
-	 * 
-	 * @GetMapping("/exemplaire/disponibles") public List<Exemplaire>
-	 * ListerExemplairesDisponibles(@RequestHeader("Authorization") String token);
-	 * 
-	 * @GetMapping("/exemplaire/disponibles/{id}") public List<Exemplaire>
-	 * ListerExemplairesDisponiblesParOuvrage(@PathVariable("id") Integer
-	 * id, @RequestHeader("Authorization") String token);
-	 * 
-	 * @GetMapping("/ouvrage/liste/rubrique/{rubrique}") public List<OuvrageAux>
-	 * tousLesOuvragesParRubrique(@PathVariable String
-	 * rubrique, @RequestHeader("Authorization") String token);
-	 * 
-	 * @PutMapping("/emprunts/save") void enregistrerEmprunt(EmpruntAux
-	 * empruntAux, @RequestHeader("Authorization") String token);
-	 * 
-	 * @GetMapping("/ouvrage/emprunts/actifs/{id}") public List<LigneEmprunt>
-	 * empruntsActifs(@PathVariable Integer id, @RequestHeader("Authorization")
-	 * String token);
-	 * 
-	 * @GetMapping("/ouvrage/emprunts/hist/{id}") public List<LigneEmprunt>
-	 * empruntsHist(@PathVariable Integer id, @RequestHeader("Authorization") String
-	 * token);
-	 * 
-	 * @GetMapping("/prolonger/{id}") void prolonger(@PathVariable Integer id);
-	 */
+	
 
 	@PutMapping("/modifier/compte/{id}")
 	public void modifierCompte(@PathVariable Integer id, @RequestHeader("Authorization") String token,
@@ -428,9 +395,19 @@ public interface MicroServiceLab {
 	public Utilisateur obtenirUtilisateurParId(
 			@RequestHeader("Authorization") String token,
 			@PathVariable(name = "id") Integer id);
+
+	@PostMapping("/private/activite/site/enregistrer")
+	public void enregistrerSite(
+			@RequestHeader("Authorization") String token,
+			FormSite formSite);
+
 	
 	
 	
+
+	
+	
+	  
 	
 	
 	

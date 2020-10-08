@@ -37,11 +37,13 @@
 		<!-- ----------------- -->
 		<div class="row d-flex justify-content-center">
 
-			<h1>Espace personnel</h1>
+			<h1>Activité sur site</h1>
 		</div>
 
 
 		<div class="row">
+		
+		<!--  
 			<div class="donnees col-lg-6" style="margin: 5px;">
 
 				<div class="row d-flex justify-content-center">
@@ -78,6 +80,9 @@
 				</div>
 
 			</div>
+			
+			 -->
+			 
 			<div class="col donnees" style="margin: 5px;">
 
 				<div class="row d-flex justify-content-center">
@@ -88,87 +93,28 @@
 
 				<div class="row d-flex justify-content-center">
 					<a
-						th:href="@{/labplan/private/qualifications/{id}(id=${utilisateur.id})}"><button
+						th:href="@{/labplan/private/activite/site/incidents}"><button
 							type="button" class="btn mb-1 bouton2"
-							style="background-color: #7e60fb; color: white;">Mes
-							qualifications en cours</button></a>
+							style="background-color: #7e60fb; color: white;">Voir les incidents</button></a>
 				</div>
 
 
 				<div class="row d-flex justify-content-center">
 					<a
-						th:href="@{/labplan/private/historique/{id}(id=${utilisateur.id})}"><button
+						th:href="@{/labplan/private/activite/site/declarer}"><button
 							type="button" class="btn mb-1 bouton2"
-							style="background-color: #7e60fb; color: white;">Toutes
-							mes qualifications</button></a>
-				</div>
-
-				<div class="row d-flex justify-content-center">
-					<a href="/labplan/private/qualifications"><button type="button"
-							class="btn mb-1 bouton2"
-							style="background-color: #7e60fb; color: white;">Toutes
-							les qualifications</button></a>
-				</div>
-
-				<div class="row d-flex justify-content-center">
-					<a href="/labplan/private/qualification/creation"><button
-							type="button" class="btn mb-1 bouton2"
-							style="background-color: #7e60fb; color: white;">Créer
-							une qualification</button></a>
-				</div>
-
-				<div class="row d-flex justify-content-center">
-					<a href="/labplan/private/procedure/liste/voir"><button
-							type="button" class="btn mb-1 bouton2"
-							style="background-color: #7e60fb; color: white;">Voir
-							les procédures</button></a>
-				</div>
-
-
-				<div class="row d-flex justify-content-center">
-					<a href="/labplan/private/procedure/creation"><button
-							type="button" class="btn mb-1 bouton2"
-							style="background-color: #7e60fb; color: white;">Créer
-							une procédure</button></a>
-				</div>
-
-				<div class="row d-flex justify-content-center">
-					<a href="/labplan/private/demande/liste"><button type="button"
-							class="btn mb-1 bouton2"
-							style="background-color: #7e60fb; color: white;">Voir
-							les demandes</button></a>
-				</div>
-
-				<div class="row d-flex justify-content-center">
-					<a href="/labplan/private/demande/creation"><button
-							type="button" class="btn mb-1 bouton2"
-							style="background-color: #7e60fb; color: white;">Créer
-							une demande</button></a>
-				</div>
-
-				<div class="row d-flex justify-content-center">
-					<a href="/labplan/private/fiche/voir"><button type="button"
-							class="btn mb-1 bouton2"
-							style="background-color: #7e60fb; color: white;">Voir
-							les fiches</button></a>
-				</div>
-
-				<div class="row d-flex justify-content-center">
-					<a href="/labplan/private/fiche/creation"><button type="button"
-							class="btn mb-1 bouton2"
-							style="background-color: #7e60fb; color: white;">Créer
-							une fiche</button></a>
+							style="background-color: #7e60fb; color: white;">Déclarer un incident</button></a>
 				</div>
 				
 					<div class="row d-flex justify-content-center">
-					<a href="/labplan/private/activite/site"><button type="button"
-							class="btn mb-1 bouton2"
-							style="background-color: #7e60fb; color: white;">Activité sur site</button></a>
+					<a
+						th:href="@{/labplan/private/activite/site/creer}"><button
+							type="button" class="btn mb-1 bouton2"
+							style="background-color: #7e60fb; color: white;">Créer un site</button></a>
 				</div>
+
 				
-
-
-
+			
 			</div>
 
 
