@@ -68,6 +68,14 @@ public class SiteController {
 		
 	}
 	
+	@GetMapping("/site/declarer")
+	public String declarerIncident(Model model, HttpSession session) {
+		
+		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		model.addAttribute("formIncident", new FormIncident());
+		return "createIncident";
+	}
+	
 	
 
 }
