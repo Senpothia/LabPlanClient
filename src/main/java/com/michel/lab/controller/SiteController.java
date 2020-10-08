@@ -1,5 +1,7 @@
 package com.michel.lab.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,9 +51,21 @@ public class SiteController {
 		
 		formSite.setCommercial(utilisateur.getId());
 		microServiceLab.enregistrerSite(token, formSite);
+		List<FormSite> sites = microServiceLab.obtenirListeSites(token);
+ 		model.addAttribute("sites", sites);
+		return "sites";
+	}
+	
+	@GetMapping("/site/incidents")
+	public String voirIncidents(Model model, HttpSession session) {
 		
+		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
+		List<FormSite> sites = microServiceLab.obtenirListeSites(token);
+ 		model.addAttribute("sites", sites);
+		return "sites";
 		
-		return "ok";
 	}
 	
 	

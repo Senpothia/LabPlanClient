@@ -400,6 +400,9 @@ public interface MicroServiceLab {
 	public void enregistrerSite(
 			@RequestHeader("Authorization") String token,
 			FormSite formSite);
+	
+	@GetMapping("/private/activite/site/liste")
+	public List<FormSite> obtenirListeSites(@RequestHeader("Authorization") String token);
 
 	
 	
