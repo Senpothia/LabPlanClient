@@ -42,47 +42,9 @@
 
 
 		<div class="row">
-		
-		<!--  
-			<div class="donnees col-lg-6" style="margin: 5px;">
-
-				<div class="row d-flex justify-content-center">
-					<h3>
-						<strong>Vos données</strong></br>
-					</h3>
-				</div>
 
 
-				<div class="row d-flex justify-content-center">
-					<p th:text="'Nom: ' + ${utilisateur.nom}"></p>
-				</div>
 
-				<div class="row d-flex justify-content-center">
-					<p th:text="'Prénom: ' + ${utilisateur.prenom}"></p>
-				</div>
-
-
-				<div class="row d-flex justify-content-center">
-					<p th:text="'email: ' + ${utilisateur.username}"></p>
-				</div>
-
-
-				<div class="row d-flex justify-content-center">
-					<a href="/labplan/compte/modifier"><button type="button"
-							class="btn mb-1 bouton2"
-							style="background-color: #7e60fb; color: white;">Modifier</button></a>
-				</div>
-
-				<div class="row d-flex justify-content-center">
-					<a class="btn mb-1 bouton2"
-						style="background-color: #7e60fb; color: white;"
-						th:href="@{/labplan/logout}">Déconnexion</a>
-				</div>
-
-			</div>
-			
-			 -->
-			 
 			<div class="col donnees" style="margin: 5px;">
 
 				<div class="row d-flex justify-content-center">
@@ -92,29 +54,35 @@
 				</div>
 
 				<div class="row d-flex justify-content-center">
-					<a
-						th:href="@{/labplan/private/activite/site/incidents}"><button
+					<a th:href="@{/labplan/private/activite/site/incidents}"><button
 							type="button" class="btn mb-1 bouton2"
-							style="background-color: #7e60fb; color: white;">Voir les incidents</button></a>
+							style="background-color: #7e60fb; color: white;">Voir
+							les incidents</button></a>
 				</div>
 
 
 				<div class="row d-flex justify-content-center">
-					<a
-						th:href="@{/labplan/private/activite/site/declarer}"><button
+					<a th:href="@{/labplan/private/activite/site/declarer}"><button
 							type="button" class="btn mb-1 bouton2"
-							style="background-color: #7e60fb; color: white;">Déclarer un incident</button></a>
+							style="background-color: #7e60fb; color: white;">Déclarer
+							un incident</button></a>
+				</div>
+
+				<div class="row d-flex justify-content-center">
+					<a th:href="@{/labplan/private/activite/site/creer}"><button
+							type="button" class="btn mb-1 bouton2"
+							style="background-color: #7e60fb; color: white;">Créer
+							un site</button></a>
 				</div>
 				
 					<div class="row d-flex justify-content-center">
-					<a
-						th:href="@{/labplan/private/activite/site/creer}"><button
+					<a th:href="@{/labplan/private/activite/site/defaut/selectionner/produit}"><button
 							type="button" class="btn mb-1 bouton2"
-							style="background-color: #7e60fb; color: white;">Créer un site</button></a>
+							style="background-color: #7e60fb; color: white;">Associer un incident</button></a>
 				</div>
 
-				
-			
+
+
 			</div>
 
 

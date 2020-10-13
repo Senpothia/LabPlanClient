@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 
 import com.michel.lab.model.NoteAux;
+import com.michel.lab.controller.FormIncident;
 import com.michel.lab.model.DemandeAux;
 import com.michel.lab.model.DomaineAux;
 import com.michel.lab.model.EchantillonAux;
@@ -403,6 +404,20 @@ public interface MicroServiceLab {
 	
 	@GetMapping("/private/activite/site/liste")
 	public List<FormSite> obtenirListeSites(@RequestHeader("Authorization") String token);
+	
+	@PostMapping("/private/activite/site/defaut/enregistrer")
+	public void enregistrerIncident(
+			@RequestHeader("Authorization") String token,
+			FormIncident formIncident);
+	
+	@GetMapping("/private/activite/site/defaut/liste")
+	public List<FormIncident> obtenirListeIncident(@RequestHeader("Authorization") String token);
+	
+	@PostMapping("/private/activite/site/defaut/produit")
+	public List<FormIncident> obtenirDefautParProduit(@RequestHeader("Authorization") String token, String produit);
+	
+	@PostMapping("/private/activite/site/defaut/produit/voir")
+	public FormIncident obtenirDefautParId(@RequestHeader("Authorization") String token, Integer id);
 
 	
 	

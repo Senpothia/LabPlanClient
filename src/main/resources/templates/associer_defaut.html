@@ -40,56 +40,39 @@
 		<div class="message row">
 
 			<p>
-				<b>Pour déclarer un incident, remplir ce formulaire.</b>
+				<b>Sélectionnez un défaut et un site pour les associer</b>
 			</p>
 
 		</div>
-		<!-- ***********   Alerte erreur  ************ -->
-
-		<span th:if="${erreur}">
-			<div class="message row">
-
-				<p>
-					<b style="color: red;">Tous les champs doivent être complétés</b>
-				</p>
-
-			</div>
-		</span>
-		<!-- ********************************************* -->
 
 		<div class="container">
-			
-				<form th:action="@{/labplan/private/activite/site/declarer}"
-				method="post" th:object="${formIncident}">
+			<form th:action="@{/labplan/private/procedure/creation}"
+				method="post" th:object="${association}">
+
 
 				<div class="col">
+					<h1>Site</h1>
+
+					<div class="form-group">
+						<label for="text">Sélectionnez un site</label> <select
+							class="form-control" name="site">
+							<option th:each="site: ${sites}" th:text="${site}"></option>
+
+						</select>
+					</div>
+					
+					
 					<h1>Incident</h1>
-					
-					
-							
-					<div class="row  mr-1">
-						<label for="text">Produit</label> <input type="text"
-							class="form-control" th:field="*{produit}" required="required">
+
+					<div class="form-group">
+						<label for="text">Sélectionnez un incident</label> <select
+							class="form-control" name="defaut">
+							<option th:each="defaut: ${defauts}" th:text="${defaut}"></option>
+
+						</select>
 					</div>
 
 
-						
-					<div class="row  mr-1">
-						<label for="text">Code</label> <input type="text"
-							class="form-control" th:field="*{code}" required="required">
-					</div>
-					
-					<div class="row  mr-1">
-						<label for="text">Description</label> <input type="text"
-							class="form-control" th:field="*{description}" required="required">
-					</div>
-					
-					<div class="row  mr-1">
-						<label for="text">Date</label> <input type="date"
-							class="form-control" th:field="*{date}" required="required">
-					</div>
-					
-					
 					<div class="bouton row">
 
 						<div class="col">
@@ -104,17 +87,22 @@
 							</div>
 						</div>
 					</div>
+
+				</div>
 			</form>
 
-			<!-- PIED DE PAGE -->
-
-			<div th:replace="fragments/footer :: footer"></div>
-
-			<!-- ********************************************* -->
 		</div>
 
 	</div>
 
+	</div>
+
+	<!-- PIED DE PAGE -->
+
+	<div th:replace="fragments/footer :: footer"></div>
+
+	<!-- ********************************************* -->
+	</div>
 
 
 
