@@ -39,6 +39,82 @@
 
 		<div class="row">
 
+			<h1>Présentation du site</h1>
+
+
+		</div>
+
+		<div class="col">
+
+
+
+
+
+			<table class="table table-striped">
+				<thead>
+
+
+				</thead>
+				<tbody>
+					<tr>
+						<th scope="row">Nom</th>
+						<td th:text="${site.nom}" />
+
+					</tr>
+
+
+					<tr>
+						<th scope="row">Numéro</th>
+						<td th:text="${site.numero}" />
+
+					</tr>
+
+
+					<tr>
+						<th scope="row">Voie</th>
+						<td th:text="${site.voie}" />
+
+					</tr>
+
+					<tr>
+						<th scope="row">Ville</th>
+						<td th:text="${site.ville}" />
+
+					</tr>
+
+					<tr>
+						<th scope="row">Code postal</th>
+						<td th:text="${site.codePostal}" />
+
+					</tr>
+
+					<tr>
+						<th scope="row">Seteur</th>
+						<td th:text="${site.secteur}" />
+
+					</tr>
+
+					<tr>
+						<th scope="row">Départementt</th>
+						<td th:text="${site.departement}" />
+
+					</tr>
+
+					<tr>
+						<th scope="row">Région</th>
+						<td th:text="${site.region}" />
+
+					</tr>
+
+
+				</tbody>
+			</table>
+
+		</div>
+
+
+		<div class="row">
+
 			<h1>Présentation du défaut</h1>
 
 
@@ -47,74 +123,94 @@
 		<div class="col">
 
 
+
+
+
 			<table class="table table-striped">
 				<thead>
 
-				
+
 				</thead>
 				<tbody>
 					<tr>
 						<th scope="row">Produit</th>
-						<td th:text="${formIncident.produit}" />
-
-					</tr>
-
-
-					<tr>
-						<th scope="row">Date</th>
-						<td th:text="${formIncident.date}" />
+						<td th:text="${defaut.produit}" />
 
 					</tr>
 
 
 					<tr>
 						<th scope="row">Code</th>
-						<td th:text="${formIncident.code}" />
+						<td th:text="${defaut.code}" />
+
+					</tr>
+
+
+					<tr>
+						<th scope="row">Date</th>
+						<td th:text="${defaut.date}" />
 
 					</tr>
 
 					<tr>
 						<th scope="row">Description</th>
-						<td th:text="${formIncident.description}" />
+						<td th:text="${defaut.description}" />
 
 					</tr>
 
-				
+
 
 				</tbody>
 			</table>
 
 		</div>
 
-		<div class="row mt-3">
-			<div class="col d-flex justify-content-end">
+		<div class="col">
 
-			
-<!-- 
-				<div class="form-group mr-3">
-					<a
-						th:href="@{/labplan/private/fiche/supprimer}"><p
-							type="text" class="btn btn-block"
-							style="background-color: red; color: white">Supprimer</p></a>
+			<div class="row mt-3">
+				<div class="col">
+
+
+					<form
+						th:action="@{/labplan/private/activite/site/defaut/selectionner/{site}/{defaut}(site=${recurrence.site}, defaut=${recurrence.defaut})}"
+						method="post" th:object="${recurrence}">
+
+
+
+						<h1>Indiquer la récurrence du défaut</h1>
+
+
+						<div class="row  mr-1">
+							<label for="text">Récurrence</label> <input type="number"
+								class="form-control" th:field="${recurrence.nombre}">
+						</div>
+
+
+						<div class="bouton row">
+
+							<div class="col">
+								<div class="d-flex justify-content-end">
+									<a class="btn mb-1 bouton2"
+										style="background-color: #7e60fb; color: white;"
+										href="/labplan/espace" role="button">Annuler</a> <input
+										type="submit" class="btn mb-1 bouton2"
+										style="background-color: #7e60fb; color: white;"
+										value="Enregistrer">
+
+								</div>
+							</div>
+						</div>
+					</form>
+
+
+
 				</div>
 
- -->
 
-				<div class="form-group mr-3">
-					<a
-						th:href="@{/labplan/private/activite/site/defaut/selectionner/{id}(id=${formIncident.id})}"><p
-							type="text" class="btn btn-block"
-							style="background-color: #7e60fb; color: white">Sélectionner</p></a>
-				</div>
-
-				<div class="form-group ">
-					<a href="/labplan/espace"><p type="text" class="btn btn-block"
-							style="background-color: #7e60fb; color: white">Retour</p></a>
-				</div>
 			</div>
 
-
 		</div>
+
 
 
 

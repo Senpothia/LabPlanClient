@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.michel.lab.model.FormSite;
+import com.michel.lab.model.RecurrenceAux;
 import com.michel.lab.model.Utilisateur;
 import com.michel.lab.proxy.MicroServiceLab;
 import com.michel.lab.service.UserConnexion;
@@ -175,7 +176,73 @@ public class SiteController {
 	public String voirIncidentsId(@PathVariable(name = "id") Integer id, Model model, HttpSession session) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
+		
+		
+		return "ok";
+	}
+	
+	
+	@GetMapping("/site/defaut/selectionner/{id}")
+	public String selectionnerIncidentsId(@PathVariable(name = "id") Integer id, Model model, HttpSession session) {
 
+		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
+		
+		List<FormSite> sites = microServiceLab.obtenirListeSites(token);
+		model.addAttribute("sites", sites);
+		model.addAttribute("defaut", id);
+		return "selectionner_site";
+
+	}
+	
+	@GetMapping("/site/defaut/selectionner/{id}/{defaut}")
+	public String associerSiteDefaut(
+			@PathVariable(name = "id") Integer idSite,
+			@PathVariable(name = "defaut") Integer idDefaut,
+			Model model, HttpSession session) {
+
+		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
+		System.out.println("idSite: " + idSite);
+		System.out.println("idDefaut: " + idDefaut);
+		FormIncident defaut = microServiceLab.obtenirDefautParId(token, idDefaut);
+		FormSite site = microServiceLab.obtenirSiteParId(token, idSite);
+		
+		RecurrenceAux recurrence = new RecurrenceAux(idSite, idDefaut, 0);
+		
+		System.out.println("idSite obj: " + recurrence.getSite());
+		
+		model.addAttribute("site", site);
+		model.addAttribute("defaut", defaut);
+		model.addAttribute("recurrence", recurrence);
+		
+		return "ajouter_recurrence";
+	}
+	
+	@PostMapping("/site/defaut/selectionner/{id}/{defaut}")
+	public String EnregistrerAssocierSiteDefaut(
+			@PathVariable(name = "id") Integer idSite,
+			@PathVariable(name = "defaut") Integer idDefaut,
+			Model model, HttpSession session,
+			RecurrenceAux recurrence) {
+		
+
+		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
+		
+		recurrence.setSite(idSite);
+		System.out.println("Site: " + recurrence.getSite());
+		System.out.println("Site2 :" + idSite);
+		System.out.println("Defaut: " +  recurrence.getDefaut());
+		System.out.println("Nombre: " + recurrence.getNombre());
+		
+		microServiceLab.ajouterRecurrence(token, recurrence);
+		
 		return "ok";
 	}
 

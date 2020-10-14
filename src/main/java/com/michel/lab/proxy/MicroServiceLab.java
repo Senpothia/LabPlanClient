@@ -33,6 +33,7 @@ import com.michel.lab.model.Login;
 import com.michel.lab.model.ProcedureAux;
 import com.michel.lab.model.QualificationAux;
 import com.michel.lab.model.RapportAux;
+import com.michel.lab.model.RecurrenceAux;
 import com.michel.lab.model.SequenceAux;
 import com.michel.lab.model.Upload;
 import com.michel.lab.model.Utilisateur;
@@ -418,6 +419,13 @@ public interface MicroServiceLab {
 	
 	@PostMapping("/private/activite/site/defaut/produit/voir")
 	public FormIncident obtenirDefautParId(@RequestHeader("Authorization") String token, Integer id);
+	
+	
+	@PostMapping("/private/activite/site/get")
+	public FormSite obtenirSiteParId(@RequestHeader("Authorization") String token, Integer idSite);
+	
+	@PostMapping("/private/activite/site/ajouter/recurrence")
+	public void ajouterRecurrence(@RequestHeader("Authorization") String token, RecurrenceAux recurrenceAux);
 
 	
 	
