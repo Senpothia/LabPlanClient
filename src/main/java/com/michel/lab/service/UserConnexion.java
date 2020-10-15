@@ -22,9 +22,6 @@ public class UserConnexion {
 	MicroServiceLab microServiceLab;
 	
 	
-	
-
-
 	public Utilisateur identifierUtilisateur(Login login, HttpSession session) {
 		
 		System.out.println("Username: " + login.getUser());

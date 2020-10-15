@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.michel.lab.model.FormDemande;
 import com.michel.lab.model.FormSite;
 import com.michel.lab.model.RecurrenceAux;
 import com.michel.lab.model.Utilisateur;
@@ -178,9 +179,13 @@ public class SiteController {
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
 		String token = (String) session.getAttribute("TOKEN");
 		token = "Bearer " + token;
+		FormSite site = microServiceLab.obtenirSiteParId(token, id);
 		
+		List<FormIncident> defauts = microServiceLab.obtenirDefautsParSite(token, id);
+		model.addAttribute("defauts", defauts);
+		model.addAttribute("site", site);
 		
-		return "ok";
+		return "anomalies";
 	}
 	
 	
@@ -236,14 +241,16 @@ public class SiteController {
 		token = "Bearer " + token;
 		
 		recurrence.setSite(idSite);
-		System.out.println("Site: " + recurrence.getSite());
-		System.out.println("Site2 :" + idSite);
-		System.out.println("Defaut: " +  recurrence.getDefaut());
-		System.out.println("Nombre: " + recurrence.getNombre());
 		
 		microServiceLab.ajouterRecurrence(token, recurrence);
 		
-		return "ok";
+		FormIncident defaut = microServiceLab.obtenirDefautParId(token, idDefaut);
+		List<FormSite> sites = microServiceLab.cartographier(token, idDefaut);
+		model.addAttribute("sites", sites);
+		model.addAttribute("defaut", defaut);
+		
+		
+		return "cartographie";
 	}
 
 }

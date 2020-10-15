@@ -426,6 +426,14 @@ public interface MicroServiceLab {
 	
 	@PostMapping("/private/activite/site/ajouter/recurrence")
 	public void ajouterRecurrence(@RequestHeader("Authorization") String token, RecurrenceAux recurrenceAux);
+	
+	@PostMapping("/private/activite/site/defaut/cartographier")
+	public List<FormSite> cartographier(@RequestHeader("Authorization") String token, Integer idDefaut);
+	
+	@PostMapping("/private/activite/site/defauts")
+	public List<FormIncident> obtenirDefautsParSite(@RequestHeader("Authorization") String token, Integer id);
+
+	
 
 	
 	
