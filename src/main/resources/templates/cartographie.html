@@ -1,0 +1,196 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="fr">
+<head>
+<!-- Required meta tags -->
+<meta charset="utf-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+	integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+	crossorigin="anonymous">
+
+<link rel="stylesheet" href="/css/styles.css">
+
+<title>LabPlan</title>
+<link rel="shortcut icon" type="image/x-icon" href="/images/logo0.png" />
+</head>
+<body>
+	<div class="container">
+
+
+		<!-- Entete -->
+		<span th:if="${authentification}">
+			<div th:replace="fragments/entete_post :: entete_post"></div>
+		</span> <span th:unless="${authentification}">
+			<div th:replace="fragments/entete_init :: entete_init"></div>
+		</span>
+		<!-- ---------------- -->
+
+		<div class="row">
+			<div class="col">
+				<img class="img-fluid" src="/images/bandeau7.png"
+					th:src="@{/images/bandeau6.png}" />
+			</div>
+		</div>
+
+
+
+		<div class="row">
+
+			<h1>Présentation du défaut</h1>
+
+
+		</div>
+
+		<div class="col">
+
+
+
+
+
+			<table class="table table-striped">
+				<thead>
+
+
+				</thead>
+				<tbody>
+					<tr>
+						<th scope="row">Produit</th>
+						<td th:text="${defaut.produit}" />
+
+					</tr>
+
+
+					<tr>
+						<th scope="row">Code</th>
+						<td th:text="${defaut.code}" />
+
+					</tr>
+
+
+					<tr>
+						<th scope="row">Date</th>
+						<td th:text="${defaut.date}" />
+
+					</tr>
+
+					<tr>
+						<th scope="row">Description</th>
+						<td th:text="${defaut.description}" />
+
+					</tr>
+
+
+
+				</tbody>
+			</table>
+
+		</div>
+
+		<div class="row">
+
+			<h1>Cartographie du défaut</h1>
+
+
+		</div>
+		
+		<div class="row">
+
+			<p>Liste des sites affectés par le défaut</p>
+
+
+		</div>
+
+		<div class="col">
+
+			<div class="row">
+
+
+
+				<div class="col" style="margin: 5px;">
+
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th scope="col">Nom</th>
+								<th scope="col">N°</th>
+								<th scope="col">Voie</th>
+								<th scope="col">Ville</th>
+								<th scope="col">Code postal</th>
+								<th scope="col">Secteur</th>
+								<th scope="col">Défauts</th>
+
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="site, iStat: ${sites}">
+								<th scope="row"><span th:text="${site.nom}"></span></th>
+								<td th:text="${site.numero}" />
+								<td th:text="${site.voie}" />
+								<td th:text="${site.ville}" />
+								<td th:text="${site.codePostal}" />
+								<td th:text="${site.secteur}" />
+								<td><a
+									th:href="@{/private/activite/site/defauts/voir/{id}(id=${site.id})}"><p
+											type="text" class="btn btn-block"
+											style="background-color: #7e60fb; color: white">voir</p></a></td>
+							</tr>
+
+						</tbody>
+					</table>
+
+
+				</div>
+
+
+			</div>
+
+
+		</div>
+		
+		
+						<div class="bouton row">
+
+							<div class="col">
+								<div class="d-flex justify-content-end">
+									<a class="btn mb-1 bouton2"
+										style="background-color: #7e60fb; color: white;"
+										href="/labplan/espace" role="button">Retour</a> 
+
+								</div>
+							</div>
+						</div>
+
+
+
+
+		<!-- footer -->
+
+		<!-- PIED DE PAGE -->
+
+		<div th:replace="fragments/footer :: footer"></div>
+
+		<!-- ********************************************* -->
+
+		<!-- footer -->
+	</div>
+
+	<!-- Optional JavaScript -->
+	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+		integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+		integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+		integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+		crossorigin="anonymous"></script>
+</body>
+</html>

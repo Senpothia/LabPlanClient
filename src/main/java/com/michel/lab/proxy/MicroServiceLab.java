@@ -19,19 +19,21 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 
 import com.michel.lab.model.NoteAux;
-
+import com.michel.lab.controller.FormIncident;
 import com.michel.lab.model.DemandeAux;
 import com.michel.lab.model.DomaineAux;
 import com.michel.lab.model.EchantillonAux;
 import com.michel.lab.model.FormProcedure;
 import com.michel.lab.model.FormQualif;
 import com.michel.lab.model.FormSequence;
+import com.michel.lab.model.FormSite;
 import com.michel.lab.model.Groupe;
 import com.michel.lab.model.GroupeRapport;
 import com.michel.lab.model.Login;
 import com.michel.lab.model.ProcedureAux;
 import com.michel.lab.model.QualificationAux;
 import com.michel.lab.model.RapportAux;
+import com.michel.lab.model.RecurrenceAux;
 import com.michel.lab.model.SequenceAux;
 import com.michel.lab.model.Upload;
 import com.michel.lab.model.Utilisateur;
@@ -397,6 +399,41 @@ public interface MicroServiceLab {
 			@PathVariable(name = "id") Integer id);
 	
 	
+	@PostMapping("/private/activite/site/enregistrer")
+	public void enregistrerSite(
+			@RequestHeader("Authorization") String token,
+			FormSite formSite);
+	
+	@GetMapping("/private/activite/site/liste")
+	public List<FormSite> obtenirListeSites(@RequestHeader("Authorization") String token);
+	
+	@PostMapping("/private/activite/site/defaut/enregistrer")
+	public void enregistrerIncident(
+			@RequestHeader("Authorization") String token,
+			FormIncident formIncident);
+	
+	@GetMapping("/private/activite/site/defaut/liste")
+	public List<FormIncident> obtenirListeIncident(@RequestHeader("Authorization") String token);
+	
+	@PostMapping("/private/activite/site/defaut/produit")
+	public List<FormIncident> obtenirDefautParProduit(@RequestHeader("Authorization") String token, String produit);
+	
+	@PostMapping("/private/activite/site/defaut/produit/voir")
+	public FormIncident obtenirDefautParId(@RequestHeader("Authorization") String token, Integer id);
+	
+	
+	@PostMapping("/private/activite/site/get")
+	public FormSite obtenirSiteParId(@RequestHeader("Authorization") String token, Integer idSite);
+	
+	@PostMapping("/private/activite/site/ajouter/recurrence")
+	public void ajouterRecurrence(@RequestHeader("Authorization") String token, RecurrenceAux recurrenceAux);
+	
+	@PostMapping("/private/activite/site/defaut/cartographier")
+	public List<FormSite> cartographier(@RequestHeader("Authorization") String token, Integer idDefaut);
+	
+	@PostMapping("/private/activite/site/defauts")
+	public List<FormIncident> obtenirDefautsParSite(@RequestHeader("Authorization") String token, Integer id);
+
 	
 	
 	
