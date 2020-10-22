@@ -51,13 +51,15 @@ public class UsineController {
 		token = "Bearer " + token;
 		Integer idUser = utilisateur.getId();
 		formOf.setCreateur(idUser);
+		
 		microServiceLab.enregistrerOf(token, formOf);
 		List<FormOf> ofs = microServiceLab.obtenirListeOfs(token);
 		model.addAttribute("ofs", ofs);
 		return "ofs";
+	
 	} 
 	
-	@GetMapping("/usine/voir/{id}")
+	@GetMapping("/usine/of/voir/{id}")
 	public String voirOf(
 			@PathVariable(name="id") Integer id, Model model, HttpSession session) {
 	
@@ -69,6 +71,19 @@ public class UsineController {
 		model.addAttribute("of", of);
 		
 		return "of";
+	}
+	
+	@GetMapping("/usine/ofs/voir")
+	public String VoirOfs(Model model, HttpSession session) {
+		
+		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
+		
+		List<FormOf> ofs = microServiceLab.obtenirListeOfs(token);
+		model.addAttribute("ofs", ofs);
+		return "ofs";
+		
 	}
 	
 	
