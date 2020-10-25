@@ -41,6 +41,7 @@ import com.michel.lab.model.Utilisateur;
 import com.michel.lab.model.UtilisateurAux;
 import com.michel.lab.model.EssaiAux;
 import com.michel.lab.model.FicheAux;
+import com.michel.lab.model.FormAnomalie;
 import com.michel.lab.model.FormDemande;
 import com.michel.lab.model.FormEchantillon;
 import com.michel.lab.model.FormEssai;
@@ -442,6 +443,15 @@ public interface MicroServiceLab {
 
 	@PostMapping("/private/gestion/usine/of/voir")
 	public FormOf obtenirOfParId(@RequestHeader("Authorization")  String token, Integer id);
+	
+	@PostMapping("/private/gestion/usine/anomalie/enregistrer")
+	public void enregistrerAnomalie(@RequestHeader("Authorization") String token, @RequestBody FormAnomalie formAnomalie);
+	
+	@GetMapping("/private/gestion/usine/anomalies/liste")
+	public List<FormAnomalie> obtenirListeAnomalies(@RequestHeader("Authorization") String token);
+
+	@PostMapping("/private/gestion/usine/anomalie")
+	public FormAnomalie obtenirAnomalieParId(@RequestHeader("Authorization")String token, @RequestBody Integer id);
 
 	
 

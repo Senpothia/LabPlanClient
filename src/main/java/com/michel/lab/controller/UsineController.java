@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.michel.lab.model.FormAnomalie;
 import com.michel.lab.model.Utilisateur;
 import com.michel.lab.proxy.MicroServiceLab;
 import com.michel.lab.service.UserConnexion;
@@ -86,6 +87,50 @@ public class UsineController {
 		
 	}
 	
+	@GetMapping("/usine/anomalie/declarer")
+	public String declarerAnomalie(Model model, HttpSession session){
+		
+		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
+		model.addAttribute("formAnomalie", new FormAnomalie());
+		return "createAnomalie";
+	}
 	
+	@PostMapping("/usine/anomalie/declarer")
+	public String enregistrerAnomalie(Model model, HttpSession session,
+			FormAnomalie formAnomalie){
+		
+		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
+		Integer controleur = utilisateur.getId();
+		formAnomalie.setControleur(controleur);
+		microServiceLab.enregistrerAnomalie(token, formAnomalie);
+		List<FormAnomalie> anomalies = microServiceLab.obtenirListeAnomalies(token);
+		model.addAttribute("anomalies", anomalies);
+		return "anomalies";
+	}
+	
+	@GetMapping("/usine/anomalie/voir/{id}")
+	public String voirAnomalie(
+			@PathVariable(name="id") Integer id, 
+			Model model, 
+			HttpSession session) {
+		
+		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
+		FormAnomalie anomalie = microServiceLab.obtenirAnomalieParId(token, id);
+		model.addAttribute("anomalie", anomalie);
+		
+		return "anomalie";
+	}
+	
+	@GetMapping("/non-conformites")
+	public String selectionnerProduit() {
+		
+		return null;
+	}
 
 }
