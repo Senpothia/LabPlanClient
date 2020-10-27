@@ -127,10 +127,31 @@ public class UsineController {
 		return "anomalie";
 	}
 	
-	@GetMapping("/non-conformites")
-	public String selectionnerProduit() {
+	@GetMapping("/usine/non-conformites")
+	public String selectionnerProduit(
+			Model model, 
+			HttpSession session) {
 		
-		return null;
+		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
+		List<String> produits = microServiceLab.listeProduitsAvecAnomalie(token);
+		model.addAttribute("produits", produits);
+		return "selectionner_produit_anomalies";
 	}
+	
+	@PostMapping("/usine/anomalies/selectionner/produit")
+	public String afficherAnomaliesParProduit(Model model, 
+			HttpSession session,
+			String produit) {
+		
+		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
+		List<FormAnomalie> anomalies = microServiceLab.obtenirAnomaliesParProduit(token, produit);
+		model.addAttribute("anomalies", anomalies);
+		return "anomalies";
+	}
+			
 
 }

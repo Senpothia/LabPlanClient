@@ -452,6 +452,12 @@ public interface MicroServiceLab {
 
 	@PostMapping("/private/gestion/usine/anomalie")
 	public FormAnomalie obtenirAnomalieParId(@RequestHeader("Authorization")String token, @RequestBody Integer id);
+	
+	@PostMapping("/private/gestion/usine/anomalie/produits")
+	public List<String> listeProduitsAvecAnomalie(@RequestHeader("Authorization") String token);
+	
+	@PostMapping("/private/gestion/usine/anomalie/produit")
+	public List<FormAnomalie> obtenirAnomaliesParProduit(@RequestHeader("Authorization") String token, @RequestBody String produit);
 
 	
 
