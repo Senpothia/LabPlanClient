@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.michel.lab.model.FormAnomalie;
+import com.michel.lab.model.RepetitionAux;
 import com.michel.lab.model.Utilisateur;
 import com.michel.lab.proxy.MicroServiceLab;
 import com.michel.lab.service.UserConnexion;
@@ -151,6 +152,117 @@ public class UsineController {
 		List<FormAnomalie> anomalies = microServiceLab.obtenirAnomaliesParProduit(token, produit);
 		model.addAttribute("anomalies", anomalies);
 		return "anomalies";
+	}
+	
+	@GetMapping("/usine/of/anomalies/{id}")
+	public String anomaliesParOf(
+			Model model, 
+			HttpSession session,
+			@PathVariable (name="id") Integer id) {
+		
+		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
+		
+		List<FormAnomalie> anomalies = microServiceLab.obtenirAnomalieParOf(token, id);
+		
+		return null;
+	}
+	
+
+	@GetMapping("/usine/anomalie/selectionner/produit")
+	public String selectionProduitAssocierOf(
+			Model model, 
+			HttpSession session) {
+		
+		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
+		
+		List<String> produits = microServiceLab.listeProduitsAvecAnomalie(token);
+		model.addAttribute("produits", produits);
+		return "selectionner_produit_association_of";
+	}
+	
+	@PostMapping("/usine/anomalies/selectionner/produit/associer/of")
+	public String afficherOfParProduit(Model model, 
+			HttpSession session,
+			String produit) {
+		
+		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
+		
+		RepetitionAux repetition = new RepetitionAux();
+		repetition.setProduit(produit);
+		List<FormOf> ofs = microServiceLab.obtenirOfsParProduit(token, produit);
+		model.addAttribute("ofs", ofs);
+		model.addAttribute("repetition", repetition);
+	
+		return "selectionner_of_association_produit";
+	}
+	
+	@GetMapping("/usine/of/associer/{of}/{produit}")
+	public String choisirAnomalie(Model model, 
+			HttpSession session,
+			@PathVariable (name="of") Integer of,
+			@PathVariable (name="produit") String produit) {
+		
+		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
+		RepetitionAux repetition = new RepetitionAux(null, null, of, produit, null);
+		model.addAttribute("repetition", repetition);
+		FormOf formOf = microServiceLab.obtenirOfParId(token, of);
+		List<FormAnomalie> anomalies = microServiceLab.obtenirAnomaliesParProduit(token, produit);
+		model.addAttribute("anomalies", anomalies);
+		model.addAttribute("of", of);
+		
+		return "selectionner_anomalie";
+	}
+	
+	@GetMapping("/usine/anomalie/selectionner/{anomalie}/{of}")
+	public String ajouterRepetition(
+			Model model, 
+			HttpSession session,
+			@PathVariable (name="anomalie") Integer idAnomalie,
+			@PathVariable (name="of") Integer idOf) {
+		
+		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
+		
+		FormAnomalie formAnomalie = microServiceLab.obtenirAnomalieParId(token, idAnomalie);
+		FormOf formOf  = microServiceLab.obtenirOfParId(token, idOf);
+		model.addAttribute("formAnomalie", formAnomalie);
+		model.addAttribute("formOf", formOf);
+		model.addAttribute("repetition", new RepetitionAux(null, idAnomalie, idOf, null, null));
+		
+		return "ajouter_repetition";
+	}
+	
+	@PostMapping("/usine/associer/of/anomalie/{anomalie}/{of}")
+	public String enregistrerAssociationOfAnomalie(
+			Model model, 
+			HttpSession session,
+			RepetitionAux repetition,
+			@PathVariable(name="anomalie") Integer anomalie,
+			@PathVariable(name="of") Integer of) {
+		
+		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
+		
+		repetition.setAnomalie(anomalie);
+		repetition.setOf(of);
+		System.out.println("methode post");
+		System.out.println("nbre d'anomalie: " + repetition.getTotal());
+		System.out.println("id anomalie: " + repetition.getAnomalie());
+		System.out.println("id of" + repetition.getOf());
+		
+		microServiceLab.enregistrerRepetition(token, repetition);
+		
+		return "ok";
 	}
 			
 

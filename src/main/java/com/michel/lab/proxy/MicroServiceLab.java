@@ -35,6 +35,7 @@ import com.michel.lab.model.ProcedureAux;
 import com.michel.lab.model.QualificationAux;
 import com.michel.lab.model.RapportAux;
 import com.michel.lab.model.RecurrenceAux;
+import com.michel.lab.model.RepetitionAux;
 import com.michel.lab.model.SequenceAux;
 import com.michel.lab.model.Upload;
 import com.michel.lab.model.Utilisateur;
@@ -458,6 +459,15 @@ public interface MicroServiceLab {
 	
 	@PostMapping("/private/gestion/usine/anomalie/produit")
 	public List<FormAnomalie> obtenirAnomaliesParProduit(@RequestHeader("Authorization") String token, @RequestBody String produit);
+
+	@PostMapping("/private/gestion/usine/of/anomalies")
+	public List<FormAnomalie> obtenirAnomalieParOf(@RequestHeader("Authorization") String token, @RequestBody Integer id);
+	
+	@PostMapping("/private/gestion/usine/of/produit")
+	public List<FormOf> obtenirOfsParProduit(@RequestHeader("Authorization") String token, @RequestBody String produit);
+	
+	@PostMapping("/private/gestion/usine/enregistrer/repetition")
+	public void enregistrerRepetition(@RequestHeader("Authorization") String token, @RequestBody RepetitionAux repetition);
 
 	
 

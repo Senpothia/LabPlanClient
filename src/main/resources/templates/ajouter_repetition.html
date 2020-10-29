@@ -1,0 +1,231 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="fr">
+<head>
+<!-- Required meta tags -->
+<meta charset="utf-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+	integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+	crossorigin="anonymous">
+
+<link rel="stylesheet" href="/css/styles.css">
+
+<title>LabPlan</title>
+<link rel="shortcut icon" type="image/x-icon" href="/images/logo0.png" />
+</head>
+<body>
+	<div class="container">
+
+
+		<!-- Entete -->
+		<span th:if="${authentification}">
+			<div th:replace="fragments/entete_post :: entete_post"></div>
+		</span> <span th:unless="${authentification}">
+			<div th:replace="fragments/entete_init :: entete_init"></div>
+		</span>
+		<!-- ---------------- -->
+
+		<div class="row">
+			<div class="col">
+				<img class="img-fluid" src="/images/bandeau7.png"
+					th:src="@{/images/bandeau6.png}" />
+			</div>
+		</div>
+
+		<div class="row">
+
+			<h1>Présentation de l'OF</h1>
+
+
+		</div>
+
+		<div class="col">
+
+
+
+
+
+			<table class="table table-striped">
+				<thead>
+
+
+				</thead>
+				<tbody>
+					<tr>
+						<th scope="row">Numéro</th>
+						<td th:text="${formOf.numero}" />
+
+					</tr>
+
+
+					<tr>
+						<th scope="row">Produit</th>
+						<td th:text="${formOf.produit}" />
+
+					</tr>
+
+
+					<tr>
+						<th scope="row">Code</th>
+						<td th:text="${formOf.code}" />
+
+					</tr>
+
+					<tr>
+						<th scope="row">Date</th>
+						<td th:text="${formOf.date}" />
+
+					</tr>
+
+					<tr>
+						<th scope="row">Taille</th>
+						<td th:text="${formOf.taille}" />
+
+					</tr>
+
+
+				</tbody>
+			</table>
+
+		</div>
+
+
+		<div class="row">
+
+			<h1>Présentation de l'anomalie</h1>
+
+
+		</div>
+
+		<div class="col">
+
+
+
+
+
+			<table class="table table-striped">
+				<thead>
+
+
+				</thead>
+				<tbody>
+					<tr>
+						<th scope="row">Numéro</th>
+						<td th:text="${formAnomalie.numero}" />
+
+					</tr>
+
+
+					<tr>
+						<th scope="row">Date</th>
+						<td th:text="${formAnomalie.date}" />
+
+					</tr>
+
+
+					<tr>
+						<th scope="row">Produit</th>
+						<td th:text="${formAnomalie.produit}" />
+
+					</tr>
+
+					<tr>
+						<th scope="row">Code</th>
+						<td th:text="${formAnomalie.code}" />
+
+					</tr>
+
+					<tr>
+						<th scope="row">Description</th>
+						<td th:text="${formAnomalie.description}" />
+
+					</tr>
+
+
+
+				</tbody>
+			</table>
+
+		</div>
+
+		<div class="col">
+
+			<div class="row mt-3">
+				<div class="col">
+
+
+					<form
+						th:action="@{/labplan/private/gestion/usine/associer/of/anomalie/{anomalie}/{of}(anomalie=${repetition.anomalie}, of=${repetition.of})}"
+						method="post" th:object="${repetition}">
+
+
+
+						<h1>Indiquer la quantité de non-conformes dans l'OF</h1>
+
+
+						<div class="row  mr-1">
+							<label for="text">Quantité non-conforme</label> <input
+								type="number" class="form-control"
+								th:field="${repetition.total}">
+						</div>
+
+
+						<div class="bouton row">
+
+							<div class="col">
+								<div class="d-flex justify-content-end">
+									<a class="btn mb-1 bouton2"
+										style="background-color: #7e60fb; color: white;"
+										href="/labplan/espace" role="button">Annuler</a> <input
+										type="submit" class="btn mb-1 bouton2"
+										style="background-color: #7e60fb; color: white;"
+										value="Enregistrer">
+
+								</div>
+							</div>
+						</div>
+					</form>
+
+
+
+				</div>
+
+
+			</div>
+
+		</div>
+
+
+
+
+		<!-- footer -->
+
+		<!-- PIED DE PAGE -->
+
+		<div th:replace="fragments/footer :: footer"></div>
+
+		<!-- ********************************************* -->
+
+		<!-- footer -->
+	</div>
+
+	<!-- Optional JavaScript -->
+	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+		integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+		integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+		integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+		crossorigin="anonymous"></script>
+</body>
+</html>
