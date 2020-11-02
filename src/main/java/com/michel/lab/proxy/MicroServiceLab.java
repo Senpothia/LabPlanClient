@@ -468,6 +468,15 @@ public interface MicroServiceLab {
 	
 	@PostMapping("/private/gestion/usine/enregistrer/repetition")
 	public void enregistrerRepetition(@RequestHeader("Authorization") String token, @RequestBody RepetitionAux repetition);
+	
+	@PostMapping("/private/gestion/usine/repetitions/of")
+	public List<RepetitionAux> obtenirRepetitionsParOf(@RequestHeader("Authorization") String token, @RequestBody Integer of);
+	
+	@PostMapping("/private/gestion/usine/modifier/of")
+	public void modifierOf(@RequestHeader("Authorization") String token,  @RequestBody FormOf formOf);
+	
+	@PostMapping("/private/gestion/usine/supprimer/of")
+	public void supprimerOf(@RequestHeader("Authorization")String token, @RequestBody Integer id);
 
 	
 

@@ -1,5 +1,6 @@
 package com.michel.lab.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -164,9 +165,11 @@ public class UsineController {
 		String token = (String) session.getAttribute("TOKEN");
 		token = "Bearer " + token;
 		
+		System.out.println("Visu anomalie pour OF");
 		List<FormAnomalie> anomalies = microServiceLab.obtenirAnomalieParOf(token, id);
+		model.addAttribute("anomalies", anomalies);
+		return "anomalies_bilan_of";
 		
-		return null;
 	}
 	
 
@@ -255,15 +258,98 @@ public class UsineController {
 		
 		repetition.setAnomalie(anomalie);
 		repetition.setOf(of);
-		System.out.println("methode post");
-		System.out.println("nbre d'anomalie: " + repetition.getTotal());
-		System.out.println("id anomalie: " + repetition.getAnomalie());
-		System.out.println("id of" + repetition.getOf());
 		
 		microServiceLab.enregistrerRepetition(token, repetition);
+		List<RepetitionAux> reps = microServiceLab.obtenirRepetitionsParOf(token, of);
+		List<FormAnomalie> anomalies = new ArrayList<FormAnomalie>();
+		for(RepetitionAux r: reps) {
+			
+			Integer id = r.getAnomalie();
+			FormAnomalie f = microServiceLab.obtenirAnomalieParId(token, id);
+			f.setTotal(r.getTotal());
+			anomalies.add(f);
+			
+		}
+		model.addAttribute("anomalies", anomalies);
+		return "anomalies_bilan_of";
+	}
+	
+	@GetMapping("/usine/modifier/of/{id}")
+	public String modifierOf(
+			Model model, 
+			HttpSession session,
+			@PathVariable(name = "id") Integer id) {
+		
+		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
+		FormOf formOf = microServiceLab.obtenirOfParId(token, id);
+		System.out.println("id formOf: " + formOf.getId());
+		model.addAttribute("formOf", formOf);
+		
+		return "modifierOf";
+	}
+	
+	@PostMapping("/usine/modifier/of/{id}")
+	public String enreristrerModificationsOf(
+					Model model, 
+					HttpSession session,
+					@PathVariable(name ="id" ) Integer id,
+					FormOf formOf) {
+		
+		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
+		formOf.setId(id);
+		microServiceLab.modifierOf(token, formOf);
+		
+		List<FormOf> ofs = microServiceLab.obtenirListeOfs(token);
+		model.addAttribute("ofs", ofs);
+		return "ofs";
+	
+	}
+	
+	@GetMapping("/usine/supprimer/of/{id}")
+	public String supprimerOf(Model model, 
+			HttpSession session,
+			@PathVariable(name = "id") Integer id) {
+		
+		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
+		
+		microServiceLab.supprimerOf(token, id);
+		List<FormOf> ofs = microServiceLab.obtenirListeOfs(token);
+		model.addAttribute("ofs", ofs);
+		return "ofs";
+	
+		
+	}
+	
+	@GetMapping("/usine/anomalie/modifier/{id}")
+	public String modifierAnomalie(Model model, 
+			HttpSession session) {
+		
+		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
 		
 		return "ok";
 	}
+	
+	@GetMapping("/usine/anomalie/supprimer/{id}")
+	public String supprimerAnomalie(Model model, 
+			HttpSession session) {
+		
+		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
+		
+		return "ok";
+	}
+	
+	
+	
 			
 
 }
