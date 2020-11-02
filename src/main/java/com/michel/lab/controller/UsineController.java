@@ -328,24 +328,53 @@ public class UsineController {
 	
 	@GetMapping("/usine/anomalie/modifier/{id}")
 	public String modifierAnomalie(Model model, 
-			HttpSession session) {
+			HttpSession session,
+			@PathVariable(name = "id") Integer id) {
 		
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
 		String token = (String) session.getAttribute("TOKEN");
 		token = "Bearer " + token;
 		
-		return "ok";
+		FormAnomalie formAnomalie = microServiceLab.obtenirAnomalieParId(token, id);
+		model.addAttribute("formAnomalie", formAnomalie);
+		
+		return "modifierAnomalie";
+		
+	}
+	
+	@PostMapping("/usine/anomalie/modifier/{id}")
+	public String enregistrerModifierAnomalie(Model model, 
+			HttpSession session,
+			@PathVariable(name = "id") Integer id,
+			FormAnomalie formAnomalie) {
+		
+		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
+		
+		formAnomalie.setId(id);
+		microServiceLab.modifierAnomalie(token, formAnomalie);
+		
+		List<FormAnomalie> anomalies = microServiceLab.obtenirListeAnomalies(token);
+		model.addAttribute("anomalies", anomalies);
+		return "anomalies";
+		
 	}
 	
 	@GetMapping("/usine/anomalie/supprimer/{id}")
 	public String supprimerAnomalie(Model model, 
-			HttpSession session) {
+			HttpSession session,
+			@PathVariable(name = "id") Integer id) {
 		
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
 		String token = (String) session.getAttribute("TOKEN");
 		token = "Bearer " + token;
 		
-		return "ok";
+		microServiceLab.supprimerAnomalie(token, id);
+		List<FormAnomalie> anomalies = microServiceLab.obtenirListeAnomalies(token);
+		model.addAttribute("anomalies", anomalies);
+		return "anomalies";
+	
 	}
 	
 	

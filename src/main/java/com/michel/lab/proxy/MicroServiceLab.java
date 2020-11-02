@@ -477,6 +477,12 @@ public interface MicroServiceLab {
 	
 	@PostMapping("/private/gestion/usine/supprimer/of")
 	public void supprimerOf(@RequestHeader("Authorization")String token, @RequestBody Integer id);
+	
+	@PostMapping("/private/gestion/usine/modifier/anomalie")
+	public void modifierAnomalie(@RequestHeader("Authorization") String token, @RequestBody FormAnomalie formAnomalie);
+	
+	@PostMapping("/private/gestion/usine/supprimer/anomalie")
+	public void supprimerAnomalie(@RequestHeader("Authorization") String token, @RequestBody Integer id);
 
 	
 
