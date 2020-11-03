@@ -51,6 +51,14 @@ public class Private {
 	private UserConnexion userConnexion;
 
 	private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:MM");
+	
+	@GetMapping("/qualifications/access")
+	public String accessQualifications(Model model, HttpSession session) {
+		
+		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		//model.addAttribute("formQualif", new FormQualif());
+		return "accueil_qualification";
+	}
 
 	@GetMapping("/qualification/creation") // Accès au formulaire de création d'un qualification
 	public String creer(Model model, HttpSession session) {
