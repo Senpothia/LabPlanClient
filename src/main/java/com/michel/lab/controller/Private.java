@@ -51,16 +51,21 @@ public class Private {
 	private UserConnexion userConnexion;
 
 	private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:MM");
+	
+	@GetMapping("/qualifications/access")
+	public String accessQualifications(Model model, HttpSession session) {
+		
+		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		//model.addAttribute("formQualif", new FormQualif());
+		return "accueil_qualification";
+	}
 
 	@GetMapping("/qualification/creation") // Accès au formulaire de création d'un qualification
 	public String creer(Model model, HttpSession session) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		String token = (String) session.getAttribute("TOKEN");
-		token = "Bearer " + token;
 		model.addAttribute("formQualif", new FormQualif());
 		return Constants.CREATION_QUALIFICATION;
-		//return "ok";
 	}
 
 	@PostMapping("/qualification/creation") // Enregistrement des éléments de création d'une qualification
@@ -219,7 +224,7 @@ public class Private {
 		redirectAttributes.addAttribute("id", qualification);
 		redirectAttributes.addAttribute("num", id);
 
-		return "redirect:/private/sequences";
+		return "redirect:/labplan/private/sequences";
 
 	}
 
@@ -470,7 +475,7 @@ public class Private {
 		redirectAttributes.addAttribute("qualification", num);
 		redirectAttributes.addAttribute("sequence", idSequence);
 
-		return "redirect:/private/sequences/voir/retour";
+		return "redirect:/labplan/private/sequences/voir/retour";
 
 	}
 
@@ -522,7 +527,7 @@ public class Private {
 		redirectAttributes.addAttribute("qualification", numQualification);
 		redirectAttributes.addAttribute("sequence", idSequence);
 
-		return "redirect:/private/sequences/voir/retour";
+		return "redirect:/labplan/private/sequences/voir/retour";
 	}
 
 	@GetMapping("/echantillons/retirer/{echantillon}/{qualification}/{sequence}/{essai}")
@@ -541,7 +546,7 @@ public class Private {
 		redirectAttributes.addAttribute("qualification", numQualification);
 		redirectAttributes.addAttribute("sequence", idSequence);
 
-		return "redirect:/private/sequences/voir/retour";
+		return "redirect:/labplan/private/sequences/voir/retour";
 	}
 
 	@GetMapping("/qualification/modifier/statut/{id}")
@@ -771,7 +776,7 @@ public class Private {
 		redirectAttributes.addAttribute("id", numQualification);
 		redirectAttributes.addAttribute("num", idEssai);
 
-		return "redirect:/private/sequences";
+		return "redirect:/labplan/private/sequences";
 
 	}
 

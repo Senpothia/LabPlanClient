@@ -30,7 +30,13 @@ public class ProcedureController {
 
 	@Autowired
 	private UserConnexion userConnexion;
-
+	
+	@GetMapping("/procedures/access")
+	public String accessProcedures(Model model, HttpSession session) {
+		
+		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		return "accueil_procedures";
+	}
 	@GetMapping("/procedure/creation")
 	public String creationProcedure(
 			@RequestParam(name = "selection", defaultValue = "true", required = false) boolean selection, Model model,
@@ -56,7 +62,8 @@ public class ProcedureController {
 
 		}
 
-		return Constants.CREATION_PROCEDURE;
+		//return "createProcedure";
+		return "CreateProcedure";
 
 	}
 
@@ -83,7 +90,6 @@ public class ProcedureController {
 		model.addAttribute("formProcedure", new FormProcedure());
 
 		return "choisirProcedure";
-		
 
 	}
 

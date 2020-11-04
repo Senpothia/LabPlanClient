@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.michel.lab.model.NoteAux;
 import com.michel.lab.controller.FormIncident;
+import com.michel.lab.controller.FormOf;
 import com.michel.lab.model.DemandeAux;
 import com.michel.lab.model.DomaineAux;
 import com.michel.lab.model.EchantillonAux;
@@ -34,12 +35,14 @@ import com.michel.lab.model.ProcedureAux;
 import com.michel.lab.model.QualificationAux;
 import com.michel.lab.model.RapportAux;
 import com.michel.lab.model.RecurrenceAux;
+import com.michel.lab.model.RepetitionAux;
 import com.michel.lab.model.SequenceAux;
 import com.michel.lab.model.Upload;
 import com.michel.lab.model.Utilisateur;
 import com.michel.lab.model.UtilisateurAux;
 import com.michel.lab.model.EssaiAux;
 import com.michel.lab.model.FicheAux;
+import com.michel.lab.model.FormAnomalie;
 import com.michel.lab.model.FormDemande;
 import com.michel.lab.model.FormEchantillon;
 import com.michel.lab.model.FormEssai;
@@ -397,8 +400,7 @@ public interface MicroServiceLab {
 	public Utilisateur obtenirUtilisateurParId(
 			@RequestHeader("Authorization") String token,
 			@PathVariable(name = "id") Integer id);
-	
-	
+
 	@PostMapping("/private/activite/site/enregistrer")
 	public void enregistrerSite(
 			@RequestHeader("Authorization") String token,
@@ -434,7 +436,65 @@ public interface MicroServiceLab {
 	@PostMapping("/private/activite/site/defauts")
 	public List<FormIncident> obtenirDefautsParSite(@RequestHeader("Authorization") String token, Integer id);
 
+	@PostMapping("/private/gestion/usine/of/enregistrer")
+	public void enregistrerOf(@RequestHeader("Authorization") String token, @RequestBody FormOf formOf);
 	
+	@GetMapping("/private/gestion/usine/of/liste")
+	public List<FormOf> obtenirListeOfs(@RequestHeader("Authorization") String token);
+
+	@PostMapping("/private/gestion/usine/of/voir")
+	public FormOf obtenirOfParId(@RequestHeader("Authorization")  String token, Integer id);
+	
+	@PostMapping("/private/gestion/usine/anomalie/enregistrer")
+	public void enregistrerAnomalie(@RequestHeader("Authorization") String token, @RequestBody FormAnomalie formAnomalie);
+	
+	@GetMapping("/private/gestion/usine/anomalies/liste")
+	public List<FormAnomalie> obtenirListeAnomalies(@RequestHeader("Authorization") String token);
+
+	@PostMapping("/private/gestion/usine/anomalie")
+	public FormAnomalie obtenirAnomalieParId(@RequestHeader("Authorization")String token, @RequestBody Integer id);
+	
+	@PostMapping("/private/gestion/usine/anomalie/produits")
+	public List<String> listeProduitsAvecAnomalie(@RequestHeader("Authorization") String token);
+	
+	@PostMapping("/private/gestion/usine/anomalie/produit")
+	public List<FormAnomalie> obtenirAnomaliesParProduit(@RequestHeader("Authorization") String token, @RequestBody String produit);
+
+	@PostMapping("/private/gestion/usine/of/anomalies")
+	public List<FormAnomalie> obtenirAnomalieParOf(@RequestHeader("Authorization") String token, @RequestBody Integer id);
+	
+	@PostMapping("/private/gestion/usine/of/produit")
+	public List<FormOf> obtenirOfsParProduit(@RequestHeader("Authorization") String token, @RequestBody String produit);
+	
+	@PostMapping("/private/gestion/usine/enregistrer/repetition")
+	public void enregistrerRepetition(@RequestHeader("Authorization") String token, @RequestBody RepetitionAux repetition);
+	
+	@PostMapping("/private/gestion/usine/repetitions/of")
+	public List<RepetitionAux> obtenirRepetitionsParOf(@RequestHeader("Authorization") String token, @RequestBody Integer of);
+	
+	@PostMapping("/private/gestion/usine/modifier/of")
+	public void modifierOf(@RequestHeader("Authorization") String token,  @RequestBody FormOf formOf);
+	
+	@PostMapping("/private/gestion/usine/supprimer/of")
+	public void supprimerOf(@RequestHeader("Authorization")String token, @RequestBody Integer id);
+	
+	@PostMapping("/private/gestion/usine/modifier/anomalie")
+	public void modifierAnomalie(@RequestHeader("Authorization") String token, @RequestBody FormAnomalie formAnomalie);
+	
+	@PostMapping("/private/gestion/usine/supprimer/anomalie")
+	public void supprimerAnomalie(@RequestHeader("Authorization") String token, @RequestBody Integer id);
+
+	
+
+	
+
+	
+	
+	
+
+	
+	
+	  
 	
 	
 	

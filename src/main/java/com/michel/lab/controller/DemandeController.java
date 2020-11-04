@@ -28,7 +28,14 @@ public class DemandeController {
 
 	@Autowired
 	private MicroServiceLab microServiceLab;
-
+	
+	@GetMapping("/access")
+	public String accessDemandes(Model model, HttpSession session) {
+		
+		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		return "accueil_demandes";
+	}
+	
 	@GetMapping("/creation")
 	public String creationDemande(Model model, HttpSession session) {
 
