@@ -224,7 +224,7 @@ public class Private {
 		redirectAttributes.addAttribute("id", qualification);
 		redirectAttributes.addAttribute("num", id);
 
-		return "redirect:/labplan/private/sequences";
+		return "redirect:/private/sequences";
 
 	}
 
