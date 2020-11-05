@@ -17,10 +17,10 @@ public class Constants {
 	public static final String DOMAINES = "domaines";
 	public static final String ESSAIS = "essais";
 	public static final String PAGE_ESSAIS = "essaisQualification";
-	public static final String CREATION_ECHANTILLON = "createEchantillon";
+	public static final String CREATION_ECHANTILLON = "CreateEchantillon";
 	public static final String ECHANTILLONS = "echantillons";
 	public static final String LISTE_SEQUENCES = "sequencesEssai";
-	public static final String CREATION_SEQUENCE = "createSequence";
+	public static final String CREATION_SEQUENCE = "CreateSequence";
 	public static final String SEQUENCE = "sequence";
 	public static final String MODIFIER_SEQUENCE = "modifierSequence";
 	public static final String MODIFIER_ECHANTILLON = "modifierEchantillon";

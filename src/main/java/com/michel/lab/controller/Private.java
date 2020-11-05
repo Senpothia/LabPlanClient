@@ -475,7 +475,8 @@ public class Private {
 		redirectAttributes.addAttribute("qualification", num);
 		redirectAttributes.addAttribute("sequence", idSequence);
 
-		return "redirect:/labplan/private/sequences/voir/retour";
+		//return "redirect:/labplan/private/sequences/voir/retour";
+		return "redirect:/private/sequences/voir/retour";
 
 	}
 
@@ -527,7 +528,7 @@ public class Private {
 		redirectAttributes.addAttribute("qualification", numQualification);
 		redirectAttributes.addAttribute("sequence", idSequence);
 
-		return "redirect:/labplan/private/sequences/voir/retour";
+		return "redirect:/private/sequences/voir/retour";
 	}
 
 	@GetMapping("/echantillons/retirer/{echantillon}/{qualification}/{sequence}/{essai}")
@@ -546,7 +547,7 @@ public class Private {
 		redirectAttributes.addAttribute("qualification", numQualification);
 		redirectAttributes.addAttribute("sequence", idSequence);
 
-		return "redirect:/labplan/private/sequences/voir/retour";
+		return "redirect:/private/sequences/voir/retour";
 	}
 
 	@GetMapping("/qualification/modifier/statut/{id}")
