@@ -185,7 +185,7 @@ public class SiteController {
 		model.addAttribute("defauts", defauts);
 		model.addAttribute("site", site);
 		
-		return "anomalies";
+		return "defauts";
 	}
 	
 	
