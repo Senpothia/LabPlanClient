@@ -483,6 +483,10 @@ public interface MicroServiceLab {
 	
 	@PostMapping("/private/gestion/usine/supprimer/anomalie")
 	public void supprimerAnomalie(@RequestHeader("Authorization") String token, @RequestBody Integer id);
+	
+	
+	@PostMapping("/private/activite/site/defaut/produit/recurrence")
+	public FormIncident obtenirDefautParIdPourProduit(@RequestHeader("Authorization")String token, @RequestBody Integer id, @RequestBody Integer idProduit);
 
 	
 

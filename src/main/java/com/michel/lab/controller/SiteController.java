@@ -132,7 +132,7 @@ public class SiteController {
 	}
 	
 	
-	@GetMapping("/site/defaut/voir/{id}")
+	@GetMapping("/site/defaut/voir/{id}")  // version initiale
 	public String voirDefaut(@PathVariable(name = "id") Integer id, Model model, HttpSession session) {
 		
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
@@ -143,6 +143,19 @@ public class SiteController {
 		return "presentation_defaut";
 	}
 
+	
+	@GetMapping("/site/defaut/voir/{id}/{produit}")   // en cours d'écriture
+	public String voirDefautRepetitions(@PathVariable(name = "id") Integer id, @PathVariable(name = "produit") Integer idProduit, Model model, HttpSession session) {
+		
+		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		String token = (String) session.getAttribute("TOKEN");
+		token = "Bearer " + token;
+		FormIncident defaut = microServiceLab.obtenirDefautParIdPourProduit(token, id, idProduit);
+		model.addAttribute("formIncident", defaut);
+		return "presentation_defaut2";
+	}
+	
+	
 	@GetMapping("/site/defaut/associer")
 	public String associerIncident(Model model, HttpSession session) {
 
