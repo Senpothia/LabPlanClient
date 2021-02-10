@@ -9,6 +9,7 @@ public class FormIncident {
 	private String code;
 	private String description;
 	private Integer recurrence;
+	private Integer site;
 	
 	public FormIncident() {
 		super();
@@ -16,8 +17,10 @@ public class FormIncident {
 	}
 
 	
+	
+
 	public FormIncident(Integer id, Integer commercial, String date, String produit, String code, String description,
-			Integer recurrence) {
+			Integer recurrence, Integer site) {
 		super();
 		this.id = id;
 		this.commercial = commercial;
@@ -26,7 +29,11 @@ public class FormIncident {
 		this.code = code;
 		this.description = description;
 		this.recurrence = recurrence;
+		this.site = site;
 	}
+
+
+
 
 	public Integer getId() {
 		return id;
@@ -86,6 +93,20 @@ public class FormIncident {
 
 	public void setRecurrence(Integer recurrence) {
 		this.recurrence = recurrence;
+	}
+
+
+
+
+	public Integer getSite() {
+		return site;
+	}
+
+
+
+
+	public void setSite(Integer site) {
+		this.site = site;
 	}
 	
 

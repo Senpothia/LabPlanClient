@@ -71,7 +71,7 @@
 							<td th:text="${defaut.date}" />
 							<td th:text="${defaut.code}" />
 							<td th:text="${defaut.description}" />
-							<td><a th:href="@{/private/activite/site/defaut/voir/{id}/{produit}(id=${defaut.id}, produit=${defaut.produit})}"><p
+							<td><a th:href="@{/private/activite/site/defaut/voir/{defaut}/{site}(defaut=${defaut.id}, site=${site.id})}"><p
 										type="text" class="btn btn-block"
 										style="background-color: #7e60fb; color: white">voir</p></a></td>
 							

@@ -486,7 +486,7 @@ public interface MicroServiceLab {
 	
 	
 	@PostMapping("/private/activite/site/defaut/produit/recurrence")
-	public FormIncident obtenirDefautParIdPourProduit(@RequestHeader("Authorization")String token, @RequestBody Integer id, @RequestBody Integer idProduit);
+	public FormIncident obtenirDefautParIdPourProduit(@RequestHeader("Authorization")String token, @RequestBody FormIncident incident);
 
 	
 
