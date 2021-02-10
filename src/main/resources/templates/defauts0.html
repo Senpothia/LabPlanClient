@@ -60,22 +60,21 @@
 								<th scope="col">Code</th>
 								<th scope="col">Description</th>
 								<th scope="col">Visualiser</th>
-
+							
 
 							</tr>
 						</thead>
 						<tbody>
-							<tr th:each="defaut, iStat: ${defauts}">
-								<th scope="row"><span th:text="${defaut.produit}"></span></th>
-
-								<td th:text="${defaut.date}" />
-								<td th:text="${defaut.code}" />
-								<td th:text="${defaut.description}" />
-								<td><a
-									th:href="@{/private/activite/site/defaut/voir/{defaut}/{site}(defaut=${defaut.id}, site=${site.id})}"><p
-											type="text" class="btn btn-block" style="background-color:
-											#7e60fb; color: white">voir</p></a></td>
-
+								<tr th:each="defaut, iStat: ${defauts}">
+							<th scope="row"><span th:text="${defaut.produit}"></span></th>
+							
+							<td th:text="${defaut.date}" />
+							<td th:text="${defaut.code}" />
+							<td th:text="${defaut.description}" />
+							<td><a th:href="@{/private/activite/site/defaut/voir/{id}(id=${defaut.id})}"><p
+										type="text" class="btn btn-block"
+										style="background-color: #7e60fb; color: white">voir</p></a></td>
+							
 							</tr>
 
 						</tbody>
@@ -93,8 +92,9 @@
 			<div class="col d-flex justify-content-end">
 
 				<div class="form-group mr-3">
-					<a th:href="@{/private/activite/site/declarer}"><p type="text"
-							class="btn btn-block"
+					<a
+						th:href="@{/private/activite/site/declarer}"><p
+							type="text" class="btn btn-block"
 							style="background-color: #7e60fb; color: white">Ajouter</p></a>
 				</div>
 				<div class="form-group ">

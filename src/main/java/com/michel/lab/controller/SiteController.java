@@ -93,7 +93,7 @@ public class SiteController {
 		List<FormIncident> defauts = microServiceLab.obtenirListeIncident(token);
 		model.addAttribute("defauts", defauts);
 
-		return "defauts";
+		return "defauts0";
 	}
 
 	@GetMapping("/site/defaut/selectionner/produit")
