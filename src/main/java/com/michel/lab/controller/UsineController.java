@@ -1,7 +1,9 @@
 package com.michel.lab.controller;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpSession;
 
@@ -137,7 +139,10 @@ public class UsineController {
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
 		String token = (String) session.getAttribute("TOKEN");
 		token = "Bearer " + token;
-		List<String> produits = microServiceLab.listeProduitsAvecAnomalie(token);
+		List<String> produits0 = microServiceLab.listeProduitsAvecAnomalie(token);
+		Set set = new HashSet();
+		set.addAll(produits0);
+		ArrayList produits = new ArrayList(set) ;
 		model.addAttribute("produits", produits);
 		return "selectionner_produit_anomalies";
 	}
