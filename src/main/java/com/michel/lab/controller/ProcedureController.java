@@ -30,6 +30,13 @@ public class ProcedureController {
 
 	@Autowired
 	private UserConnexion userConnexion;
+	
+	@GetMapping("/procedures/access")
+	public String accessProcedures(Model model, HttpSession session) {
+		
+		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		return "accueil_procedures";
+	}
 
 	@GetMapping("/procedure/creation")
 	public String creationProcedure(

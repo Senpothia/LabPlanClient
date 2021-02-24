@@ -19,31 +19,37 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 
 import com.michel.lab.model.NoteAux;
-
+import com.michel.lab.controller.FormIncident;
+import com.michel.lab.controller.FormOf;
 import com.michel.lab.model.DemandeAux;
 import com.michel.lab.model.DomaineAux;
 import com.michel.lab.model.EchantillonAux;
 import com.michel.lab.model.FormProcedure;
 import com.michel.lab.model.FormQualif;
 import com.michel.lab.model.FormSequence;
+import com.michel.lab.model.FormSite;
 import com.michel.lab.model.Groupe;
 import com.michel.lab.model.GroupeRapport;
 import com.michel.lab.model.Login;
 import com.michel.lab.model.ProcedureAux;
 import com.michel.lab.model.QualificationAux;
 import com.michel.lab.model.RapportAux;
+import com.michel.lab.model.RecurrenceAux;
+import com.michel.lab.model.RepetitionAux;
 import com.michel.lab.model.SequenceAux;
 import com.michel.lab.model.Upload;
 import com.michel.lab.model.Utilisateur;
 import com.michel.lab.model.UtilisateurAux;
 import com.michel.lab.model.EssaiAux;
 import com.michel.lab.model.FicheAux;
+import com.michel.lab.model.FormAnomalie;
 import com.michel.lab.model.FormDemande;
 import com.michel.lab.model.FormEchantillon;
 import com.michel.lab.model.FormEssai;
 import com.michel.lab.model.FormFiche;
 import com.michel.lab.model.FormInitRapport;
 import com.michel.lab.model.FormNote;
+
 
 import feign.Body;
 import feign.Headers;
@@ -430,6 +436,93 @@ public interface MicroServiceLab {
 			@PathVariable(name = "id") Integer id);
 	
 	
+	@PostMapping("/private/activite/site/enregistrer")
+	public void enregistrerSite(
+			@RequestHeader("Authorization") String token,
+			FormSite formSite);
+	
+	@GetMapping("/private/activite/site/liste")
+	public List<FormSite> obtenirListeSites(@RequestHeader("Authorization") String token);
+	
+	@PostMapping("/private/activite/site/defaut/enregistrer")
+	public void enregistrerIncident(
+			@RequestHeader("Authorization") String token,
+			FormIncident formIncident);
+	
+	@GetMapping("/private/activite/site/defaut/liste")
+	public List<FormIncident> obtenirListeIncident(@RequestHeader("Authorization") String token);
+	
+	@PostMapping("/private/activite/site/defaut/produit")
+	public List<FormIncident> obtenirDefautParProduit(@RequestHeader("Authorization") String token, String produit);
+	
+	@PostMapping("/private/activite/site/defaut/produit/voir")
+	public FormIncident obtenirDefautParId(@RequestHeader("Authorization") String token, Integer id);
+	
+	
+	@PostMapping("/private/activite/site/get")
+	public FormSite obtenirSiteParId(@RequestHeader("Authorization") String token, Integer idSite);
+	
+	@PostMapping("/private/activite/site/ajouter/recurrence")
+	public void ajouterRecurrence(@RequestHeader("Authorization") String token, RecurrenceAux recurrenceAux);
+	
+	@PostMapping("/private/activite/site/defaut/cartographier")
+	public List<FormSite> cartographier(@RequestHeader("Authorization") String token, Integer idDefaut);
+	
+	@PostMapping("/private/activite/site/defauts")
+	public List<FormIncident> obtenirDefautsParSite(@RequestHeader("Authorization") String token, Integer id);
+
+	@PostMapping("/private/gestion/usine/of/enregistrer")
+	public void enregistrerOf(@RequestHeader("Authorization") String token, @RequestBody FormOf formOf);
+	
+	@GetMapping("/private/gestion/usine/of/liste")
+	public List<FormOf> obtenirListeOfs(@RequestHeader("Authorization") String token);
+
+	@PostMapping("/private/gestion/usine/of/voir")
+	public FormOf obtenirOfParId(@RequestHeader("Authorization")  String token, Integer id);
+	
+	@PostMapping("/private/gestion/usine/anomalie/enregistrer")
+	public void enregistrerAnomalie(@RequestHeader("Authorization") String token, @RequestBody FormAnomalie formAnomalie);
+	
+	@GetMapping("/private/gestion/usine/anomalies/liste")
+	public List<FormAnomalie> obtenirListeAnomalies(@RequestHeader("Authorization") String token);
+
+	@PostMapping("/private/gestion/usine/anomalie")
+	public FormAnomalie obtenirAnomalieParId(@RequestHeader("Authorization")String token, @RequestBody Integer id);
+	
+	@PostMapping("/private/gestion/usine/anomalie/produits")
+	public List<String> listeProduitsAvecAnomalie(@RequestHeader("Authorization") String token);
+	
+	@PostMapping("/private/gestion/usine/anomalie/produit")
+	public List<FormAnomalie> obtenirAnomaliesParProduit(@RequestHeader("Authorization") String token, @RequestBody String produit);
+
+	@PostMapping("/private/gestion/usine/of/anomalies")
+	public List<FormAnomalie> obtenirAnomalieParOf(@RequestHeader("Authorization") String token, @RequestBody Integer id);
+	
+	@PostMapping("/private/gestion/usine/of/produit")
+	public List<FormOf> obtenirOfsParProduit(@RequestHeader("Authorization") String token, @RequestBody String produit);
+	
+	@PostMapping("/private/gestion/usine/enregistrer/repetition")
+	public void enregistrerRepetition(@RequestHeader("Authorization") String token, @RequestBody RepetitionAux repetition);
+	
+	@PostMapping("/private/gestion/usine/repetitions/of")
+	public List<RepetitionAux> obtenirRepetitionsParOf(@RequestHeader("Authorization") String token, @RequestBody Integer of);
+	
+	@PostMapping("/private/gestion/usine/modifier/of")
+	public void modifierOf(@RequestHeader("Authorization") String token,  @RequestBody FormOf formOf);
+	
+	@PostMapping("/private/gestion/usine/supprimer/of")
+	public void supprimerOf(@RequestHeader("Authorization")String token, @RequestBody Integer id);
+	
+	@PostMapping("/private/gestion/usine/modifier/anomalie")
+	public void modifierAnomalie(@RequestHeader("Authorization") String token, @RequestBody FormAnomalie formAnomalie);
+	
+	@PostMapping("/private/gestion/usine/supprimer/anomalie")
+	public void supprimerAnomalie(@RequestHeader("Authorization") String token, @RequestBody Integer id);
+	
+	
+	@PostMapping("/private/activite/site/defaut/produit/recurrence")
+	public FormIncident obtenirDefautParIdPourProduit(@RequestHeader("Authorization")String token, @RequestBody FormIncident incident);
+
 	
 	
 	

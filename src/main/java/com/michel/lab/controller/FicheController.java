@@ -29,6 +29,13 @@ public class FicheController {
 
 	@Autowired
 	private MicroServiceLab microServiceLab;
+	
+	@GetMapping("/access")
+	public String accessFiches(Model model, HttpSession session) {
+		
+		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		return "accueil_fiches";
+	}
 
 	@GetMapping("/liste/{id}")
 	public String listesFiches(@PathVariable("id") Integer numQualification, Model model, HttpSession session) {
