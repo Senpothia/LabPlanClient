@@ -1,6 +1,7 @@
 package com.michel.lab.view.pdf;
 
 import java.awt.Color;
+import java.awt.Toolkit;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -46,6 +47,9 @@ import rx.annotations.Beta;
 
 @Component("rapport")
 public class RapportViewPdf extends AbstractPdfView {
+	
+	 private URL bandeau =  getClass().getClassLoader().getResource("/main/resources/static/images/bandeau_entreprise1.png");
+	 //java.awt.Image imageOff = Toolkit.getDefaultToolkit().getImage(bandeau);
 
 	private static final Phrase HeaderFooter = null;
 
@@ -58,8 +62,8 @@ public class RapportViewPdf extends AbstractPdfView {
 
 		try {
 			//Image entete = Image.getInstance("bandeau_entreprise1.png");
-			URL url = new URL("/src/main/resources/static/images/bandeau_entreprise1.png") ;
-			Image entete = Image.getInstance(url);
+			//URL url = new URL("/src/main/resources/static/images/bandeau_entreprise1.png") ;
+			Image entete = Image.getInstance(bandeau);
 			entete.scaleAbsolute(523, 100);
 			HeaderFooter header = new HeaderFooter(new Phrase(new Chunk(entete, 0, -35)), false);
 			HeaderFooter footer = new HeaderFooter(
