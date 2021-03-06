@@ -63,7 +63,7 @@ public class RapportViewPdf extends AbstractPdfView {
 		try {
 			//Image entete = Image.getInstance("bandeau_entreprise1.png");
 			//URL url = new URL("/src/main/resources/static/images/bandeau_entreprise1.png") ;
-			Image entete = Image.getInstance(bandeau);
+			Image entete = Image.getInstance("http://192.46.239.178:8080/labplan/images/bandeau_entreprise1.png");
 			entete.scaleAbsolute(523, 100);
 			HeaderFooter header = new HeaderFooter(new Phrase(new Chunk(entete, 0, -35)), false);
 			HeaderFooter footer = new HeaderFooter(
