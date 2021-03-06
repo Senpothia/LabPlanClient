@@ -1,6 +1,7 @@
 package com.michel.lab.view.pdf;
 
 import java.awt.Color;
+import java.awt.Toolkit;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -48,6 +49,10 @@ import rx.annotations.Beta;
 public class RapportViewPdf extends AbstractPdfView {
 
 	private static final Phrase HeaderFooter = null;
+	
+	 //private URL bandeau =  getClass().getClassLoader().getResource("src\\main\\resources\\static\\images\\bandeau_entreprise1.png");
+	//private URL bandeau =  getClass().getClassLoader().getResource("C:\\Users\\kinte\\OneDrive\\Bureau\\bandeau_entreprise1.png");
+	// java.awt.Image imageOff = Toolkit.getDefaultToolkit().getImage(bandeau);
 
 	@Override
 	protected void buildPdfMetadata(Map<String, Object> model, Document document, HttpServletRequest request) {
@@ -57,7 +62,12 @@ public class RapportViewPdf extends AbstractPdfView {
 		RapportAux rapport = (RapportAux) model.get("rapport");
 
 		try {
-			Image entete = Image.getInstance("src\\main\\resources\\static\\images\\bandeau_entreprise1.png");
+			
+			//Image entete = Image.getInstance("bandeau_entreprise1.png");
+			//URL url = new URL("/src/main/resources/static/images/bandeau_entreprise1.png") ;
+			//Image entete = Image.getInstance(bandeau);
+			
+			Image entete = Image.getInstance("http://192.46.239.178:8080/labplan/images/bandeau_entreprise1.png");
 			entete.scaleAbsolute(523, 100);
 			HeaderFooter header = new HeaderFooter(new Phrase(new Chunk(entete, 0, -35)), false);
 			HeaderFooter footer = new HeaderFooter(
