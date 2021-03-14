@@ -35,35 +35,53 @@ public class ProcedureController {
 	public String accessProcedures(Model model, HttpSession session) {
 		
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		return "accueil_procedures";
+		if (testUser(utilisateur)) {
+
+			return "accueil_procedures";
+				
+
+			} else {
+
+				return "redirect:/labplan/connexion";
+			}
+		
 	}
+
 	@GetMapping("/procedure/creation")
 	public String creationProcedure(
 			@RequestParam(name = "selection", defaultValue = "true", required = false) boolean selection, Model model,
 			HttpSession session) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		String token = (String) session.getAttribute("TOKEN");
-		token = "Bearer " + token;
+		
+		if (testUser(utilisateur)) {
 
-		model.addAttribute("formProcedure", new FormProcedure());
-		// List<String> nomsDomaines = microServiceLab.tousLesDomaines();
-		// model.addAttribute("domaines", nomsDomaines);
+			String token = (String) session.getAttribute("TOKEN");
+			token = "Bearer " + token;
 
-		if (!selection) {
+			model.addAttribute("formProcedure", new FormProcedure());
+			// List<String> nomsDomaines = microServiceLab.tousLesDomaines();
+			// model.addAttribute("domaines", nomsDomaines);
 
-			model.addAttribute("selection", false);
+			if (!selection) {
 
-		} else {
+				model.addAttribute("selection", false);
 
-			List<String> nomsDomaines = microServiceLab.tousLesDomaines(token);
-			model.addAttribute("domaines", nomsDomaines);
-			model.addAttribute("selection", true);
+			} else {
 
-		}
+				List<String> nomsDomaines = microServiceLab.tousLesDomaines(token);
+				model.addAttribute("domaines", nomsDomaines);
+				model.addAttribute("selection", true);
 
-		//return "createProcedure";
-		return "CreateProcedure";
+			}
+			return Constants.CREATION_PROCEDURE;
+				
+
+			} else {
+
+				return "redirect:/labplan/connexion";
+			}
+		
 
 	}
 
@@ -71,11 +89,21 @@ public class ProcedureController {
 	public String enregistrerProcedure(String domaine, Model model, HttpSession session, FormProcedure formProcedure) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		String token = (String) session.getAttribute("TOKEN");
-		token = "Bearer " + token;
-		System.out.println("Domaine récupéré: " + domaine);
-		microServiceLab.saveProcedure(token, formProcedure);
-		return Constants.ESPACE_PERSONEL;
+		
+		if (testUser(utilisateur)) {
+
+			String token = (String) session.getAttribute("TOKEN");
+			token = "Bearer " + token;
+			System.out.println("Domaine récupéré: " + domaine);
+			microServiceLab.saveProcedure(token, formProcedure);
+			return Constants.ESPACE_PERSONEL;
+				
+
+			} else {
+
+				return "redirect:/labplan/connexion";
+			}
+		
 
 	}
 
@@ -83,13 +111,22 @@ public class ProcedureController {
 	public String voirProcedure(Model model, HttpSession session) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		String token = (String) session.getAttribute("TOKEN");
-		token = "Bearer " + token;
-		List<String> nomsDomaines = microServiceLab.tousLesDomaines(token);
-		model.addAttribute("domaines", nomsDomaines);
-		model.addAttribute("formProcedure", new FormProcedure());
+		
+		if (testUser(utilisateur)) {
 
-		return "choisirProcedure";
+			String token = (String) session.getAttribute("TOKEN");
+			token = "Bearer " + token;
+			List<String> nomsDomaines = microServiceLab.tousLesDomaines(token);
+			model.addAttribute("domaines", nomsDomaines);
+			model.addAttribute("formProcedure", new FormProcedure());
+			return "choisirProcedure";
+				
+
+			} else {
+
+				return "redirect:/labplan/connexion";
+			}
+		
 
 	}
 
@@ -97,17 +134,27 @@ public class ProcedureController {
 	public String listerProcedures(String domaine, Model model, HttpSession session, FormProcedure formProcedure) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		String token = (String) session.getAttribute("TOKEN");
-		token = "Bearer " + token;
-		System.out.println("Domaine récupéré: " + domaine);
-		List<ProcedureAux> procedures = microServiceLab.obtenirProceduresParDomaine(token, domaine);
-		for (ProcedureAux p : procedures) {
+		
 
-			System.out.println("Nom procédure: " + p.getNom());
-		}
-		model.addAttribute("procedures", procedures);
+		if (testUser(utilisateur)) {
 
-		return "procedures";
+			String token = (String) session.getAttribute("TOKEN");
+			token = "Bearer " + token;
+			System.out.println("Domaine récupéré: " + domaine);
+			List<ProcedureAux> procedures = microServiceLab.obtenirProceduresParDomaine(token, domaine);
+			for (ProcedureAux p : procedures) {
+
+				System.out.println("Nom procédure: " + p.getNom());
+			}
+			model.addAttribute("procedures", procedures);
+			return "procedures";
+				
+
+			} else {
+
+				return "redirect:/labplan/connexion";
+			}
+		
 
 	}
 
@@ -115,20 +162,31 @@ public class ProcedureController {
 	public String modifierProcedure(@PathVariable(name = "id") Integer id, Model model, HttpSession session) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		String token = (String) session.getAttribute("TOKEN");
-		token = "Bearer " + token;
-		ProcedureAux procedure = microServiceLab.obtenirUneProcedure(token, id);
+		
+		if (testUser(utilisateur)) {
 
-		FormProcedure formProcedure = new FormProcedure();
+			String token = (String) session.getAttribute("TOKEN");
+			token = "Bearer " + token;
+			ProcedureAux procedure = microServiceLab.obtenirUneProcedure(token, id);
 
-		formProcedure.setDomaine(procedure.getDomaine());
-		formProcedure.setNom(procedure.getNom());
-		formProcedure.setReferentiel(procedure.getReferentiel());
-		formProcedure.setVersion(procedure.getVersion());
+			FormProcedure formProcedure = new FormProcedure();
 
-		model.addAttribute("formProcedure", formProcedure);
-		model.addAttribute("id", id);
-		return "modifierProcedure";
+			formProcedure.setDomaine(procedure.getDomaine());
+			formProcedure.setNom(procedure.getNom());
+			formProcedure.setReferentiel(procedure.getReferentiel());
+			formProcedure.setVersion(procedure.getVersion());
+
+			model.addAttribute("formProcedure", formProcedure);
+			model.addAttribute("id", id);
+			return "modifierProcedure";
+				
+
+			} else {
+
+				return "redirect:/labplan/connexion";
+			}
+		
+		
 
 	}
 
@@ -137,20 +195,40 @@ public class ProcedureController {
 			HttpSession session, FormProcedure formProcedure) {
 		
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		String token = (String) session.getAttribute("TOKEN");
-		token = "Bearer " + token;
-		formProcedure.setId(id);
-		microServiceLab.modifierProcedure(token, formProcedure);
 		
-		List<ProcedureAux> procedures = microServiceLab.obtenirProceduresParDomaine(token, formProcedure.getDomaine());
-		for (ProcedureAux p : procedures) {
 
-			System.out.println("Nom procédure: " + p.getNom());
-		}
-		model.addAttribute("procedures", procedures);
+		if (testUser(utilisateur)) {
 
-		return "procedures";
+			String token = (String) session.getAttribute("TOKEN");
+			token = "Bearer " + token;
+			formProcedure.setId(id);
+			microServiceLab.modifierProcedure(token, formProcedure);
+			
+			List<ProcedureAux> procedures = microServiceLab.obtenirProceduresParDomaine(token, formProcedure.getDomaine());
+			for (ProcedureAux p : procedures) {
+
+				System.out.println("Nom procédure: " + p.getNom());
+			}
+			model.addAttribute("procedures", procedures);
+			return "procedures";
+
+			} else {
+
+				return "redirect:/labplan/connexion";
+			}
 		
+		
+	}
+	
+	public boolean testUser(Utilisateur utilisateur) {
+
+		if (utilisateur == null) {
+
+			return false;
+
+		} else
+
+			return true;
 	}
 
 }

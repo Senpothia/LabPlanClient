@@ -1,9 +1,7 @@
 package com.michel.lab.controller;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.servlet.http.HttpSession;
 
@@ -36,15 +34,36 @@ public class UsineController {
 	public String accesActiviteSite(Model model, HttpSession session) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		return "accueil_gestion_usine";
+		
+		if (testUser(utilisateur)) {
+
+			return "accueil_gestion_usine";
+				
+
+			} else {
+
+				return "redirect:/labplan/connexion";
+			}
+		
 	}
 	
 	@GetMapping("/usine/creer/of")
 	public String creerOf(Model model, HttpSession session) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		model.addAttribute("formOf", new FormOf());
-		return "createOf";
+		
+		
+		if (testUser(utilisateur)) {
+
+			model.addAttribute("formOf", new FormOf());
+			return "createOf";
+				
+
+			} else {
+
+				return "redirect:/labplan/connexion";
+			}
+		
 	}
 	
 	@PostMapping("/usine/creer/of")
@@ -52,15 +71,25 @@ public class UsineController {
 			FormOf formOf) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		String token = (String) session.getAttribute("TOKEN");
-		token = "Bearer " + token;
-		Integer idUser = utilisateur.getId();
-		formOf.setCreateur(idUser);
 		
-		microServiceLab.enregistrerOf(token, formOf);
-		List<FormOf> ofs = microServiceLab.obtenirListeOfs(token);
-		model.addAttribute("ofs", ofs);
-		return "ofs";
+		
+		if (testUser(utilisateur)) {
+
+			String token = (String) session.getAttribute("TOKEN");
+			token = "Bearer " + token;
+			Integer idUser = utilisateur.getId();
+			formOf.setCreateur(idUser);
+			microServiceLab.enregistrerOf(token, formOf);
+			List<FormOf> ofs = microServiceLab.obtenirListeOfs(token);
+			model.addAttribute("ofs", ofs);
+			return "ofs";
+				
+
+			} else {
+
+				return "redirect:/labplan/connexion";
+			}
+		
 	
 	} 
 	
@@ -69,25 +98,45 @@ public class UsineController {
 			@PathVariable(name="id") Integer id, Model model, HttpSession session) {
 	
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		String token = (String) session.getAttribute("TOKEN");
-		token = "Bearer " + token;
 		
-		FormOf of = microServiceLab.obtenirOfParId(token, id);
-		model.addAttribute("of", of);
 		
-		return "of";
+		if (testUser(utilisateur)) {
+
+			String token = (String) session.getAttribute("TOKEN");
+			token = "Bearer " + token;
+			FormOf of = microServiceLab.obtenirOfParId(token, id);
+			model.addAttribute("of", of);
+			return "of";
+				
+
+			} else {
+
+				return "redirect:/labplan/connexion";
+			}
+		
+		
 	}
 	
 	@GetMapping("/usine/ofs/voir")
 	public String VoirOfs(Model model, HttpSession session) {
 		
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		String token = (String) session.getAttribute("TOKEN");
-		token = "Bearer " + token;
+	
 		
-		List<FormOf> ofs = microServiceLab.obtenirListeOfs(token);
-		model.addAttribute("ofs", ofs);
-		return "ofs";
+		if (testUser(utilisateur)) {
+			
+			String token = (String) session.getAttribute("TOKEN");
+			token = "Bearer " + token;
+			List<FormOf> ofs = microServiceLab.obtenirListeOfs(token);
+			model.addAttribute("ofs", ofs);
+			return "ofs";
+				
+
+			} else {
+
+				return "redirect:/labplan/connexion";
+			}
+	
 		
 	}
 	
@@ -95,10 +144,21 @@ public class UsineController {
 	public String declarerAnomalie(Model model, HttpSession session){
 		
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		String token = (String) session.getAttribute("TOKEN");
-		token = "Bearer " + token;
-		model.addAttribute("formAnomalie", new FormAnomalie());
-		return "createAnomalie";
+		
+		
+		if (testUser(utilisateur)) {
+
+			String token = (String) session.getAttribute("TOKEN");
+			token = "Bearer " + token;
+			model.addAttribute("formAnomalie", new FormAnomalie());
+			return "createAnomalie";
+				
+
+			} else {
+
+				return "redirect:/labplan/connexion";
+			}
+		
 	}
 	
 	@PostMapping("/usine/anomalie/declarer")
@@ -106,14 +166,25 @@ public class UsineController {
 			FormAnomalie formAnomalie){
 		
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		String token = (String) session.getAttribute("TOKEN");
-		token = "Bearer " + token;
-		Integer controleur = utilisateur.getId();
-		formAnomalie.setControleur(controleur);
-		microServiceLab.enregistrerAnomalie(token, formAnomalie);
-		List<FormAnomalie> anomalies = microServiceLab.obtenirListeAnomalies(token);
-		model.addAttribute("anomalies", anomalies);
-		return "anomalies";
+	
+		
+		if (testUser(utilisateur)) {
+
+			String token = (String) session.getAttribute("TOKEN");
+			token = "Bearer " + token;
+			Integer controleur = utilisateur.getId();
+			formAnomalie.setControleur(controleur);
+			microServiceLab.enregistrerAnomalie(token, formAnomalie);
+			List<FormAnomalie> anomalies = microServiceLab.obtenirListeAnomalies(token);
+			model.addAttribute("anomalies", anomalies);
+			return "anomalies";
+				
+
+			} else {
+
+				return "redirect:/labplan/connexion";
+			}
+		
 	}
 	
 	@GetMapping("/usine/anomalie/voir/{id}")
@@ -123,12 +194,23 @@ public class UsineController {
 			HttpSession session) {
 		
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		String token = (String) session.getAttribute("TOKEN");
-		token = "Bearer " + token;
-		FormAnomalie anomalie = microServiceLab.obtenirAnomalieParId(token, id);
-		model.addAttribute("anomalie", anomalie);
 		
-		return "anomalie";
+		
+		if (testUser(utilisateur)) {
+
+			String token = (String) session.getAttribute("TOKEN");
+			token = "Bearer " + token;
+			FormAnomalie anomalie = microServiceLab.obtenirAnomalieParId(token, id);
+			model.addAttribute("anomalie", anomalie);
+			return "anomalie";
+				
+
+			} else {
+
+				return "redirect:/labplan/connexion";
+			}
+		
+		
 	}
 	
 	@GetMapping("/usine/non-conformites")
@@ -137,14 +219,22 @@ public class UsineController {
 			HttpSession session) {
 		
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		String token = (String) session.getAttribute("TOKEN");
-		token = "Bearer " + token;
-		List<String> produits0 = microServiceLab.listeProduitsAvecAnomalie(token);
-		Set set = new HashSet();
-		set.addAll(produits0);
-		ArrayList produits = new ArrayList(set) ;
-		model.addAttribute("produits", produits);
-		return "selectionner_produit_anomalies";
+		
+		
+		if (testUser(utilisateur)) {
+
+			String token = (String) session.getAttribute("TOKEN");
+			token = "Bearer " + token;
+			List<String> produits = microServiceLab.listeProduitsAvecAnomalie(token);
+			model.addAttribute("produits", produits);
+			return "selectionner_produit_anomalies";
+				
+
+			} else {
+
+				return "redirect:/labplan/connexion";
+			}
+		
 	}
 	
 	@PostMapping("/usine/anomalies/selectionner/produit")
@@ -153,11 +243,22 @@ public class UsineController {
 			String produit) {
 		
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		String token = (String) session.getAttribute("TOKEN");
-		token = "Bearer " + token;
-		List<FormAnomalie> anomalies = microServiceLab.obtenirAnomaliesParProduit(token, produit);
-		model.addAttribute("anomalies", anomalies);
-		return "anomalies";
+		
+		
+		if (testUser(utilisateur)) {
+
+			String token = (String) session.getAttribute("TOKEN");
+			token = "Bearer " + token;
+			List<FormAnomalie> anomalies = microServiceLab.obtenirAnomaliesParProduit(token, produit);
+			model.addAttribute("anomalies", anomalies);
+			return "anomalies";
+				
+
+			} else {
+
+				return "redirect:/labplan/connexion";
+			}
+		
 	}
 	
 	@GetMapping("/usine/of/anomalies/{id}")
@@ -167,13 +268,24 @@ public class UsineController {
 			@PathVariable (name="id") Integer id) {
 		
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		String token = (String) session.getAttribute("TOKEN");
-		token = "Bearer " + token;
 		
-		System.out.println("Visu anomalie pour OF");
-		List<FormAnomalie> anomalies = microServiceLab.obtenirAnomalieParOf(token, id);
-		model.addAttribute("anomalies", anomalies);
-		return "anomalies_bilan_of";
+		
+		if (testUser(utilisateur)) {
+
+			String token = (String) session.getAttribute("TOKEN");
+			token = "Bearer " + token;
+			
+			System.out.println("Visu anomalie pour OF");
+			List<FormAnomalie> anomalies = microServiceLab.obtenirAnomalieParOf(token, id);
+			model.addAttribute("anomalies", anomalies);
+			return "anomalies_bilan_of";
+				
+
+			} else {
+
+				return "redirect:/labplan/connexion";
+			}
+		
 		
 	}
 	
@@ -184,12 +296,23 @@ public class UsineController {
 			HttpSession session) {
 		
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		String token = (String) session.getAttribute("TOKEN");
-		token = "Bearer " + token;
+	
 		
-		List<String> produits = microServiceLab.listeProduitsAvecAnomalie(token);
-		model.addAttribute("produits", produits);
-		return "selectionner_produit_association_of";
+		if (testUser(utilisateur)) {
+
+			String token = (String) session.getAttribute("TOKEN");
+			token = "Bearer " + token;
+			
+			List<String> produits = microServiceLab.listeProduitsAvecAnomalie(token);
+			model.addAttribute("produits", produits);
+			return "selectionner_produit_association_of";
+				
+
+			} else {
+
+				return "redirect:/labplan/connexion";
+			}
+		
 	}
 	
 	@PostMapping("/usine/anomalies/selectionner/produit/associer/of")
@@ -198,16 +321,26 @@ public class UsineController {
 			String produit) {
 		
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		String token = (String) session.getAttribute("TOKEN");
-		token = "Bearer " + token;
-		
-		RepetitionAux repetition = new RepetitionAux();
-		repetition.setProduit(produit);
-		List<FormOf> ofs = microServiceLab.obtenirOfsParProduit(token, produit);
-		model.addAttribute("ofs", ofs);
-		model.addAttribute("repetition", repetition);
 	
-		return "selectionner_of_association_produit";
+	
+		if (testUser(utilisateur)) {
+
+			String token = (String) session.getAttribute("TOKEN");
+			token = "Bearer " + token;
+			
+			RepetitionAux repetition = new RepetitionAux();
+			repetition.setProduit(produit);
+			List<FormOf> ofs = microServiceLab.obtenirOfsParProduit(token, produit);
+			model.addAttribute("ofs", ofs);
+			model.addAttribute("repetition", repetition);
+			return "selectionner_of_association_produit";
+				
+
+			} else {
+
+				return "redirect:/labplan/connexion";
+			}
+		
 	}
 	
 	@GetMapping("/usine/of/associer/{of}/{produit}")
@@ -217,16 +350,26 @@ public class UsineController {
 			@PathVariable (name="produit") String produit) {
 		
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		String token = (String) session.getAttribute("TOKEN");
-		token = "Bearer " + token;
-		RepetitionAux repetition = new RepetitionAux(null, null, of, produit, null);
-		model.addAttribute("repetition", repetition);
-		FormOf formOf = microServiceLab.obtenirOfParId(token, of);
-		List<FormAnomalie> anomalies = microServiceLab.obtenirAnomaliesParProduit(token, produit);
-		model.addAttribute("anomalies", anomalies);
-		model.addAttribute("of", of);
 		
-		return "selectionner_anomalie";
+		
+		if (testUser(utilisateur)) {
+
+			String token = (String) session.getAttribute("TOKEN");
+			token = "Bearer " + token;
+			RepetitionAux repetition = new RepetitionAux(null, null, of, produit, null);
+			model.addAttribute("repetition", repetition);
+			FormOf formOf = microServiceLab.obtenirOfParId(token, of);
+			List<FormAnomalie> anomalies = microServiceLab.obtenirAnomaliesParProduit(token, produit);
+			model.addAttribute("anomalies", anomalies);
+			model.addAttribute("of", of);
+			return "selectionner_anomalie";
+				
+
+			} else {
+
+				return "redirect:/labplan/connexion";
+			}
+		
 	}
 	
 	@GetMapping("/usine/anomalie/selectionner/{anomalie}/{of}")
@@ -237,16 +380,26 @@ public class UsineController {
 			@PathVariable (name="of") Integer idOf) {
 		
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		String token = (String) session.getAttribute("TOKEN");
-		token = "Bearer " + token;
+	
 		
-		FormAnomalie formAnomalie = microServiceLab.obtenirAnomalieParId(token, idAnomalie);
-		FormOf formOf  = microServiceLab.obtenirOfParId(token, idOf);
-		model.addAttribute("formAnomalie", formAnomalie);
-		model.addAttribute("formOf", formOf);
-		model.addAttribute("repetition", new RepetitionAux(null, idAnomalie, idOf, null, null));
+		if (testUser(utilisateur)) {
+
+			String token = (String) session.getAttribute("TOKEN");
+			token = "Bearer " + token;
+			
+			FormAnomalie formAnomalie = microServiceLab.obtenirAnomalieParId(token, idAnomalie);
+			FormOf formOf  = microServiceLab.obtenirOfParId(token, idOf);
+			model.addAttribute("formAnomalie", formAnomalie);
+			model.addAttribute("formOf", formOf);
+			model.addAttribute("repetition", new RepetitionAux(null, idAnomalie, idOf, null, null));
+			return "ajouter_repetition";
+				
+
+			} else {
+
+				return "redirect:/labplan/connexion";
+			}
 		
-		return "ajouter_repetition";
 	}
 	
 	@PostMapping("/usine/associer/of/anomalie/{anomalie}/{of}")
@@ -258,25 +411,36 @@ public class UsineController {
 			@PathVariable(name="of") Integer of) {
 		
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		String token = (String) session.getAttribute("TOKEN");
-		token = "Bearer " + token;
+	
 		
-		repetition.setAnomalie(anomalie);
-		repetition.setOf(of);
+		if (testUser(utilisateur)) {
+
+			String token = (String) session.getAttribute("TOKEN");
+			token = "Bearer " + token;
+			
+			repetition.setAnomalie(anomalie);
+			repetition.setOf(of);
+			
+			microServiceLab.enregistrerRepetition(token, repetition);
+			List<RepetitionAux> reps = microServiceLab.obtenirRepetitionsParOf(token, of);
+			List<FormAnomalie> anomalies = new ArrayList<FormAnomalie>();
+			for(RepetitionAux r: reps) {
+				
+				Integer id = r.getAnomalie();
+				FormAnomalie f = microServiceLab.obtenirAnomalieParId(token, id);
+				f.setTotal(r.getTotal());
+				anomalies.add(f);
+				
+			}
+			model.addAttribute("anomalies", anomalies);
+			return "anomalies_bilan_of";
+				
+
+			} else {
+
+				return "redirect:/labplan/connexion";
+			}
 		
-		microServiceLab.enregistrerRepetition(token, repetition);
-		List<RepetitionAux> reps = microServiceLab.obtenirRepetitionsParOf(token, of);
-		List<FormAnomalie> anomalies = new ArrayList<FormAnomalie>();
-		for(RepetitionAux r: reps) {
-			
-			Integer id = r.getAnomalie();
-			FormAnomalie f = microServiceLab.obtenirAnomalieParId(token, id);
-			f.setTotal(r.getTotal());
-			anomalies.add(f);
-			
-		}
-		model.addAttribute("anomalies", anomalies);
-		return "anomalies_bilan_of";
 	}
 	
 	@GetMapping("/usine/modifier/of/{id}")
@@ -286,13 +450,23 @@ public class UsineController {
 			@PathVariable(name = "id") Integer id) {
 		
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		String token = (String) session.getAttribute("TOKEN");
-		token = "Bearer " + token;
-		FormOf formOf = microServiceLab.obtenirOfParId(token, id);
-		System.out.println("id formOf: " + formOf.getId());
-		model.addAttribute("formOf", formOf);
 		
-		return "modifierOf";
+		
+		if (testUser(utilisateur)) {
+
+			String token = (String) session.getAttribute("TOKEN");
+			token = "Bearer " + token;
+			FormOf formOf = microServiceLab.obtenirOfParId(token, id);
+			System.out.println("id formOf: " + formOf.getId());
+			model.addAttribute("formOf", formOf);
+			return "modifierOf";
+				
+
+			} else {
+
+				return "redirect:/labplan/connexion";
+			}
+		
 	}
 	
 	@PostMapping("/usine/modifier/of/{id}")
@@ -303,14 +477,25 @@ public class UsineController {
 					FormOf formOf) {
 		
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		String token = (String) session.getAttribute("TOKEN");
-		token = "Bearer " + token;
-		formOf.setId(id);
-		microServiceLab.modifierOf(token, formOf);
+	
 		
-		List<FormOf> ofs = microServiceLab.obtenirListeOfs(token);
-		model.addAttribute("ofs", ofs);
-		return "ofs";
+		if (testUser(utilisateur)) {
+
+			String token = (String) session.getAttribute("TOKEN");
+			token = "Bearer " + token;
+			formOf.setId(id);
+			microServiceLab.modifierOf(token, formOf);
+			
+			List<FormOf> ofs = microServiceLab.obtenirListeOfs(token);
+			model.addAttribute("ofs", ofs);
+			return "ofs";
+				
+
+			} else {
+
+				return "redirect:/labplan/connexion";
+			}
+		
 	
 	}
 	
@@ -320,13 +505,24 @@ public class UsineController {
 			@PathVariable(name = "id") Integer id) {
 		
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		String token = (String) session.getAttribute("TOKEN");
-		token = "Bearer " + token;
 		
-		microServiceLab.supprimerOf(token, id);
-		List<FormOf> ofs = microServiceLab.obtenirListeOfs(token);
-		model.addAttribute("ofs", ofs);
-		return "ofs";
+		
+		if (testUser(utilisateur)) {
+
+			String token = (String) session.getAttribute("TOKEN");
+			token = "Bearer " + token;
+			
+			microServiceLab.supprimerOf(token, id);
+			List<FormOf> ofs = microServiceLab.obtenirListeOfs(token);
+			model.addAttribute("ofs", ofs);
+			return "ofs";
+				
+
+			} else {
+
+				return "redirect:/labplan/connexion";
+			}
+		
 	
 		
 	}
@@ -337,13 +533,23 @@ public class UsineController {
 			@PathVariable(name = "id") Integer id) {
 		
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		String token = (String) session.getAttribute("TOKEN");
-		token = "Bearer " + token;
+	
 		
-		FormAnomalie formAnomalie = microServiceLab.obtenirAnomalieParId(token, id);
-		model.addAttribute("formAnomalie", formAnomalie);
+		if (testUser(utilisateur)) {
+
+			String token = (String) session.getAttribute("TOKEN");
+			token = "Bearer " + token;
+			
+			FormAnomalie formAnomalie = microServiceLab.obtenirAnomalieParId(token, id);
+			model.addAttribute("formAnomalie", formAnomalie);
+			return "modifierAnomalie";
+				
+
+			} else {
+
+				return "redirect:/labplan/connexion";
+			}
 		
-		return "modifierAnomalie";
 		
 	}
 	
@@ -354,15 +560,26 @@ public class UsineController {
 			FormAnomalie formAnomalie) {
 		
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		String token = (String) session.getAttribute("TOKEN");
-		token = "Bearer " + token;
 		
-		formAnomalie.setId(id);
-		microServiceLab.modifierAnomalie(token, formAnomalie);
 		
-		List<FormAnomalie> anomalies = microServiceLab.obtenirListeAnomalies(token);
-		model.addAttribute("anomalies", anomalies);
-		return "anomalies";
+		if (testUser(utilisateur)) {
+
+			String token = (String) session.getAttribute("TOKEN");
+			token = "Bearer " + token;
+			
+			formAnomalie.setId(id);
+			microServiceLab.modifierAnomalie(token, formAnomalie);
+			
+			List<FormAnomalie> anomalies = microServiceLab.obtenirListeAnomalies(token);
+			model.addAttribute("anomalies", anomalies);
+			return "anomalies";
+				
+
+			} else {
+
+				return "redirect:/labplan/connexion";
+			}
+		
 		
 	}
 	
@@ -372,17 +589,37 @@ public class UsineController {
 			@PathVariable(name = "id") Integer id) {
 		
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		String token = (String) session.getAttribute("TOKEN");
-		token = "Bearer " + token;
 		
-		microServiceLab.supprimerAnomalie(token, id);
-		List<FormAnomalie> anomalies = microServiceLab.obtenirListeAnomalies(token);
-		model.addAttribute("anomalies", anomalies);
-		return "anomalies";
+		
+		if (testUser(utilisateur)) {
+
+			String token = (String) session.getAttribute("TOKEN");
+			token = "Bearer " + token;
+			
+			microServiceLab.supprimerAnomalie(token, id);
+			List<FormAnomalie> anomalies = microServiceLab.obtenirListeAnomalies(token);
+			model.addAttribute("anomalies", anomalies);
+			return "anomalies";
+				
+
+			} else {
+
+				return "redirect:/labplan/connexion";
+			}
+		
 	
 	}
 	
-	
+	public boolean testUser(Utilisateur utilisateur) {
+
+		if (utilisateur == null) {
+
+			return false;
+
+		} else
+
+			return true;
+	}
 	
 			
 

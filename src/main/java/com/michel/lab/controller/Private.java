@@ -51,13 +51,21 @@ public class Private {
 	private UserConnexion userConnexion;
 
 	private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:MM");
-	
+
 	@GetMapping("/qualifications/access")
 	public String accessQualifications(Model model, HttpSession session) {
-		
+
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		//model.addAttribute("formQualif", new FormQualif());
-		return "accueil_qualification";
+
+		if (testUser(utilisateur)) {
+
+			return "accueil_qualification";
+
+		} else {
+
+			return "redirect:/labplan/connexion";
+		}
+
 	}
 
 	@GetMapping("/qualification/creation") // Accès au formulaire de création d'un qualification
@@ -65,33 +73,61 @@ public class Private {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
 		model.addAttribute("formQualif", new FormQualif());
-		return Constants.CREATION_QUALIFICATION;
+
+		if (testUser(utilisateur)) {
+
+			return Constants.CREATION_QUALIFICATION;
+
+		} else {
+
+			return "redirect:/labplan/connexion";
+		}
+
 	}
 
 	@PostMapping("/qualification/creation") // Enregistrement des éléments de création d'une qualification
 	public String enregistrerQualification(Model model, HttpSession session, FormQualif formQualif) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		String token = (String) session.getAttribute("TOKEN");
-		token = "Bearer " + token;
-		System.out.println("Token header: " + token);
-		Integer createurId = utilisateur.getId();
-		formQualif.setCreateurId(createurId);
-		microServiceLab.saveQualification(token, formQualif);
-		return Constants.ESPACE_PERSONEL;
+
+		if (testUser(utilisateur)) {
+
+			String token = (String) session.getAttribute("TOKEN");
+			token = "Bearer " + token;
+			System.out.println("Token header: " + token);
+			Integer createurId = utilisateur.getId();
+			formQualif.setCreateurId(createurId);
+			microServiceLab.saveQualification(token, formQualif);
+
+			return Constants.ESPACE_PERSONEL;
+
+		} else {
+
+			return "redirect:/labplan/connexion";
+		}
+
 	}
 
 	@GetMapping("/qualifications")
 	public String qualifications(Model model, HttpSession session) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		String token = (String) session.getAttribute("TOKEN");
-		token = "Bearer " + token;
-		System.out.println("Token header: " + token);
-		List<QualificationAux> qualifications = microServiceLab.toutesLesQualifications(token);
-		model.addAttribute("qualifications", qualifications);
-		model.addAttribute("access", "1");
-		return Constants.QUALIFICATIONS;
+
+		if (testUser(utilisateur)) {
+
+			String token = (String) session.getAttribute("TOKEN");
+			token = "Bearer " + token;
+			System.out.println("Token header: " + token);
+			List<QualificationAux> qualifications = microServiceLab.toutesLesQualifications(token);
+			model.addAttribute("qualifications", qualifications);
+			model.addAttribute("access", "1");
+			return Constants.QUALIFICATIONS;
+
+		} else {
+
+			return "redirect:/labplan/connexion";
+		}
+
 	}
 
 	@GetMapping("/historique/{id}") // récupération de la liste de toutes les qualifications
@@ -99,13 +135,22 @@ public class Private {
 	public String mesQualifications(@PathVariable(name = "id") Integer id, Model model, HttpSession session) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		String token = (String) session.getAttribute("TOKEN");
-		token = "Bearer " + token;
-		System.out.println("Token header: " + token);
-		List<QualificationAux> qualifications = microServiceLab.mesQualifications(token, id);
-		model.addAttribute("qualifications", qualifications);
-		model.addAttribute("access", "2");
-		return Constants.QUALIFICATIONS;
+
+		if (testUser(utilisateur)) {
+
+			String token = (String) session.getAttribute("TOKEN");
+			token = "Bearer " + token;
+			System.out.println("Token header: " + token);
+			List<QualificationAux> qualifications = microServiceLab.mesQualifications(token, id);
+			model.addAttribute("qualifications", qualifications);
+			model.addAttribute("access", "2");
+			return Constants.QUALIFICATIONS;
+
+		} else {
+
+			return "redirect:/labplan/connexion";
+		}
+
 	}
 
 	@GetMapping("/qualifications/{id}") // Récupérer les qualification d'un utilisateur, identifiant : id
@@ -113,13 +158,22 @@ public class Private {
 	public String qualificationsEnCours(@PathVariable(name = "id") Integer id, Model model, HttpSession session) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		String token = (String) session.getAttribute("TOKEN");
-		token = "Bearer " + token;
-		System.out.println("Token header: " + token);
-		List<QualificationAux> qualifications = microServiceLab.mesQualificationsEnCours(token, id);
-		model.addAttribute("qualifications", qualifications);
-		model.addAttribute("access", "3");
-		return Constants.QUALIFICATIONS;
+
+		if (testUser(utilisateur)) {
+
+			String token = (String) session.getAttribute("TOKEN");
+			token = "Bearer " + token;
+			System.out.println("Token header: " + token);
+			List<QualificationAux> qualifications = microServiceLab.mesQualificationsEnCours(token, id);
+			model.addAttribute("qualifications", qualifications);
+			model.addAttribute("access", "3");
+			return Constants.QUALIFICATIONS;
+
+		} else {
+
+			return "redirect:/labplan/connexion";
+		}
+
 	}
 
 	@GetMapping("/qualification/{id}") // Consulter une qualification
@@ -127,28 +181,55 @@ public class Private {
 	public String qualification(@PathVariable(name = "id") Integer id, Model model, HttpSession session) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		String token = (String) session.getAttribute("TOKEN");
-		token = "Bearer " + token;
-		QualificationAux qualification = microServiceLab.obtenirQualification(token, id);
-		model.addAttribute("qualification", qualification);
-		model.addAttribute("modification", false);
-		System.out.println("Référence qualification: " + qualification.getReference());
-		return Constants.QUALIFICATION;
+		/*
+		 * String token = (String) session.getAttribute("TOKEN"); token = "Bearer " +
+		 * token; QualificationAux qualification =
+		 * microServiceLab.obtenirQualification(token, id);
+		 * model.addAttribute("qualification", qualification);
+		 * model.addAttribute("modification", false);
+		 * System.out.println("Référence qualification: " +
+		 * qualification.getReference());
+		 */
+		if (testUser(utilisateur)) {
+
+			String token = (String) session.getAttribute("TOKEN");
+			token = "Bearer " + token;
+			QualificationAux qualification = microServiceLab.obtenirQualification(token, id);
+			model.addAttribute("qualification", qualification);
+			model.addAttribute("modification", false);
+			System.out.println("Référence qualification: " + qualification.getReference());
+
+			return Constants.QUALIFICATION;
+
+		} else {
+
+			return "redirect:/labplan/connexion";
+		}
+
 	}
 
 	@GetMapping("/essai/voir/{id}")
 	public String visualiserEssais(@PathVariable(name = "id") Integer id, Model model, HttpSession session) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		String token = (String) session.getAttribute("TOKEN");
-		token = "Bearer " + token;
-		QualificationAux qualification = microServiceLab.obtenirQualification(token, id);
 
-		List<EssaiAux> essais = microServiceLab.obtenirEssaisParQualification(token, id);
+		if (testUser(utilisateur)) {
 
-		model.addAttribute("qualification", qualification);
-		model.addAttribute("essais", essais);
-		return Constants.PAGE_ESSAIS;
+			String token = (String) session.getAttribute("TOKEN");
+			token = "Bearer " + token;
+			QualificationAux qualification = microServiceLab.obtenirQualification(token, id);
+
+			List<EssaiAux> essais = microServiceLab.obtenirEssaisParQualification(token, id);
+
+			model.addAttribute("qualification", qualification);
+			model.addAttribute("essais", essais);
+			return Constants.PAGE_ESSAIS;
+
+		} else {
+
+			return "redirect:/labplan/connexion";
+		}
+
 	}
 
 	@GetMapping("/sequences/{id}/{num}/{domaine}") // id = numéro qualification, num = id essai
@@ -156,26 +237,34 @@ public class Private {
 			Model model, HttpSession session) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		String token = (String) session.getAttribute("TOKEN");
-		token = "Bearer " + token;
-		EssaiAux essai = microServiceLab.obtenirEssaiParNumero(token,num);
-		model.addAttribute("essai", essai);
 
-		List<SequenceAux> sequences = microServiceLab.obtenirSequencesParEssai(token, id, num);
-		model.addAttribute("sequences", sequences);
-		QualificationAux qualification = microServiceLab.obtenirQualificationParNumero(token, id);
-		model.addAttribute("qualification", qualification);
+		if (testUser(utilisateur)) {
 
-		if (sequences.isEmpty()) {
+			String token = (String) session.getAttribute("TOKEN");
+			token = "Bearer " + token;
+			EssaiAux essai = microServiceLab.obtenirEssaiParNumero(token, num);
+			model.addAttribute("essai", essai);
 
-			model.addAttribute("vide", true);
+			List<SequenceAux> sequences = microServiceLab.obtenirSequencesParEssai(token, id, num);
+			model.addAttribute("sequences", sequences);
+			QualificationAux qualification = microServiceLab.obtenirQualificationParNumero(token, id);
+			model.addAttribute("qualification", qualification);
+
+			if (sequences.isEmpty()) {
+
+				model.addAttribute("vide", true);
+
+			} else {
+
+				model.addAttribute("vide", false);
+			}
+			return Constants.LISTE_SEQUENCES;
 
 		} else {
 
-			model.addAttribute("vide", false);
+			return "redirect:/labplan/connexion";
 		}
 
-		return Constants.LISTE_SEQUENCES;
 	}
 
 	@GetMapping("/sequence/creer/{id}/{qualification}/{domaine}")
@@ -189,17 +278,24 @@ public class Private {
 		System.out.println("Valeur domaine récupéré: " + domaine);
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		FormSequence formSequence = new FormSequence();
-		formSequence.setEssai(id);
-		formSequence.setQualification(qualification);
-		formSequence.setNomDomaine(domaine);
-		System.out.println(formSequence.toString());
-		model.addAttribute("formSequence", formSequence);
-		model.addAttribute("id", id);
-		model.addAttribute("qualification", qualification);
-		model.addAttribute("domaine", domaine);
 
-		return Constants.CREATION_SEQUENCE;
+		if (testUser(utilisateur)) {
+
+			FormSequence formSequence = new FormSequence();
+			formSequence.setEssai(id);
+			formSequence.setQualification(qualification);
+			formSequence.setNomDomaine(domaine);
+			System.out.println(formSequence.toString());
+			model.addAttribute("formSequence", formSequence);
+			model.addAttribute("id", id);
+			model.addAttribute("qualification", qualification);
+			model.addAttribute("domaine", domaine);
+			return Constants.CREATION_SEQUENCE;
+
+		} else {
+
+			return "redirect:/labplan/connexion";
+		}
 
 	}
 
@@ -212,19 +308,27 @@ public class Private {
 		System.out.println(formSequence.toString());
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		String token = (String) session.getAttribute("TOKEN");
-		token = "Bearer " + token;
 
-		System.out.println("Identifiant essai récupéré: " + id);
-		System.out.println("Identifiant qualification récupéré: " + qualification);
+		if (testUser(utilisateur)) {
 
-		formSequence.setEssai(id);
-		microServiceLab.enregistrerSequence(token, formSequence);
+			String token = (String) session.getAttribute("TOKEN");
+			token = "Bearer " + token;
 
-		redirectAttributes.addAttribute("id", qualification);
-		redirectAttributes.addAttribute("num", id);
+			System.out.println("Identifiant essai récupéré: " + id);
+			System.out.println("Identifiant qualification récupéré: " + qualification);
 
-		return "redirect:/private/sequences";
+			formSequence.setEssai(id);
+			microServiceLab.enregistrerSequence(token, formSequence);
+
+			redirectAttributes.addAttribute("id", qualification);
+			redirectAttributes.addAttribute("num", id);
+
+			return "redirect:/labplan/private/sequences";
+
+		} else {
+
+			return "redirect:/labplan/connexion";
+		}
 
 	}
 
@@ -236,26 +340,34 @@ public class Private {
 
 		System.out.println(" *** entrée méthode voirSequencesParEssais2 ");
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		String token = (String) session.getAttribute("TOKEN");
-		token = "Bearer " + token;
-		EssaiAux essai = microServiceLab.obtenirEssaiParNumero(token, id);
-		model.addAttribute("essai", essai);
 
-		List<SequenceAux> sequences = microServiceLab.obtenirSequencesParEssai(token, qualification, id);
-		model.addAttribute("sequences", sequences);
-		QualificationAux qualif = microServiceLab.obtenirQualificationParNumero(token, qualification);
-		model.addAttribute("qualification", qualif);
+		if (testUser(utilisateur)) {
 
-		if (sequences.isEmpty()) {
+			String token = (String) session.getAttribute("TOKEN");
+			token = "Bearer " + token;
+			EssaiAux essai = microServiceLab.obtenirEssaiParNumero(token, id);
+			model.addAttribute("essai", essai);
 
-			model.addAttribute("vide", true);
+			List<SequenceAux> sequences = microServiceLab.obtenirSequencesParEssai(token, qualification, id);
+			model.addAttribute("sequences", sequences);
+			QualificationAux qualif = microServiceLab.obtenirQualificationParNumero(token, qualification);
+			model.addAttribute("qualification", qualif);
+
+			if (sequences.isEmpty()) {
+
+				model.addAttribute("vide", true);
+
+			} else {
+
+				model.addAttribute("vide", false);
+			}
+			return Constants.LISTE_SEQUENCES;
 
 		} else {
 
-			model.addAttribute("vide", false);
+			return "redirect:/labplan/connexion";
 		}
 
-		return Constants.LISTE_SEQUENCES;
 	}
 
 	@GetMapping("/sequences/voir/{id}/{num}/{sequence}")
@@ -264,26 +376,35 @@ public class Private {
 			@PathVariable(name = "sequence") Integer idSequence, Model model, HttpSession session) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		String token = (String) session.getAttribute("TOKEN");
-		token = "Bearer " + token;
-		SequenceAux sequence = microServiceLab.obtenirSequenceParId(token, idSequence);
 
-		Duration duration = Duration.between(sequence.getDebut(), sequence.getFin());
-		System.out.println("durée: " + duration.toHours() + " hours");
-		long duree = duration.toHours();
-		sequence.setDuree(duree);
+		if (testUser(utilisateur)) {
 
-		model.addAttribute("sequence", sequence);
-		QualificationAux qualification = microServiceLab.obtenirQualificationParNumero(token, id);
-		model.addAttribute("qualification", qualification);
-		EssaiAux essai = microServiceLab.obtenirEssaiParNumero(token, num);
-		model.addAttribute("essai", essai);
-		List<EchantillonAux> echantillons = microServiceLab.obtenirEchantillonsParQualification(token,id);
-		List<EchantillonAux> echSelection = microServiceLab.obtenirEchantillonSelectionParSequence(token, id, idSequence);
-		// model.addAttribute("echantillons", echantillons);
-		model.addAttribute("echantillons", echSelection);
+			String token = (String) session.getAttribute("TOKEN");
+			token = "Bearer " + token;
+			SequenceAux sequence = microServiceLab.obtenirSequenceParId(token, idSequence);
 
-		return Constants.SEQUENCE;
+			Duration duration = Duration.between(sequence.getDebut(), sequence.getFin());
+			System.out.println("durée: " + duration.toHours() + " hours");
+			long duree = duration.toHours();
+			sequence.setDuree(duree);
+
+			model.addAttribute("sequence", sequence);
+			QualificationAux qualification = microServiceLab.obtenirQualificationParNumero(token, id);
+			model.addAttribute("qualification", qualification);
+			EssaiAux essai = microServiceLab.obtenirEssaiParNumero(token, num);
+			model.addAttribute("essai", essai);
+			List<EchantillonAux> echantillons = microServiceLab.obtenirEchantillonsParQualification(token, id);
+			List<EchantillonAux> echSelection = microServiceLab.obtenirEchantillonSelectionParSequence(token, id,
+					idSequence);
+			// model.addAttribute("echantillons", echantillons);
+			model.addAttribute("echantillons", echSelection);
+			return Constants.SEQUENCE;
+
+		} else {
+
+			return "redirect:/labplan/connexion";
+		}
+
 	}
 
 	@GetMapping("/sequence/modifier/{id}/{qualification}/{sequence}")
@@ -294,85 +415,167 @@ public class Private {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
 
-		System.out.println("id essai reçu par url: " + idEssai);
-		System.out.println("num qualification reçu par url: " + numQualif);
-		System.out.println("id sequence reçu par url: " + idSequence);
-		
-		String token = (String) session.getAttribute("TOKEN");
-		token = "Bearer " + token;
+		/*
+		 * System.out.println("id essai reçu par url: " + idEssai);
+		 * System.out.println("num qualification reçu par url: " + numQualif);
+		 * System.out.println("id sequence reçu par url: " + idSequence);
+		 * 
+		 * String token = (String) session.getAttribute("TOKEN"); token = "Bearer " +
+		 * token;
+		 * 
+		 * SequenceAux sequence = microServiceLab.obtenirSequenceParId(token,
+		 * idSequence); FormSequence formSequence = new FormSequence();
+		 * formSequence.setId(sequence.getId());
+		 * formSequence.setNumero(sequence.getNumero());
+		 * formSequence.setNom(sequence.getNom());
+		 * formSequence.setNiveau(sequence.getNiveau());
+		 * formSequence.setDomaine(sequence.getDomaine());
+		 * 
+		 * formSequence.setDebut(sequence.getDebut());
+		 * 
+		 * String debutText = sequence.getDebutText();
+		 * System.out.println("valeur debutText: " + debutText);
+		 * 
+		 * String[] tokensDebut = debutText.split("-");
+		 * 
+		 * for (String t : tokensDebut) {
+		 * 
+		 * System.out.println(t);
+		 * 
+		 * }
+		 * 
+		 * String[] anneeDebut = tokensDebut[2].split(" "); System.out.println("année: "
+		 * + anneeDebut[0]); String dateDebutText = anneeDebut[0] + "-" + tokensDebut[1]
+		 * + "-" + tokensDebut[0]; System.out.println("dateFinText: " + dateDebutText);
+		 * 
+		 * formSequence.setDebutText(dateDebutText); System.out.println("debutText = " +
+		 * formSequence.getDebutText());
+		 * 
+		 * String finText = sequence.getFinText(); System.out.println("valeur finText: "
+		 * + finText);
+		 * 
+		 * String[] tokensFin = finText.split("-");
+		 * 
+		 * for (String t : tokensFin) {
+		 * 
+		 * System.out.println(t);
+		 * 
+		 * }
+		 * 
+		 * String[] anneeFin = tokensFin[2].split(" "); System.out.println("année: " +
+		 * anneeFin[0]); String dateFinText = anneeFin[0] + "-" + tokensFin[1] + "-" +
+		 * tokensFin[0]; System.out.println("dateFinText: " + dateFinText);
+		 * 
+		 * formSequence.setFinText(dateFinText); System.out.println("finText = " +
+		 * formSequence.getFinText());
+		 * 
+		 * System.out.println("date de debut prépa heure: " + debutText);
+		 * System.out.println("date de fin prépa heure: " + finText);
+		 * 
+		 * String segmentDebut[] = debutText.split(" "); String segmentFin[] =
+		 * finText.split(" ");
+		 * 
+		 * String debutHeureText = segmentDebut[1]; String finHeureText = segmentFin[1];
+		 * 
+		 * formSequence.setDebutHeureText(debutHeureText);
+		 * formSequence.setFinHeureText(finHeureText);
+		 * 
+		 * formSequence.setProfil(sequence.getProfil());
+		 * formSequence.setCommentaire(sequence.getCommentaire());
+		 * formSequence.setActif(sequence.getActif());
+		 * formSequence.setAvis(sequence.getAvis()); formSequence.setEssai(idEssai);
+		 * 
+		 * model.addAttribute("formSequence", formSequence); model.addAttribute("essai",
+		 * idEssai); model.addAttribute("qualification", numQualif);
+		 * model.addAttribute("sequence", idSequence);
+		 * 
+		 */
+		if (testUser(utilisateur)) {
 
-		SequenceAux sequence = microServiceLab.obtenirSequenceParId(token,idSequence);
-		FormSequence formSequence = new FormSequence();
-		formSequence.setId(sequence.getId());
-		formSequence.setNumero(sequence.getNumero());
-		formSequence.setNom(sequence.getNom());
-		formSequence.setNiveau(sequence.getNiveau());
-		formSequence.setDomaine(sequence.getDomaine());
+			System.out.println("id essai reçu par url: " + idEssai);
+			System.out.println("num qualification reçu par url: " + numQualif);
+			System.out.println("id sequence reçu par url: " + idSequence);
 
-		formSequence.setDebut(sequence.getDebut());
+			String token = (String) session.getAttribute("TOKEN");
+			token = "Bearer " + token;
 
-		String debutText = sequence.getDebutText();
-		System.out.println("valeur debutText: " + debutText);
+			SequenceAux sequence = microServiceLab.obtenirSequenceParId(token, idSequence);
+			FormSequence formSequence = new FormSequence();
+			formSequence.setId(sequence.getId());
+			formSequence.setNumero(sequence.getNumero());
+			formSequence.setNom(sequence.getNom());
+			formSequence.setNiveau(sequence.getNiveau());
+			formSequence.setDomaine(sequence.getDomaine());
 
-		String[] tokensDebut = debutText.split("-");
+			formSequence.setDebut(sequence.getDebut());
 
-		for (String t : tokensDebut) {
+			String debutText = sequence.getDebutText();
+			System.out.println("valeur debutText: " + debutText);
 
-			System.out.println(t);
+			String[] tokensDebut = debutText.split("-");
 
+			for (String t : tokensDebut) {
+
+				System.out.println(t);
+
+			}
+
+			String[] anneeDebut = tokensDebut[2].split(" ");
+			System.out.println("année: " + anneeDebut[0]);
+			String dateDebutText = anneeDebut[0] + "-" + tokensDebut[1] + "-" + tokensDebut[0];
+			System.out.println("dateFinText: " + dateDebutText);
+
+			formSequence.setDebutText(dateDebutText);
+			System.out.println("debutText = " + formSequence.getDebutText());
+
+			String finText = sequence.getFinText();
+			System.out.println("valeur finText: " + finText);
+
+			String[] tokensFin = finText.split("-");
+
+			for (String t : tokensFin) {
+
+				System.out.println(t);
+
+			}
+
+			String[] anneeFin = tokensFin[2].split(" ");
+			System.out.println("année: " + anneeFin[0]);
+			String dateFinText = anneeFin[0] + "-" + tokensFin[1] + "-" + tokensFin[0];
+			System.out.println("dateFinText: " + dateFinText);
+
+			formSequence.setFinText(dateFinText);
+			System.out.println("finText = " + formSequence.getFinText());
+
+			System.out.println("date de debut prépa heure: " + debutText);
+			System.out.println("date de fin prépa heure: " + finText);
+
+			String segmentDebut[] = debutText.split(" ");
+			String segmentFin[] = finText.split(" ");
+
+			String debutHeureText = segmentDebut[1];
+			String finHeureText = segmentFin[1];
+
+			formSequence.setDebutHeureText(debutHeureText);
+			formSequence.setFinHeureText(finHeureText);
+
+			formSequence.setProfil(sequence.getProfil());
+			formSequence.setCommentaire(sequence.getCommentaire());
+			formSequence.setActif(sequence.getActif());
+			formSequence.setAvis(sequence.getAvis());
+			formSequence.setEssai(idEssai);
+
+			model.addAttribute("formSequence", formSequence);
+			model.addAttribute("essai", idEssai);
+			model.addAttribute("qualification", numQualif);
+			model.addAttribute("sequence", idSequence);
+			return Constants.MODIFIER_SEQUENCE;
+
+		} else {
+
+			return "redirect:/labplan/connexion";
 		}
 
-		String[] anneeDebut = tokensDebut[2].split(" ");
-		System.out.println("année: " + anneeDebut[0]);
-		String dateDebutText = anneeDebut[0] + "-" + tokensDebut[1] + "-" + tokensDebut[0];
-		System.out.println("dateFinText: " + dateDebutText);
-
-		formSequence.setDebutText(dateDebutText);
-		System.out.println("debutText = " + formSequence.getDebutText());
-
-		String finText = sequence.getFinText();
-		System.out.println("valeur finText: " + finText);
-
-		String[] tokensFin = finText.split("-");
-
-		for (String t : tokensFin) {
-
-			System.out.println(t);
-
-		}
-
-		String[] anneeFin = tokensFin[2].split(" ");
-		System.out.println("année: " + anneeFin[0]);
-		String dateFinText = anneeFin[0] + "-" + tokensFin[1] + "-" + tokensFin[0];
-		System.out.println("dateFinText: " + dateFinText);
-
-		formSequence.setFinText(dateFinText);
-		System.out.println("finText = " + formSequence.getFinText());
-
-		System.out.println("date de debut prépa heure: " + debutText);
-		System.out.println("date de fin prépa heure: " + finText);
-
-		String segmentDebut[] = debutText.split(" ");
-		String segmentFin[] = finText.split(" ");
-
-		String debutHeureText = segmentDebut[1];
-		String finHeureText = segmentFin[1];
-
-		formSequence.setDebutHeureText(debutHeureText);
-		formSequence.setFinHeureText(finHeureText);
-
-		formSequence.setProfil(sequence.getProfil());
-		formSequence.setCommentaire(sequence.getCommentaire());
-		formSequence.setActif(sequence.getActif());
-		formSequence.setAvis(sequence.getAvis());
-		formSequence.setEssai(idEssai);
-
-		model.addAttribute("formSequence", formSequence);
-		model.addAttribute("essai", idEssai);
-		model.addAttribute("qualification", numQualif);
-		model.addAttribute("sequence", idSequence);
-
-		return Constants.MODIFIER_SEQUENCE;
 	}
 
 	@PostMapping("/sequence/modifier/{essai}/{qualification}/{sequence}")
@@ -382,101 +585,189 @@ public class Private {
 
 		System.out.println("*******Entrée méthode enregistrerModificationSequence()");
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		String token = (String) session.getAttribute("TOKEN");
-		token = "Bearer " + token;
-		
-		formSequence.setEssai(idEssai);
-		formSequence.setId(idSequence);
+		/*
+		 * String token = (String) session.getAttribute("TOKEN"); token = "Bearer " +
+		 * token;
+		 * 
+		 * formSequence.setEssai(idEssai); formSequence.setId(idSequence);
+		 * 
+		 * String debutText = formSequence.getDebutText(); String debutHeureText =
+		 * formSequence.getDebutHeureText(); String finText = formSequence.getFinText();
+		 * String finHeureText = formSequence.getFinHeureText();
+		 * 
+		 * String dateDebutText = null; String dateFinText = null;
+		 * 
+		 * System.out.println("Date début reçue: " + debutText);
+		 * System.out.println("Heure début reçue: " + debutHeureText);
+		 * 
+		 * System.out.println("Date fin reçue: " + finText);
+		 * System.out.println("Heure fin reçue: " + finHeureText);
+		 * 
+		 * System.out.println(debutText + " " + debutHeureText);
+		 * System.out.println(finText + " " + finHeureText);
+		 * 
+		 * String segmentHeureDebut[] = debutHeureText.split(":"); String suffixe =
+		 * null;
+		 * 
+		 * String segmentHeureFin[] = finHeureText.split(":");
+		 * 
+		 * int heureDebut = Integer.parseInt(segmentHeureDebut[0]);
+		 * 
+		 * if (heureDebut > 12) {
+		 * 
+		 * suffixe = "PM"; heureDebut = heureDebut - 12; System.out.println("heureFin: "
+		 * + heureDebut); debutHeureText = String.valueOf(heureDebut); if (heureDebut <
+		 * 10) {
+		 * 
+		 * debutHeureText = "0" + debutHeureText;
+		 * System.out.println("debutHeureText transformé: " + debutHeureText);
+		 * dateDebutText = debutText + " " + debutHeureText + ":" + segmentHeureDebut[1]
+		 * + " " + suffixe; System.out.println("dateDebutText = " + dateDebutText); }
+		 * 
+		 * } else {
+		 * 
+		 * suffixe = "AM"; dateDebutText = debutText + " " + debutHeureText + " " +
+		 * suffixe; System.out.println("dateDebutText = " + dateDebutText);
+		 * 
+		 * }
+		 * 
+		 * suffixe = null;
+		 * 
+		 * int heureFin = Integer.parseInt(segmentHeureFin[0]);
+		 * 
+		 * if (heureFin > 12) {
+		 * 
+		 * suffixe = "PM"; heureFin = heureFin - 12; System.out.println("heureFin: " +
+		 * heureFin); finHeureText = String.valueOf(heureFin); if (heureFin < 10) {
+		 * 
+		 * finHeureText = "0" + finHeureText;
+		 * System.out.println("finHeureText transformé: " + finHeureText); dateFinText =
+		 * finText + " " + finHeureText + ":" + segmentHeureFin[1] + " " + suffixe;
+		 * System.out.println("dateFinText = " + dateFinText); }
+		 * 
+		 * } else {
+		 * 
+		 * suffixe = "AM"; dateFinText = finText + " " + finHeureText + " " + suffixe;
+		 * System.out.println("dateFinText = " + dateFinText); }
+		 * 
+		 * LocalDateTime debut = LocalDateTime.parse(dateDebutText,
+		 * DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm a")); //
+		 * DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm a")); //
+		 * DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mm a"));
+		 * formSequence.setDebut(debut);
+		 * 
+		 * LocalDateTime fin = LocalDateTime.parse(dateFinText,
+		 * DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm a")); //
+		 * DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm a")); //
+		 * DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mm a")); formSequence.setFin(fin);
+		 * 
+		 * microServiceLab.modifierSequence(token, formSequence);
+		 * 
+		 * redirectAttributes.addAttribute("essai", idEssai);
+		 * redirectAttributes.addAttribute("qualification", num);
+		 * redirectAttributes.addAttribute("sequence", idSequence);
+		 */
 
-		String debutText = formSequence.getDebutText();
-		String debutHeureText = formSequence.getDebutHeureText();
-		String finText = formSequence.getFinText();
-		String finHeureText = formSequence.getFinHeureText();
+		if (testUser(utilisateur)) {
 
-		String dateDebutText = null;
-		String dateFinText = null;
+			String token = (String) session.getAttribute("TOKEN");
+			token = "Bearer " + token;
 
-		System.out.println("Date début reçue: " + debutText);
-		System.out.println("Heure début reçue: " + debutHeureText);
+			formSequence.setEssai(idEssai);
+			formSequence.setId(idSequence);
 
-		System.out.println("Date fin reçue: " + finText);
-		System.out.println("Heure fin reçue: " + finHeureText);
+			String debutText = formSequence.getDebutText();
+			String debutHeureText = formSequence.getDebutHeureText();
+			String finText = formSequence.getFinText();
+			String finHeureText = formSequence.getFinHeureText();
 
-		System.out.println(debutText + " " + debutHeureText);
-		System.out.println(finText + " " + finHeureText);
+			String dateDebutText = null;
+			String dateFinText = null;
 
-		String segmentHeureDebut[] = debutHeureText.split(":");
-		String suffixe = null;
+			System.out.println("Date début reçue: " + debutText);
+			System.out.println("Heure début reçue: " + debutHeureText);
 
-		String segmentHeureFin[] = finHeureText.split(":");
+			System.out.println("Date fin reçue: " + finText);
+			System.out.println("Heure fin reçue: " + finHeureText);
 
-		int heureDebut = Integer.parseInt(segmentHeureDebut[0]);
+			System.out.println(debutText + " " + debutHeureText);
+			System.out.println(finText + " " + finHeureText);
 
-		if (heureDebut > 12) {
+			String segmentHeureDebut[] = debutHeureText.split(":");
+			String suffixe = null;
 
-			suffixe = "PM";
-			heureDebut = heureDebut - 12;
-			System.out.println("heureFin: " + heureDebut);
-			debutHeureText = String.valueOf(heureDebut);
-			if (heureDebut < 10) {
+			String segmentHeureFin[] = finHeureText.split(":");
 
-				debutHeureText = "0" + debutHeureText;
-				System.out.println("debutHeureText transformé: " + debutHeureText);
-				dateDebutText = debutText + " " + debutHeureText + ":" + segmentHeureDebut[1] + " " + suffixe;
+			int heureDebut = Integer.parseInt(segmentHeureDebut[0]);
+
+			if (heureDebut > 12) {
+
+				suffixe = "PM";
+				heureDebut = heureDebut - 12;
+				System.out.println("heureFin: " + heureDebut);
+				debutHeureText = String.valueOf(heureDebut);
+				if (heureDebut < 10) {
+
+					debutHeureText = "0" + debutHeureText;
+					System.out.println("debutHeureText transformé: " + debutHeureText);
+					dateDebutText = debutText + " " + debutHeureText + ":" + segmentHeureDebut[1] + " " + suffixe;
+					System.out.println("dateDebutText = " + dateDebutText);
+				}
+
+			} else {
+
+				suffixe = "AM";
+				dateDebutText = debutText + " " + debutHeureText + " " + suffixe;
 				System.out.println("dateDebutText = " + dateDebutText);
+
 			}
 
-		} else {
+			suffixe = null;
 
-			suffixe = "AM";
-			dateDebutText = debutText + " " + debutHeureText + " " + suffixe;
-			System.out.println("dateDebutText = " + dateDebutText);
+			int heureFin = Integer.parseInt(segmentHeureFin[0]);
 
-		}
+			if (heureFin > 12) {
 
-		suffixe = null;
+				suffixe = "PM";
+				heureFin = heureFin - 12;
+				System.out.println("heureFin: " + heureFin);
+				finHeureText = String.valueOf(heureFin);
+				if (heureFin < 10) {
 
-		int heureFin = Integer.parseInt(segmentHeureFin[0]);
+					finHeureText = "0" + finHeureText;
+					System.out.println("finHeureText transformé: " + finHeureText);
+					dateFinText = finText + " " + finHeureText + ":" + segmentHeureFin[1] + " " + suffixe;
+					System.out.println("dateFinText = " + dateFinText);
+				}
 
-		if (heureFin > 12) {
+			} else {
 
-			suffixe = "PM";
-			heureFin = heureFin - 12;
-			System.out.println("heureFin: " + heureFin);
-			finHeureText = String.valueOf(heureFin);
-			if (heureFin < 10) {
-
-				finHeureText = "0" + finHeureText;
-				System.out.println("finHeureText transformé: " + finHeureText);
-				dateFinText = finText + " " + finHeureText + ":" + segmentHeureFin[1] + " " + suffixe;
+				suffixe = "AM";
+				dateFinText = finText + " " + finHeureText + " " + suffixe;
 				System.out.println("dateFinText = " + dateFinText);
 			}
 
+			LocalDateTime debut = LocalDateTime.parse(dateDebutText, DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm a"));
+			// DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm a"));
+			// DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mm a"));
+			formSequence.setDebut(debut);
+
+			LocalDateTime fin = LocalDateTime.parse(dateFinText, DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm a"));
+			// DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm a"));
+			// DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mm a"));
+			formSequence.setFin(fin);
+
+			microServiceLab.modifierSequence(token, formSequence);
+
+			redirectAttributes.addAttribute("essai", idEssai);
+			redirectAttributes.addAttribute("qualification", num);
+			redirectAttributes.addAttribute("sequence", idSequence);
+			return "redirect:/labplan/private/sequences/voir/retour";
+
 		} else {
 
-			suffixe = "AM";
-			dateFinText = finText + " " + finHeureText + " " + suffixe;
-			System.out.println("dateFinText = " + dateFinText);
+			return "redirect:/labplan/connexion";
 		}
-
-		LocalDateTime debut = LocalDateTime.parse(dateDebutText, DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm a"));
-		// DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm a"));
-		// DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mm a"));
-		formSequence.setDebut(debut);
-
-		LocalDateTime fin = LocalDateTime.parse(dateFinText, DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm a"));
-		// DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm a"));
-		// DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mm a"));
-		formSequence.setFin(fin);
-
-		microServiceLab.modifierSequence(token, formSequence);
-
-		redirectAttributes.addAttribute("essai", idEssai);
-		redirectAttributes.addAttribute("qualification", num);
-		redirectAttributes.addAttribute("sequence", idSequence);
-
-		//return "redirect:/labplan/private/sequences/voir/retour";
-		return "redirect:/private/sequences/voir/retour";
 
 	}
 
@@ -486,30 +777,40 @@ public class Private {
 			@RequestParam(name = "sequence") Integer idSequence, Model model, HttpSession session) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		String token = (String) session.getAttribute("TOKEN");
-		token = "Bearer " + token;
 
-		System.out.println("redirect:/sequences/voir/{essai}/{qualification}/{sequence}");
-		System.out.println("id sequence recu: " + idSequence);
+		if (testUser(utilisateur)) {
 
-		SequenceAux sequence = microServiceLab.obtenirSequenceParId(token, idSequence);
+			String token = (String) session.getAttribute("TOKEN");
+			token = "Bearer " + token;
 
-		Duration duration = Duration.between(sequence.getDebut(), sequence.getFin());
-		System.out.println("durée: " + duration.toHours() + " hours");
-		long duree = duration.toHours();
-		sequence.setDuree(duree);
+			System.out.println("redirect:/sequences/voir/{essai}/{qualification}/{sequence}");
+			System.out.println("id sequence recu: " + idSequence);
 
-		model.addAttribute("sequence", sequence);
-		QualificationAux qualification = microServiceLab.obtenirQualificationParNumero(token, num);
-		model.addAttribute("qualification", qualification);
-		EssaiAux essai = microServiceLab.obtenirEssaiParNumero(token, idEssai);
-		model.addAttribute("essai", essai);
-		List<EchantillonAux> echantillons = microServiceLab.obtenirEchantillonsParQualification(token, num);
-		List<EchantillonAux> echSelection = microServiceLab.obtenirEchantillonSelectionParSequence(token, num, idSequence);
+			SequenceAux sequence = microServiceLab.obtenirSequenceParId(token, idSequence);
 
-		model.addAttribute("echantillons", echSelection);
+			Duration duration = Duration.between(sequence.getDebut(), sequence.getFin());
+			System.out.println("durée: " + duration.toHours() + " hours");
+			long duree = duration.toHours();
+			sequence.setDuree(duree);
 
-		return Constants.SEQUENCE;
+			model.addAttribute("sequence", sequence);
+			QualificationAux qualification = microServiceLab.obtenirQualificationParNumero(token, num);
+			model.addAttribute("qualification", qualification);
+			EssaiAux essai = microServiceLab.obtenirEssaiParNumero(token, idEssai);
+			model.addAttribute("essai", essai);
+			List<EchantillonAux> echantillons = microServiceLab.obtenirEchantillonsParQualification(token, num);
+			List<EchantillonAux> echSelection = microServiceLab.obtenirEchantillonSelectionParSequence(token, num,
+					idSequence);
+
+			model.addAttribute("echantillons", echSelection);
+
+			return Constants.SEQUENCE;
+
+		} else {
+
+			return "redirect:/labplan/connexion";
+		}
+
 	}
 
 	@GetMapping("/echantillons/ajouter/{echantillon}/{qualification}/{sequence}/{essai}")
@@ -519,16 +820,24 @@ public class Private {
 			Model model, HttpSession session, RedirectAttributes redirectAttributes) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		String token = (String) session.getAttribute("TOKEN");
-		token = "Bearer " + token;
-		
-		microServiceLab.ajouterEchantillon(token, idEchantillon, numQualification, idSequence);
 
-		redirectAttributes.addAttribute("essai", idEssai);
-		redirectAttributes.addAttribute("qualification", numQualification);
-		redirectAttributes.addAttribute("sequence", idSequence);
+		if (testUser(utilisateur)) {
 
-		return "redirect:/private/sequences/voir/retour";
+			String token = (String) session.getAttribute("TOKEN");
+			token = "Bearer " + token;
+
+			microServiceLab.ajouterEchantillon(token, idEchantillon, numQualification, idSequence);
+
+			redirectAttributes.addAttribute("essai", idEssai);
+			redirectAttributes.addAttribute("qualification", numQualification);
+			redirectAttributes.addAttribute("sequence", idSequence);
+			return "redirect:/labplan/private/sequences/voir/retour";
+
+		} else {
+
+			return "redirect:/labplan/connexion";
+		}
+
 	}
 
 	@GetMapping("/echantillons/retirer/{echantillon}/{qualification}/{sequence}/{essai}")
@@ -538,16 +847,25 @@ public class Private {
 			Model model, HttpSession session, RedirectAttributes redirectAttributes) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		String token = (String) session.getAttribute("TOKEN");
-		token = "Bearer " + token;
-		
-		microServiceLab.retirerEchantillon(token, idEchantillon, numQualification, idSequence);
 
-		redirectAttributes.addAttribute("essai", idEssai);
-		redirectAttributes.addAttribute("qualification", numQualification);
-		redirectAttributes.addAttribute("sequence", idSequence);
+		if (testUser(utilisateur)) {
 
-		return "redirect:/private/sequences/voir/retour";
+			String token = (String) session.getAttribute("TOKEN");
+			token = "Bearer " + token;
+
+			microServiceLab.retirerEchantillon(token, idEchantillon, numQualification, idSequence);
+
+			redirectAttributes.addAttribute("essai", idEssai);
+			redirectAttributes.addAttribute("qualification", numQualification);
+			redirectAttributes.addAttribute("sequence", idSequence);
+
+			return "redirect:/labplan/private/sequences/voir/retour";
+
+		} else {
+
+			return "redirect:/labplan/connexion";
+		}
+
 	}
 
 	@GetMapping("/qualification/modifier/statut/{id}")
@@ -555,16 +873,25 @@ public class Private {
 			HttpSession session) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		String token = (String) session.getAttribute("TOKEN");
-		token = "Bearer " + token;
-		
-		microServiceLab.modifierStatutQualification(token, numQualification);
 
-		QualificationAux qualification = microServiceLab.obtenirQualification(token, numQualification);
-		model.addAttribute("qualification", qualification);
-		model.addAttribute("modification", false);
-		System.out.println("Référence qualification: " + qualification.getReference());
-		return Constants.QUALIFICATION;
+		if (testUser(utilisateur)) {
+
+			String token = (String) session.getAttribute("TOKEN");
+			token = "Bearer " + token;
+
+			microServiceLab.modifierStatutQualification(token, numQualification);
+
+			QualificationAux qualification = microServiceLab.obtenirQualification(token, numQualification);
+			model.addAttribute("qualification", qualification);
+			model.addAttribute("modification", false);
+			System.out.println("Référence qualification: " + qualification.getReference());
+			return Constants.QUALIFICATION;
+
+		} else {
+
+			return "redirect:/labplan/connexion";
+		}
+
 	}
 
 	@GetMapping("/qualification/modifier/resultat/{id}") // Non utilisée - 1ere version
@@ -572,15 +899,24 @@ public class Private {
 			HttpSession session) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		String token = (String) session.getAttribute("TOKEN");
-		token = "Bearer " + token;
-		
-		QualificationAux qualification = microServiceLab.obtenirQualification(token, numQualification);
-		model.addAttribute("qualification", qualification);
-		model.addAttribute("modification", true);
 
-		System.out.println("Référence qualification: " + qualification.getReference());
-		return Constants.QUALIFICATION;
+		if (testUser(utilisateur)) {
+
+			String token = (String) session.getAttribute("TOKEN");
+			token = "Bearer " + token;
+
+			QualificationAux qualification = microServiceLab.obtenirQualification(token, numQualification);
+			model.addAttribute("qualification", qualification);
+			model.addAttribute("modification", true);
+
+			System.out.println("Référence qualification: " + qualification.getReference());
+
+			return Constants.QUALIFICATION;
+
+		} else {
+
+			return "redirect:/labplan/connexion";
+		}
 
 	}
 
@@ -589,24 +925,32 @@ public class Private {
 			HttpSession session) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		String token = (String) session.getAttribute("TOKEN");
-		token = "Bearer " + token;
 
-		QualificationAux qualification = microServiceLab.obtenirQualification(token, numQualification);
-		model.addAttribute("qualification", qualification);
+		if (testUser(utilisateur)) {
 
-		FormQualif formQualif = new FormQualif();
+			String token = (String) session.getAttribute("TOKEN");
+			token = "Bearer " + token;
 
-		formQualif.setNumero(qualification.getNumero());
-		formQualif.setReference(qualification.getReference());
-		formQualif.setProduit(qualification.getProjet());
-		formQualif.setProjet(qualification.getProjet());
-		formQualif.setObjet(qualification.getObjet());
+			QualificationAux qualification = microServiceLab.obtenirQualification(token, numQualification);
+			model.addAttribute("qualification", qualification);
 
-		model.addAttribute("formQualif", formQualif);
+			FormQualif formQualif = new FormQualif();
 
-		System.out.println("Référence qualification: " + qualification.getReference());
-		return Constants.MODIFIER_QUALIFICATION;
+			formQualif.setNumero(qualification.getNumero());
+			formQualif.setReference(qualification.getReference());
+			formQualif.setProduit(qualification.getProjet());
+			formQualif.setProjet(qualification.getProjet());
+			formQualif.setObjet(qualification.getObjet());
+
+			model.addAttribute("formQualif", formQualif);
+
+			System.out.println("Référence qualification: " + qualification.getReference());
+			return Constants.MODIFIER_QUALIFICATION;
+
+		} else {
+
+			return "redirect:/labplan/connexion";
+		}
 
 	}
 
@@ -615,17 +959,26 @@ public class Private {
 			HttpSession session, FormQualif formQualif) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		String token = (String) session.getAttribute("TOKEN");
-		token = "Bearer " + token;
 
-		formQualif.setNumero(numQualification);
-		microServiceLab.modifierQualification(token, formQualif);
+		if (testUser(utilisateur)) {
 
-		QualificationAux qualification = microServiceLab.obtenirQualification(token, numQualification);
-		model.addAttribute("qualification", qualification);
-		model.addAttribute("modification", false);
-		System.out.println("Référence qualification: " + qualification.getReference());
-		return Constants.QUALIFICATION;
+			String token = (String) session.getAttribute("TOKEN");
+			token = "Bearer " + token;
+
+			formQualif.setNumero(numQualification);
+			microServiceLab.modifierQualification(token, formQualif);
+
+			QualificationAux qualification = microServiceLab.obtenirQualification(token, numQualification);
+			model.addAttribute("qualification", qualification);
+			model.addAttribute("modification", false);
+			System.out.println("Référence qualification: " + qualification.getReference());
+
+			return Constants.QUALIFICATION;
+
+		} else {
+
+			return "redirect:/labplan/connexion";
+		}
 
 	}
 
@@ -635,29 +988,36 @@ public class Private {
 			FormSequence formSequence, Model model, HttpSession session, RedirectAttributes redirectAttributes) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		String token = (String) session.getAttribute("TOKEN");
-		token = "Bearer " + token;
-		
-		microServiceLab.supprimerSequence(token, idSequence);
 
-		EssaiAux essai = microServiceLab.obtenirEssaiParNumero(token, idEssai);
-		model.addAttribute("essai", essai);
+		if (testUser(utilisateur)) {
 
-		List<SequenceAux> sequences = microServiceLab.obtenirSequencesParEssai(token, num, idEssai);
-		model.addAttribute("sequences", sequences);
-		QualificationAux qualif = microServiceLab.obtenirQualificationParNumero(token, num);
-		model.addAttribute("qualification", qualif);
+			String token = (String) session.getAttribute("TOKEN");
+			token = "Bearer " + token;
 
-		if (sequences.isEmpty()) {
+			microServiceLab.supprimerSequence(token, idSequence);
 
-			model.addAttribute("vide", true);
+			EssaiAux essai = microServiceLab.obtenirEssaiParNumero(token, idEssai);
+			model.addAttribute("essai", essai);
+
+			List<SequenceAux> sequences = microServiceLab.obtenirSequencesParEssai(token, num, idEssai);
+			model.addAttribute("sequences", sequences);
+			QualificationAux qualif = microServiceLab.obtenirQualificationParNumero(token, num);
+			model.addAttribute("qualification", qualif);
+
+			if (sequences.isEmpty()) {
+
+				model.addAttribute("vide", true);
+
+			} else {
+
+				model.addAttribute("vide", false);
+			}
+			return Constants.LISTE_SEQUENCES;
 
 		} else {
 
-			model.addAttribute("vide", false);
+			return "redirect:/labplan/connexion";
 		}
-
-		return Constants.LISTE_SEQUENCES;
 
 	}
 
@@ -667,25 +1027,33 @@ public class Private {
 			HttpSession session) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		String token = (String) session.getAttribute("TOKEN");
-		token = "Bearer " + token;
-		
-		EssaiAux essai = microServiceLab.obtenirEssaiParNumero(token, idEssai);
-		FormEssai formEssai = new FormEssai();
-		formEssai.setNumero(essai.getNumero());
-		formEssai.setNom(essai.getNom());
-		formEssai.setVersion(essai.getVersion());
-		formEssai.setVersion(essai.getVersion());
-		formEssai.setDomaine(essai.getDomaine());
-		formEssai.setStatut(essai.getStatut());
-		formEssai.setResultat(essai.getResultat());
 
-		model.addAttribute("formEssai", formEssai);
-		model.addAttribute("num", numQualification);
-		model.addAttribute("id", idEssai);
-		model.addAttribute("domaine", nomDomaine);
+		if (testUser(utilisateur)) {
 
-		return Constants.MODIFIER_ESSAI;
+			String token = (String) session.getAttribute("TOKEN");
+			token = "Bearer " + token;
+
+			EssaiAux essai = microServiceLab.obtenirEssaiParNumero(token, idEssai);
+			FormEssai formEssai = new FormEssai();
+			formEssai.setNumero(essai.getNumero());
+			formEssai.setNom(essai.getNom());
+			formEssai.setVersion(essai.getVersion());
+			formEssai.setVersion(essai.getVersion());
+			formEssai.setDomaine(essai.getDomaine());
+			formEssai.setStatut(essai.getStatut());
+			formEssai.setResultat(essai.getResultat());
+
+			model.addAttribute("formEssai", formEssai);
+			model.addAttribute("num", numQualification);
+			model.addAttribute("id", idEssai);
+			model.addAttribute("domaine", nomDomaine);
+			return Constants.MODIFIER_ESSAI;
+
+		} else {
+
+			return "redirect:/labplan/connexion";
+		}
+
 	}
 
 	@PostMapping("/essai/modifier/{id}/{num}/{domaine}")
@@ -694,32 +1062,40 @@ public class Private {
 			Model model, HttpSession session, FormEssai formEssai) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		String token = (String) session.getAttribute("TOKEN");
-		token = "Bearer " + token;
-		
-		formEssai.setId(idEssai);
-		microServiceLab.modifierEssai(token, formEssai);
 
-		QualificationAux qualification = microServiceLab.obtenirQualification(token, numQualification);
+		if (testUser(utilisateur)) {
 
-		List<EssaiAux> essais = microServiceLab.obtenirEssaisParQualification(token, numQualification);
+			String token = (String) session.getAttribute("TOKEN");
+			token = "Bearer " + token;
 
-		model.addAttribute("qualification", qualification);
-		model.addAttribute("essais", essais);
-		return Constants.PAGE_ESSAIS;
+			formEssai.setId(idEssai);
+			microServiceLab.modifierEssai(token, formEssai);
+
+			QualificationAux qualification = microServiceLab.obtenirQualification(token, numQualification);
+
+			List<EssaiAux> essais = microServiceLab.obtenirEssaisParQualification(token, numQualification);
+
+			model.addAttribute("qualification", qualification);
+			model.addAttribute("essais", essais);
+			return Constants.PAGE_ESSAIS;
+
+		} else {
+
+			return "redirect:/labplan/connexion";
+		}
 
 	}
 
 	@PostMapping("/sequence/creer/enregistrer/{id}/{qualification}")
 	public String test(@PathVariable(name = "id") Integer idEssai,
-			@PathVariable(name = "qualification") Integer numQualification, 
-			FormSequence formSequence,
-			HttpSession session,
-			RedirectAttributes redirectAttributes) {
-		
+			@PathVariable(name = "qualification") Integer numQualification, FormSequence formSequence,
+			HttpSession session, RedirectAttributes redirectAttributes) {
+
+		// Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+
 		String token = (String) session.getAttribute("TOKEN");
 		token = "Bearer " + token;
-		
+
 		System.out.println("valeur début récupérée: " + formSequence.getDebutText());
 		System.out.println("valeur fin récupérée: " + formSequence.getFinText());
 		System.out.println("valeur heure début récupérée: " + formSequence.getDebutHeureText());
@@ -777,7 +1153,7 @@ public class Private {
 		redirectAttributes.addAttribute("id", numQualification);
 		redirectAttributes.addAttribute("num", idEssai);
 
-		return "redirect:/private/sequences";
+		return "redirect:/labplan/private/sequences";
 
 	}
 
@@ -786,29 +1162,36 @@ public class Private {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
 
-		String token = (String) session.getAttribute("TOKEN");
-		token = "Bearer " + token;
+		if (testUser(utilisateur)) {
 
-		System.out.println("num qualification: " + numQualification);
-		List<RapportAux> rapports = microServiceLab.obtenirRapportsParQualification(token, numQualification);
-		
-		if (!rapports.isEmpty()) {
-		
-		
-		System.out.println("taille liste de rapports: " + rapports.size());
-		System.out.println("date rapport récupéré:" + rapports.get(0).getDate());
-		model.addAttribute("vide", false);
-		model.addAttribute("rapports", rapports);
-		model.addAttribute("qualification", numQualification);
-		
-		}else {
+			String token = (String) session.getAttribute("TOKEN");
+			token = "Bearer " + token;
 
-		model.addAttribute("rapports", rapports);
-		model.addAttribute("qualification", numQualification);
-		model.addAttribute("vide", true);
-		
+			System.out.println("num qualification: " + numQualification);
+			List<RapportAux> rapports = microServiceLab.obtenirRapportsParQualification(token, numQualification);
+
+			if (!rapports.isEmpty()) {
+
+				System.out.println("taille liste de rapports: " + rapports.size());
+				System.out.println("date rapport récupéré:" + rapports.get(0).getDate());
+				model.addAttribute("vide", false);
+				model.addAttribute("rapports", rapports);
+				model.addAttribute("qualification", numQualification);
+
+			} else {
+
+				model.addAttribute("rapports", rapports);
+				model.addAttribute("qualification", numQualification);
+				model.addAttribute("vide", true);
+
+			}
+			return Constants.RAPPORTS;
+
+		} else {
+
+			return "redirect:/labplan/connexion";
 		}
-		return Constants.RAPPORTS;
+
 	}
 
 	@GetMapping("/qualification/rapport/{num}") // création d'un nouveau rapport pour une qualification
@@ -816,120 +1199,154 @@ public class Private {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
 
-		String token = (String) session.getAttribute("TOKEN");
-		token = "Bearer " + token;
+		
 
-		QualificationAux qualification = microServiceLab.obtenirQualificationParNumero(
-				token,
-				numQualification);
+		if (testUser(utilisateur)) {
 
-		FormInitRapport formInitRapport = new FormInitRapport();
-		formInitRapport.setQualification(numQualification);
-		formInitRapport.setProjet(qualification.getProjet());
-		model.addAttribute("formInitRapport", formInitRapport);
-		return Constants.INIT_RAPPORT;
+			String token = (String) session.getAttribute("TOKEN");
+			token = "Bearer " + token;
+
+			QualificationAux qualification = microServiceLab.obtenirQualificationParNumero(token, numQualification);
+
+			FormInitRapport formInitRapport = new FormInitRapport();
+			formInitRapport.setQualification(numQualification);
+			formInitRapport.setProjet(qualification.getProjet());
+			model.addAttribute("formInitRapport", formInitRapport);
+			return Constants.INIT_RAPPORT;
+
+		} else {
+
+			return "redirect:/labplan/connexion";
+		}
+
 	}
 
-	@PostMapping("/qualification/rapport/{qualification}")   // Enregistrement des données de rapport
+	@PostMapping("/qualification/rapport/{qualification}") // Enregistrement des données de rapport
 	public String enregistrementInitRapport(@PathVariable("qualification") Integer numQualification,
 			FormInitRapport formInitRapport, Model model, HttpSession session) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
 
-		String token = (String) session.getAttribute("TOKEN");
-		token = "Bearer " + token;
 		
-		System.out.println("num qualif: " + formInitRapport.getQualification());
 
-		System.out.println("Objet: " + formInitRapport.getObjet());
+		if (testUser(utilisateur)) {
 
-		Integer auteur = utilisateur.getId();
-		System.out.println("identifiant auteur: " + auteur);
-		
-		formInitRapport.setAuteur(auteur);
-		Integer idRapport = microServiceLab.enregistrerInitRapport(token, formInitRapport);  // changé en 2 pour test!
-		System.out.println("Identifiant rapport enregistrer: " + idRapport);
-		
-		RapportAux rapport = microServiceLab.obtenirRapportsParId(token, idRapport);
-		System.out.println("id rapport récupéré: " + rapport.getId());
-		System.out.println("id/num qualification du rapport: " + rapport.getQualification());
-		
-		model.addAttribute("rapport", rapport);
-		
-		List<EchantillonAux> echantillons = microServiceLab.obtenirEchantillonsParRapportId(
-				token,idRapport);
-		model.addAttribute("echantillons", echantillons);
-		
-		List<EssaiAux> essais = microServiceLab.obtenirEssaisParRapportId(token, idRapport);
-		model.addAttribute("essais", essais);
-		
-		return Constants.RAPPORT;  
+			String token = (String) session.getAttribute("TOKEN");
+			token = "Bearer " + token;
+
+			System.out.println("num qualif: " + formInitRapport.getQualification());
+
+			System.out.println("Objet: " + formInitRapport.getObjet());
+
+			Integer auteur = utilisateur.getId();
+			System.out.println("identifiant auteur: " + auteur);
+
+			formInitRapport.setAuteur(auteur);
+			Integer idRapport = microServiceLab.enregistrerInitRapport(token, formInitRapport); // changé en 2 pour test!
+			System.out.println("Identifiant rapport enregistrer: " + idRapport);
+
+			RapportAux rapport = microServiceLab.obtenirRapportsParId(token, idRapport);
+			System.out.println("id rapport récupéré: " + rapport.getId());
+			System.out.println("id/num qualification du rapport: " + rapport.getQualification());
+
+			model.addAttribute("rapport", rapport);
+
+			List<EchantillonAux> echantillons = microServiceLab.obtenirEchantillonsParRapportId(token, idRapport);
+			model.addAttribute("echantillons", echantillons);
+
+			List<EssaiAux> essais = microServiceLab.obtenirEssaisParRapportId(token, idRapport);
+			model.addAttribute("essais", essais);
+			return Constants.RAPPORT;
+
+		} else {
+
+			return "redirect:/labplan/connexion";
+		}
+
 	}
 
-	@PostMapping(value = "/qualification/rapport/upload/{qualification}")  // Upload des images de test
-	public String guardar(@RequestParam("repertoireImages") MultipartFile multiPart
-			, Model model
-			, HttpSession session
-			, Upload upload) {
+	@PostMapping(value = "/qualification/rapport/upload/{qualification}") // Upload des images de test
+	public String guardar(@RequestParam("repertoireImages") MultipartFile multiPart, Model model, HttpSession session,
+			Upload upload) {
 
 		if (!multiPart.isEmpty()) {
 			// String path = "/labplan/images/"; // Linux/MAC
 			String path = "C:/labplan/images/"; // Windows
 			String nomImage = UploadImage.guardarArchivo(multiPart, path);
-			if (nomImage != null) { 
-				
+			if (nomImage != null) {
+
 				upload.setImage(nomImage);
 			}
 		}
-		
+
 		// implémenter l'enregistrement de l'avis de confomité du rapport
-		
-		
+
 		return "ok";
 	}
-	
-	
+
 	@GetMapping("/qualification/rapport/supprimer/{id}")
-	public String supprimerRapport(
-			@PathVariable("id") Integer IdRapport
-			, Model model, HttpSession session) {
-		
-		
+	public String supprimerRapport(@PathVariable("id") Integer IdRapport, Model model, HttpSession session) {
+
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
 
-		String token = (String) session.getAttribute("TOKEN");
-		token = "Bearer " + token;
-		
-		microServiceLab.supprimerRapportsParId(token, IdRapport);
-		
-		return Constants.ESPACE_PERSONEL;
-	}
 	
-	@GetMapping("/qualification/rapport/voir/{id}")  // Visualisation d'un rapport - version 2
-	public String visualiserRapport(
-			@PathVariable("id") Integer idRapport
-			, Model model, HttpSession session) {
-		
+
+		if (testUser(utilisateur)) {
+
+			String token = (String) session.getAttribute("TOKEN");
+			token = "Bearer " + token;
+
+			microServiceLab.supprimerRapportsParId(token, IdRapport);
+			return Constants.ESPACE_PERSONEL;
+
+		} else {
+
+			return "redirect:/labplan/connexion";
+		}
+
+	}
+
+	@GetMapping("/qualification/rapport/voir/{id}") // Visualisation d'un rapport - version 2
+	public String visualiserRapport(@PathVariable("id") Integer idRapport, Model model, HttpSession session) {
+
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
 
-		String token = (String) session.getAttribute("TOKEN");
-		token = "Bearer " + token;
 		
-		RapportAux rapport = microServiceLab.obtenirRapportsParId(token, idRapport);
-		System.out.println("id rapport récupéré: " + rapport.getId());
-		System.out.println("id/num qualification du rapport: " + rapport.getQualification());
-		
-		model.addAttribute("rapport", rapport);
-		
-		List<EchantillonAux> echantillons = microServiceLab.obtenirEchantillonsParRapportId(
-				token, idRapport);
-		model.addAttribute("echantillons", echantillons);
-		
-		List<EssaiAux> essais = microServiceLab.obtenirEssaisParRapportId(token, idRapport);
-		model.addAttribute("essais", essais);
-		
-		return Constants.RAPPORT;
+
+		if (testUser(utilisateur)) {
+
+			String token = (String) session.getAttribute("TOKEN");
+			token = "Bearer " + token;
+
+			RapportAux rapport = microServiceLab.obtenirRapportsParId(token, idRapport);
+			System.out.println("id rapport récupéré: " + rapport.getId());
+			System.out.println("id/num qualification du rapport: " + rapport.getQualification());
+
+			model.addAttribute("rapport", rapport);
+
+			List<EchantillonAux> echantillons = microServiceLab.obtenirEchantillonsParRapportId(token, idRapport);
+			model.addAttribute("echantillons", echantillons);
+
+			List<EssaiAux> essais = microServiceLab.obtenirEssaisParRapportId(token, idRapport);
+			model.addAttribute("essais", essais);
+			return Constants.RAPPORT;
+
+		} else {
+
+			return "redirect:/labplan/connexion";
+		}
+
 	}
-	
+
+	public boolean testUser(Utilisateur utilisateur) {
+
+		if (utilisateur == null) {
+
+			return false;
+
+		} else
+
+			return true;
+	}
 
 }

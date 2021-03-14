@@ -41,13 +41,23 @@ public class FicheController {
 	public String listesFiches(@PathVariable("id") Integer numQualification, Model model, HttpSession session) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		String token = (String) session.getAttribute("TOKEN");
-		token = "Bearer " + token;
-		List<FicheAux> fiches = microServiceLab.voirLesFichesParQualification(token, numQualification);
-		model.addAttribute("fiches", fiches);
-		model.addAttribute("qualification", numQualification);
+		
 
-		return "fichesParQualification";
+		if (testUser(utilisateur)) {
+
+			String token = (String) session.getAttribute("TOKEN");
+			token = "Bearer " + token;
+			List<FicheAux> fiches = microServiceLab.voirLesFichesParQualification(token, numQualification);
+			model.addAttribute("fiches", fiches);
+			model.addAttribute("qualification", numQualification);
+			return "fichesParQualification";
+				
+
+			} else {
+
+				return "redirect:/labplan/connexion";
+			}
+		
 
 	}
 
@@ -55,36 +65,66 @@ public class FicheController {
 	public String listesFiches(Model model, HttpSession session) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		model.addAttribute("formFiche", new FormFiche());
+	
 
-		return "CreateFiche";
+		if (testUser(utilisateur)) {
+
+			model.addAttribute("formFiche", new FormFiche());
+			return "CreateFiche";
+				
+
+			} else {
+
+				return "redirect:/labplan/connexion";
+			}
+		
 	}
 
 	@PostMapping("/creation")
 	public String listesFiches(Model model, HttpSession session, FormFiche formFiche) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		String token = (String) session.getAttribute("TOKEN");
-		token = "Bearer " + token;
-		formFiche.setAuteur(utilisateur.getId());
-		microServiceLab.enregistrerFiche(token, formFiche);
-		System.out.println("dégré: " + formFiche.getDegre());
-		List<FicheAux> fiches = microServiceLab.voirLesFiches(token);
-		model.addAttribute("fiches", fiches);
+		
 
-		return "fiches";
+		if (testUser(utilisateur)) {
+
+			String token = (String) session.getAttribute("TOKEN");
+			token = "Bearer " + token;
+			formFiche.setAuteur(utilisateur.getId());
+			microServiceLab.enregistrerFiche(token, formFiche);
+			System.out.println("dégré: " + formFiche.getDegre());
+			List<FicheAux> fiches = microServiceLab.voirLesFiches(token);
+			model.addAttribute("fiches", fiches);
+			return "fiches";
+				
+
+			} else {
+
+				return "redirect:/labplan/connexion";
+			}
+		
 	}
 
 	@GetMapping("/voir")
 	public String voirLesFiches(Model model, HttpSession session) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		String token = (String) session.getAttribute("TOKEN");
-		token = "Bearer " + token;
-		List<FicheAux> fiches = microServiceLab.voirLesFiches(token);
-		model.addAttribute("fiches", fiches);
+		
 
-		return "fiches";
+		if (testUser(utilisateur)) {
+
+			String token = (String) session.getAttribute("TOKEN");
+			token = "Bearer " + token;
+			List<FicheAux> fiches = microServiceLab.voirLesFiches(token);
+			model.addAttribute("fiches", fiches);
+			return "fiches";
+				
+
+			} else {
+
+				return "redirect:/labplan/connexion";
+			}
+		
 	}
 
 	@GetMapping("/ajouter/{qualification}")
@@ -93,13 +133,23 @@ public class FicheController {
 
 		System.out.println("numQual: " + numQualification);
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		FormFiche formFiche = new FormFiche();
-		formFiche.setQualification(numQualification);
+		
+		if (testUser(utilisateur)) {
 
-		model.addAttribute("formFiche", formFiche);
-		model.addAttribute("qualification", numQualification);
+			FormFiche formFiche = new FormFiche();
+			formFiche.setQualification(numQualification);
 
-		return "ajouterFiche";
+			model.addAttribute("formFiche", formFiche);
+			model.addAttribute("qualification", numQualification);
+
+			return "ajouterFiche";
+				
+
+			} else {
+
+				return "redirect:/labplan/connexion";
+			}
+		
 
 	}
 
@@ -109,17 +159,27 @@ public class FicheController {
 
 		System.out.println("numQualif: " + numQualification);
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		String token = (String) session.getAttribute("TOKEN");
-		token = "Bearer " + token;
-		formFiche.setAuteur(utilisateur.getId());
-		formFiche.setQualification(numQualification);
-		microServiceLab.ajouterFiche(token, formFiche);
+	
 
-		List<FicheAux> fiches = microServiceLab.voirLesFichesParQualification(token, numQualification);
-		model.addAttribute("fiches", fiches);
-		model.addAttribute("qualification", numQualification);
+		if (testUser(utilisateur)) {
 
-		return "fichesParQualification";
+			String token = (String) session.getAttribute("TOKEN");
+			token = "Bearer " + token;
+			formFiche.setAuteur(utilisateur.getId());
+			formFiche.setQualification(numQualification);
+			microServiceLab.ajouterFiche(token, formFiche);
+
+			List<FicheAux> fiches = microServiceLab.voirLesFichesParQualification(token, numQualification);
+			model.addAttribute("fiches", fiches);
+			model.addAttribute("qualification", numQualification);
+			return "fichesParQualification";
+				
+
+			} else {
+
+				return "redirect:/labplan/connexion";
+			}
+		
 
 	}
 
@@ -130,13 +190,23 @@ public class FicheController {
 
 		// System.out.println("numQual: " + numQualification);
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		FormFiche formFiche = new FormFiche();
-		// formFiche.setQualification(numQualification);
+		
 
-		model.addAttribute("formFiche", formFiche);
-		model.addAttribute("qualification", 0);
+		if (testUser(utilisateur)) {
 
-		return "creerFiche";
+			FormFiche formFiche = new FormFiche();
+			// formFiche.setQualification(numQualification);
+
+			model.addAttribute("formFiche", formFiche);
+			model.addAttribute("qualification", 0);
+			return "creerFiche";
+				
+
+			} else {
+
+				return "redirect:/labplan/connexion";
+			}
+		
 
 	}
 
@@ -147,17 +217,27 @@ public class FicheController {
 
 		// System.out.println("numQualif: " + numQualification);
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		String token = (String) session.getAttribute("TOKEN");
-		token = "Bearer " + token;
-		formFiche.setAuteur(utilisateur.getId());
-		// formFiche.setQualification(numQualification);
-		microServiceLab.ajouterFiche(token, formFiche);
+		
+		if (testUser(utilisateur)) {
 
-		List<FicheAux> fiches = microServiceLab.voirLesFiches(token);
-		model.addAttribute("fiches", fiches);
-		// model.addAttribute("qualification", numQualification);
+			String token = (String) session.getAttribute("TOKEN");
+			token = "Bearer " + token;
+			formFiche.setAuteur(utilisateur.getId());
+			// formFiche.setQualification(numQualification);
+			microServiceLab.ajouterFiche(token, formFiche);
 
-		return "fiches";
+			List<FicheAux> fiches = microServiceLab.voirLesFiches(token);
+			model.addAttribute("fiches", fiches);
+			// model.addAttribute("qualification", numQualification);
+
+			return "fiches";
+				
+
+			} else {
+
+				return "redirect:/labplan/connexion";
+			}
+	
 
 	}
 
@@ -165,40 +245,58 @@ public class FicheController {
 	public String voirLaFiche(@PathVariable("id") Integer id, Model model, HttpSession session) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		String token = (String) session.getAttribute("TOKEN");
-		token = "Bearer " + token;
-		FicheAux fiche = microServiceLab.voirLaFiches(token, id);
+	
 
-		model.addAttribute("fiche", fiche);
+		if (testUser(utilisateur)) {
 
-		return "fiche";
+			String token = (String) session.getAttribute("TOKEN");
+			token = "Bearer " + token;
+			FicheAux fiche = microServiceLab.voirLaFiches(token, id);
+
+			model.addAttribute("fiche", fiche);
+			return "fiche";
+
+			} else {
+
+				return "redirect:/labplan/connexion";
+			}
+		
 	}
 
 	@GetMapping("/supprimer/{id}")
 	public String supprimerLaFiche(@PathVariable("id") Integer id, Model model, HttpSession session) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		String token = (String) session.getAttribute("TOKEN");
-		token = "Bearer " + token;
-		FicheAux fiche = microServiceLab.voirLaFiches(token, id);
-		Integer numQualification = fiche.getNumQualification();
-		System.out.println("numQualif pour suppression: " + numQualification);
-		microServiceLab.supprimerLaFiches(token, id);
+		
+		
+		if (testUser(utilisateur)) {
 
-		if (numQualification != null) {
+			String token = (String) session.getAttribute("TOKEN");
+			token = "Bearer " + token;
+			FicheAux fiche = microServiceLab.voirLaFiches(token, id);
+			Integer numQualification = fiche.getNumQualification();
+			System.out.println("numQualif pour suppression: " + numQualification);
+			microServiceLab.supprimerLaFiches(token, id);
 
-			List<FicheAux> fiches = microServiceLab.voirLesFichesParQualification(token, numQualification);
-			model.addAttribute("fiches", fiches);
-			model.addAttribute("qualification", numQualification);
-			return "fichesParQualification";
+			if (numQualification != null) {
 
-		} else {
+				List<FicheAux> fiches = microServiceLab.voirLesFichesParQualification(token, numQualification);
+				model.addAttribute("fiches", fiches);
+				model.addAttribute("qualification", numQualification);
+				return "fichesParQualification";
 
-			List<FicheAux> fiches = microServiceLab.voirLesFiches(token);
-			model.addAttribute("fiches", fiches);
-			return "fiches";
+			} else {
 
-		}
+				List<FicheAux> fiches = microServiceLab.voirLesFiches(token);
+				model.addAttribute("fiches", fiches);
+				return "fiches";
+
+			}
+
+			} else {
+
+				return "redirect:/labplan/connexion";
+			}
 
 	}
 
@@ -206,34 +304,45 @@ public class FicheController {
 	public String modifierLaFiche(@PathVariable("id") Integer id, Model model, HttpSession session) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		String token = (String) session.getAttribute("TOKEN");
-		token = "Bearer " + token;
-		FicheAux fiche = microServiceLab.voirLaFiches(token, id);
+		
 
-		FormFiche formFiche = new FormFiche();
+		if (testUser(utilisateur)) {
 
-		formFiche.setId(fiche.getId());
-		formFiche.setNumero(fiche.getNumero());
-		formFiche.setAuteur(fiche.getAuteur());
-		formFiche.setCirconstance(fiche.getCirconstance());
-		formFiche.setCode(fiche.getCode());
-		formFiche.setDate(fiche.getDate());
-		formFiche.setDomaine(fiche.getDomaine());
-		formFiche.setEtat(fiche.getEtat());
-		formFiche.setIncidence(fiche.getIncidence());
-		formFiche.setNiveau(fiche.getNiveau());
-		formFiche.setObjet(fiche.getObjet());
-		formFiche.setObservation(fiche.getObservation());
-		formFiche.setProjet(fiche.getProjet());
-		formFiche.setProduit(fiche.getProduit());
-		formFiche.setQualification(fiche.getQualification());
-		formFiche.setReponse(fiche.getReponse());
-		formFiche.setSolution(fiche.getSolution());
-		formFiche.setStatut(fiche.isStatut());
+			String token = (String) session.getAttribute("TOKEN");
+			token = "Bearer " + token;
+			FicheAux fiche = microServiceLab.voirLaFiches(token, id);
 
-		model.addAttribute("formFiche", formFiche);
+			FormFiche formFiche = new FormFiche();
 
-		return "modifierFiche";
+			formFiche.setId(fiche.getId());
+			formFiche.setNumero(fiche.getNumero());
+			formFiche.setAuteur(fiche.getAuteur());
+			formFiche.setCirconstance(fiche.getCirconstance());
+			formFiche.setCode(fiche.getCode());
+			formFiche.setDate(fiche.getDate());
+			formFiche.setDomaine(fiche.getDomaine());
+			formFiche.setEtat(fiche.getEtat());
+			formFiche.setIncidence(fiche.getIncidence());
+			formFiche.setNiveau(fiche.getNiveau());
+			formFiche.setObjet(fiche.getObjet());
+			formFiche.setObservation(fiche.getObservation());
+			formFiche.setProjet(fiche.getProjet());
+			formFiche.setProduit(fiche.getProduit());
+			formFiche.setQualification(fiche.getQualification());
+			formFiche.setReponse(fiche.getReponse());
+			formFiche.setSolution(fiche.getSolution());
+			formFiche.setStatut(fiche.isStatut());
+
+			model.addAttribute("formFiche", formFiche);
+			return "modifierFiche";
+				
+
+			} else {
+
+				return "redirect:/labplan/connexion";
+			}
+		
+		
 
 	}
 
@@ -243,30 +352,51 @@ public class FicheController {
 
 		System.out.println("Valeur id: " + id);
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		String token = (String) session.getAttribute("TOKEN");
-		token = "Bearer " + token;
-		FicheAux fiche = microServiceLab.voirLaFiches(token, id);
-		Integer numQualification = fiche.getNumQualification();
-		formFiche.setId(id);
-		formFiche.setAuteur(utilisateur.getId());
-		microServiceLab.modifierLaFiche(token, formFiche);
+		
+		
+		if (testUser(utilisateur)) {
 
-		if (numQualification != null) {
+			String token = (String) session.getAttribute("TOKEN");
+			token = "Bearer " + token;
+			FicheAux fiche = microServiceLab.voirLaFiches(token, id);
+			Integer numQualification = fiche.getNumQualification();
+			formFiche.setId(id);
+			formFiche.setAuteur(utilisateur.getId());
+			microServiceLab.modifierLaFiche(token, formFiche);
 
-			List<FicheAux> fiches = microServiceLab.voirLesFichesParQualification(token, numQualification);
-			model.addAttribute("fiches", fiches);
-			model.addAttribute("qualification", numQualification);
+			if (numQualification != null) {
 
-			return "fichesParQualification";
+				List<FicheAux> fiches = microServiceLab.voirLesFichesParQualification(token, numQualification);
+				model.addAttribute("fiches", fiches);
+				model.addAttribute("qualification", numQualification);
 
-		} else {
+				return "fichesParQualification";
 
-			List<FicheAux> fiches = microServiceLab.voirLesFiches(token);
-			model.addAttribute("fiches", fiches);
-			return "fiches";
+			} else {
 
-		}
+				List<FicheAux> fiches = microServiceLab.voirLesFiches(token);
+				model.addAttribute("fiches", fiches);
+				return "fiches";
 
+			}
+				
+
+			} else {
+
+				return "redirect:/labplan/connexion";
+			}
+
+	}
+	
+	public boolean testUser(Utilisateur utilisateur) {
+
+		if (utilisateur == null) {
+
+			return false;
+
+		} else
+
+			return true;
 	}
 
 }

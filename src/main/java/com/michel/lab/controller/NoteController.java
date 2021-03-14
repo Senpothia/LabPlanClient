@@ -35,36 +35,45 @@ public class NoteController {
 	public String listerNotes(@PathVariable(name = "id") Integer numQualification, Model model, HttpSession session) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		String token = (String) session.getAttribute("TOKEN");
-		token = "Bearer " + token;
-		QualificationAux qualification = microServiceLab.obtenirQualificationParNumero(token, numQualification);
-		model.addAttribute("qualification", qualification);
-		List<NoteAux> notes = microServiceLab.obtenirListeNotesParQualification(token, numQualification);
 
-		for (NoteAux n : notes) {
+		if (testUser(utilisateur)) {
 
-			String text = n.getTexte();
+			String token = (String) session.getAttribute("TOKEN");
+			token = "Bearer " + token;
+			QualificationAux qualification = microServiceLab.obtenirQualificationParNumero(token, numQualification);
+			model.addAttribute("qualification", qualification);
+			List<NoteAux> notes = microServiceLab.obtenirListeNotesParQualification(token, numQualification);
 
-			if (text.length() > 12) {
-				String texte = text.substring(0, 13);
-				n.setTexte(texte);
+			for (NoteAux n : notes) {
+
+				String text = n.getTexte();
+
+				if (text.length() > 12) {
+					String texte = text.substring(0, 13);
+					n.setTexte(texte);
+				}
+
 			}
 
-		}
+			System.out.println("Taille liste de notes: " + notes.size());
+			model.addAttribute("notes", notes);
 
-		System.out.println("Taille liste de notes: " + notes.size());
-		model.addAttribute("notes", notes);
+			if (notes.isEmpty()) {
 
-		if (notes.isEmpty()) {
+				model.addAttribute("vide", true);
 
-			model.addAttribute("vide", true);
+			} else {
+
+				model.addAttribute("vide", false);
+			}
+
+			return Constants.NOTES;
 
 		} else {
 
-			model.addAttribute("vide", false);
+			return "redirect:/labplan/connexion";
 		}
 
-		return Constants.NOTES;
 	}
 
 	@GetMapping("/ajouter/{id}")
@@ -72,14 +81,22 @@ public class NoteController {
 			@PathVariable(name = "id") Integer numQualification, Model model, HttpSession session) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		String token = (String) session.getAttribute("TOKEN");
-		token = "Bearer " + token;
-		QualificationAux qualification = microServiceLab.obtenirQualificationParNumero(token, numQualification);
-		System.out.println("num qualification: " + qualification.getNumero());
-		model.addAttribute("qualification", qualification);
-		model.addAttribute("formNote", new FormNote());
 
-		return Constants.CREATION_NOTE;
+		if (testUser(utilisateur)) {
+
+			String token = (String) session.getAttribute("TOKEN");
+			token = "Bearer " + token;
+			QualificationAux qualification = microServiceLab.obtenirQualificationParNumero(token, numQualification);
+			System.out.println("num qualification: " + qualification.getNumero());
+			model.addAttribute("qualification", qualification);
+			model.addAttribute("formNote", new FormNote());
+			return Constants.CREATION_NOTE;
+
+		} else {
+
+			return "redirect:/labplan/connexion";
+		}
+
 	}
 
 	@PostMapping("/creer/{id}")
@@ -87,42 +104,49 @@ public class NoteController {
 			@PathVariable(name = "id") Integer numQualification, Model model, HttpSession session, FormNote formNote) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		String token = (String) session.getAttribute("TOKEN");
-		token = "Bearer " + token;
-		Integer auteur = utilisateur.getId();
-		formNote.setAuteur(auteur);
-		formNote.setQualification(numQualification);
 
-		microServiceLab.ajouterNote(token, formNote);
+		if (testUser(utilisateur)) {
 
-		QualificationAux qualification = microServiceLab.obtenirQualificationParNumero(token, numQualification);
-		model.addAttribute("qualification", qualification);
-		List<NoteAux> notes = microServiceLab.obtenirListeNotesParQualification(token, numQualification);
+			String token = (String) session.getAttribute("TOKEN");
+			token = "Bearer " + token;
+			Integer auteur = utilisateur.getId();
+			formNote.setAuteur(auteur);
+			formNote.setQualification(numQualification);
 
-		for (NoteAux n : notes) {
+			microServiceLab.ajouterNote(token, formNote);
 
-			String text = n.getTexte();
+			QualificationAux qualification = microServiceLab.obtenirQualificationParNumero(token, numQualification);
+			model.addAttribute("qualification", qualification);
+			List<NoteAux> notes = microServiceLab.obtenirListeNotesParQualification(token, numQualification);
 
-			if (text.length() > 12) {
-				String texte = text.substring(0, 13);
-				n.setTexte(texte);
+			for (NoteAux n : notes) {
+
+				String text = n.getTexte();
+
+				if (text.length() > 12) {
+					String texte = text.substring(0, 13);
+					n.setTexte(texte);
+				}
+
 			}
 
-		}
+			System.out.println("Taille liste de notes: " + notes.size());
+			model.addAttribute("notes", notes);
 
-		System.out.println("Taille liste de notes: " + notes.size());
-		model.addAttribute("notes", notes);
+			if (notes.isEmpty()) {
 
-		if (notes.isEmpty()) {
+				model.addAttribute("vide", true);
 
-			model.addAttribute("vide", true);
+			} else {
+
+				model.addAttribute("vide", false);
+			}
+			return Constants.NOTES;
 
 		} else {
 
-			model.addAttribute("vide", false);
+			return "redirect:/labplan/connexion";
 		}
-
-		return Constants.NOTES;
 
 	}
 
@@ -130,76 +154,101 @@ public class NoteController {
 	public String afficherNote(@PathVariable(name = "id") Integer idNote, Model model, HttpSession session) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		String token = (String) session.getAttribute("TOKEN");
-		token = "Bearer " + token;
-		NoteAux note = microServiceLab.obtenirNote(token, idNote);
-		System.out.println("numéro de note: " + note.getNumero());
-		model.addAttribute("note", note);
-		return "note2";
-		//return Constants.NOTE;
+
+		if (testUser(utilisateur)) {
+
+			String token = (String) session.getAttribute("TOKEN");
+			token = "Bearer " + token;
+			NoteAux note = microServiceLab.obtenirNote(token, idNote);
+			System.out.println("numéro de note: " + note.getNumero());
+			model.addAttribute("note", note);
+			return "note2";
+
+		} else {
+
+			return "redirect:/labplan/connexion";
+		}
+
+		// return Constants.NOTE;
 	}
 
 	@GetMapping("/supprimer/{id}")
 	public String supprimerNote(@PathVariable(name = "id") Integer idNote, Model model, HttpSession session) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		String token = (String) session.getAttribute("TOKEN");
-		token = "Bearer " + token;
-		NoteAux note = microServiceLab.obtenirNote(token, idNote);
 
-		Integer numQualification = note.getQualification();
+		if (testUser(utilisateur)) {
 
-		microServiceLab.supprimerNote(token, idNote);
+			String token = (String) session.getAttribute("TOKEN");
+			token = "Bearer " + token;
+			NoteAux note = microServiceLab.obtenirNote(token, idNote);
 
-		QualificationAux qualification = microServiceLab.obtenirQualificationParNumero(token, numQualification);
-		model.addAttribute("qualification", qualification);
-		List<NoteAux> notes = microServiceLab.obtenirListeNotesParQualification(token, numQualification);
+			Integer numQualification = note.getQualification();
 
-		for (NoteAux n : notes) {
+			microServiceLab.supprimerNote(token, idNote);
 
-			String text = n.getTexte();
+			QualificationAux qualification = microServiceLab.obtenirQualificationParNumero(token, numQualification);
+			model.addAttribute("qualification", qualification);
+			List<NoteAux> notes = microServiceLab.obtenirListeNotesParQualification(token, numQualification);
 
-			if (text.length() > 12) {
-				String texte = text.substring(0, 13);
-				n.setTexte(texte);
+			for (NoteAux n : notes) {
+
+				String text = n.getTexte();
+
+				if (text.length() > 12) {
+					String texte = text.substring(0, 13);
+					n.setTexte(texte);
+				}
+
 			}
+			System.out.println("Taille liste de notes: " + notes.size());
+			model.addAttribute("notes", notes);
 
-		}
-		System.out.println("Taille liste de notes: " + notes.size());
-		model.addAttribute("notes", notes);
+			if (notes.isEmpty()) {
 
-		if (notes.isEmpty()) {
+				model.addAttribute("vide", true);
 
-			model.addAttribute("vide", true);
+			} else {
+
+				model.addAttribute("vide", false);
+			}
+			return Constants.NOTES;
 
 		} else {
 
-			model.addAttribute("vide", false);
+			return "redirect:/labplan/connexion";
 		}
 
-		return Constants.NOTES;
 	}
 
 	@GetMapping("/modifier/{id}")
 	public String modifierNote(@PathVariable(name = "id") Integer idNote, Model model, HttpSession session) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		String token = (String) session.getAttribute("TOKEN");
-		token = "Bearer " + token;
-		NoteAux note = microServiceLab.obtenirNote(token, idNote);
-		Integer numQualification = note.getQualification();
-		QualificationAux qualification = microServiceLab.obtenirQualificationParNumero(token, numQualification);
-		model.addAttribute("qualification", qualification);
 
-		FormNote formNote = new FormNote();
-		formNote.setId(idNote);
-		formNote.setTexte(note.getTexte());
-		formNote.setDate(note.getDate());
-		formNote.setQualification(numQualification);
+		if (testUser(utilisateur)) {
 
-		model.addAttribute("formNote", formNote);
+			String token = (String) session.getAttribute("TOKEN");
+			token = "Bearer " + token;
+			NoteAux note = microServiceLab.obtenirNote(token, idNote);
+			Integer numQualification = note.getQualification();
+			QualificationAux qualification = microServiceLab.obtenirQualificationParNumero(token, numQualification);
+			model.addAttribute("qualification", qualification);
 
-		return Constants.MODIFICATION_NOTE;
+			FormNote formNote = new FormNote();
+			formNote.setId(idNote);
+			formNote.setTexte(note.getTexte());
+			formNote.setDate(note.getDate());
+			formNote.setQualification(numQualification);
+
+			model.addAttribute("formNote", formNote);
+			return Constants.MODIFICATION_NOTE;
+
+		} else {
+
+			return "redirect:/labplan/connexion";
+		}
+
 	}
 
 	@PostMapping("/modifier/{id}/{note}")
@@ -208,35 +257,54 @@ public class NoteController {
 			Model model, HttpSession session, FormNote formNote) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		String token = (String) session.getAttribute("TOKEN");
-		token = "Bearer " + token;
-		Integer auteur = utilisateur.getId();
-		formNote.setAuteur(auteur);
-		formNote.setId(idNote);
 
-		NoteAux note = microServiceLab.obtenirNote(token, idNote);
+		if (testUser(utilisateur)) {
 
-		System.out.println("id note récupéré: " + formNote.getId());
+			String token = (String) session.getAttribute("TOKEN");
+			token = "Bearer " + token;
+			Integer auteur = utilisateur.getId();
+			formNote.setAuteur(auteur);
+			formNote.setId(idNote);
 
-		microServiceLab.modifierNote(token, formNote);
+			NoteAux note = microServiceLab.obtenirNote(token, idNote);
 
-		QualificationAux qualification = microServiceLab.obtenirQualificationParNumero(token, numQualification);
-		model.addAttribute("qualification", qualification);
-		List<NoteAux> notes = microServiceLab.obtenirListeNotesParQualification(token, numQualification);
-		System.out.println("Taille liste de notes: " + notes.size());
-		model.addAttribute("notes", notes);
+			System.out.println("id note récupéré: " + formNote.getId());
 
-		if (notes.isEmpty()) {
+			microServiceLab.modifierNote(token, formNote);
 
-			model.addAttribute("vide", true);
+			QualificationAux qualification = microServiceLab.obtenirQualificationParNumero(token, numQualification);
+			model.addAttribute("qualification", qualification);
+			List<NoteAux> notes = microServiceLab.obtenirListeNotesParQualification(token, numQualification);
+			System.out.println("Taille liste de notes: " + notes.size());
+			model.addAttribute("notes", notes);
+
+			if (notes.isEmpty()) {
+
+				model.addAttribute("vide", true);
+
+			} else {
+
+				model.addAttribute("vide", false);
+			}
+
+			return Constants.NOTES;
 
 		} else {
 
-			model.addAttribute("vide", false);
+			return "redirect:/labplan/connexion";
 		}
 
-		return Constants.NOTES;
+	}
 
+	public boolean testUser(Utilisateur utilisateur) {
+
+		if (utilisateur == null) {
+
+			return false;
+
+		} else
+
+			return true;
 	}
 
 }
