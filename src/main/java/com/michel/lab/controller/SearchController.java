@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.michel.lab.model.Utilisateur;
+
 @Controller
 @RequestMapping("/labplan/search")
 public class SearchController {
@@ -26,6 +28,15 @@ public class SearchController {
 		return "ok";
 	}
 	
-	
+	public boolean testUser(Utilisateur utilisateur) {
+
+		if (utilisateur == null) {
+
+			return false;
+
+		} else
+
+			return true;
+	}
 
 }
