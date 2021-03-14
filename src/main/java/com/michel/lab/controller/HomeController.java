@@ -19,7 +19,7 @@ import com.michel.lab.proxy.MicroServiceLab;
 import com.michel.lab.service.UserConnexion;
 
 @Controller
-@RequestMapping("/labplan")
+//@RequestMapping("/labplan")
 
 public class HomeController {
 	

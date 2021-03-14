@@ -22,7 +22,7 @@ import com.michel.lab.model.Utilisateur;
 import com.michel.lab.proxy.MicroServiceLab;
 
 @Controller
-@RequestMapping("/labplan/private")
+@RequestMapping("/private")
 public class ProcedureController {
 
 	@Autowired

@@ -20,7 +20,7 @@ import com.michel.lab.proxy.MicroServiceLab;
 import com.michel.lab.service.UserConnexion;
 
 @Controller
-@RequestMapping("/labplan/private/gestion")
+@RequestMapping("/private/gestion")
 public class UsineController {
 	
 	@Autowired

@@ -22,7 +22,7 @@ import com.michel.lab.proxy.MicroServiceLab;
 import com.michel.lab.service.UserConnexion;
 
 @Controller
-@RequestMapping("/labplan/private/activite")
+@RequestMapping("/private/activite")
 public class SiteController {
 
 	@Autowired
