@@ -34,7 +34,16 @@ public class FicheController {
 	public String accessFiches(Model model, HttpSession session) {
 		
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		return "accueil_fiches";
+		
+		if (testUser(utilisateur)) {
+
+			return "accueil_fiches";
+
+			} else {
+
+				return "redirect:/connexion";
+			}
+		
 	}
 
 	@GetMapping("/liste/{id}")
