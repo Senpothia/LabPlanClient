@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-
 import com.michel.lab.model.DemandeAux;
 import com.michel.lab.model.FormDemande;
 import com.michel.lab.model.Utilisateur;
@@ -28,12 +27,21 @@ public class DemandeController {
 
 	@Autowired
 	private MicroServiceLab microServiceLab;
-	
+
 	@GetMapping("/access")
 	public String accessDemandes(Model model, HttpSession session) {
-		
+
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		return "accueil_demandes";
+
+		if (testUser(utilisateur)) {
+
+			return "accueil_demandes";
+
+		} else {
+
+			return "redirect:/labplan/connexion";
+		}
+
 	}
 
 	@GetMapping("/creation")
@@ -41,11 +49,17 @@ public class DemandeController {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
 
-		FormDemande formDemande = new FormDemande();
-		// formDemande.setDemandeur(utilisateur.getId());
-		model.addAttribute("formDemande", formDemande);
+		if (testUser(utilisateur)) {
 
-		return "CreateDemande";
+			FormDemande formDemande = new FormDemande();
+			// formDemande.setDemandeur(utilisateur.getId());
+			model.addAttribute("formDemande", formDemande);
+			return "CreateDemande";
+
+		} else {
+
+			return "redirect:/labplan/connexion";
+		}
 
 	}
 
@@ -53,30 +67,46 @@ public class DemandeController {
 	public String enregistrerDemande(Model model, HttpSession session, FormDemande formDemande) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		String token = (String) session.getAttribute("TOKEN");
-		token = "Bearer " + token;
-		formDemande.setDemandeur(utilisateur.getId());
-		formDemande.setStatut(true);
-		microServiceLab.enregistrerDemande(token, formDemande);
 
-		List<DemandeAux> demandes = microServiceLab.listeDemandes(token);
-		model.addAttribute("demandes", demandes);
+		if (testUser(utilisateur)) {
 
-		return "demandes";
+			String token = (String) session.getAttribute("TOKEN");
+			token = "Bearer " + token;
+			formDemande.setDemandeur(utilisateur.getId());
+			formDemande.setStatut(true);
+			microServiceLab.enregistrerDemande(token, formDemande);
 
-		// return "ok";
+			List<DemandeAux> demandes = microServiceLab.listeDemandes(token);
+			model.addAttribute("demandes", demandes);
+			return "demandes";
+
+		} else {
+
+			return "redirect:/labplan/connexion";
+		}
+
 	}
 
 	@GetMapping("/liste")
 	public String voirDemandes(Model model, HttpSession session) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		String token = (String) session.getAttribute("TOKEN");
-		token = "Bearer " + token;
-		List<DemandeAux> demandes = microServiceLab.listeDemandes(token);
-		model.addAttribute("demandes", demandes);
+		
 
-		return "demandes";
+		if (testUser(utilisateur)) {
+			
+			String token = (String) session.getAttribute("TOKEN");
+			token = "Bearer " + token;
+			List<DemandeAux> demandes = microServiceLab.listeDemandes(token);
+			model.addAttribute("demandes", demandes);
+			return "demandes";
+				
+
+			} else {
+
+				return "redirect:/labplan/connexion";
+			}
+		
 
 	}
 
@@ -84,12 +114,22 @@ public class DemandeController {
 	public String VoirDemande(@PathVariable(name = "id") Integer id, Model model, HttpSession session) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		String token = (String) session.getAttribute("TOKEN");
-		token = "Bearer " + token;
-		DemandeAux demande = microServiceLab.voirDemande(token,id);
-		model.addAttribute("demande", demande);
+		
 
-		return "demande2";
+		if (testUser(utilisateur)) {
+
+			String token = (String) session.getAttribute("TOKEN");
+			token = "Bearer " + token;
+			DemandeAux demande = microServiceLab.voirDemande(token, id);
+			model.addAttribute("demande", demande);
+			return "demande2";
+				
+
+			} else {
+
+				return "redirect:/labplan/connexion";
+			}
+		
 
 	}
 
@@ -97,13 +137,23 @@ public class DemandeController {
 	public String supprimerDemande(@PathVariable(name = "id") Integer id, Model model, HttpSession session) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		String token = (String) session.getAttribute("TOKEN");
-		token = "Bearer " + token;
-		microServiceLab.supprimerDemande(token, id);
-		List<DemandeAux> demandes = microServiceLab.listeDemandes(token);
-		model.addAttribute("demandes", demandes);
+		
 
-		return "demandes";
+		if (testUser(utilisateur)) {
+
+			String token = (String) session.getAttribute("TOKEN");
+			token = "Bearer " + token;
+			microServiceLab.supprimerDemande(token, id);
+			List<DemandeAux> demandes = microServiceLab.listeDemandes(token);
+			model.addAttribute("demandes", demandes);
+			return "demandes";
+				
+
+			} else {
+
+				return "redirect:/labplan/connexion";
+			}
+		
 
 	}
 
@@ -111,145 +161,203 @@ public class DemandeController {
 	public String modifierDemande(@PathVariable(name = "id") Integer id, Model model, HttpSession session) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		String token = (String) session.getAttribute("TOKEN");
-		token = "Bearer " + token;
-		DemandeAux demande = microServiceLab.voirDemande(token, id);
-		FormDemande formDemande = new FormDemande();
-
-		formDemande.setId(id);
-		formDemande.setNumero(demande.getNumero());
-		formDemande.setDemandeur(utilisateur.getId());
-		formDemande.setDate(demande.getDate());
-		formDemande.setCode(demande.getCode());
-		formDemande.setProduit(demande.getProduit());
-		formDemande.setEchantillon(demande.getEchantillon());
-		formDemande.setObjectif(demande.getObjectif());
-		formDemande.setOrigine(demande.getOrigine());
-		formDemande.setEssai(demande.getEssai());
-		formDemande.setAuxiliaire(demande.getAuxiliaire());
-		formDemande.setUrgence(demande.getUrgence());
-		model.addAttribute("formDemande", formDemande);
 		
-		return "modifierDemande";
+		if (testUser(utilisateur)) {
+
+			String token = (String) session.getAttribute("TOKEN");
+			token = "Bearer " + token;
+			DemandeAux demande = microServiceLab.voirDemande(token, id);
+			FormDemande formDemande = new FormDemande();
+
+			formDemande.setId(id);
+			formDemande.setNumero(demande.getNumero());
+			formDemande.setDemandeur(utilisateur.getId());
+			formDemande.setDate(demande.getDate());
+			formDemande.setCode(demande.getCode());
+			formDemande.setProduit(demande.getProduit());
+			formDemande.setEchantillon(demande.getEchantillon());
+			formDemande.setObjectif(demande.getObjectif());
+			formDemande.setOrigine(demande.getOrigine());
+			formDemande.setEssai(demande.getEssai());
+			formDemande.setAuxiliaire(demande.getAuxiliaire());
+			formDemande.setUrgence(demande.getUrgence());
+			model.addAttribute("formDemande", formDemande);
+			return "modifierDemande";
+				
+
+			} else {
+
+				return "redirect:/labplan/connexion";
+			}
+		
 
 	}
 
 	@PostMapping("/modifier/{id}")
-	public String enregistrerModificationDemande(@PathVariable(name = "id") Integer id
-			, Model model, HttpSession session
-			, FormDemande formDemande) {
-		
-		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		String token = (String) session.getAttribute("TOKEN");
-		token = "Bearer " + token;
-		formDemande.setDemandeur(utilisateur.getId());
-		System.out.println("Nom de produit: " + formDemande.getProduit());
-		microServiceLab.modifierDemande(token, formDemande);
-		List<DemandeAux> demandes = microServiceLab.listeDemandes(token);
-		model.addAttribute("demandes", demandes);
+	public String enregistrerModificationDemande(@PathVariable(name = "id") Integer id, Model model,
+			HttpSession session, FormDemande formDemande) {
 
-		return "demandes";
+		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		
+
+		if (testUser(utilisateur)) {
+
+			String token = (String) session.getAttribute("TOKEN");
+			token = "Bearer " + token;
+			formDemande.setDemandeur(utilisateur.getId());
+			System.out.println("Nom de produit: " + formDemande.getProduit());
+			microServiceLab.modifierDemande(token, formDemande);
+			List<DemandeAux> demandes = microServiceLab.listeDemandes(token);
+			model.addAttribute("demandes", demandes);
+			return "demandes";
+				
+
+			} else {
+
+				return "redirect:/labplan/connexion";
+			}
+		
 	}
-	
+
 	@GetMapping("/repondre/{id}")
-	public String creationDemande(
-			@PathVariable(name = "id") Integer id,
-			Model model, HttpSession session) {
+	public String creationDemande(@PathVariable(name = "id") Integer id, Model model, HttpSession session) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		String token = (String) session.getAttribute("TOKEN");
-		token = "Bearer " + token;
-		DemandeAux demande = microServiceLab.voirDemande(token, id);
-		
-		System.out.println("num demande: " + demande.getNumero());
-		FormDemande formDemande = new FormDemande();
-		formDemande.setId(id);
-		formDemande.setNumero(demande.getNumero());
-		formDemande.setProduit(demande.getProduit());
-		formDemande.setEchantillon(demande.getEchantillon());
-		formDemande.setObjectif(demande.getObjectif());
-		formDemande.setOrigine(demande.getOrigine());
-		formDemande.setEssai(demande.getEssai());
-		
-		model.addAttribute("formDemande", formDemande);
+	
+		if (testUser(utilisateur)) {
 
-		return "repondreDemande";
+			String token = (String) session.getAttribute("TOKEN");
+			token = "Bearer " + token;
+			DemandeAux demande = microServiceLab.voirDemande(token, id);
+
+			System.out.println("num demande: " + demande.getNumero());
+			FormDemande formDemande = new FormDemande();
+			formDemande.setId(id);
+			formDemande.setNumero(demande.getNumero());
+			formDemande.setProduit(demande.getProduit());
+			formDemande.setEchantillon(demande.getEchantillon());
+			formDemande.setObjectif(demande.getObjectif());
+			formDemande.setOrigine(demande.getOrigine());
+			formDemande.setEssai(demande.getEssai());
+
+			model.addAttribute("formDemande", formDemande);
+			return "repondreDemande";
+				
+
+			} else {
+
+				return "redirect:/labplan/connexion";
+			}
+		
 
 	}
-	
+
 	@PostMapping("/repondre/{id}")
-	public String enregistrerReponseDemande(
-			@PathVariable(name = "id") Integer id,
-			Model model, HttpSession session,
+	public String enregistrerReponseDemande(@PathVariable(name = "id") Integer id, Model model, HttpSession session,
 			FormDemande formDemande) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		String token = (String) session.getAttribute("TOKEN");
-		token = "Bearer " + token;
-		DemandeAux demande = microServiceLab.voirDemande(token, id);
-		formDemande.setStatut(false);
-		formDemande.setId(id);
-		formDemande.setTechnicien(utilisateur.getId());
-		microServiceLab.enregistrerReponse(token, formDemande);
 		
-		List<DemandeAux> demandes = microServiceLab.listeDemandes(token);
-		model.addAttribute("demandes", demandes);
 
-		return "demandes";
-		
+		if (testUser(utilisateur)) {
+
+			String token = (String) session.getAttribute("TOKEN");
+			token = "Bearer " + token;
+			DemandeAux demande = microServiceLab.voirDemande(token, id);
+			formDemande.setStatut(false);
+			formDemande.setId(id);
+			formDemande.setTechnicien(utilisateur.getId());
+			microServiceLab.enregistrerReponse(token, formDemande);
+
+			List<DemandeAux> demandes = microServiceLab.listeDemandes(token);
+			model.addAttribute("demandes", demandes);
+			return "demandes";
+				
+
+			} else {
+
+				return "redirect:/labplan/connexion";
+			}
+	
 
 	}
-	
+
 	@GetMapping("/traiter/{id}")
-	public String traiterDemande(
-			@PathVariable(name = "id") Integer id,
-			Model model, HttpSession session) {
-		
-		
-		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		String token = (String) session.getAttribute("TOKEN");
-		token = "Bearer " + token;
-		
-		microServiceLab.traiterDemande(token, id);
-		List<DemandeAux> demandes = microServiceLab.listeDemandes(token);
-		model.addAttribute("demandes", demandes);
+	public String traiterDemande(@PathVariable(name = "id") Integer id, Model model, HttpSession session) {
 
-		return "demandes";
+		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		
+		if (testUser(utilisateur)) {
+
+			String token = (String) session.getAttribute("TOKEN");
+			token = "Bearer " + token;
+
+			microServiceLab.traiterDemande(token, id);
+			List<DemandeAux> demandes = microServiceLab.listeDemandes(token);
+			model.addAttribute("demandes", demandes);
+
+			return "demandes";
+				
+
+			} else {
+
+				return "redirect:/labplan/connexion";
+			}
+		
 	}
-	
+
 	@GetMapping("/repondre/modifier/{id}")
-	public String modifierReponseDemande(@PathVariable(name = "id") Integer id,
-			Model model, HttpSession session) {
-		
-		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		String token = (String) session.getAttribute("TOKEN");
-		token = "Bearer " + token;
-		DemandeAux demande = microServiceLab.voirDemande(token, id);
-		System.out.println("num demande: " + demande.getNumero());
-		FormDemande formDemande = new FormDemande();
-		formDemande.setId(id);
-		formDemande.setNumero(demande.getNumero());
-		formDemande.setDate(demande.getDate());
-		formDemande.setCode(demande.getCode());
-		formDemande.setProduit(demande.getProduit());
-		formDemande.setEchantillon(demande.getEchantillon());
-		formDemande.setObjectif(demande.getObjectif());
-		formDemande.setOrigine(demande.getOrigine());
-		formDemande.setEssai(demande.getEssai());
-		formDemande.setAuxiliaire(demande.getAuxiliaire());
-		formDemande.setUrgence(demande.getUrgence());
-		
-		formDemande.setNomTechnicien(demande.getTechnicien());
-		formDemande.setAvis(demande.getAvis());
-		formDemande.setObservation(demande.getObservation());
-		formDemande.setDateReponse(demande.getDateReponse());
-		formDemande.setRapport(demande.getRapport());
-		
-		model.addAttribute("formDemande", formDemande);
+	public String modifierReponseDemande(@PathVariable(name = "id") Integer id, Model model, HttpSession session) {
 
-		return "repondreDemande";
+		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+		
+
+		if (testUser(utilisateur)) {
+
+			String token = (String) session.getAttribute("TOKEN");
+			token = "Bearer " + token;
+			DemandeAux demande = microServiceLab.voirDemande(token, id);
+			System.out.println("num demande: " + demande.getNumero());
+			FormDemande formDemande = new FormDemande();
+			formDemande.setId(id);
+			formDemande.setNumero(demande.getNumero());
+			formDemande.setDate(demande.getDate());
+			formDemande.setCode(demande.getCode());
+			formDemande.setProduit(demande.getProduit());
+			formDemande.setEchantillon(demande.getEchantillon());
+			formDemande.setObjectif(demande.getObjectif());
+			formDemande.setOrigine(demande.getOrigine());
+			formDemande.setEssai(demande.getEssai());
+			formDemande.setAuxiliaire(demande.getAuxiliaire());
+			formDemande.setUrgence(demande.getUrgence());
+
+			formDemande.setNomTechnicien(demande.getTechnicien());
+			formDemande.setAvis(demande.getAvis());
+			formDemande.setObservation(demande.getObservation());
+			formDemande.setDateReponse(demande.getDateReponse());
+			formDemande.setRapport(demande.getRapport());
+
+			model.addAttribute("formDemande", formDemande);
+			return "repondreDemande";
+				
+
+			} else {
+
+				return "redirect:/labplan/connexion";
+			}
+		
 
 	}
 
+	public boolean testUser(Utilisateur utilisateur) {
+
+		if (utilisateur == null) {
+
+			return false;
+
+		} else
+
+			return true;
+	}
 
 }
