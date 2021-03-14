@@ -48,7 +48,7 @@ public class EssaiController {
 
 			} else {
 
-				return "redirect:/labplan/connexion";
+				return "redirect:/connexion";
 			}
 		
 	}
@@ -75,7 +75,7 @@ public class EssaiController {
 
 			} else {
 
-				return "redirect:/labplan/connexion";
+				return "redirect:/connexion";
 			}
 		
 
@@ -227,7 +227,7 @@ public class EssaiController {
 
 			} else {
 
-				return "redirect:/labplan/connexion";
+				return "redirect:/connexion";
 			}
 		
 	}
@@ -256,7 +256,7 @@ public class EssaiController {
 
 			} else {
 
-				return "redirect:/labplan/connexion";
+				return "redirect:/connexion";
 			}
 		
 	}
@@ -346,7 +346,7 @@ public class EssaiController {
 
 			} else {
 
-				return "redirect:/labplan/connexion";
+				return "redirect:/connexion";
 			}
 		
 

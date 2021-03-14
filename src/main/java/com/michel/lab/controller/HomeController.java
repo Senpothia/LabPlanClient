@@ -72,7 +72,7 @@ public class HomeController {
 		
 		} else {
 			
-			return "redirect:/labplan/connexion?error=true";
+			return "redirect:/connexion?error=true";
 		}
 	}
 	
@@ -165,7 +165,7 @@ public class HomeController {
 			
 		}else {
 			
-			return "redirect:/labplan/compte/modifier?error=true";
+			return "redirect:/compte/modifier?error=true";
 		}
 		
 	}

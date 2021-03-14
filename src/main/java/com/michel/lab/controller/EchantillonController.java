@@ -51,7 +51,7 @@ public class EchantillonController {
 
 			} else {
 
-				return "redirect:/labplan/connexion";
+				return "redirect:/connexion";
 			}
 		
 		
@@ -76,12 +76,12 @@ public class EchantillonController {
 
 			redirectAttributes.addAttribute("id", id);
 
-			return "redirect:/labplan/private/echantillons/voir";
+			return "redirect:/private/echantillons/voir";
 				
 
 			} else {
 
-				return "redirect:/labplan/connexion";
+				return "redirect:/connexion";
 			}
 		
 
@@ -107,7 +107,7 @@ public class EchantillonController {
 
 			} else {
 
-				return "redirect:/labplan/connexion";
+				return "redirect:/connexion";
 			}
 	
 	}
@@ -135,7 +135,7 @@ public class EchantillonController {
 
 			} else {
 
-				return "redirect:/labplan/connexion";
+				return "redirect:/connexion";
 			}
 		
 
@@ -160,7 +160,7 @@ public class EchantillonController {
 
 			} else {
 
-				return "redirect:/labplan/connexion";
+				return "redirect:/connexion";
 			}
 		
 	}
@@ -183,12 +183,12 @@ public class EchantillonController {
 			model.addAttribute("echantillons", echantillons);
 			QualificationAux qualif = microServiceLab.obtenirQualification(token, qualification);
 			model.addAttribute("qualification", qualif);
-			return "redirect:/labplan/private/echantillons/voir";
+			return "redirect:/private/echantillons/voir";
 				
 
 			} else {
 
-				return "redirect:/labplan/connexion";
+				return "redirect:/connexion";
 			}
 		
 
@@ -226,7 +226,7 @@ public class EchantillonController {
 
 			} else {
 
-				return "redirect:/labplan/connexion";
+				return "redirect:/connexion";
 			}
 		
 	}
@@ -253,12 +253,12 @@ public class EchantillonController {
 			model.addAttribute("echantillons", echantillons);
 			QualificationAux qualif = microServiceLab.obtenirQualification(token, qualification);
 			model.addAttribute("qualification", qualif);
-			return "redirect:/labplan/private/echantillons/voir";
+			return "redirect:/private/echantillons/voir";
 				
 
 			} else {
 
-				return "redirect:/labplan/connexion";
+				return "redirect:/connexion";
 			}
 		
 		

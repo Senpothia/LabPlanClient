@@ -55,7 +55,7 @@ public class FicheController {
 
 			} else {
 
-				return "redirect:/labplan/connexion";
+				return "redirect:/connexion";
 			}
 		
 
@@ -75,7 +75,7 @@ public class FicheController {
 
 			} else {
 
-				return "redirect:/labplan/connexion";
+				return "redirect:/connexion";
 			}
 		
 	}
@@ -100,7 +100,7 @@ public class FicheController {
 
 			} else {
 
-				return "redirect:/labplan/connexion";
+				return "redirect:/connexion";
 			}
 		
 	}
@@ -122,7 +122,7 @@ public class FicheController {
 
 			} else {
 
-				return "redirect:/labplan/connexion";
+				return "redirect:/connexion";
 			}
 		
 	}
@@ -147,7 +147,7 @@ public class FicheController {
 
 			} else {
 
-				return "redirect:/labplan/connexion";
+				return "redirect:/connexion";
 			}
 		
 
@@ -177,7 +177,7 @@ public class FicheController {
 
 			} else {
 
-				return "redirect:/labplan/connexion";
+				return "redirect:/connexion";
 			}
 		
 
@@ -204,7 +204,7 @@ public class FicheController {
 
 			} else {
 
-				return "redirect:/labplan/connexion";
+				return "redirect:/connexion";
 			}
 		
 
@@ -235,7 +235,7 @@ public class FicheController {
 
 			} else {
 
-				return "redirect:/labplan/connexion";
+				return "redirect:/connexion";
 			}
 	
 
@@ -258,7 +258,7 @@ public class FicheController {
 
 			} else {
 
-				return "redirect:/labplan/connexion";
+				return "redirect:/connexion";
 			}
 		
 	}
@@ -295,7 +295,7 @@ public class FicheController {
 
 			} else {
 
-				return "redirect:/labplan/connexion";
+				return "redirect:/connexion";
 			}
 
 	}
@@ -339,7 +339,7 @@ public class FicheController {
 
 			} else {
 
-				return "redirect:/labplan/connexion";
+				return "redirect:/connexion";
 			}
 		
 		
@@ -383,7 +383,7 @@ public class FicheController {
 
 			} else {
 
-				return "redirect:/labplan/connexion";
+				return "redirect:/connexion";
 			}
 
 	}

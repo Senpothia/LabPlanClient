@@ -42,7 +42,7 @@ public class UsineController {
 
 			} else {
 
-				return "redirect:/labplan/connexion";
+				return "redirect:/connexion";
 			}
 		
 	}
@@ -61,7 +61,7 @@ public class UsineController {
 
 			} else {
 
-				return "redirect:/labplan/connexion";
+				return "redirect:/connexion";
 			}
 		
 	}
@@ -87,7 +87,7 @@ public class UsineController {
 
 			} else {
 
-				return "redirect:/labplan/connexion";
+				return "redirect:/connexion";
 			}
 		
 	
@@ -111,7 +111,7 @@ public class UsineController {
 
 			} else {
 
-				return "redirect:/labplan/connexion";
+				return "redirect:/connexion";
 			}
 		
 		
@@ -134,7 +134,7 @@ public class UsineController {
 
 			} else {
 
-				return "redirect:/labplan/connexion";
+				return "redirect:/connexion";
 			}
 	
 		
@@ -156,7 +156,7 @@ public class UsineController {
 
 			} else {
 
-				return "redirect:/labplan/connexion";
+				return "redirect:/connexion";
 			}
 		
 	}
@@ -182,7 +182,7 @@ public class UsineController {
 
 			} else {
 
-				return "redirect:/labplan/connexion";
+				return "redirect:/connexion";
 			}
 		
 	}
@@ -207,7 +207,7 @@ public class UsineController {
 
 			} else {
 
-				return "redirect:/labplan/connexion";
+				return "redirect:/connexion";
 			}
 		
 		
@@ -232,7 +232,7 @@ public class UsineController {
 
 			} else {
 
-				return "redirect:/labplan/connexion";
+				return "redirect:/connexion";
 			}
 		
 	}
@@ -256,7 +256,7 @@ public class UsineController {
 
 			} else {
 
-				return "redirect:/labplan/connexion";
+				return "redirect:/connexion";
 			}
 		
 	}
@@ -283,7 +283,7 @@ public class UsineController {
 
 			} else {
 
-				return "redirect:/labplan/connexion";
+				return "redirect:/connexion";
 			}
 		
 		
@@ -310,7 +310,7 @@ public class UsineController {
 
 			} else {
 
-				return "redirect:/labplan/connexion";
+				return "redirect:/connexion";
 			}
 		
 	}
@@ -338,7 +338,7 @@ public class UsineController {
 
 			} else {
 
-				return "redirect:/labplan/connexion";
+				return "redirect:/connexion";
 			}
 		
 	}
@@ -367,7 +367,7 @@ public class UsineController {
 
 			} else {
 
-				return "redirect:/labplan/connexion";
+				return "redirect:/connexion";
 			}
 		
 	}
@@ -397,7 +397,7 @@ public class UsineController {
 
 			} else {
 
-				return "redirect:/labplan/connexion";
+				return "redirect:/connexion";
 			}
 		
 	}
@@ -438,7 +438,7 @@ public class UsineController {
 
 			} else {
 
-				return "redirect:/labplan/connexion";
+				return "redirect:/connexion";
 			}
 		
 	}
@@ -464,7 +464,7 @@ public class UsineController {
 
 			} else {
 
-				return "redirect:/labplan/connexion";
+				return "redirect:/connexion";
 			}
 		
 	}
@@ -493,7 +493,7 @@ public class UsineController {
 
 			} else {
 
-				return "redirect:/labplan/connexion";
+				return "redirect:/connexion";
 			}
 		
 	
@@ -520,7 +520,7 @@ public class UsineController {
 
 			} else {
 
-				return "redirect:/labplan/connexion";
+				return "redirect:/connexion";
 			}
 		
 	
@@ -547,7 +547,7 @@ public class UsineController {
 
 			} else {
 
-				return "redirect:/labplan/connexion";
+				return "redirect:/connexion";
 			}
 		
 		
@@ -577,7 +577,7 @@ public class UsineController {
 
 			} else {
 
-				return "redirect:/labplan/connexion";
+				return "redirect:/connexion";
 			}
 		
 		
@@ -604,7 +604,7 @@ public class UsineController {
 
 			} else {
 
-				return "redirect:/labplan/connexion";
+				return "redirect:/connexion";
 			}
 		
 	

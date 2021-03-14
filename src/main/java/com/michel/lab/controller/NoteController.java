@@ -71,7 +71,7 @@ public class NoteController {
 
 		} else {
 
-			return "redirect:/labplan/connexion";
+			return "redirect:/connexion";
 		}
 
 	}
@@ -94,7 +94,7 @@ public class NoteController {
 
 		} else {
 
-			return "redirect:/labplan/connexion";
+			return "redirect:/connexion";
 		}
 
 	}
@@ -145,7 +145,7 @@ public class NoteController {
 
 		} else {
 
-			return "redirect:/labplan/connexion";
+			return "redirect:/connexion";
 		}
 
 	}
@@ -166,7 +166,7 @@ public class NoteController {
 
 		} else {
 
-			return "redirect:/labplan/connexion";
+			return "redirect:/connexion";
 		}
 
 		// return Constants.NOTE;
@@ -216,7 +216,7 @@ public class NoteController {
 
 		} else {
 
-			return "redirect:/labplan/connexion";
+			return "redirect:/connexion";
 		}
 
 	}
@@ -246,7 +246,7 @@ public class NoteController {
 
 		} else {
 
-			return "redirect:/labplan/connexion";
+			return "redirect:/connexion";
 		}
 
 	}
@@ -291,7 +291,7 @@ public class NoteController {
 
 		} else {
 
-			return "redirect:/labplan/connexion";
+			return "redirect:/connexion";
 		}
 
 	}

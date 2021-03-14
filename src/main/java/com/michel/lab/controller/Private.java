@@ -63,7 +63,7 @@ public class Private {
 
 		} else {
 
-			return "redirect:/labplan/connexion";
+			return "redirect:/connexion";
 		}
 
 	}
@@ -80,7 +80,7 @@ public class Private {
 
 		} else {
 
-			return "redirect:/labplan/connexion";
+			return "redirect:/connexion";
 		}
 
 	}
@@ -103,7 +103,7 @@ public class Private {
 
 		} else {
 
-			return "redirect:/labplan/connexion";
+			return "redirect:/connexion";
 		}
 
 	}
@@ -125,7 +125,7 @@ public class Private {
 
 		} else {
 
-			return "redirect:/labplan/connexion";
+			return "redirect:/connexion";
 		}
 
 	}
@@ -148,7 +148,7 @@ public class Private {
 
 		} else {
 
-			return "redirect:/labplan/connexion";
+			return "redirect:/connexion";
 		}
 
 	}
@@ -171,7 +171,7 @@ public class Private {
 
 		} else {
 
-			return "redirect:/labplan/connexion";
+			return "redirect:/connexion";
 		}
 
 	}
@@ -203,7 +203,7 @@ public class Private {
 
 		} else {
 
-			return "redirect:/labplan/connexion";
+			return "redirect:/connexion";
 		}
 
 	}
@@ -227,7 +227,7 @@ public class Private {
 
 		} else {
 
-			return "redirect:/labplan/connexion";
+			return "redirect:/connexion";
 		}
 
 	}
@@ -262,7 +262,7 @@ public class Private {
 
 		} else {
 
-			return "redirect:/labplan/connexion";
+			return "redirect:/connexion";
 		}
 
 	}
@@ -294,7 +294,7 @@ public class Private {
 
 		} else {
 
-			return "redirect:/labplan/connexion";
+			return "redirect:/connexion";
 		}
 
 	}
@@ -323,11 +323,11 @@ public class Private {
 			redirectAttributes.addAttribute("id", qualification);
 			redirectAttributes.addAttribute("num", id);
 
-			return "redirect:/labplan/private/sequences";
+			return "redirect:/private/sequences";
 
 		} else {
 
-			return "redirect:/labplan/connexion";
+			return "redirect:/connexion";
 		}
 
 	}
@@ -365,7 +365,7 @@ public class Private {
 
 		} else {
 
-			return "redirect:/labplan/connexion";
+			return "redirect:/connexion";
 		}
 
 	}
@@ -402,7 +402,7 @@ public class Private {
 
 		} else {
 
-			return "redirect:/labplan/connexion";
+			return "redirect:/connexion";
 		}
 
 	}
@@ -573,7 +573,7 @@ public class Private {
 
 		} else {
 
-			return "redirect:/labplan/connexion";
+			return "redirect:/connexion";
 		}
 
 	}
@@ -766,7 +766,7 @@ public class Private {
 
 		} else {
 
-			return "redirect:/labplan/connexion";
+			return "redirect:/connexion";
 		}
 
 	}
@@ -808,7 +808,7 @@ public class Private {
 
 		} else {
 
-			return "redirect:/labplan/connexion";
+			return "redirect:/connexion";
 		}
 
 	}
@@ -831,11 +831,11 @@ public class Private {
 			redirectAttributes.addAttribute("essai", idEssai);
 			redirectAttributes.addAttribute("qualification", numQualification);
 			redirectAttributes.addAttribute("sequence", idSequence);
-			return "redirect:/labplan/private/sequences/voir/retour";
+			return "redirect:/private/sequences/voir/retour";
 
 		} else {
 
-			return "redirect:/labplan/connexion";
+			return "redirect:/connexion";
 		}
 
 	}
@@ -859,11 +859,11 @@ public class Private {
 			redirectAttributes.addAttribute("qualification", numQualification);
 			redirectAttributes.addAttribute("sequence", idSequence);
 
-			return "redirect:/labplan/private/sequences/voir/retour";
+			return "redirect:/private/sequences/voir/retour";
 
 		} else {
 
-			return "redirect:/labplan/connexion";
+			return "redirect:/connexion";
 		}
 
 	}
@@ -889,7 +889,7 @@ public class Private {
 
 		} else {
 
-			return "redirect:/labplan/connexion";
+			return "redirect:/connexion";
 		}
 
 	}
@@ -915,7 +915,7 @@ public class Private {
 
 		} else {
 
-			return "redirect:/labplan/connexion";
+			return "redirect:/connexion";
 		}
 
 	}
@@ -949,7 +949,7 @@ public class Private {
 
 		} else {
 
-			return "redirect:/labplan/connexion";
+			return "redirect:/connexion";
 		}
 
 	}
@@ -977,7 +977,7 @@ public class Private {
 
 		} else {
 
-			return "redirect:/labplan/connexion";
+			return "redirect:/connexion";
 		}
 
 	}
@@ -1016,7 +1016,7 @@ public class Private {
 
 		} else {
 
-			return "redirect:/labplan/connexion";
+			return "redirect:/connexion";
 		}
 
 	}
@@ -1051,7 +1051,7 @@ public class Private {
 
 		} else {
 
-			return "redirect:/labplan/connexion";
+			return "redirect:/connexion";
 		}
 
 	}
@@ -1081,7 +1081,7 @@ public class Private {
 
 		} else {
 
-			return "redirect:/labplan/connexion";
+			return "redirect:/connexion";
 		}
 
 	}
@@ -1153,7 +1153,7 @@ public class Private {
 		redirectAttributes.addAttribute("id", numQualification);
 		redirectAttributes.addAttribute("num", idEssai);
 
-		return "redirect:/labplan/private/sequences";
+		return "redirect:/private/sequences";
 
 	}
 
@@ -1189,7 +1189,7 @@ public class Private {
 
 		} else {
 
-			return "redirect:/labplan/connexion";
+			return "redirect:/connexion";
 		}
 
 	}
@@ -1216,7 +1216,7 @@ public class Private {
 
 		} else {
 
-			return "redirect:/labplan/connexion";
+			return "redirect:/connexion";
 		}
 
 	}
@@ -1260,7 +1260,7 @@ public class Private {
 
 		} else {
 
-			return "redirect:/labplan/connexion";
+			return "redirect:/connexion";
 		}
 
 	}
@@ -1301,7 +1301,7 @@ public class Private {
 
 		} else {
 
-			return "redirect:/labplan/connexion";
+			return "redirect:/connexion";
 		}
 
 	}
@@ -1333,7 +1333,7 @@ public class Private {
 
 		} else {
 
-			return "redirect:/labplan/connexion";
+			return "redirect:/connexion";
 		}
 
 	}
