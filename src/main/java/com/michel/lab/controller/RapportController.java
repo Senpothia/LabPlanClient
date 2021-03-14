@@ -41,35 +41,55 @@ public class RapportController {
 		
 		
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		String token = (String) session.getAttribute("TOKEN");
-		token = "Bearer " + token;
 		
-		RapportAux rapport = microServiceLab.obtenirRapportsParId(token, idRapport);
-		System.out.println("id rapport récupéré: " + rapport.getId());
-		System.out.println("id/num qualification du rapport: " + rapport.getQualification());
 		
-		List<EchantillonAux> echantillons = microServiceLab.obtenirEchantillonsParRapportId(token, idRapport);
+		    if (testUser(utilisateur)) {
+		    	
+		    	String token = (String) session.getAttribute("TOKEN");
+				token = "Bearer " + token;
+				
+				RapportAux rapport = microServiceLab.obtenirRapportsParId(token, idRapport);
+				System.out.println("id rapport récupéré: " + rapport.getId());
+				System.out.println("id/num qualification du rapport: " + rapport.getQualification());
+				
+				List<EchantillonAux> echantillons = microServiceLab.obtenirEchantillonsParRapportId(token, idRapport);
+				
+				List<EssaiAux> essais = microServiceLab.obtenirEssaisParRapportId(token, idRapport);
+				
+				//*******************************************************************
+				
+				final String CREATED_PDF = "C:\\labplan";
+				
+				 Document document = new Document();
+				    try {
+				      PdfWriter.getInstance(document,new FileOutputStream(CREATED_PDF));
+				      document.open();
+				      // font and color settings
+				      Font font = new Font(Font.TIMES_ROMAN, 18, Font.NORMAL, Color.MAGENTA);
+				      Paragraph para = new Paragraph("Hello World PDF created using OpenPDF", font);
+				      document.add(para);     
+				    } catch (Exception de) {
+				      System.err.println(de.getMessage());
+				    }
+				    document.close();
+		    	return "ok";
+
+				} else {
+
+					return "redirect:/labplan/connexion";
+				}
 		
-		List<EssaiAux> essais = microServiceLab.obtenirEssaisParRapportId(token, idRapport);
-		
-		//*******************************************************************
-		
-		final String CREATED_PDF = "C:\\labplan";
-		
-		 Document document = new Document();
-		    try {
-		      PdfWriter.getInstance(document,new FileOutputStream(CREATED_PDF));
-		      document.open();
-		      // font and color settings
-		      Font font = new Font(Font.TIMES_ROMAN, 18, Font.NORMAL, Color.MAGENTA);
-		      Paragraph para = new Paragraph("Hello World PDF created using OpenPDF", font);
-		      document.add(para);     
-		    } catch (Exception de) {
-		      System.err.println(de.getMessage());
-		    }
-		    document.close();
-		
-		return "ok";
+	}
+	
+	public boolean testUser(Utilisateur utilisateur) {
+
+		if (utilisateur == null) {
+
+			return false;
+
+		} else
+
+			return true;
 	}
 
 }
