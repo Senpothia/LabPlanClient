@@ -21,7 +21,7 @@ import com.michel.lab.proxy.MicroServiceLab;
 import com.michel.lab.service.UserConnexion;
 
 @Controller
-@RequestMapping("/private/fiche")
+@RequestMapping("/labplan/private/fiche")
 public class FicheController {
 
 	@Autowired

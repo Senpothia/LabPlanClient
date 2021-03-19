@@ -24,7 +24,7 @@ import com.michel.lab.proxy.MicroServiceLab;
 import com.michel.lab.service.UserConnexion;
 
 @Controller
-@RequestMapping("/private/echantillons")
+@RequestMapping("/labplan/private/echantillons")
 public class EchantillonController {
 
 	@Autowired

@@ -26,7 +26,7 @@ import com.michel.lab.model.Utilisateur;
 import com.michel.lab.proxy.MicroServiceLab;
 
 @Controller
-@RequestMapping("/private/essai")
+@RequestMapping("/labplan/private/essai")
 public class EssaiController {
 
 	@Autowired

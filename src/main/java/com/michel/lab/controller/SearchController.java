@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.michel.lab.model.Utilisateur;
 
 @Controller
-@RequestMapping("/search")
+@RequestMapping("/labplan/search")
 public class SearchController {
 	
 	

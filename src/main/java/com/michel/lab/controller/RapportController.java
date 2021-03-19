@@ -25,7 +25,7 @@ import com.michel.lab.proxy.MicroServiceLab;
 import com.michel.lab.service.UserConnexion;
 
 @Controller
-@RequestMapping("/private/rapport")
+@RequestMapping("/labplan/private/rapport")
 public class RapportController {
 	
 	@Autowired

@@ -22,7 +22,7 @@ import com.michel.lab.proxy.MicroServiceLab;
 import com.michel.lab.service.UserConnexion;
 
 @Controller
-@RequestMapping("/private/note")
+@RequestMapping("/labplan/private/note")
 public class NoteController {
 
 	@Autowired
