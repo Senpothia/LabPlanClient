@@ -251,8 +251,37 @@ public class EssaiController {
 			redirectAttributes.addAttribute("id", id);
 			redirectAttributes.addAttribute("domaine", domaineId);
 			redirectAttributes.addAttribute("qualification", qualification);
-			return "redirect:/labplan/private/essai/procedures";
-				
+			//return "redirect:/labplan/private/essai/procedures";
+			return "redirect:/private/essai/procedures";
+
+			} else {
+
+				return "redirect:/connexion";
+			}
+		
+	}
+	
+	@GetMapping("/procedures/supprimer/{id}/{domaine}/{qualification}")
+	public String supprimerProcedure(@PathVariable(name = "id") Integer id,
+			@PathVariable(name = "domaine") Integer domaineId,
+			@PathVariable(name = "qualification") Integer qualification, RedirectAttributes redirectAttributes,
+			Model model, HttpSession session) {
+
+		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+	
+		
+		if (testUser(utilisateur)) {
+
+			String token = (String) session.getAttribute("TOKEN");
+			token = "Bearer " + token;
+			Integer idUser = utilisateur.getId();
+			microServiceLab.supprimerProcedure(token, id, qualification, idUser);
+
+			redirectAttributes.addAttribute("id", id);
+			redirectAttributes.addAttribute("domaine", domaineId);
+			redirectAttributes.addAttribute("qualification", qualification);
+			//return "redirect:/labplan/private/essai/procedures";
+			return "redirect:/private/essai/procedures";
 
 			} else {
 

@@ -488,6 +488,12 @@ public interface MicroServiceLab {
 	@PostMapping("/private/activite/site/defaut/produit/recurrence")
 	public FormIncident obtenirDefautParIdPourProduit(@RequestHeader("Authorization")String token, @RequestBody FormIncident incident);
 
+	@PostMapping("/essai/supprimer/procedure/{id}/{qualification}/{idUser}")
+	public void supprimerProcedure(@RequestHeader("Authorization") String token,
+			@PathVariable(name = "id") Integer id // id = identifiant procedure
+			, @PathVariable(name = "qualification") Integer qualification // qualification = numéro de qualification
+			, @PathVariable(name = "idUser") Integer idUser);
+
 	
 
 	
