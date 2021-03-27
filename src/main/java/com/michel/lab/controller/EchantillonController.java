@@ -130,7 +130,7 @@ public class EchantillonController {
 			model.addAttribute("echantillons", echantillons);
 			QualificationAux qualif = microServiceLab.obtenirQualification(token, qualification);
 			model.addAttribute("qualification", qualif);
-			return "redirect:/labplan/private/echantillons/voir";
+			return "redirect:/private/echantillons/voir";
 				
 
 			} else {

@@ -762,7 +762,7 @@ public class Private {
 			redirectAttributes.addAttribute("essai", idEssai);
 			redirectAttributes.addAttribute("qualification", num);
 			redirectAttributes.addAttribute("sequence", idSequence);
-			return "redirect:/labplan/private/sequences/voir/retour";
+			return "redirect:/private/sequences/voir/retour";
 
 		} else {
 
