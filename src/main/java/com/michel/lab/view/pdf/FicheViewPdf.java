@@ -39,7 +39,7 @@ public class FicheViewPdf extends AbstractPdfView {
 
 		try {
 			document.setMargins(30, 30, 30, 30);
-			Image entete = Image.getInstance("http://192.46.239.178:8080/labplan/images/bandeau_entreprise1.png");
+			Image entete = Image.getInstance("https://i.ibb.co/61HYK40/Bandeausup1.jpg");
 			// Image entete =
 			// Image.getInstance("src\\main\\resources\\static\\images\\BandeauSup1.jpg");
 			entete.scaleAbsolute(535, 100);

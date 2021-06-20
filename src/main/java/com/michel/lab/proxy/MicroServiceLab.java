@@ -65,7 +65,7 @@ public interface MicroServiceLab {
 	public ResponseEntity<UtilisateurAux> generate(@RequestBody final Login login);
 
 	@PostMapping("/compte")
-	public void creerCompte(UtilisateurAux user);
+	public void creerCompte(@RequestBody UtilisateurAux user);
 
 	@PostMapping("/save/qualification") // Enregistrement d'une qualification
 	public void saveQualification(@RequestHeader("Authorization") String token, FormQualif formQualif);
