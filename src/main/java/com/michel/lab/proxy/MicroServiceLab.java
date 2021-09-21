@@ -53,7 +53,7 @@ import com.michel.lab.model.FormNote;
 import feign.Body;
 import feign.Headers;
 
-@FeignClient(name = "lab-service", url = "46.105.35.7:8098")
+@FeignClient(name = "labplan-service", url = "46.105.35.7:8098")
 public interface MicroServiceLab {
 	
 
