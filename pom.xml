@@ -12,7 +12,7 @@
 	<groupId>com.michel.lab</groupId>
 	<artifactId>LabPlanClient</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<name>LabPlanClient</name>
 	<description>Editeur de test</description>
 
