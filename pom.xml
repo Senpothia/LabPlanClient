@@ -82,7 +82,7 @@
 	</dependencyManagement>
 
 	<build>
-		<finalName>labplan-localhost</finalName>
+		<finalName>labplan2</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
