@@ -110,15 +110,27 @@
 							th:value="*{commentaire}">
 					</div>
 
-					<div class="form-group">
-						<label for="exampleInputEmail1">Statut</label> <input type="text"
-							class="form-control" th:field="*{actif}" th:value="*{actif}">
+					<div class=" row form-group">
+						<label for="exampleFormControlSelect1">Statut</label> <select
+							class="form-control" id="exampleFormControlSelect1"
+							th:field="*{actif}">
+							<option th:value="'Ouverte'" th:text="Ouverte"></option>
+							<option th:value="'Clôturée'" th:text="Clôturée"></option>
+
+						</select>
 					</div>
 
-					<div class="form-group">
-						<label for="exampleInputEmail1">Résultat</label> <input
-							type="text" class="form-control" th:field="*{avis}"
-							th:value="*{avis}">
+
+					<div class=" row form-group">
+						<label for="exampleFormControlSelect1">Résultat</label> <select
+							class="form-control" id="exampleFormControlSelect2"
+							th:field="*{avis}">
+							<option th:value="'Actif'" th:text="Active"></option>
+							<option th:value="'Conforme'" th:text="Conforme"></option>
+							<option th:value="'Non-conforme'" th:text="Non-conforme">
+							</option>
+
+						</select>
 					</div>
 
 					<div class="d-flex justify-content-end">

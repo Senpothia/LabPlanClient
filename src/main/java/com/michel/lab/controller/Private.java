@@ -756,6 +756,7 @@ public class Private {
 			// DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm a"));
 			// DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mm a"));
 			formSequence.setFin(fin);
+			
 
 			microServiceLab.modifierSequence(token, formSequence);
 
