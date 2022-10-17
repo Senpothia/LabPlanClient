@@ -47,9 +47,9 @@ import rx.annotations.Beta;
 
 @Component("rapport")
 public class RapportViewPdf extends AbstractPdfView {
-	
-	 private URL bandeau =  getClass().getClassLoader().getResource("/main/resources/static/images/bandeau_entreprise1.png");
-	
+
+	private URL bandeau = getClass().getClassLoader()
+			.getResource("/main/resources/static/images/bandeau_entreprise1.png");
 
 	private static final Phrase HeaderFooter = null;
 
@@ -61,7 +61,7 @@ public class RapportViewPdf extends AbstractPdfView {
 		RapportAux rapport = (RapportAux) model.get("rapport");
 
 		try {
-			
+
 			Image entete = Image.getInstance("https://i.ibb.co/61HYK40/Bandeausup1.jpg");
 			entete.scaleAbsolute(523, 100);
 			HeaderFooter header = new HeaderFooter(new Phrase(new Chunk(entete, 0, -35)), false);
@@ -132,7 +132,6 @@ public class RapportViewPdf extends AbstractPdfView {
 		reference.setSpacingAfter(10);
 		document.add(reference);
 
-		
 		// start second page
 		document.newPage();
 
@@ -154,46 +153,28 @@ public class RapportViewPdf extends AbstractPdfView {
 		EchantillonsTitre.setSpacingAfter(20);
 		document.add(EchantillonsTitre);
 
-		//////////////////////////////////////////////////////////
-
-		PdfPTable tableEchantillon = new PdfPTable(6);
-		tableEchantillon.setWidths(new float[] { 1, 1, 1.5f, 1, 3, 1 });
-
-		
-		PdfPCell cell1 = new PdfPCell(new Paragraph("Ordre"));
-		cell1.setBackgroundColor(new Color( 190, 58, 220 ));
-		
-		PdfPCell cell2 = new PdfPCell(new Paragraph("Numéro"));
-		cell2.setBackgroundColor(new Color( 190, 58, 220 ));
-		
-		PdfPCell cell3 = new PdfPCell(new Paragraph("Date"));
-		cell3.setBackgroundColor(new Color( 190, 58, 220 ));
-		
-		PdfPCell cell4 = new PdfPCell(new Paragraph("Version"));
-		cell4.setBackgroundColor(new Color( 190, 58, 220 ));
-		
-		PdfPCell cell5 = new PdfPCell(new Paragraph("Caractéristique"));
-		cell5.setBackgroundColor(new Color( 190, 58, 220 ));
-		
-		PdfPCell cell6 = new PdfPCell(new Paragraph("Statut"));
-		cell6.setBackgroundColor(new Color( 190, 58, 220 ));
-		
-		tableEchantillon.addCell(cell1);
-		tableEchantillon.addCell(cell2);
-		tableEchantillon.addCell(cell3);
-		tableEchantillon.addCell(cell4);
-		tableEchantillon.addCell(cell5);
-		tableEchantillon.addCell(cell6);
-		
-		
 		int i = 1;
 		for (EchantillonAux e : echantillons) {
 
-			tableEchantillon.addCell(String.valueOf(i));
-			tableEchantillon.addCell(e.getNumero().toString());
-			tableEchantillon.addCell(e.getDate());
-			tableEchantillon.addCell(String.valueOf(e.getVersion()));
-			tableEchantillon.addCell(e.getCaracteristique());
+			PdfPTable tableEchantillon = new PdfPTable(2);
+			tableEchantillon.setWidths(new float[] { 1, 3.0f });
+
+			PdfPCell cell1 = new PdfPCell(new Paragraph("Ordre"));
+			cell1.setBackgroundColor(new Color(190, 58, 220));
+			PdfPCell cell2 = new PdfPCell(new Paragraph(String.valueOf(i)));
+			cell2.setBackgroundColor(new Color(190, 58, 220));
+			PdfPCell cell3 = new PdfPCell(new Paragraph("Numéro"));
+			PdfPCell cell4 = new PdfPCell(new Paragraph(e.getNumero().toString()));
+			PdfPCell cell5 = new PdfPCell(new Paragraph("Date"));
+
+			PdfPCell cell6 = new PdfPCell(new Paragraph(e.getDate()));
+
+			PdfPCell cell7 = new PdfPCell(new Paragraph("Version"));
+
+			PdfPCell cell8 = new PdfPCell(new Paragraph(e.getVersion().toString()));
+
+			PdfPCell cell9 = new PdfPCell(new Paragraph("Caractéristique"));
+			PdfPCell cell10 = new PdfPCell(new Paragraph(e.getCaracteristique()));
 
 			boolean statut = e.isStatut();
 			String etat = null;
@@ -204,40 +185,94 @@ public class RapportViewPdf extends AbstractPdfView {
 
 				etat = "Inactif";
 			}
-			tableEchantillon.addCell(etat);
+
+			PdfPCell cell11 = new PdfPCell(new Paragraph("Statut"));
+			PdfPCell cell12 = new PdfPCell(new Paragraph(etat));
+
+			tableEchantillon.addCell(cell1);
+			tableEchantillon.addCell(cell2);
+			tableEchantillon.addCell(cell3);
+			tableEchantillon.addCell(cell4);
+			tableEchantillon.addCell(cell5);
+			tableEchantillon.addCell(cell6);
+			tableEchantillon.addCell(cell7);
+			tableEchantillon.addCell(cell8);
+			tableEchantillon.addCell(cell9);
+			tableEchantillon.addCell(cell10);
+			tableEchantillon.addCell(cell11);
+			tableEchantillon.addCell(cell12);
+
 			i++;
+			tableEchantillon.setSpacingAfter(20);
+			document.add(tableEchantillon);
+			
 		}
-
-		tableEchantillon.setSpacingAfter(20);
-		document.add(tableEchantillon);
-
-		Paragraph EssaisTitre = new Paragraph(new Chunk("3. Essais", FontFactory.getFont(FontFactory.TIMES_ROMAN, 24)));
-		EssaisTitre.setSpacingAfter(30);
-		document.add(EssaisTitre);
-
-		for (EssaiAux es : essais) {
-
-			PdfPTable esTable = new PdfPTable(6);
-			esTable.setWidths(new float[] { 0.5f, 3.5f, 1, 1, 1, 1 });
-
-			PdfPCell cell11 = new PdfPCell(new Paragraph("N°"));
-			cell11.setBackgroundColor(new Color( 46, 127, 238 ));
-			
-			PdfPCell cell12 = new PdfPCell(new Paragraph("Essai"));
-			cell12.setBackgroundColor(new Color( 46, 127, 238 ));
-			
-			PdfPCell cell13 = new PdfPCell(new Paragraph("Version"));
-			cell13.setBackgroundColor(new Color( 46, 127, 238 ));
 		
-			PdfPCell cell14 = new PdfPCell(new Paragraph("Domaine"));
-			cell14.setBackgroundColor(new Color( 46, 127, 238 ));
+		document.newPage();
+		Paragraph EssaisRésultats = new Paragraph(new Chunk("3. Résultats", FontFactory.getFont(FontFactory.TIMES_ROMAN, 24)));
+		EssaisRésultats.setSpacingAfter(20);
+		document.add(EssaisRésultats);
+		
+		PdfPTable resTable = new PdfPTable(3);
+		resTable.setWidths(new float[] { 0.5f, 3f, 1.0f });
+		
+		PdfPCell cell1 = new PdfPCell(new Paragraph(new Chunk("N°")));
+		cell1.setBackgroundColor(new Color(46, 127, 238));
+		
+		PdfPCell cell111 = new PdfPCell(new Paragraph(new Chunk("Test")));
+		cell111.setBackgroundColor(new Color(46, 127, 238));
+		
+		PdfPCell cell2 = new PdfPCell(new Paragraph(new Chunk("Résultat")));
+		cell2.setBackgroundColor(new Color(46, 127, 238));
+		resTable.addCell(cell1);
+		resTable.addCell(cell111);
+		resTable.addCell(cell2);
+		
+		for (EssaiAux es : essais) {
+			
+			PdfPCell cell3 = new PdfPCell(new Paragraph(new Chunk(es.getNumero().toString())));
+			PdfPCell cell31 = new PdfPCell(new Paragraph(new Chunk(es.getNom().toString())));
 
+			PdfPCell cell4 = new PdfPCell(new Paragraph(new Chunk(es.getResultat())));
 			
-			PdfPCell cell15 = new PdfPCell(new Paragraph("Statut"));
-			cell15.setBackgroundColor(new Color( 46, 127, 238 ));
+			resTable.addCell(cell3);
+			resTable.addCell(cell31);
+			resTable.addCell(cell4);
+		}
+		
+		document.add(resTable);
+		document.newPage();
+
+		Paragraph EssaisTitre = new Paragraph(new Chunk("4. Essais", FontFactory.getFont(FontFactory.TIMES_ROMAN, 24)));
+		EssaisTitre.setSpacingAfter(20);
+		document.add(EssaisTitre);
+		Integer nbreTable = 0;
+		Boolean sautDePage = false;
+		for (EssaiAux es : essais) {
 			
-			PdfPCell cell16 = new PdfPCell(new Paragraph("Résultat"));
-			cell16.setBackgroundColor(new Color( 46, 127, 238 ));
+			nbreTable++;
+			PdfPTable esTable = new PdfPTable(2);
+			esTable.setWidths(new float[] { 1f, 3f });
+
+			PdfPCell cell11 = new PdfPCell(new Paragraph(new Chunk("N°")));
+			cell11.setBackgroundColor(new Color(46, 127, 238));
+
+			PdfPCell cell12 = new PdfPCell(new Paragraph(new Chunk(es.getNumero().toString())));
+			cell12.setBackgroundColor(new Color(46, 127, 238));
+
+			PdfPCell cell13 = new PdfPCell(new Paragraph("Essai"));
+
+			PdfPCell cell14 = new PdfPCell(new Paragraph(es.getNom()));
+
+			PdfPCell cell15 = new PdfPCell(new Paragraph("Domaine"));
+
+			PdfPCell cell16 = new PdfPCell(new Paragraph(es.getDomaine()));
+
+			PdfPCell cell17 = new PdfPCell(new Paragraph("Statut"));
+			PdfPCell cell18 = new PdfPCell(new Paragraph(es.getStatut()));
+
+			PdfPCell cell19 = new PdfPCell(new Paragraph("Résultat"));
+			PdfPCell cell20 = new PdfPCell(new Paragraph(es.getResultat()));
 
 			esTable.addCell(cell11);
 			esTable.addCell(cell12);
@@ -245,14 +280,11 @@ public class RapportViewPdf extends AbstractPdfView {
 			esTable.addCell(cell14);
 			esTable.addCell(cell15);
 			esTable.addCell(cell16);
+			esTable.addCell(cell17);
+			esTable.addCell(cell18);
+			esTable.addCell(cell19);
+			esTable.addCell(cell20);
 			int j = 1;
-
-			esTable.addCell(es.getNumero().toString());
-			esTable.addCell(es.getNom());
-			esTable.addCell(es.getVersion());
-			esTable.addCell(es.getDomaine());
-			esTable.addCell(es.getStatut());
-			esTable.addCell(es.getResultat());
 
 			esTable.setSpacingAfter(20);
 			document.add(esTable);
@@ -267,14 +299,8 @@ public class RapportViewPdf extends AbstractPdfView {
 			int k = 1;
 
 			for (SequenceAux s : sequences) {
-				
-
-				
 
 				if (writer.getPageNumber() == 3) {
-
-				
-					// document.newPage();
 
 					Paragraph margeSup2 = new Paragraph(
 							new Chunk(" ", FontFactory.getFont(FontFactory.TIMES_ROMAN, 24)));
@@ -284,33 +310,32 @@ public class RapportViewPdf extends AbstractPdfView {
 
 				}
 
-				
-				
 				LocalDateTime debut = s.getDebut();
 				LocalDateTime fin = s.getFin();
 				Duration duration = Duration.between(debut, fin);
 				Long dureeLongHours = duration.toHours();
 				Long dureeLongMins = duration.toMinutes();
 				String duree = null;
-				
-				if (dureeLongHours<1) {
-					
+
+				if (dureeLongHours < 1) {
+
 					duree = Long.toString(dureeLongMins) + "min";
-				}else {
-					
+				} else {
+
 					duree = Long.toString(dureeLongHours) + "h";
 				}
-				
+
 				PdfPCell cell21 = new PdfPCell(new Paragraph("N°"));
 				cell21.setBackgroundColor(new Color(17, 142, 46));
-				
-				PdfPCell cell22 = new PdfPCell(new Phrase(String.valueOf(k), FontFactory.getFont(FontFactory.TIMES_ROMAN, 12)));
+
+				PdfPCell cell22 = new PdfPCell(
+						new Phrase(String.valueOf(k), FontFactory.getFont(FontFactory.TIMES_ROMAN, 12)));
 				cell22.setBackgroundColor(new Color(17, 142, 46));
 				
-
+				nbreTable++;
 				PdfPTable seqTable = new PdfPTable(2);
 				seqTable.setWidths(new float[] { 1, 3f });
-			
+
 				seqTable.addCell(cell21);
 				seqTable.addCell(cell22);
 
@@ -321,7 +346,7 @@ public class RapportViewPdf extends AbstractPdfView {
 				seqTable.addCell(new Phrase("Fin", FontFactory.getFont(FontFactory.TIMES_ROMAN, 12)));
 				seqTable.addCell(new Phrase(s.getFinText(), FontFactory.getFont(FontFactory.TIMES_ROMAN, 12)));
 				seqTable.addCell(new Phrase("Durée", FontFactory.getFont(FontFactory.TIMES_ROMAN, 12)));
-				seqTable.addCell(new Phrase( duree, FontFactory.getFont(FontFactory.TIMES_ROMAN, 12)));
+				seqTable.addCell(new Phrase(duree, FontFactory.getFont(FontFactory.TIMES_ROMAN, 12)));
 				seqTable.addCell(new Phrase("Profil", FontFactory.getFont(FontFactory.TIMES_ROMAN, 12)));
 				seqTable.addCell(new Phrase(s.getProfil(), FontFactory.getFont(FontFactory.TIMES_ROMAN, 12)));
 				seqTable.addCell(new Phrase("Commentaire", FontFactory.getFont(FontFactory.TIMES_ROMAN, 12)));
@@ -334,18 +359,34 @@ public class RapportViewPdf extends AbstractPdfView {
 				seqTable.setSpacingAfter(20);
 				document.add(seqTable);
 				k++;
+				
+				if(nbreTable == 3) {
+					
+					document.newPage();
+					Paragraph margeSup2 = new Paragraph(new Chunk(" ", FontFactory.getFont(FontFactory.TIMES_ROMAN, 24)));
+					margeSup2.setAlignment(Element.ALIGN_CENTER);
+					margeSup2.setSpacingAfter(-20);
+					document.add(margeSup2);
+					nbreTable = 0;
+					sautDePage = true;
+				}
 			}
-
-			document.newPage();
-
+			
+			if(!sautDePage) {
+				
+				document.newPage();
+			}
+			
+			nbreTable = 0;
 			Paragraph margeSup2 = new Paragraph(new Chunk(" ", FontFactory.getFont(FontFactory.TIMES_ROMAN, 24)));
 			margeSup2.setAlignment(Element.ALIGN_CENTER);
 			margeSup2.setSpacingAfter(-20);
 			document.add(margeSup2);
+			sautDePage = false;
 
 		}
 
-		Paragraph avisTitre = new Paragraph(new Chunk("4. Avis", FontFactory.getFont(FontFactory.TIMES_ROMAN, 24)));
+		Paragraph avisTitre = new Paragraph(new Chunk("5. Avis", FontFactory.getFont(FontFactory.TIMES_ROMAN, 24)));
 		avisTitre.setSpacingAfter(20);
 		document.add(avisTitre);
 
