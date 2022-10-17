@@ -49,7 +49,7 @@ import rx.annotations.Beta;
 public class RapportViewPdf extends AbstractPdfView {
 	
 	 private URL bandeau =  getClass().getClassLoader().getResource("/main/resources/static/images/bandeau_entreprise1.png");
-	 //java.awt.Image imageOff = Toolkit.getDefaultToolkit().getImage(bandeau);
+	
 
 	private static final Phrase HeaderFooter = null;
 
@@ -61,8 +61,7 @@ public class RapportViewPdf extends AbstractPdfView {
 		RapportAux rapport = (RapportAux) model.get("rapport");
 
 		try {
-			//Image entete = Image.getInstance("bandeau_entreprise1.png");
-			//URL url = new URL("/src/main/resources/static/images/bandeau_entreprise1.png") ;
+			
 			Image entete = Image.getInstance("https://i.ibb.co/61HYK40/Bandeausup1.jpg");
 			entete.scaleAbsolute(523, 100);
 			HeaderFooter header = new HeaderFooter(new Phrase(new Chunk(entete, 0, -35)), false);
@@ -133,18 +132,7 @@ public class RapportViewPdf extends AbstractPdfView {
 		reference.setSpacingAfter(10);
 		document.add(reference);
 
-		/*
-		 * PdfPTable table = new PdfPTable(1); table.addCell("Qualification");
-		 * document.add(table);
-		 */
-
-		/*
-		 * Image jpg =
-		 * Image.getInstance("src\\main\\resources\\static\\images\\Bandeausup1.jpg");
-		 * document.add(jpg);
-		 * 
-		 */
-
+		
 		// start second page
 		document.newPage();
 
@@ -251,17 +239,6 @@ public class RapportViewPdf extends AbstractPdfView {
 			PdfPCell cell16 = new PdfPCell(new Paragraph("Résultat"));
 			cell16.setBackgroundColor(new Color( 46, 127, 238 ));
 
-			/*
-
-			esTable.addCell("N°");
-			esTable.addCell("Essai");
-			esTable.addCell("Version");
-			esTable.addCell("Domaine");
-			esTable.addCell("Statut");
-			esTable.addCell("Résultat");
-			
-			*/
-			
 			esTable.addCell(cell11);
 			esTable.addCell(cell12);
 			esTable.addCell(cell13);
@@ -292,11 +269,11 @@ public class RapportViewPdf extends AbstractPdfView {
 			for (SequenceAux s : sequences) {
 				
 
-				System.out.println("Numéro de page: " + writer.getPageNumber() + " k: " + k);
+				
 
 				if (writer.getPageNumber() == 3) {
 
-					System.out.println("saut de page");
+				
 					// document.newPage();
 
 					Paragraph margeSup2 = new Paragraph(
@@ -307,19 +284,7 @@ public class RapportViewPdf extends AbstractPdfView {
 
 				}
 
-				/*
-				 * if (writer.getPageNumber() > 2 && k == 2) { // trouver les multiples de 3
-				 * 
-				 * document.newPage();
-				 * 
-				 * Paragraph margeSup2 = new Paragraph( new Chunk(" ",
-				 * FontFactory.getFont(FontFactory.TIMES_ROMAN, 24)));
-				 * margeSup2.setAlignment(Element.ALIGN_CENTER); margeSup2.setSpacingAfter(60);
-				 * document.add(margeSup2);
-				 * 
-				 * }
-				 * 
-				 */
+				
 				
 				LocalDateTime debut = s.getDebut();
 				LocalDateTime fin = s.getFin();
@@ -345,10 +310,7 @@ public class RapportViewPdf extends AbstractPdfView {
 
 				PdfPTable seqTable = new PdfPTable(2);
 				seqTable.setWidths(new float[] { 1, 3f });
-
-				//seqTable.addCell(new Phrase("N°", FontFactory.getFont(FontFactory.TIMES_ROMAN, 9)));
-
-				//seqTable.addCell(new Phrase(String.valueOf(k), FontFactory.getFont(FontFactory.TIMES_ROMAN, 10)));
+			
 				seqTable.addCell(cell21);
 				seqTable.addCell(cell22);
 

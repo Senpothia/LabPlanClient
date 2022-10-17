@@ -16,7 +16,7 @@ public class SearchController {
 	@PostMapping("/simple")
 	public String searchSimple(String phrase) {
 		
-		System.out.println("pharse: " + phrase);
+	
 		
 		return "ok";
 	}

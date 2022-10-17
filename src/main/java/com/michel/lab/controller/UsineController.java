@@ -275,7 +275,7 @@ public class UsineController {
 			String token = (String) session.getAttribute("TOKEN");
 			token = "Bearer " + token;
 			
-			System.out.println("Visu anomalie pour OF");
+			
 			List<FormAnomalie> anomalies = microServiceLab.obtenirAnomalieParOf(token, id);
 			model.addAttribute("anomalies", anomalies);
 			return "anomalies_bilan_of";
@@ -457,7 +457,7 @@ public class UsineController {
 			String token = (String) session.getAttribute("TOKEN");
 			token = "Bearer " + token;
 			FormOf formOf = microServiceLab.obtenirOfParId(token, id);
-			System.out.println("id formOf: " + formOf.getId());
+		
 			model.addAttribute("formOf", formOf);
 			return "modifierOf";
 				

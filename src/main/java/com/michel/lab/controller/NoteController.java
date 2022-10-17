@@ -55,7 +55,7 @@ public class NoteController {
 
 			}
 
-			System.out.println("Taille liste de notes: " + notes.size());
+		
 			model.addAttribute("notes", notes);
 
 			if (notes.isEmpty()) {
@@ -87,7 +87,7 @@ public class NoteController {
 			String token = (String) session.getAttribute("TOKEN");
 			token = "Bearer " + token;
 			QualificationAux qualification = microServiceLab.obtenirQualificationParNumero(token, numQualification);
-			System.out.println("num qualification: " + qualification.getNumero());
+			
 			model.addAttribute("qualification", qualification);
 			model.addAttribute("formNote", new FormNote());
 			return Constants.CREATION_NOTE;
@@ -130,7 +130,7 @@ public class NoteController {
 
 			}
 
-			System.out.println("Taille liste de notes: " + notes.size());
+			
 			model.addAttribute("notes", notes);
 
 			if (notes.isEmpty()) {
@@ -160,7 +160,7 @@ public class NoteController {
 			String token = (String) session.getAttribute("TOKEN");
 			token = "Bearer " + token;
 			NoteAux note = microServiceLab.obtenirNote(token, idNote);
-			System.out.println("numéro de note: " + note.getNumero());
+			
 			model.addAttribute("note", note);
 			return "note2";
 
@@ -201,7 +201,7 @@ public class NoteController {
 				}
 
 			}
-			System.out.println("Taille liste de notes: " + notes.size());
+		
 			model.addAttribute("notes", notes);
 
 			if (notes.isEmpty()) {
@@ -268,14 +268,14 @@ public class NoteController {
 
 			NoteAux note = microServiceLab.obtenirNote(token, idNote);
 
-			System.out.println("id note récupéré: " + formNote.getId());
+		
 
 			microServiceLab.modifierNote(token, formNote);
 
 			QualificationAux qualification = microServiceLab.obtenirQualificationParNumero(token, numQualification);
 			model.addAttribute("qualification", qualification);
 			List<NoteAux> notes = microServiceLab.obtenirListeNotesParQualification(token, numQualification);
-			System.out.println("Taille liste de notes: " + notes.size());
+			
 			model.addAttribute("notes", notes);
 
 			if (notes.isEmpty()) {

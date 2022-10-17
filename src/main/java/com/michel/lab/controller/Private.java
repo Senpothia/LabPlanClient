@@ -94,7 +94,7 @@ public class Private {
 
 			String token = (String) session.getAttribute("TOKEN");
 			token = "Bearer " + token;
-			System.out.println("Token header: " + token);
+		
 			Integer createurId = utilisateur.getId();
 			formQualif.setCreateurId(createurId);
 			microServiceLab.saveQualification(token, formQualif);
@@ -117,7 +117,7 @@ public class Private {
 
 			String token = (String) session.getAttribute("TOKEN");
 			token = "Bearer " + token;
-			System.out.println("Token header: " + token);
+			
 			List<QualificationAux> qualifications = microServiceLab.toutesLesQualifications(token);
 			model.addAttribute("qualifications", qualifications);
 			model.addAttribute("access", "1");
@@ -140,7 +140,7 @@ public class Private {
 
 			String token = (String) session.getAttribute("TOKEN");
 			token = "Bearer " + token;
-			System.out.println("Token header: " + token);
+		
 			List<QualificationAux> qualifications = microServiceLab.mesQualifications(token, id);
 			model.addAttribute("qualifications", qualifications);
 			model.addAttribute("access", "2");
@@ -163,7 +163,7 @@ public class Private {
 
 			String token = (String) session.getAttribute("TOKEN");
 			token = "Bearer " + token;
-			System.out.println("Token header: " + token);
+		
 			List<QualificationAux> qualifications = microServiceLab.mesQualificationsEnCours(token, id);
 			model.addAttribute("qualifications", qualifications);
 			model.addAttribute("access", "3");
@@ -181,15 +181,7 @@ public class Private {
 	public String qualification(@PathVariable(name = "id") Integer id, Model model, HttpSession session) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		/*
-		 * String token = (String) session.getAttribute("TOKEN"); token = "Bearer " +
-		 * token; QualificationAux qualification =
-		 * microServiceLab.obtenirQualification(token, id);
-		 * model.addAttribute("qualification", qualification);
-		 * model.addAttribute("modification", false);
-		 * System.out.println("Référence qualification: " +
-		 * qualification.getReference());
-		 */
+		
 		if (testUser(utilisateur)) {
 
 			String token = (String) session.getAttribute("TOKEN");
@@ -197,8 +189,7 @@ public class Private {
 			QualificationAux qualification = microServiceLab.obtenirQualification(token, id);
 			model.addAttribute("qualification", qualification);
 			model.addAttribute("modification", false);
-			System.out.println("Référence qualification: " + qualification.getReference());
-
+			
 			return Constants.QUALIFICATION;
 
 		} else {
@@ -272,11 +263,7 @@ public class Private {
 			@PathVariable(name = "qualification") Integer qualification, @PathVariable(name = "domaine") String domaine,
 			Model model, HttpSession session) {
 
-		System.out.println("Get: creerSequence");
-		System.out.println("Valeur id récupéré: " + id);
-		System.out.println("Valeur qualification récupéré: " + qualification);
-		System.out.println("Valeur domaine récupéré: " + domaine);
-
+	
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
 
 		if (testUser(utilisateur)) {
@@ -285,7 +272,7 @@ public class Private {
 			formSequence.setEssai(id);
 			formSequence.setQualification(qualification);
 			formSequence.setNomDomaine(domaine);
-			System.out.println(formSequence.toString());
+		
 			model.addAttribute("formSequence", formSequence);
 			model.addAttribute("id", id);
 			model.addAttribute("qualification", qualification);
@@ -304,8 +291,7 @@ public class Private {
 			@PathVariable(name = "qualification") Integer qualification, Model model, HttpSession session,
 			FormSequence formSequence, RedirectAttributes redirectAttributes) {
 
-		System.out.println("méthode POST enregistrement sequence");
-		System.out.println(formSequence.toString());
+	
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
 
@@ -314,9 +300,7 @@ public class Private {
 			String token = (String) session.getAttribute("TOKEN");
 			token = "Bearer " + token;
 
-			System.out.println("Identifiant essai récupéré: " + id);
-			System.out.println("Identifiant qualification récupéré: " + qualification);
-
+			
 			formSequence.setEssai(id);
 			microServiceLab.enregistrerSequence(token, formSequence);
 
@@ -338,7 +322,7 @@ public class Private {
 
 			Model model, HttpSession session) {
 
-		System.out.println(" *** entrée méthode voirSequencesParEssais2 ");
+	
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
 
 		if (testUser(utilisateur)) {
@@ -384,7 +368,7 @@ public class Private {
 			SequenceAux sequence = microServiceLab.obtenirSequenceParId(token, idSequence);
 
 			Duration duration = Duration.between(sequence.getDebut(), sequence.getFin());
-			System.out.println("durée: " + duration.toHours() + " hours");
+			
 			long duree = duration.toHours();
 			sequence.setDuree(duree);
 
@@ -415,86 +399,10 @@ public class Private {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
 
-		/*
-		 * System.out.println("id essai reçu par url: " + idEssai);
-		 * System.out.println("num qualification reçu par url: " + numQualif);
-		 * System.out.println("id sequence reçu par url: " + idSequence);
-		 * 
-		 * String token = (String) session.getAttribute("TOKEN"); token = "Bearer " +
-		 * token;
-		 * 
-		 * SequenceAux sequence = microServiceLab.obtenirSequenceParId(token,
-		 * idSequence); FormSequence formSequence = new FormSequence();
-		 * formSequence.setId(sequence.getId());
-		 * formSequence.setNumero(sequence.getNumero());
-		 * formSequence.setNom(sequence.getNom());
-		 * formSequence.setNiveau(sequence.getNiveau());
-		 * formSequence.setDomaine(sequence.getDomaine());
-		 * 
-		 * formSequence.setDebut(sequence.getDebut());
-		 * 
-		 * String debutText = sequence.getDebutText();
-		 * System.out.println("valeur debutText: " + debutText);
-		 * 
-		 * String[] tokensDebut = debutText.split("-");
-		 * 
-		 * for (String t : tokensDebut) {
-		 * 
-		 * System.out.println(t);
-		 * 
-		 * }
-		 * 
-		 * String[] anneeDebut = tokensDebut[2].split(" "); System.out.println("année: "
-		 * + anneeDebut[0]); String dateDebutText = anneeDebut[0] + "-" + tokensDebut[1]
-		 * + "-" + tokensDebut[0]; System.out.println("dateFinText: " + dateDebutText);
-		 * 
-		 * formSequence.setDebutText(dateDebutText); System.out.println("debutText = " +
-		 * formSequence.getDebutText());
-		 * 
-		 * String finText = sequence.getFinText(); System.out.println("valeur finText: "
-		 * + finText);
-		 * 
-		 * String[] tokensFin = finText.split("-");
-		 * 
-		 * for (String t : tokensFin) {
-		 * 
-		 * System.out.println(t);
-		 * 
-		 * }
-		 * 
-		 * String[] anneeFin = tokensFin[2].split(" "); System.out.println("année: " +
-		 * anneeFin[0]); String dateFinText = anneeFin[0] + "-" + tokensFin[1] + "-" +
-		 * tokensFin[0]; System.out.println("dateFinText: " + dateFinText);
-		 * 
-		 * formSequence.setFinText(dateFinText); System.out.println("finText = " +
-		 * formSequence.getFinText());
-		 * 
-		 * System.out.println("date de debut prépa heure: " + debutText);
-		 * System.out.println("date de fin prépa heure: " + finText);
-		 * 
-		 * String segmentDebut[] = debutText.split(" "); String segmentFin[] =
-		 * finText.split(" ");
-		 * 
-		 * String debutHeureText = segmentDebut[1]; String finHeureText = segmentFin[1];
-		 * 
-		 * formSequence.setDebutHeureText(debutHeureText);
-		 * formSequence.setFinHeureText(finHeureText);
-		 * 
-		 * formSequence.setProfil(sequence.getProfil());
-		 * formSequence.setCommentaire(sequence.getCommentaire());
-		 * formSequence.setActif(sequence.getActif());
-		 * formSequence.setAvis(sequence.getAvis()); formSequence.setEssai(idEssai);
-		 * 
-		 * model.addAttribute("formSequence", formSequence); model.addAttribute("essai",
-		 * idEssai); model.addAttribute("qualification", numQualif);
-		 * model.addAttribute("sequence", idSequence);
-		 * 
-		 */
+	
 		if (testUser(utilisateur)) {
 
-			System.out.println("id essai reçu par url: " + idEssai);
-			System.out.println("num qualification reçu par url: " + numQualif);
-			System.out.println("id sequence reçu par url: " + idSequence);
+			
 
 			String token = (String) session.getAttribute("TOKEN");
 			token = "Bearer " + token;
@@ -510,45 +418,43 @@ public class Private {
 			formSequence.setDebut(sequence.getDebut());
 
 			String debutText = sequence.getDebutText();
-			System.out.println("valeur debutText: " + debutText);
+		
 
 			String[] tokensDebut = debutText.split("-");
 
 			for (String t : tokensDebut) {
 
-				System.out.println(t);
+				
 
 			}
 
 			String[] anneeDebut = tokensDebut[2].split(" ");
-			System.out.println("année: " + anneeDebut[0]);
+		
 			String dateDebutText = anneeDebut[0] + "-" + tokensDebut[1] + "-" + tokensDebut[0];
-			System.out.println("dateFinText: " + dateDebutText);
+			
 
 			formSequence.setDebutText(dateDebutText);
-			System.out.println("debutText = " + formSequence.getDebutText());
+			
 
 			String finText = sequence.getFinText();
-			System.out.println("valeur finText: " + finText);
+			
 
 			String[] tokensFin = finText.split("-");
 
 			for (String t : tokensFin) {
 
-				System.out.println(t);
+			
 
 			}
 
 			String[] anneeFin = tokensFin[2].split(" ");
-			System.out.println("année: " + anneeFin[0]);
+		
 			String dateFinText = anneeFin[0] + "-" + tokensFin[1] + "-" + tokensFin[0];
-			System.out.println("dateFinText: " + dateFinText);
-
+		
 			formSequence.setFinText(dateFinText);
-			System.out.println("finText = " + formSequence.getFinText());
+		
 
-			System.out.println("date de debut prépa heure: " + debutText);
-			System.out.println("date de fin prépa heure: " + finText);
+			
 
 			String segmentDebut[] = debutText.split(" ");
 			String segmentFin[] = finText.split(" ");
@@ -583,90 +489,9 @@ public class Private {
 			@PathVariable(name = "qualification") Integer num, @PathVariable(name = "sequence") Integer idSequence,
 			FormSequence formSequence, Model model, HttpSession session, RedirectAttributes redirectAttributes) {
 
-		System.out.println("*******Entrée méthode enregistrerModificationSequence()");
+		
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		/*
-		 * String token = (String) session.getAttribute("TOKEN"); token = "Bearer " +
-		 * token;
-		 * 
-		 * formSequence.setEssai(idEssai); formSequence.setId(idSequence);
-		 * 
-		 * String debutText = formSequence.getDebutText(); String debutHeureText =
-		 * formSequence.getDebutHeureText(); String finText = formSequence.getFinText();
-		 * String finHeureText = formSequence.getFinHeureText();
-		 * 
-		 * String dateDebutText = null; String dateFinText = null;
-		 * 
-		 * System.out.println("Date début reçue: " + debutText);
-		 * System.out.println("Heure début reçue: " + debutHeureText);
-		 * 
-		 * System.out.println("Date fin reçue: " + finText);
-		 * System.out.println("Heure fin reçue: " + finHeureText);
-		 * 
-		 * System.out.println(debutText + " " + debutHeureText);
-		 * System.out.println(finText + " " + finHeureText);
-		 * 
-		 * String segmentHeureDebut[] = debutHeureText.split(":"); String suffixe =
-		 * null;
-		 * 
-		 * String segmentHeureFin[] = finHeureText.split(":");
-		 * 
-		 * int heureDebut = Integer.parseInt(segmentHeureDebut[0]);
-		 * 
-		 * if (heureDebut > 12) {
-		 * 
-		 * suffixe = "PM"; heureDebut = heureDebut - 12; System.out.println("heureFin: "
-		 * + heureDebut); debutHeureText = String.valueOf(heureDebut); if (heureDebut <
-		 * 10) {
-		 * 
-		 * debutHeureText = "0" + debutHeureText;
-		 * System.out.println("debutHeureText transformé: " + debutHeureText);
-		 * dateDebutText = debutText + " " + debutHeureText + ":" + segmentHeureDebut[1]
-		 * + " " + suffixe; System.out.println("dateDebutText = " + dateDebutText); }
-		 * 
-		 * } else {
-		 * 
-		 * suffixe = "AM"; dateDebutText = debutText + " " + debutHeureText + " " +
-		 * suffixe; System.out.println("dateDebutText = " + dateDebutText);
-		 * 
-		 * }
-		 * 
-		 * suffixe = null;
-		 * 
-		 * int heureFin = Integer.parseInt(segmentHeureFin[0]);
-		 * 
-		 * if (heureFin > 12) {
-		 * 
-		 * suffixe = "PM"; heureFin = heureFin - 12; System.out.println("heureFin: " +
-		 * heureFin); finHeureText = String.valueOf(heureFin); if (heureFin < 10) {
-		 * 
-		 * finHeureText = "0" + finHeureText;
-		 * System.out.println("finHeureText transformé: " + finHeureText); dateFinText =
-		 * finText + " " + finHeureText + ":" + segmentHeureFin[1] + " " + suffixe;
-		 * System.out.println("dateFinText = " + dateFinText); }
-		 * 
-		 * } else {
-		 * 
-		 * suffixe = "AM"; dateFinText = finText + " " + finHeureText + " " + suffixe;
-		 * System.out.println("dateFinText = " + dateFinText); }
-		 * 
-		 * LocalDateTime debut = LocalDateTime.parse(dateDebutText,
-		 * DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm a")); //
-		 * DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm a")); //
-		 * DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mm a"));
-		 * formSequence.setDebut(debut);
-		 * 
-		 * LocalDateTime fin = LocalDateTime.parse(dateFinText,
-		 * DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm a")); //
-		 * DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm a")); //
-		 * DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mm a")); formSequence.setFin(fin);
-		 * 
-		 * microServiceLab.modifierSequence(token, formSequence);
-		 * 
-		 * redirectAttributes.addAttribute("essai", idEssai);
-		 * redirectAttributes.addAttribute("qualification", num);
-		 * redirectAttributes.addAttribute("sequence", idSequence);
-		 */
+		
 
 		if (testUser(utilisateur)) {
 
@@ -684,14 +509,7 @@ public class Private {
 			String dateDebutText = null;
 			String dateFinText = null;
 
-			System.out.println("Date début reçue: " + debutText);
-			System.out.println("Heure début reçue: " + debutHeureText);
-
-			System.out.println("Date fin reçue: " + finText);
-			System.out.println("Heure fin reçue: " + finHeureText);
-
-			System.out.println(debutText + " " + debutHeureText);
-			System.out.println(finText + " " + finHeureText);
+		
 
 			String segmentHeureDebut[] = debutHeureText.split(":");
 			String suffixe = null;
@@ -704,21 +522,21 @@ public class Private {
 
 				suffixe = "PM";
 				heureDebut = heureDebut - 12;
-				System.out.println("heureFin: " + heureDebut);
+				
 				debutHeureText = String.valueOf(heureDebut);
 				if (heureDebut < 10) {
 
 					debutHeureText = "0" + debutHeureText;
-					System.out.println("debutHeureText transformé: " + debutHeureText);
+				
 					dateDebutText = debutText + " " + debutHeureText + ":" + segmentHeureDebut[1] + " " + suffixe;
-					System.out.println("dateDebutText = " + dateDebutText);
+					
 				}
 
 			} else {
 
 				suffixe = "AM";
 				dateDebutText = debutText + " " + debutHeureText + " " + suffixe;
-				System.out.println("dateDebutText = " + dateDebutText);
+				
 
 			}
 
@@ -730,31 +548,29 @@ public class Private {
 
 				suffixe = "PM";
 				heureFin = heureFin - 12;
-				System.out.println("heureFin: " + heureFin);
+				
 				finHeureText = String.valueOf(heureFin);
 				if (heureFin < 10) {
 
 					finHeureText = "0" + finHeureText;
-					System.out.println("finHeureText transformé: " + finHeureText);
+				
 					dateFinText = finText + " " + finHeureText + ":" + segmentHeureFin[1] + " " + suffixe;
-					System.out.println("dateFinText = " + dateFinText);
+					
 				}
 
 			} else {
 
 				suffixe = "AM";
 				dateFinText = finText + " " + finHeureText + " " + suffixe;
-				System.out.println("dateFinText = " + dateFinText);
+				
 			}
 
 			LocalDateTime debut = LocalDateTime.parse(dateDebutText, DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm a"));
-			// DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm a"));
-			// DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mm a"));
+			
 			formSequence.setDebut(debut);
 
 			LocalDateTime fin = LocalDateTime.parse(dateFinText, DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm a"));
-			// DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm a"));
-			// DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mm a"));
+			
 			formSequence.setFin(fin);
 			
 
@@ -784,13 +600,12 @@ public class Private {
 			String token = (String) session.getAttribute("TOKEN");
 			token = "Bearer " + token;
 
-			System.out.println("redirect:/sequences/voir/{essai}/{qualification}/{sequence}");
-			System.out.println("id sequence recu: " + idSequence);
+		
 
 			SequenceAux sequence = microServiceLab.obtenirSequenceParId(token, idSequence);
 
 			Duration duration = Duration.between(sequence.getDebut(), sequence.getFin());
-			System.out.println("durée: " + duration.toHours() + " hours");
+			
 			long duree = duration.toHours();
 			sequence.setDuree(duree);
 
@@ -885,7 +700,7 @@ public class Private {
 			QualificationAux qualification = microServiceLab.obtenirQualification(token, numQualification);
 			model.addAttribute("qualification", qualification);
 			model.addAttribute("modification", false);
-			System.out.println("Référence qualification: " + qualification.getReference());
+			
 			return Constants.QUALIFICATION;
 
 		} else {
@@ -910,7 +725,7 @@ public class Private {
 			model.addAttribute("qualification", qualification);
 			model.addAttribute("modification", true);
 
-			System.out.println("Référence qualification: " + qualification.getReference());
+		
 
 			return Constants.QUALIFICATION;
 
@@ -945,7 +760,7 @@ public class Private {
 
 			model.addAttribute("formQualif", formQualif);
 
-			System.out.println("Référence qualification: " + qualification.getReference());
+		
 			return Constants.MODIFIER_QUALIFICATION;
 
 		} else {
@@ -972,7 +787,7 @@ public class Private {
 			QualificationAux qualification = microServiceLab.obtenirQualification(token, numQualification);
 			model.addAttribute("qualification", qualification);
 			model.addAttribute("modification", false);
-			System.out.println("Référence qualification: " + qualification.getReference());
+			
 
 			return Constants.QUALIFICATION;
 
@@ -1097,10 +912,7 @@ public class Private {
 		String token = (String) session.getAttribute("TOKEN");
 		token = "Bearer " + token;
 
-		System.out.println("valeur début récupérée: " + formSequence.getDebutText());
-		System.out.println("valeur fin récupérée: " + formSequence.getFinText());
-		System.out.println("valeur heure début récupérée: " + formSequence.getDebutHeureText());
-		System.out.println("valeur heure fin récupérée: " + formSequence.getFinHeureText());
+	
 		String debutText = formSequence.getDebutText();
 		String finText = formSequence.getFinText();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
@@ -1112,7 +924,7 @@ public class Private {
 			String debutTextConv = debutText + " " + debutHeureText;
 
 			LocalDateTime debut = LocalDateTime.parse(debutTextConv, formatter);
-			System.out.println("Date début convertie : " + debut);
+		
 			formSequence.setDebut(debut);
 
 			if (formSequence.getFinText() == "") { // sans date de fin définie: debut = fin
@@ -1123,7 +935,7 @@ public class Private {
 
 		} else {
 
-			System.out.println("Aucune date de debut définie!");
+		
 			formSequence.setDebut(null);
 		}
 
@@ -1133,14 +945,14 @@ public class Private {
 
 			String finTextConv = finText + " " + finHeureText;
 			LocalDateTime fin = LocalDateTime.parse(finTextConv, formatter);
-			System.out.println("Date fin convertie : " + fin);
+		
 			formSequence.setFin(fin);
 
 		} else {
 
 			if (formSequence.getDebutText() == "") {
 
-				System.out.println("Aucune date de fin définie!");
+				
 				formSequence.setFin(null);
 
 			}
@@ -1168,13 +980,12 @@ public class Private {
 			String token = (String) session.getAttribute("TOKEN");
 			token = "Bearer " + token;
 
-			System.out.println("num qualification: " + numQualification);
+		
 			List<RapportAux> rapports = microServiceLab.obtenirRapportsParQualification(token, numQualification);
 
 			if (!rapports.isEmpty()) {
 
-				System.out.println("taille liste de rapports: " + rapports.size());
-				System.out.println("date rapport récupéré:" + rapports.get(0).getDate());
+			
 				model.addAttribute("vide", false);
 				model.addAttribute("rapports", rapports);
 				model.addAttribute("qualification", numQualification);
@@ -1235,20 +1046,16 @@ public class Private {
 			String token = (String) session.getAttribute("TOKEN");
 			token = "Bearer " + token;
 
-			System.out.println("num qualif: " + formInitRapport.getQualification());
-
-			System.out.println("Objet: " + formInitRapport.getObjet());
+		
 
 			Integer auteur = utilisateur.getId();
-			System.out.println("identifiant auteur: " + auteur);
-
+		
 			formInitRapport.setAuteur(auteur);
 			Integer idRapport = microServiceLab.enregistrerInitRapport(token, formInitRapport); // changé en 2 pour test!
-			System.out.println("Identifiant rapport enregistrer: " + idRapport);
+		
 
 			RapportAux rapport = microServiceLab.obtenirRapportsParId(token, idRapport);
-			System.out.println("id rapport récupéré: " + rapport.getId());
-			System.out.println("id/num qualification du rapport: " + rapport.getQualification());
+			
 
 			model.addAttribute("rapport", rapport);
 
@@ -1320,8 +1127,7 @@ public class Private {
 			token = "Bearer " + token;
 
 			RapportAux rapport = microServiceLab.obtenirRapportsParId(token, idRapport);
-			System.out.println("id rapport récupéré: " + rapport.getId());
-			System.out.println("id/num qualification du rapport: " + rapport.getQualification());
+			
 
 			model.addAttribute("rapport", rapport);
 

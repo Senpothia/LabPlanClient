@@ -101,7 +101,6 @@ public class FicheController {
 			token = "Bearer " + token;
 			formFiche.setAuteur(utilisateur.getId());
 			microServiceLab.enregistrerFiche(token, formFiche);
-			System.out.println("dégré: " + formFiche.getDegre());
 			List<FicheAux> fiches = microServiceLab.voirLesFiches(token);
 			model.addAttribute("fiches", fiches);
 			return "fiches";
@@ -140,7 +139,7 @@ public class FicheController {
 	public String ajouterFicheQualification(@PathVariable("qualification") Integer numQualification, Model model,
 			HttpSession session) {
 
-		System.out.println("numQual: " + numQualification);
+	
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
 		
 		if (testUser(utilisateur)) {
@@ -166,7 +165,6 @@ public class FicheController {
 	public String ajouterFiches(@PathVariable("qualification") Integer numQualification, Model model,
 			HttpSession session, FormFiche formFiche) {
 
-		System.out.println("numQualif: " + numQualification);
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
 	
 
@@ -194,18 +192,16 @@ public class FicheController {
 
 	@GetMapping("/ajouter")
 	public String ajouterFicheQualification(
-			// @PathVariable("qualification") Integer numQualification,
 			Model model, HttpSession session) {
 
-		// System.out.println("numQual: " + numQualification);
+		
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
 		
 
 		if (testUser(utilisateur)) {
 
 			FormFiche formFiche = new FormFiche();
-			// formFiche.setQualification(numQualification);
-
+		
 			model.addAttribute("formFiche", formFiche);
 			model.addAttribute("qualification", 0);
 			return "creerFiche";
@@ -221,10 +217,9 @@ public class FicheController {
 
 	@PostMapping("/ajouter")
 	public String ajouterFiches(
-			// @PathVariable("qualification") Integer numQualification,
-			Model model, HttpSession session, FormFiche formFiche) {
+						Model model, HttpSession session, FormFiche formFiche) {
 
-		// System.out.println("numQualif: " + numQualification);
+		
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
 		
 		if (testUser(utilisateur)) {
@@ -284,7 +279,7 @@ public class FicheController {
 			token = "Bearer " + token;
 			FicheAux fiche = microServiceLab.voirLaFiches(token, id);
 			Integer numQualification = fiche.getNumQualification();
-			System.out.println("numQualif pour suppression: " + numQualification);
+			
 			microServiceLab.supprimerLaFiches(token, id);
 
 			if (numQualification != null) {
@@ -359,7 +354,7 @@ public class FicheController {
 	public String enregistrerModificationFiche(@PathVariable("id") Integer id, Model model, HttpSession session,
 			FormFiche formFiche) {
 
-		System.out.println("Valeur id: " + id);
+	
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
 		
 		

@@ -188,7 +188,7 @@ public class SiteController {
 			token = "Bearer " + token;
 
 			List<FormIncident> defauts = microServiceLab.obtenirDefautParProduit(token, produit);
-			System.out.println("Id defaut: " + defauts.get(0).getId());
+		
 			model.addAttribute("defauts", defauts);
 			return "selectionner_defaut";
 
@@ -337,14 +337,13 @@ public class SiteController {
 
 			String token = (String) session.getAttribute("TOKEN");
 			token = "Bearer " + token;
-			System.out.println("idSite: " + idSite);
-			System.out.println("idDefaut: " + idDefaut);
+		
 			FormIncident defaut = microServiceLab.obtenirDefautParId(token, idDefaut);
 			FormSite site = microServiceLab.obtenirSiteParId(token, idSite);
 
 			RecurrenceAux recurrence = new RecurrenceAux(idSite, idDefaut, 0);
 
-			System.out.println("idSite obj: " + recurrence.getSite());
+		
 
 			model.addAttribute("site", site);
 			model.addAttribute("defaut", defaut);

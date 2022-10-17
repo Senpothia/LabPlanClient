@@ -62,7 +62,7 @@ public class EchantillonController {
 	public String enregistrementEchantillon(@PathVariable(name = "id") Integer id, Model model, HttpSession session,
 			FormEchantillon formEchantillon, RedirectAttributes redirectAttributes) {
 
-		System.out.println("Numéro de qualification pour enregistrement ech: " + id);
+	
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
 		
 		if (testUser(utilisateur)) {
@@ -70,8 +70,7 @@ public class EchantillonController {
 			String token = (String) session.getAttribute("TOKEN");
 			token = "Bearer " + token;
 			formEchantillon.setQualification(id);
-			System.out.println(
-					"Numéro de qualification pour enregistrement ech dans form: " + formEchantillon.getQualification());
+
 			microServiceLab.saveEchantillon(token, formEchantillon);
 
 			redirectAttributes.addAttribute("id", id);
@@ -214,8 +213,7 @@ public class EchantillonController {
 
 			String date = echantillon.getDate();
 
-			System.out.println("Date échantillon récupérée:" + date);
-
+		
 			model.addAttribute("formEchantillon", formEchantillon);
 			model.addAttribute("echantillon", id);
 			model.addAttribute("qualification", qualification);
@@ -245,9 +243,7 @@ public class EchantillonController {
 			token = "Bearer " + token;
 			formEchantillon.setId(id);
 			microServiceLab.modifierEchantillon(token, formEchantillon);
-			System.out.println("id récupéré: " + id);
-			System.out.println("qualif récupéré: " + qualification);
-
+		
 			redirectAttributes.addAttribute("id", qualification);
 			List<EchantillonAux> echantillons = microServiceLab.obtenirEchantillonsParQualification(token, qualification);
 			model.addAttribute("echantillons", echantillons);

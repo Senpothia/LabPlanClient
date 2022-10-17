@@ -49,8 +49,7 @@ public class RapportController {
 				token = "Bearer " + token;
 				
 				RapportAux rapport = microServiceLab.obtenirRapportsParId(token, idRapport);
-				System.out.println("id rapport récupéré: " + rapport.getId());
-				System.out.println("id/num qualification du rapport: " + rapport.getQualification());
+			
 				
 				List<EchantillonAux> echantillons = microServiceLab.obtenirEchantillonsParRapportId(token, idRapport);
 				
@@ -69,7 +68,7 @@ public class RapportController {
 				      Paragraph para = new Paragraph("Hello World PDF created using OpenPDF", font);
 				      document.add(para);     
 				    } catch (Exception de) {
-				      System.err.println(de.getMessage());
+				    
 				    }
 				    document.close();
 		    	return "ok";

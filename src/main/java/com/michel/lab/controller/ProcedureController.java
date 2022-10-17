@@ -94,7 +94,7 @@ public class ProcedureController {
 
 			String token = (String) session.getAttribute("TOKEN");
 			token = "Bearer " + token;
-			System.out.println("Domaine récupéré: " + domaine);
+			
 			microServiceLab.saveProcedure(token, formProcedure);
 			return Constants.ESPACE_PERSONEL;
 				
@@ -140,11 +140,11 @@ public class ProcedureController {
 
 			String token = (String) session.getAttribute("TOKEN");
 			token = "Bearer " + token;
-			System.out.println("Domaine récupéré: " + domaine);
+			
 			List<ProcedureAux> procedures = microServiceLab.obtenirProceduresParDomaine(token, domaine);
 			for (ProcedureAux p : procedures) {
 
-				System.out.println("Nom procédure: " + p.getNom());
+			
 			}
 			model.addAttribute("procedures", procedures);
 			return "procedures";
@@ -207,7 +207,7 @@ public class ProcedureController {
 			List<ProcedureAux> procedures = microServiceLab.obtenirProceduresParDomaine(token, formProcedure.getDomaine());
 			for (ProcedureAux p : procedures) {
 
-				System.out.println("Nom procédure: " + p.getNom());
+				
 			}
 			model.addAttribute("procedures", procedures);
 			return "procedures";

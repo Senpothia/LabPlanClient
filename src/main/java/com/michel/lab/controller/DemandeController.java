@@ -205,7 +205,7 @@ public class DemandeController {
 			String token = (String) session.getAttribute("TOKEN");
 			token = "Bearer " + token;
 			formDemande.setDemandeur(utilisateur.getId());
-			System.out.println("Nom de produit: " + formDemande.getProduit());
+			
 			microServiceLab.modifierDemande(token, formDemande);
 			List<DemandeAux> demandes = microServiceLab.listeDemandes(token);
 			model.addAttribute("demandes", demandes);
@@ -230,7 +230,7 @@ public class DemandeController {
 			token = "Bearer " + token;
 			DemandeAux demande = microServiceLab.voirDemande(token, id);
 
-			System.out.println("num demande: " + demande.getNumero());
+		
 			FormDemande formDemande = new FormDemande();
 			formDemande.setId(id);
 			formDemande.setNumero(demande.getNumero());
@@ -317,7 +317,7 @@ public class DemandeController {
 			String token = (String) session.getAttribute("TOKEN");
 			token = "Bearer " + token;
 			DemandeAux demande = microServiceLab.voirDemande(token, id);
-			System.out.println("num demande: " + demande.getNumero());
+		
 			FormDemande formDemande = new FormDemande();
 			formDemande.setId(id);
 			formDemande.setNumero(demande.getNumero());
