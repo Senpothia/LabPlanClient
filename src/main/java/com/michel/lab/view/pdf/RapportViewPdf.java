@@ -85,7 +85,7 @@ public class RapportViewPdf extends AbstractPdfView {
 		RapportAux rapport = (RapportAux) model.get("rapport");
 		List<EchantillonAux> echantillons = (List<EchantillonAux>) model.get("echantillons");
 		List<EssaiAux> essais = (List<EssaiAux>) model.get("essais");
-
+		Integer nbreEssais = essais.size();
 		Paragraph margeSup = new Paragraph(new Chunk(" ", FontFactory.getFont(FontFactory.TIMES_ROMAN, 24)));
 		margeSup.setAlignment(Element.ALIGN_CENTER);
 		margeSup.setSpacingAfter(80);
@@ -241,16 +241,31 @@ public class RapportViewPdf extends AbstractPdfView {
 		}
 		
 		document.add(resTable);
-		document.newPage();
+		
+		Paragraph avisTitre = new Paragraph(new Chunk("4. Avis", FontFactory.getFont(FontFactory.TIMES_ROMAN, 24)));
+		avisTitre.setSpacingAfter(20);
+		document.add(avisTitre);
 
-		Paragraph EssaisTitre = new Paragraph(new Chunk("4. Essais", FontFactory.getFont(FontFactory.TIMES_ROMAN, 24)));
+		Paragraph avis = new Paragraph(new Chunk(rapport.getAvis(), FontFactory.getFont(FontFactory.TIMES_ROMAN, 12)));
+		avis.setSpacingAfter(20);
+		document.add(avis);
+		
+		document.newPage();
+		
+		
+		// liste des essais et affichage des séquences 
+		
+		
+		Paragraph EssaisTitre = new Paragraph(new Chunk("5. Essais", FontFactory.getFont(FontFactory.TIMES_ROMAN, 24)));
 		EssaisTitre.setSpacingAfter(20);
 		document.add(EssaisTitre);
 		Integer nbreTable = 0;
 		Boolean sautDePage = false;
 		for (EssaiAux es : essais) {
 			
-			nbreTable++;
+			
+			sautDePage = false;
+			nbreTable = 0;
 			PdfPTable esTable = new PdfPTable(2);
 			esTable.setWidths(new float[] { 1f, 3f });
 
@@ -287,17 +302,20 @@ public class RapportViewPdf extends AbstractPdfView {
 			int j = 1;
 
 			esTable.setSpacingAfter(20);
+			nbreTable++;
+			nbreEssais--;
 			document.add(esTable);
 
 			List<SequenceAux> sequences = es.getSequences();
-
+			Integer nbreSequences = sequences.size();
 			Paragraph sequenceTitre = new Paragraph(
 					new Chunk("    Séquences", FontFactory.getFont(FontFactory.TIMES_ROMAN, 18)));
 			sequenceTitre.setSpacingAfter(30);
 			document.add(sequenceTitre);
 
 			int k = 1;
-
+			
+			
 			for (SequenceAux s : sequences) {
 
 				if (writer.getPageNumber() == 3) {
@@ -310,20 +328,7 @@ public class RapportViewPdf extends AbstractPdfView {
 
 				}
 
-				LocalDateTime debut = s.getDebut();
-				LocalDateTime fin = s.getFin();
-				Duration duration = Duration.between(debut, fin);
-				Long dureeLongHours = duration.toHours();
-				Long dureeLongMins = duration.toMinutes();
-				String duree = null;
-
-				if (dureeLongHours < 1) {
-
-					duree = Long.toString(dureeLongMins) + "min";
-				} else {
-
-					duree = Long.toString(dureeLongHours) + "h";
-				}
+				
 
 				PdfPCell cell21 = new PdfPCell(new Paragraph("N°"));
 				cell21.setBackgroundColor(new Color(17, 142, 46));
@@ -332,7 +337,7 @@ public class RapportViewPdf extends AbstractPdfView {
 						new Phrase(String.valueOf(k), FontFactory.getFont(FontFactory.TIMES_ROMAN, 12)));
 				cell22.setBackgroundColor(new Color(17, 142, 46));
 				
-				nbreTable++;
+				
 				PdfPTable seqTable = new PdfPTable(2);
 				seqTable.setWidths(new float[] { 1, 3f });
 
@@ -345,8 +350,7 @@ public class RapportViewPdf extends AbstractPdfView {
 				seqTable.addCell(new Phrase(s.getDebutText(), FontFactory.getFont(FontFactory.TIMES_ROMAN, 12)));
 				seqTable.addCell(new Phrase("Fin", FontFactory.getFont(FontFactory.TIMES_ROMAN, 12)));
 				seqTable.addCell(new Phrase(s.getFinText(), FontFactory.getFont(FontFactory.TIMES_ROMAN, 12)));
-				seqTable.addCell(new Phrase("Durée", FontFactory.getFont(FontFactory.TIMES_ROMAN, 12)));
-				seqTable.addCell(new Phrase(duree, FontFactory.getFont(FontFactory.TIMES_ROMAN, 12)));
+				
 				seqTable.addCell(new Phrase("Profil", FontFactory.getFont(FontFactory.TIMES_ROMAN, 12)));
 				seqTable.addCell(new Phrase(s.getProfil(), FontFactory.getFont(FontFactory.TIMES_ROMAN, 12)));
 				seqTable.addCell(new Phrase("Commentaire", FontFactory.getFont(FontFactory.TIMES_ROMAN, 12)));
@@ -357,11 +361,13 @@ public class RapportViewPdf extends AbstractPdfView {
 				seqTable.addCell(new Phrase(s.getAvis(), FontFactory.getFont(FontFactory.TIMES_ROMAN, 12)));
 
 				seqTable.setSpacingAfter(20);
+				nbreTable++;
 				document.add(seqTable);
+				nbreSequences--;
 				k++;
 				
-				if(nbreTable == 3) {
-					
+				if(nbreTable >= 3 || nbreSequences == 0) {
+					if (nbreEssais != 0) {
 					document.newPage();
 					Paragraph margeSup2 = new Paragraph(new Chunk(" ", FontFactory.getFont(FontFactory.TIMES_ROMAN, 24)));
 					margeSup2.setAlignment(Element.ALIGN_CENTER);
@@ -369,31 +375,26 @@ public class RapportViewPdf extends AbstractPdfView {
 					document.add(margeSup2);
 					nbreTable = 0;
 					sautDePage = true;
+					}
 				}
 			}
 			
-			if(!sautDePage) {
+			
+			if(!sautDePage && nbreEssais !=0) {
 				
 				document.newPage();
 			}
 			
+			
 			nbreTable = 0;
+			sautDePage = false;
 			Paragraph margeSup2 = new Paragraph(new Chunk(" ", FontFactory.getFont(FontFactory.TIMES_ROMAN, 24)));
 			margeSup2.setAlignment(Element.ALIGN_CENTER);
 			margeSup2.setSpacingAfter(-20);
 			document.add(margeSup2);
-			sautDePage = false;
-
+		
 		}
-
-		Paragraph avisTitre = new Paragraph(new Chunk("5. Avis", FontFactory.getFont(FontFactory.TIMES_ROMAN, 24)));
-		avisTitre.setSpacingAfter(20);
-		document.add(avisTitre);
-
-		Paragraph avis = new Paragraph(new Chunk(rapport.getAvis(), FontFactory.getFont(FontFactory.TIMES_ROMAN, 12)));
-		avis.setSpacingAfter(20);
-		document.add(avis);
-
+		
 	}
 
 }
