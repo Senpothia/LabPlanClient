@@ -170,9 +170,9 @@
 							<td th:text="${sequence.nom}" />
 							<td th:text="${sequence.niveau}" />
 							
-							<td th:text="${sequence.debutText}" />
-							<td th:text="${sequence.finText}" />
-							<td th:text="${sequence.duree}" />
+							<td th:text="${#temporals.format(sequence.debut, 'dd-MM-yyyy HH:mm')}" />
+							<td th:text="${#temporals.format(sequence.fin, 'dd-MM-yyyy HH:mm')}" />
+							<td th:text="${sequence.dureeText}" />
 							<td th:text="${sequence.profil}" />
 							<td th:text="${sequence.commentaire}" />
 							<td th:text="${sequence.actif}" />

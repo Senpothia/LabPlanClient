@@ -32,6 +32,8 @@ public class FormSequence {
 		// TODO Auto-generated constructor stub
 	}
 
+	
+
 	public FormSequence(Integer id, String commentaire, LocalDateTime debut, LocalDateTime fin, String debutText,
 			String debutHeureText, String finText, String finHeureText, String niveau, String nom, Integer numero,
 			String profil, Integer essai, String nomEssais, Integer domaine, String nomDomaine, boolean statut,
@@ -59,6 +61,8 @@ public class FormSequence {
 		this.resultat = resultat;
 		this.avis = avis;
 	}
+
+
 
 	public Integer getId() {
 		return id;

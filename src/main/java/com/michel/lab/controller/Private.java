@@ -50,8 +50,8 @@ public class Private {
 	@Autowired
 	private UserConnexion userConnexion;
 
-	private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:MM");
-
+	private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+	private  DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("HH:mm");
 	@GetMapping("/qualifications/access")
 	public String accessQualifications(Model model, HttpSession session) {
 
@@ -94,7 +94,7 @@ public class Private {
 
 			String token = (String) session.getAttribute("TOKEN");
 			token = "Bearer " + token;
-		
+
 			Integer createurId = utilisateur.getId();
 			formQualif.setCreateurId(createurId);
 			microServiceLab.saveQualification(token, formQualif);
@@ -117,7 +117,7 @@ public class Private {
 
 			String token = (String) session.getAttribute("TOKEN");
 			token = "Bearer " + token;
-			
+
 			List<QualificationAux> qualifications = microServiceLab.toutesLesQualifications(token);
 			model.addAttribute("qualifications", qualifications);
 			model.addAttribute("access", "1");
@@ -140,7 +140,7 @@ public class Private {
 
 			String token = (String) session.getAttribute("TOKEN");
 			token = "Bearer " + token;
-		
+
 			List<QualificationAux> qualifications = microServiceLab.mesQualifications(token, id);
 			model.addAttribute("qualifications", qualifications);
 			model.addAttribute("access", "2");
@@ -163,7 +163,7 @@ public class Private {
 
 			String token = (String) session.getAttribute("TOKEN");
 			token = "Bearer " + token;
-		
+
 			List<QualificationAux> qualifications = microServiceLab.mesQualificationsEnCours(token, id);
 			model.addAttribute("qualifications", qualifications);
 			model.addAttribute("access", "3");
@@ -181,7 +181,7 @@ public class Private {
 	public String qualification(@PathVariable(name = "id") Integer id, Model model, HttpSession session) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		
+
 		if (testUser(utilisateur)) {
 
 			String token = (String) session.getAttribute("TOKEN");
@@ -189,7 +189,7 @@ public class Private {
 			QualificationAux qualification = microServiceLab.obtenirQualification(token, id);
 			model.addAttribute("qualification", qualification);
 			model.addAttribute("modification", false);
-			
+
 			return Constants.QUALIFICATION;
 
 		} else {
@@ -263,7 +263,6 @@ public class Private {
 			@PathVariable(name = "qualification") Integer qualification, @PathVariable(name = "domaine") String domaine,
 			Model model, HttpSession session) {
 
-	
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
 
 		if (testUser(utilisateur)) {
@@ -272,7 +271,7 @@ public class Private {
 			formSequence.setEssai(id);
 			formSequence.setQualification(qualification);
 			formSequence.setNomDomaine(domaine);
-		
+
 			model.addAttribute("formSequence", formSequence);
 			model.addAttribute("id", id);
 			model.addAttribute("qualification", qualification);
@@ -291,8 +290,6 @@ public class Private {
 			@PathVariable(name = "qualification") Integer qualification, Model model, HttpSession session,
 			FormSequence formSequence, RedirectAttributes redirectAttributes) {
 
-	
-
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
 
 		if (testUser(utilisateur)) {
@@ -300,8 +297,8 @@ public class Private {
 			String token = (String) session.getAttribute("TOKEN");
 			token = "Bearer " + token;
 
-			
 			formSequence.setEssai(id);
+
 			microServiceLab.enregistrerSequence(token, formSequence);
 
 			redirectAttributes.addAttribute("id", qualification);
@@ -322,7 +319,6 @@ public class Private {
 
 			Model model, HttpSession session) {
 
-	
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
 
 		if (testUser(utilisateur)) {
@@ -366,21 +362,18 @@ public class Private {
 			String token = (String) session.getAttribute("TOKEN");
 			token = "Bearer " + token;
 			SequenceAux sequence = microServiceLab.obtenirSequenceParId(token, idSequence);
-
-			Duration duration = Duration.between(sequence.getDebut(), sequence.getFin());
 			
-			long duree = duration.toHours();
-			sequence.setDuree(duree);
-
+		
 			model.addAttribute("sequence", sequence);
 			QualificationAux qualification = microServiceLab.obtenirQualificationParNumero(token, id);
 			model.addAttribute("qualification", qualification);
 			EssaiAux essai = microServiceLab.obtenirEssaiParNumero(token, num);
 			model.addAttribute("essai", essai);
+		
 			List<EchantillonAux> echantillons = microServiceLab.obtenirEchantillonsParQualification(token, id);
 			List<EchantillonAux> echSelection = microServiceLab.obtenirEchantillonSelectionParSequence(token, id,
 					idSequence);
-			// model.addAttribute("echantillons", echantillons);
+			
 			model.addAttribute("echantillons", echSelection);
 			return Constants.SEQUENCE;
 
@@ -399,10 +392,7 @@ public class Private {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
 
-	
 		if (testUser(utilisateur)) {
-
-			
 
 			String token = (String) session.getAttribute("TOKEN");
 			token = "Bearer " + token;
@@ -416,55 +406,12 @@ public class Private {
 			formSequence.setDomaine(sequence.getDomaine());
 
 			formSequence.setDebut(sequence.getDebut());
-
-			String debutText = sequence.getDebutText();
+			formSequence.setFin(sequence.getFin());
+			formSequence.setDebutText(sequence.getDebutText());
+			formSequence.setFinText(sequence.getFinText());
+			formSequence.setDebutHeureText(getHourFormDate(sequence.getDebut()));
+			formSequence.setFinHeureText(getHourFormDate(sequence.getFin()));
 		
-
-			String[] tokensDebut = debutText.split("-");
-
-			for (String t : tokensDebut) {
-
-				
-
-			}
-
-			String[] anneeDebut = tokensDebut[2].split(" ");
-		
-			String dateDebutText = anneeDebut[0] + "-" + tokensDebut[1] + "-" + tokensDebut[0];
-			
-
-			formSequence.setDebutText(dateDebutText);
-			
-
-			String finText = sequence.getFinText();
-			
-
-			String[] tokensFin = finText.split("-");
-
-			for (String t : tokensFin) {
-
-			
-
-			}
-
-			String[] anneeFin = tokensFin[2].split(" ");
-		
-			String dateFinText = anneeFin[0] + "-" + tokensFin[1] + "-" + tokensFin[0];
-		
-			formSequence.setFinText(dateFinText);
-		
-
-			
-
-			String segmentDebut[] = debutText.split(" ");
-			String segmentFin[] = finText.split(" ");
-
-			String debutHeureText = segmentDebut[1];
-			String finHeureText = segmentFin[1];
-
-			formSequence.setDebutHeureText(debutHeureText);
-			formSequence.setFinHeureText(finHeureText);
-
 			formSequence.setProfil(sequence.getProfil());
 			formSequence.setCommentaire(sequence.getCommentaire());
 			formSequence.setActif(sequence.getActif());
@@ -489,9 +436,7 @@ public class Private {
 			@PathVariable(name = "qualification") Integer num, @PathVariable(name = "sequence") Integer idSequence,
 			FormSequence formSequence, Model model, HttpSession session, RedirectAttributes redirectAttributes) {
 
-		
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-		
 
 		if (testUser(utilisateur)) {
 
@@ -505,75 +450,7 @@ public class Private {
 			String debutHeureText = formSequence.getDebutHeureText();
 			String finText = formSequence.getFinText();
 			String finHeureText = formSequence.getFinHeureText();
-
-			String dateDebutText = null;
-			String dateFinText = null;
-
-		
-
-			String segmentHeureDebut[] = debutHeureText.split(":");
-			String suffixe = null;
-
-			String segmentHeureFin[] = finHeureText.split(":");
-
-			int heureDebut = Integer.parseInt(segmentHeureDebut[0]);
-
-			if (heureDebut > 12) {
-
-				suffixe = "PM";
-				heureDebut = heureDebut - 12;
-				
-				debutHeureText = String.valueOf(heureDebut);
-				if (heureDebut < 10) {
-
-					debutHeureText = "0" + debutHeureText;
-				
-					dateDebutText = debutText + " " + debutHeureText + ":" + segmentHeureDebut[1] + " " + suffixe;
-					
-				}
-
-			} else {
-
-				suffixe = "AM";
-				dateDebutText = debutText + " " + debutHeureText + " " + suffixe;
-				
-
-			}
-
-			suffixe = null;
-
-			int heureFin = Integer.parseInt(segmentHeureFin[0]);
-
-			if (heureFin > 12) {
-
-				suffixe = "PM";
-				heureFin = heureFin - 12;
-				
-				finHeureText = String.valueOf(heureFin);
-				if (heureFin < 10) {
-
-					finHeureText = "0" + finHeureText;
-				
-					dateFinText = finText + " " + finHeureText + ":" + segmentHeureFin[1] + " " + suffixe;
-					
-				}
-
-			} else {
-
-				suffixe = "AM";
-				dateFinText = finText + " " + finHeureText + " " + suffixe;
-				
-			}
-
-			LocalDateTime debut = LocalDateTime.parse(dateDebutText, DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm a"));
 			
-			formSequence.setDebut(debut);
-
-			LocalDateTime fin = LocalDateTime.parse(dateFinText, DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm a"));
-			
-			formSequence.setFin(fin);
-			
-
 			microServiceLab.modifierSequence(token, formSequence);
 
 			redirectAttributes.addAttribute("essai", idEssai);
@@ -600,15 +477,8 @@ public class Private {
 			String token = (String) session.getAttribute("TOKEN");
 			token = "Bearer " + token;
 
-		
-
 			SequenceAux sequence = microServiceLab.obtenirSequenceParId(token, idSequence);
-
-			Duration duration = Duration.between(sequence.getDebut(), sequence.getFin());
-			
-			long duree = duration.toHours();
-			sequence.setDuree(duree);
-
+				
 			model.addAttribute("sequence", sequence);
 			QualificationAux qualification = microServiceLab.obtenirQualificationParNumero(token, num);
 			model.addAttribute("qualification", qualification);
@@ -700,7 +570,7 @@ public class Private {
 			QualificationAux qualification = microServiceLab.obtenirQualification(token, numQualification);
 			model.addAttribute("qualification", qualification);
 			model.addAttribute("modification", false);
-			
+
 			return Constants.QUALIFICATION;
 
 		} else {
@@ -724,8 +594,6 @@ public class Private {
 			QualificationAux qualification = microServiceLab.obtenirQualification(token, numQualification);
 			model.addAttribute("qualification", qualification);
 			model.addAttribute("modification", true);
-
-		
 
 			return Constants.QUALIFICATION;
 
@@ -760,7 +628,6 @@ public class Private {
 
 			model.addAttribute("formQualif", formQualif);
 
-		
 			return Constants.MODIFIER_QUALIFICATION;
 
 		} else {
@@ -787,7 +654,6 @@ public class Private {
 			QualificationAux qualification = microServiceLab.obtenirQualification(token, numQualification);
 			model.addAttribute("qualification", qualification);
 			model.addAttribute("modification", false);
-			
 
 			return Constants.QUALIFICATION;
 
@@ -912,51 +778,8 @@ public class Private {
 		String token = (String) session.getAttribute("TOKEN");
 		token = "Bearer " + token;
 
-	
 		String debutText = formSequence.getDebutText();
 		String finText = formSequence.getFinText();
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-
-		if (formSequence.getDebutText() != "") {
-			// String debutText = formSequence.getDebutText();
-			String debutHeureText = formSequence.getDebutHeureText();
-
-			String debutTextConv = debutText + " " + debutHeureText;
-
-			LocalDateTime debut = LocalDateTime.parse(debutTextConv, formatter);
-		
-			formSequence.setDebut(debut);
-
-			if (formSequence.getFinText() == "") { // sans date de fin définie: debut = fin
-
-				LocalDateTime fin = debut;
-				formSequence.setFin(debut);
-			}
-
-		} else {
-
-		
-			formSequence.setDebut(null);
-		}
-
-		if (formSequence.getFinText() != "") {
-			// String finText = formSequence.getFinText();
-			String finHeureText = formSequence.getFinHeureText();
-
-			String finTextConv = finText + " " + finHeureText;
-			LocalDateTime fin = LocalDateTime.parse(finTextConv, formatter);
-		
-			formSequence.setFin(fin);
-
-		} else {
-
-			if (formSequence.getDebutText() == "") {
-
-				
-				formSequence.setFin(null);
-
-			}
-		}
 
 		formSequence.setEssai(idEssai);
 		formSequence.setQualification(numQualification);
@@ -980,12 +803,10 @@ public class Private {
 			String token = (String) session.getAttribute("TOKEN");
 			token = "Bearer " + token;
 
-		
 			List<RapportAux> rapports = microServiceLab.obtenirRapportsParQualification(token, numQualification);
 
 			if (!rapports.isEmpty()) {
 
-			
 				model.addAttribute("vide", false);
 				model.addAttribute("rapports", rapports);
 				model.addAttribute("qualification", numQualification);
@@ -1010,8 +831,6 @@ public class Private {
 	public String rapport(@PathVariable(name = "num") Integer numQualification, Model model, HttpSession session) {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
-
-		
 
 		if (testUser(utilisateur)) {
 
@@ -1039,23 +858,18 @@ public class Private {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
 
-		
-
 		if (testUser(utilisateur)) {
 
 			String token = (String) session.getAttribute("TOKEN");
 			token = "Bearer " + token;
 
-		
-
 			Integer auteur = utilisateur.getId();
-		
+
 			formInitRapport.setAuteur(auteur);
-			Integer idRapport = microServiceLab.enregistrerInitRapport(token, formInitRapport); // changé en 2 pour test!
-		
+			Integer idRapport = microServiceLab.enregistrerInitRapport(token, formInitRapport); // changé en 2 pour
+																								// test!
 
 			RapportAux rapport = microServiceLab.obtenirRapportsParId(token, idRapport);
-			
 
 			model.addAttribute("rapport", rapport);
 
@@ -1097,8 +911,6 @@ public class Private {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
 
-	
-
 		if (testUser(utilisateur)) {
 
 			String token = (String) session.getAttribute("TOKEN");
@@ -1119,15 +931,12 @@ public class Private {
 
 		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
 
-		
-
 		if (testUser(utilisateur)) {
 
 			String token = (String) session.getAttribute("TOKEN");
 			token = "Bearer " + token;
 
 			RapportAux rapport = microServiceLab.obtenirRapportsParId(token, idRapport);
-			
 
 			model.addAttribute("rapport", rapport);
 
@@ -1154,6 +963,18 @@ public class Private {
 		} else
 
 			return true;
+	}
+
+	private String convertDateToString(LocalDateTime date) {
+
+		String convertedDate = date.format(formatter);
+		return convertedDate;
+	}
+
+	private String getHourFormDate(LocalDateTime debut) {
+
+		String heure = debut.format(formatter2);
+		return heure;
 	}
 
 }
