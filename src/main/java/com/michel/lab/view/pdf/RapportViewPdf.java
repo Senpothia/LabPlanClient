@@ -343,7 +343,9 @@ public class RapportViewPdf extends AbstractPdfView {
 
 				seqTable.addCell(cell21);
 				seqTable.addCell(cell22);
-
+				
+				seqTable.addCell(new Phrase("Nom", FontFactory.getFont(FontFactory.TIMES_ROMAN, 12)));
+				seqTable.addCell(new Phrase(s.getNom(), FontFactory.getFont(FontFactory.TIMES_ROMAN, 12)));
 				seqTable.addCell(new Phrase("Niveau", FontFactory.getFont(FontFactory.TIMES_ROMAN, 12)));
 				seqTable.addCell(new Phrase(s.getNiveau(), FontFactory.getFont(FontFactory.TIMES_ROMAN, 12)));
 				seqTable.addCell(new Phrase("Début", FontFactory.getFont(FontFactory.TIMES_ROMAN, 12)));
