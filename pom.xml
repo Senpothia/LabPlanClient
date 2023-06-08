@@ -82,7 +82,7 @@
 	</dependencyManagement>
 
 	<build>
-		<finalName>labplan4</finalName>
+		<finalName>labplan5</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

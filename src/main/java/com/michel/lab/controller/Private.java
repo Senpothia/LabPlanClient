@@ -976,5 +976,41 @@ public class Private {
 		String heure = debut.format(formatter2);
 		return heure;
 	}
+	
+	@GetMapping("/sequence/details/{num}/{id}/{sequence}")
+	public String voirSequenceDetails(@PathVariable(name = "id") Integer id, // id = numéro de qualification
+			@PathVariable(name = "num") Integer num, // num = id de l'essai
+			@PathVariable(name = "sequence") Integer idSequence, Model model, HttpSession session) {
+
+		Utilisateur utilisateur = userConnexion.obtenirUtilisateur(session, model);
+
+		if (testUser(utilisateur)) {
+
+			String token = (String) session.getAttribute("TOKEN");
+			token = "Bearer " + token;
+			SequenceAux sequence = microServiceLab.obtenirSequenceParId(token, idSequence);
+			
+		
+			model.addAttribute("sequence", sequence);
+			QualificationAux qualification = microServiceLab.obtenirQualificationParNumero(token, id);
+			model.addAttribute("qualification", qualification);
+			EssaiAux essai = microServiceLab.obtenirEssaiParNumero(token, num);
+			model.addAttribute("essai", essai);
+		
+			List<EchantillonAux> echantillons = microServiceLab.obtenirEchantillonsParQualification(token, id);
+			List<EchantillonAux> echSelection = microServiceLab.obtenirEchantillonSelectionParSequence(token, id,
+					idSequence);
+			
+			model.addAttribute("echantillons", echSelection);
+			return Constants.SEQUENCE_DETAILS;
+
+		} else {
+
+			return "redirect:/connexion";
+		}
+
+	}
+
+	
 
 }

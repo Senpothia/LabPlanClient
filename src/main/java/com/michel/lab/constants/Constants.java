@@ -33,6 +33,7 @@ public class Constants {
 	public static final String NOTE= "note";
 	public static final String CREATION_NOTE= "CreateNote";
 	public static final String MODIFICATION_NOTE = "modifierNote";
+	public static final String SEQUENCE_DETAILS = "sequenceDetails";
 	
 
 }
